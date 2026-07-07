@@ -28,11 +28,12 @@ export default function Login() {
     setIsLoading(true);
     try {
       await login(email, password);
+      // login() kehrt nach signIn() zurück — Spinner bleibt bis useEffect navigiert.
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Anmeldung fehlgeschlagen');
-    } finally {
       setIsLoading(false);
     }
+    // Kein finally-setIsLoading(false): Spinner läuft bis Navigation abgeschlossen.
   };
 
   return (

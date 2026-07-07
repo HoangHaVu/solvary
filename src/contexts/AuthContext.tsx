@@ -75,14 +75,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   useEffect(() => {
-    // Prüfe initialen Session-Status
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      if (session) {
-        applyUser(await buildUser(session));
-      }
-      setIsLoading(false);
-    });
-
+    // Supabase v2: onAuthStateChange emittiert INITIAL_SESSION sofort —
+    // kein separates getSession() nötig, das würde buildUser doppelt aufrufen.
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         if (event === 'SIGNED_OUT') {
@@ -103,8 +97,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (email: string, password: string) => {
-    const session = await signIn(email, password);
-    applyUser(await buildUser(session));
+    // signIn triggert onAuthStateChange(SIGNED_IN) — buildUser läuft dort einmalig.
+    await signIn(email, password);
   };
 
   const logout = async () => {
