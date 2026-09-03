@@ -70,7 +70,7 @@ export default function Hero() {
             </h1>
           </div>
           <div ref={(el) => { headlineRefs.current[2] = el; }} className="opacity-0">
-            <h1 className="text-[#F5A623] text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight leading-[1.05]">
+            <h1 className="text-brand-primary text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight leading-[1.05]">
               voranbringt
             </h1>
           </div>
@@ -82,7 +82,7 @@ export default function Hero() {
             ref={descRef}
             className="text-white/80 text-base max-w-[480px] leading-relaxed opacity-0"
           >
-            Bei Voltify planen und installieren wir Solaranlagen, die Effizienz und langfristigen Wert maximieren. Schließen Sie sich der Energiewende an und übernehmen Sie die Kontrolle über Ihre Energie — heute und für die Zukunft.
+            Bei Solvary planen und installieren wir Solaranlagen, die Effizienz und langfristigen Wert maximieren. Schließen Sie sich der Energiewende an und übernehmen Sie die Kontrolle über Ihre Energie — heute und für die Zukunft.
           </p>
 
           {/* Reviews Card */}
@@ -97,7 +97,7 @@ export default function Hero() {
                 e.preventDefault();
                 document.querySelector('#explore')?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="w-10 h-10 bg-[#1A3A5C] rounded-full flex items-center justify-center hover:bg-[#0F2440] transition-colors cursor-pointer"
+              className="w-10 h-10 bg-brand-secondary rounded-full flex items-center justify-center hover:bg-brand-secondary-hover transition-colors cursor-pointer"
             >
               <ArrowRight className="w-4 h-4 text-white" />
             </a>
@@ -115,7 +115,7 @@ export default function Hero() {
               <div className="ml-3">
                 <div className="text-xs font-semibold text-black">100+ Bewertungen</div>
                 <div className="text-xs text-gray-500 flex items-center gap-1">
-                  <Star className="w-3 h-3 fill-[#F5A623] text-[#F5A623]" /> 4,96 von 5
+                  <Star className="w-3 h-3 fill-brand-primary text-brand-primary" /> 4,96 von 5
                 </div>
               </div>
             </div>

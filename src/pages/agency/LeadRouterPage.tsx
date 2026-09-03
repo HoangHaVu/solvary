@@ -197,7 +197,7 @@ export default function LeadRouterPage() {
                 disabled={autoRouting || leads.length === 0}
                 className={`flex items-center gap-2 text-xs font-bold px-3 py-2 rounded-lg transition-all border ${
                   canAutoRoute
-                    ? 'bg-[#F5A623]/10 border-[#F5A623]/30 text-[#F5A623] hover:bg-[#F5A623]/20 disabled:opacity-40'
+                    ? 'bg-brand-primary/10 border-brand-primary/30 text-brand-primary hover:bg-brand-primary/20 disabled:opacity-40'
                     : 'bg-white/5 border-white/10 text-gray-500 hover:text-white hover:bg-white/10 disabled:opacity-40'
                 }`}
               >
@@ -223,14 +223,14 @@ export default function LeadRouterPage() {
           {/* Stats */}
           <div className="grid grid-cols-4 gap-3">
             {[
-              { label: 'Nicht zugewiesen', value: stats.unrouted, icon: Inbox,     color: 'text-[#F5A623]' },
+              { label: 'Nicht zugewiesen', value: stats.unrouted, icon: Inbox,     color: 'text-brand-primary' },
               { label: 'Ausstehend',       value: stats.pending,  icon: Clock,     color: 'text-amber-400' },
               { label: 'Angenommen',       value: stats.accepted, icon: CheckCircle, color: 'text-green-400' },
               { label: 'Konvertiert',      value: stats.converted, icon: Zap,      color: 'text-blue-400' },
             ].map(s => {
               const Icon = s.icon;
               return (
-                <div key={s.label} className="bg-[#1A1A1A] border border-white/5 rounded-xl p-4 flex items-center gap-3">
+                <div key={s.label} className="bg-brand-secondary-hover border border-white/5 rounded-xl p-4 flex items-center gap-3">
                   <div className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
                     <Icon className={`w-4 h-4 ${s.color}`} />
                   </div>
@@ -249,7 +249,7 @@ export default function LeadRouterPage() {
 
           {/* ── Left: Lead-Queue ── */}
           <div className="w-72 flex-shrink-0 flex flex-col gap-2">
-            <div className="flex items-center gap-2 bg-[#1A1A1A] border border-white/5 rounded-xl px-3 py-2">
+            <div className="flex items-center gap-2 bg-brand-secondary-hover border border-white/5 rounded-xl px-3 py-2">
               <Search className="w-4 h-4 text-gray-500 flex-shrink-0" />
               <input
                 type="text"
@@ -278,20 +278,20 @@ export default function LeadRouterPage() {
                       onClick={() => setSelectedLead(isSelected ? null : lead)}
                       className={`w-full text-left rounded-xl border p-3.5 transition-all ${
                         isSelected
-                          ? 'bg-[#1A3A5C] border-[#F5A623]/40 shadow-lg shadow-[#F5A623]/5'
-                          : 'bg-[#1A1A1A] border-white/5 hover:border-white/15 hover:bg-[#222]'
+                          ? 'bg-brand-secondary border-brand-primary/40 shadow-lg shadow-brand-primary/5'
+                          : 'bg-brand-secondary-hover border-white/5 hover:border-white/15 hover:bg-[#222]'
                       }`}
                     >
                       <div className="flex items-start justify-between gap-2 mb-2">
                         <div className="flex items-center gap-2 min-w-0">
-                          <div className="w-7 h-7 rounded-full bg-[#1A3A5C] flex items-center justify-center text-[10px] font-bold text-[#F5A623] flex-shrink-0">
+                          <div className="w-7 h-7 rounded-full bg-brand-secondary flex items-center justify-center text-[10px] font-bold text-brand-primary flex-shrink-0">
                             {lead.first_name?.[0]}{lead.last_name?.[0]}
                           </div>
                           <span className="text-sm font-medium text-white truncate">
                             {lead.first_name} {lead.last_name}
                           </span>
                         </div>
-                        <ChevronRight className={`w-4 h-4 flex-shrink-0 transition-transform ${isSelected ? 'rotate-90 text-[#F5A623]' : 'text-gray-600'}`} />
+                        <ChevronRight className={`w-4 h-4 flex-shrink-0 transition-transform ${isSelected ? 'rotate-90 text-brand-primary' : 'text-gray-600'}`} />
                       </div>
                       <div className="flex items-center gap-2 flex-wrap">
                         {lead.zip && (
@@ -300,7 +300,7 @@ export default function LeadRouterPage() {
                           </span>
                         )}
                         {lead.kwp && (
-                          <span className="flex items-center gap-1 text-[11px] text-[#F5A623]">
+                          <span className="flex items-center gap-1 text-[11px] text-brand-primary">
                             <Zap className="w-3 h-3" />{lead.kwp} kWp
                           </span>
                         )}
@@ -320,7 +320,7 @@ export default function LeadRouterPage() {
           {/* ── Right: Partner-Vorschläge ── */}
           <div className="flex-1 min-w-0">
             {!selectedLead ? (
-              <div className="h-full flex flex-col items-center justify-center gap-4 bg-[#1A1A1A] border border-white/5 rounded-xl text-gray-600">
+              <div className="h-full flex flex-col items-center justify-center gap-4 bg-brand-secondary-hover border border-white/5 rounded-xl text-gray-600">
                 <Handshake className="w-12 h-12 opacity-20" />
                 <div className="text-center">
                   <p className="text-sm font-medium text-gray-500">Lead auswählen</p>
@@ -330,8 +330,8 @@ export default function LeadRouterPage() {
             ) : (
               <div className="flex flex-col gap-3 h-full">
                 {/* Lead-Zusammenfassung */}
-                <div className="bg-[#1A3A5C]/30 border border-[#F5A623]/20 rounded-xl p-4 flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-[#1A3A5C] flex items-center justify-center text-sm font-bold text-[#F5A623] flex-shrink-0">
+                <div className="bg-brand-secondary/30 border border-brand-primary/20 rounded-xl p-4 flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-brand-secondary flex items-center justify-center text-sm font-bold text-brand-primary flex-shrink-0">
                     {selectedLead.first_name?.[0]}{selectedLead.last_name?.[0]}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -344,7 +344,7 @@ export default function LeadRouterPage() {
                         </span>
                       )}
                       {selectedLead.kwp && (
-                        <span className="flex items-center gap-1 text-xs text-[#F5A623]">
+                        <span className="flex items-center gap-1 text-xs text-brand-primary">
                           <Zap className="w-3 h-3" />{selectedLead.kwp} kWp
                         </span>
                       )}
@@ -364,7 +364,7 @@ export default function LeadRouterPage() {
                 {/* Partner-Vorschläge */}
                 <div className="flex-1 overflow-y-auto space-y-2 pr-0.5" style={{ maxHeight: '420px' }}>
                   {rankedPartners.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center py-12 gap-3 bg-[#1A1A1A] border border-white/5 rounded-xl text-gray-600">
+                    <div className="flex flex-col items-center justify-center py-12 gap-3 bg-brand-secondary-hover border border-white/5 rounded-xl text-gray-600">
                       <Users className="w-8 h-8 opacity-30" />
                       <p className="text-sm">Keine aktiven Partner vorhanden</p>
                     </div>
@@ -380,8 +380,8 @@ export default function LeadRouterPage() {
                           key={partner.id}
                           className={`flex items-center gap-4 rounded-xl border p-4 transition-all ${
                             score > 0
-                              ? 'bg-[#1A1A1A] border-green-500/20'
-                              : 'bg-[#1A1A1A] border-white/5 opacity-70'
+                              ? 'bg-brand-secondary-hover border-green-500/20'
+                              : 'bg-brand-secondary-hover border-white/5 opacity-70'
                           }`}
                         >
                           {/* Match-Indikator */}
@@ -428,7 +428,7 @@ export default function LeadRouterPage() {
                             disabled={assigning === partner.id}
                             className={`flex items-center gap-1.5 text-xs font-bold px-4 py-2.5 rounded-xl transition-all flex-shrink-0 ${
                               score > 0
-                                ? 'bg-[#F5A623] text-[#1A3A5C] hover:bg-[#E09000]'
+                                ? 'bg-brand-primary text-brand-secondary hover:bg-brand-primary-hover'
                                 : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
                             } disabled:opacity-50`}
                           >
@@ -451,7 +451,7 @@ export default function LeadRouterPage() {
 
         {/* ── Zuweisungs-Historie ── */}
         <div className="px-6 pb-8">
-          <div className="bg-[#1A1A1A] border border-white/5 rounded-xl overflow-hidden">
+          <div className="bg-brand-secondary-hover border border-white/5 rounded-xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/5">
               <h2 className="text-sm font-semibold text-white">Zuweisungs-Historie</h2>
               <div className="flex gap-1">
@@ -461,7 +461,7 @@ export default function LeadRouterPage() {
                     onClick={() => setHistoryFilter(f)}
                     className={`text-[11px] font-medium px-3 py-1.5 rounded-lg transition-all ${
                       historyFilter === f
-                        ? 'bg-[#1A3A5C] text-white'
+                        ? 'bg-brand-secondary text-white'
                         : 'text-gray-500 hover:text-white hover:bg-white/5'
                     }`}
                   >

@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { TrendingUp, DollarSign, Clock, Sun, ArrowRight, Zap, CheckCircle, Percent, Landmark, Download, HelpCircle, ExternalLink, Wrench, Lightbulb } from 'lucide-react';
+import { TrendingUp, DollarSign, Clock, ArrowRight, Zap, CheckCircle, Percent, Landmark, Download, HelpCircle, ExternalLink, Wrench, Lightbulb } from 'lucide-react';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import ROIPdfDocument from '../../components/pdf/ROIPdfDocument';
 import type { WizardData } from '../../pages/Configurator';
 import { calculateROI, type CalcAssumptions } from '../../lib/calculations';
-import { getGrantSubsidyTotal } from '../../data/grants';
 
 interface Props {
   data: WizardData;
@@ -45,7 +44,7 @@ export default function Step7_Analysis({ data, onNext, assumptions = {} }: Props
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h2 className="text-2xl md:text-3xl font-semibold text-[#1A3A5C] mb-2">Wirtschaftlichkeitsanalyse</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">Wirtschaftlichkeitsanalyse</h2>
         <p className="text-gray-500 text-sm">Ihre persönliche Auswertung basierend auf den eingegebenen Daten.</p>
       </div>
 
@@ -54,13 +53,13 @@ export default function Step7_Analysis({ data, onNext, assumptions = {} }: Props
         <div className="bg-white/60 backdrop-blur-sm rounded-xl border border-gray-200 p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-semibold text-[#1A3A5C]">Wie ändert sich die Wirtschaftlichkeit ohne Speicher?</p>
+              <p className="text-sm font-semibold text-brand-secondary">Wie ändert sich die Wirtschaftlichkeit ohne Speicher?</p>
               <p className="text-xs text-gray-500 mt-0.5">Vergleichen Sie die Zahlen mit und ohne Batteriespeicher</p>
             </div>
             <button
               onClick={() => setShowWithoutBattery(!showWithoutBattery)}
               className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors ${
-                showWithoutBattery ? 'bg-[#F5A623]' : 'bg-gray-300'
+                showWithoutBattery ? 'bg-brand-primary' : 'bg-gray-300'
               }`}
             >
               <span
@@ -93,7 +92,7 @@ export default function Step7_Analysis({ data, onNext, assumptions = {} }: Props
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
         <div className="bg-white/60 backdrop-blur-sm rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 mb-2">
-            <TrendingUp className="w-4 h-4 text-[#F5A623]" />
+            <TrendingUp className="w-4 h-4 text-brand-primary" />
             <span className="text-xs text-gray-500">Gewinn nach 20 J.</span>
           </div>
           <p className={`text-2xl font-bold ${profit20 >= 0 ? 'text-green-600' : 'text-red-500'}`}>
@@ -103,44 +102,44 @@ export default function Step7_Analysis({ data, onNext, assumptions = {} }: Props
         </div>
         <div className="bg-white/60 backdrop-blur-sm rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 mb-2">
-            <DollarSign className="w-4 h-4 text-[#F5A623]" />
+            <DollarSign className="w-4 h-4 text-brand-primary" />
             <span className="text-xs text-gray-500">Investition</span>
           </div>
           {grantSavings > 0 ? (
             <>
-              <p className="text-2xl font-bold text-[#1A3A5C]">{effectiveInvestment.toLocaleString()} <span className="text-sm font-normal">€</span></p>
+              <p className="text-2xl font-bold text-brand-secondary">{effectiveInvestment.toLocaleString()} <span className="text-sm font-normal">€</span></p>
               <p className="text-[10px] text-green-600 font-medium mt-0.5 flex items-center gap-1">
                 <TrendingUp className="w-3 h-3" />
                 nach Förderungen (statt {calc.investment.toLocaleString()} €)
               </p>
             </>
           ) : (
-            <p className="text-2xl font-bold text-[#1A3A5C]">{calc.investment.toLocaleString()} <span className="text-sm font-normal">€</span></p>
+            <p className="text-2xl font-bold text-brand-secondary">{calc.investment.toLocaleString()} <span className="text-sm font-normal">€</span></p>
           )}
         </div>
         <div className="bg-white/60 backdrop-blur-sm rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 mb-2">
-            <TrendingUp className="w-4 h-4 text-[#F5A623]" />
+            <TrendingUp className="w-4 h-4 text-brand-primary" />
             <span className="text-xs text-gray-500">Ersparnis/Jahr</span>
           </div>
-          <p className="text-2xl font-bold text-[#F5A623]">{calc.annualSavings.toLocaleString()} <span className="text-sm font-normal">€</span></p>
+          <p className="text-2xl font-bold text-brand-primary">{calc.annualSavings.toLocaleString()} <span className="text-sm font-normal">€</span></p>
           <p className="text-[10px] text-gray-400 mt-0.5">
             {calc.kwp} kWp · {calc.annualYield.toLocaleString()} kWh/Jahr Ertrag
           </p>
         </div>
         <div className="bg-white/60 backdrop-blur-sm rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 mb-2">
-            <Wrench className="w-4 h-4 text-[#F5A623]" />
+            <Wrench className="w-4 h-4 text-brand-primary" />
             <span className="text-xs text-gray-500">Folgekosten (20 J.)</span>
           </div>
-          <p className="text-2xl font-bold text-[#1A3A5C]">{calc.totalFollowUpCosts?.toLocaleString() || '—'} <span className="text-sm font-normal">€</span></p>
+          <p className="text-2xl font-bold text-brand-secondary">{calc.totalFollowUpCosts?.toLocaleString() || '—'} <span className="text-sm font-normal">€</span></p>
           <p className="text-[10px] text-gray-400 mt-0.5">
             Wartung + Wechselrichter{(Number(data.storageSize) > 0 && !showWithoutBattery) ? ' + Batterie' : ''}
           </p>
         </div>
         <div className="bg-white/60 backdrop-blur-sm rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 mb-2">
-            <Clock className="w-4 h-4 text-[#F5A623]" />
+            <Clock className="w-4 h-4 text-brand-primary" />
             <span className="text-xs text-gray-500">Amortisation</span>
           </div>
           {neverAmortized ? (
@@ -152,7 +151,7 @@ export default function Step7_Analysis({ data, onNext, assumptions = {} }: Props
             </>
           ) : (
             <>
-              <p className="text-2xl font-bold text-[#1A3A5C]">{calc.amortizationRealistic || calc.amortization} <span className="text-sm font-normal">Jahre</span></p>
+              <p className="text-2xl font-bold text-brand-secondary">{calc.amortizationRealistic || calc.amortization} <span className="text-sm font-normal">Jahre</span></p>
               <p className="text-[10px] text-gray-400 mt-0.5">
                 Realistisch (inkl. Folgekosten){calc.amortizationRealistic ? ` · Einfach: ${calc.amortization} J.` : ''}
               </p>
@@ -161,10 +160,10 @@ export default function Step7_Analysis({ data, onNext, assumptions = {} }: Props
         </div>
         <div className="bg-white/60 backdrop-blur-sm rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 mb-2">
-            <Zap className="w-4 h-4 text-[#F5A623]" />
+            <Zap className="w-4 h-4 text-brand-primary" />
             <span className="text-xs text-gray-500">Autarkie</span>
           </div>
-          <p className="text-2xl font-bold text-[#1A3A5C]">{calc.autarky} <span className="text-sm font-normal">%</span></p>
+          <p className="text-2xl font-bold text-brand-secondary">{calc.autarky} <span className="text-sm font-normal">%</span></p>
           <p className="text-[10px] text-gray-400 mt-0.5">Eigenverbrauchsanteil</p>
         </div>
       </div>
@@ -186,23 +185,23 @@ export default function Step7_Analysis({ data, onNext, assumptions = {} }: Props
       )}
 
       {/* Förderungsübersicht */}
-      <div className="bg-gradient-to-r from-[#1A3A5C]/5 to-[#F5A623]/5 border border-[#1A3A5C]/10 rounded-xl p-5">
+      <div className="bg-gradient-to-r from-brand-secondary/5 to-brand-primary/5 border border-brand-secondary/10 rounded-xl p-5">
         <div className="flex items-center gap-2 mb-4">
-          <CheckCircle className="w-4 h-4 text-[#F5A623]" />
-          <h3 className="font-semibold text-[#1A3A5C] text-xs uppercase tracking-widest">Förderungen & Vergünstigungen — bereits eingerechnet</h3>
+          <CheckCircle className="w-4 h-4 text-brand-primary" />
+          <h3 className="font-semibold text-brand-secondary text-xs uppercase tracking-widest">Förderungen & Vergünstigungen — bereits eingerechnet</h3>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="flex items-start gap-3 bg-white/60 rounded-lg p-4">
-            <Percent className="w-5 h-5 text-[#F5A623] shrink-0 mt-0.5" />
+            <Percent className="w-5 h-5 text-brand-primary shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold text-[#1A3A5C] text-sm">0 % Mehrwertsteuer</p>
+              <p className="font-semibold text-brand-secondary text-sm">0 % Mehrwertsteuer</p>
               <p className="text-xs text-gray-500 mt-0.5">Preis bereits ohne MwSt. — spart ~19 % auf den Kaufpreis</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-white/60 rounded-lg p-4">
-            <Zap className="w-5 h-5 text-[#F5A623] shrink-0 mt-0.5" />
+            <Zap className="w-5 h-5 text-brand-primary shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold text-[#1A3A5C] text-sm">EEG Einspeisevergütung</p>
+              <p className="font-semibold text-brand-secondary text-sm">EEG Einspeisevergütung</p>
               <p className="text-xs text-gray-500 mt-0.5">
                 {calc.gridFeedIn > 0
                   ? `ca. ${Math.round(calc.gridFeedIn * 0.082).toLocaleString()} €/Jahr · 8,2 ct/kWh · 20 Jahre garantiert`
@@ -211,10 +210,10 @@ export default function Step7_Analysis({ data, onNext, assumptions = {} }: Props
             </div>
           </div>
           {grantSavings > 0 ? (
-            <div className="flex items-start gap-3 bg-[#F5A623]/10 border border-[#F5A623]/20 rounded-lg p-4">
-              <Landmark className="w-5 h-5 text-[#F5A623] shrink-0 mt-0.5" />
+            <div className="flex items-start gap-3 bg-brand-primary/10 border border-brand-primary/20 rounded-lg p-4">
+              <Landmark className="w-5 h-5 text-brand-primary shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold text-[#1A3A5C] text-sm">Regionaler Zuschuss</p>
+                <p className="font-semibold text-brand-secondary text-sm">Regionaler Zuschuss</p>
                 <p className="text-xs text-gray-500 mt-0.5">
                   −{grantSavings.toLocaleString()} € vom Kaufpreis abgezogen
                 </p>
@@ -224,7 +223,7 @@ export default function Step7_Analysis({ data, onNext, assumptions = {} }: Props
             <div className="flex items-start gap-3 bg-white/60 rounded-lg p-4">
               <Landmark className="w-5 h-5 text-gray-400 shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold text-[#1A3A5C] text-sm">Regionale Förderung</p>
+                <p className="font-semibold text-brand-secondary text-sm">Regionale Förderung</p>
                 <p className="text-xs text-gray-500 mt-0.5">
                   Prüfen Sie zusätzliche Zuschüsse im Förderungsschritt
                 </p>
@@ -237,8 +236,8 @@ export default function Step7_Analysis({ data, onNext, assumptions = {} }: Props
       {/* Payback Chart */}
       <div className="bg-white/60 backdrop-blur-sm rounded-2xl border border-gray-200 p-6">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-sm font-medium text-[#1A3A5C]">Amortisationsverlauf (20 Jahre)</p>
-          <span className={`text-xs px-2 py-0.5 rounded-full ${profit20 >= 0 ? 'text-[#F5A623] bg-[#F5A623]/10' : 'text-red-500 bg-red-50'}`}>
+          <p className="text-sm font-medium text-brand-secondary">Amortisationsverlauf (20 Jahre)</p>
+          <span className={`text-xs px-2 py-0.5 rounded-full ${profit20 >= 0 ? 'text-brand-primary bg-brand-primary/10' : 'text-red-500 bg-red-50'}`}>
             {profit20 >= 0 ? '+' : ''}{Math.round(profit20).toLocaleString()} € nach 20 Jahren (mit Folgekosten)
           </span>
         </div>
@@ -262,16 +261,16 @@ export default function Step7_Analysis({ data, onNext, assumptions = {} }: Props
               >
                 {/* Tooltip */}
                 {hoveredBar === i && (
-                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-[#1A3A5C] text-white text-[10px] font-bold px-2 py-1 rounded-lg whitespace-nowrap z-20 shadow-lg">
+                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-brand-secondary text-white text-[10px] font-bold px-2 py-1 rounded-lg whitespace-nowrap z-20 shadow-lg">
                     Jahr {d.year}: {d.value >= 0 ? '+' : ''}{d.value.toLocaleString()} €
-                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#1A3A5C] rotate-45" />
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-brand-secondary rotate-45" />
                   </div>
                 )}
                 {/* Balken: positive gehen von zero-line aufwärts, negative abwärts */}
                 <div
                   className={`absolute left-0 right-0 ${
                     isPositive
-                      ? `bg-[#F5A623] rounded-t-sm ${hoveredBar === i ? 'brightness-110' : ''}`
+                      ? `bg-brand-primary rounded-t-sm ${hoveredBar === i ? 'brightness-110' : ''}`
                       : `bg-gray-300 rounded-b-sm ${hoveredBar === i ? 'brightness-90' : ''}`
                   }`}
                   style={{
@@ -286,7 +285,7 @@ export default function Step7_Analysis({ data, onNext, assumptions = {} }: Props
         </div>
         <div className="flex justify-between text-[10px] text-gray-400 mt-2">
           <span>Jahr 1</span>
-          <span className={`font-medium ${neverAmortized ? 'text-red-400' : 'text-[#F5A623]'}`}>
+          <span className={`font-medium ${neverAmortized ? 'text-red-400' : 'text-brand-primary'}`}>
             {neverAmortized
               ? 'Break-even nicht in 20 Jahren erreicht'
               : `Break-even ca. Jahr ${Math.ceil(calc.amortizationRealistic || calc.amortization)}`}
@@ -361,15 +360,15 @@ export default function Step7_Analysis({ data, onNext, assumptions = {} }: Props
       <div className="flex flex-col sm:flex-row gap-3">
         <button
           onClick={onNext}
-          className="flex-1 flex items-center justify-center gap-2 bg-[#F5A623] text-[#1A3A5C] px-6 py-4 rounded-xl text-sm font-bold hover:bg-[#E09000] transition-all"
+          className="flex-1 flex items-center justify-center gap-2 bg-brand-primary text-brand-secondary px-6 py-4 rounded-xl text-sm font-bold hover:bg-brand-primary-hover transition-all"
         >
           Individuelles Angebot anfordern
           <ArrowRight className="w-4 h-4" />
         </button>
         <PDFDownloadLink
           document={<ROIPdfDocument data={data} calc={calc} />}
-          fileName={`Voltify-ROI-Analyse-${data.zipCode || 'PLZ'}.pdf`}
-          className="flex items-center justify-center gap-2 bg-white border-2 border-[#1A3A5C] text-[#1A3A5C] px-6 py-4 rounded-xl text-sm font-bold hover:bg-[#1A3A5C]/5 transition-all"
+          fileName={`Solvary-ROI-Analyse-${data.zipCode || 'PLZ'}.pdf`}
+          className="flex items-center justify-center gap-2 bg-white border-2 border-brand-secondary text-brand-secondary px-6 py-4 rounded-xl text-sm font-bold hover:bg-brand-secondary/5 transition-all"
         >
           {({ loading }) => (
             <>

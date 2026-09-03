@@ -1,3 +1,4 @@
+import { COLORS } from '../lib/theme';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { PDFDownloadLink } from '@react-pdf/renderer';
@@ -10,7 +11,7 @@ import {
   Download, Check, AlertTriangle, FilePlus, Trash2, ShieldAlert,
 } from 'lucide-react';
 import { AdminSidebar } from '../components/layout/AdminSidebar';
-import { eraseLead } from '../services/leads';
+import { eraseLead, exportLead } from '../services/leads';
 import SolarPlanningSection from '../components/solar-planner/SolarPlanningSection';
 import { useAuth } from '../contexts/AuthContext';
 import { useInstallerLead } from '../hooks/useInstallerLead';
@@ -97,7 +98,7 @@ function InfoRow({ icon, label, value, accent }: InfoRowProps) {
 interface StatCardProps { label: string; value: string; sub?: string; icon: React.ReactNode; accent?: string }
 function StatCard({ label, value, sub, icon, accent }: StatCardProps) {
   return (
-    <div className="bg-[#1A1A1A] rounded-xl p-4 flex flex-col gap-1 border border-white/5">
+    <div className="bg-brand-secondary-hover rounded-xl p-4 flex flex-col gap-1 border border-white/5">
       <div className={`flex items-center gap-1.5 mb-1 ${accent ?? 'text-gray-500'}`}>
         {icon}
         <span className="text-[10px] font-bold uppercase tracking-widest">{label}</span>
@@ -113,8 +114,8 @@ const DEFAULT_COMPANY: CompanySettings = {
   firmenname: 'Voltify Solar',
   slogan: 'Ihre Solaranlage — einfach konfiguriert.',
   logoDataUrl: '',
-  primaryColor: '#1A3A5C',
-  accentColor: '#F5A623',
+  primaryColor: COLORS.secondary,
+  accentColor: COLORS.primary,
   iban: '',
   zahlungsziel: '14',
   steuernummer: '',
@@ -169,12 +170,12 @@ function OfferActionSection({
   };
 
   return (
-    <section className="bg-[#1A1A1A] rounded-xl border border-white/5 p-6">
+    <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
       <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Angebot</h2>
 
       {loadingDraft ? (
         <div className="flex items-center justify-center py-8">
-          <Loader2 className="w-6 h-6 text-[#F5A623] animate-spin" />
+          <Loader2 className="w-6 h-6 text-brand-primary animate-spin" />
         </div>
       ) : draft ? (
         <div className="space-y-4">
@@ -185,13 +186,13 @@ function OfferActionSection({
 
           <div className="flex items-baseline gap-2">
             <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Gesamtsumme</span>
-            <span className="text-2xl font-black text-[#F5A623]">{draft.total.toLocaleString('de-DE')} €</span>
+            <span className="text-2xl font-black text-brand-primary">{draft.total.toLocaleString('de-DE')} €</span>
           </div>
 
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => navigate(`/lead/${lead.id}/offer`)}
-              className="flex items-center gap-2 bg-[#F5A623] hover:bg-[#E09000] text-[#1A3A5C] font-bold text-sm px-5 py-2.5 rounded-xl transition-colors shadow-sm"
+              className="flex items-center gap-2 bg-brand-primary hover:bg-brand-primary-hover text-brand-secondary font-bold text-sm px-5 py-2.5 rounded-xl transition-colors shadow-sm"
             >
               <FilePlus className="w-4 h-4" />
               {draft.status === 'draft' ? 'Angebot bearbeiten' : 'Angebot ansehen'}
@@ -265,7 +266,7 @@ function OfferActionSection({
           <p className="text-gray-400 text-sm mb-4">Noch kein Angebot erstellt</p>
           <button
             onClick={() => navigate(`/lead/${lead.id}/offer`)}
-            className="flex items-center justify-center gap-2 w-full bg-[#F5A623] hover:bg-[#E09000] text-[#1A3A5C] font-bold text-sm px-5 py-3 rounded-xl transition-colors shadow-sm"
+            className="flex items-center justify-center gap-2 w-full bg-brand-primary hover:bg-brand-primary-hover text-brand-secondary font-bold text-sm px-5 py-3 rounded-xl transition-colors shadow-sm"
           >
             <FilePlus className="w-4 h-4" />
             Angebot erstellen
@@ -287,6 +288,8 @@ export default function LeadDetailsPage() {
   const [showErase, setShowErase] = useState(false);
   const [erasing, setErasing] = useState(false);
   const [eraseError, setEraseError] = useState('');
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState('');
 
   async function handleErase() {
     if (!lead) return;
@@ -298,6 +301,30 @@ export default function LeadDetailsPage() {
     } catch (e) {
       setEraseError(e instanceof Error ? e.message : 'Löschung fehlgeschlagen');
       setErasing(false);
+    }
+  }
+
+  // DSGVO Art. 20: alle Lead-Daten serverseitig sammeln und als JSON-Datei herunterladen.
+  async function handleExport() {
+    if (!lead) return;
+    setExporting(true);
+    setExportError('');
+    try {
+      const data = await exportLead(lead.id);
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const safeName = `${lead.last_name}_${lead.first_name}`.replace(/[^a-z0-9_-]/gi, '_');
+      a.download = `voltify-datenexport-${safeName}-${lead.id.slice(0, 8)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      setExportError(e instanceof Error ? e.message : 'Export fehlgeschlagen');
+    } finally {
+      setExporting(false);
     }
   }
   const [planningPng, setPlanningPng] = useState<string | undefined>(
@@ -383,12 +410,12 @@ export default function LeadDetailsPage() {
 
           {isLoading && (
             <div className="flex justify-center py-24">
-              <Sun className="w-10 h-10 text-[#F5A623] animate-spin" />
+              <Sun className="w-10 h-10 text-brand-primary animate-spin" />
             </div>
           )}
 
           {!isLoading && !lead && (
-            <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-12 text-center text-gray-500">
+            <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-12 text-center text-gray-500">
               <p className="font-semibold">Lead nicht gefunden.</p>
             </div>
           )}
@@ -403,18 +430,29 @@ export default function LeadDetailsPage() {
                   <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
                   Zurück zur Pipeline
                 </button>
-                <button
-                  onClick={() => setShowErase(true)}
-                  className="flex items-center gap-1.5 text-xs font-bold text-gray-600 hover:text-red-400 transition-colors"
-                  title="Alle personenbezogenen Daten dieses Leads löschen (DSGVO Art. 17)"
-                >
-                  <Trash2 className="w-3.5 h-3.5" /> DSGVO-Löschung
-                </button>
+                <div className="flex items-center gap-4">
+                  {exportError && <span className="text-xs font-semibold text-red-400">{exportError}</span>}
+                  <button
+                    onClick={handleExport}
+                    disabled={exporting}
+                    className="flex items-center gap-1.5 text-xs font-bold text-gray-600 hover:text-brand-primary transition-colors disabled:opacity-50"
+                    title="Alle Daten dieses Leads als JSON exportieren (DSGVO Art. 20 — Datenübertragbarkeit)"
+                  >
+                    {exporting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />} Datenexport (Art. 20)
+                  </button>
+                  <button
+                    onClick={() => setShowErase(true)}
+                    className="flex items-center gap-1.5 text-xs font-bold text-gray-600 hover:text-red-400 transition-colors"
+                    title="Alle personenbezogenen Daten dieses Leads löschen (DSGVO Art. 17)"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" /> DSGVO-Löschung
+                  </button>
+                </div>
               </div>
 
               {showErase && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => !erasing && setShowErase(false)}>
-                  <div className="bg-[#1A1A1A] rounded-2xl border border-red-500/20 max-w-md w-full p-6" onClick={(e) => e.stopPropagation()}>
+                  <div className="bg-brand-secondary-hover rounded-2xl border border-red-500/20 max-w-md w-full p-6" onClick={(e) => e.stopPropagation()}>
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center">
                         <ShieldAlert className="w-5 h-5 text-red-400" />
@@ -478,7 +516,7 @@ export default function LeadDetailsPage() {
                     <select
                       value={lead.status}
                       onChange={(e) => changeStatus(e.target.value as Lead['status'])}
-                      className="appearance-none bg-[#1A1A1A] border border-white/10 text-white font-bold text-sm rounded-xl pl-4 pr-10 py-3 focus:outline-none focus:ring-2 focus:ring-[#F5A623]/30 w-52 shadow-sm"
+                      className="appearance-none bg-brand-secondary-hover border border-white/10 text-white font-bold text-sm rounded-xl pl-4 pr-10 py-3 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 w-52 shadow-sm"
                     >
                       {STATUS_OPTIONS.map(o => (
                         <option key={o.value} value={o.value}>{o.label}</option>
@@ -493,19 +531,19 @@ export default function LeadDetailsPage() {
                 {/* Linke Spalte */}
                 <div className="lg:col-span-5 flex flex-col gap-6">
                   {/* Kontakt */}
-                  <section className="bg-[#1A1A1A] rounded-xl border border-white/5 p-6">
+                  <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                     <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Kontaktdaten</h2>
                     <div className="space-y-3">
                       <InfoRow
                         icon={<Mail className="w-4 h-4 text-gray-400" />}
                         label="E-Mail"
-                        value={<a href={`mailto:${lead.email}`} className="hover:text-[#F5A623] transition-colors">{lead.email}</a>}
+                        value={<a href={`mailto:${lead.email}`} className="hover:text-brand-primary transition-colors">{lead.email}</a>}
                       />
                       {lead.phone && (
                         <InfoRow
                           icon={<Phone className="w-4 h-4 text-gray-400" />}
                           label="Telefon"
-                          value={<a href={`tel:${lead.phone}`} className="hover:text-[#F5A623] transition-colors">{lead.phone}</a>}
+                          value={<a href={`tel:${lead.phone}`} className="hover:text-brand-primary transition-colors">{lead.phone}</a>}
                         />
                       )}
                       {lead.zip && (
@@ -527,7 +565,7 @@ export default function LeadDetailsPage() {
                   </section>
 
                   {/* Dachkonfiguration */}
-                  <section className="bg-[#1A1A1A] rounded-xl border border-white/5 p-6">
+                  <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                     <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Dachkonfiguration</h2>
                     <div className="space-y-3">
                       {lead.roof_area != null && (
@@ -557,7 +595,7 @@ export default function LeadDetailsPage() {
                   </section>
 
                   {/* Energiebedarf */}
-                  <section className="bg-[#1A1A1A] rounded-xl border border-white/5 p-6">
+                  <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                     <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Energiebedarf & Ausstattung</h2>
                     <div className="space-y-3">
                       {lead.consumption != null && (
@@ -593,7 +631,7 @@ export default function LeadDetailsPage() {
                   </section>
 
                   {/* Planung & Finanzierung */}
-                  <section className="bg-[#1A1A1A] rounded-xl border border-white/5 p-6">
+                  <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                     <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Planung & Finanzierung</h2>
                     <div className="space-y-3">
                       {lead.planning_horizon && (
@@ -617,7 +655,7 @@ export default function LeadDetailsPage() {
                 {/* Rechte Spalte */}
                 <div className="lg:col-span-7 flex flex-col gap-6">
                   {/* Anlagenkennzahlen */}
-                  <section className="bg-[#1A1A1A] rounded-xl border border-white/5 p-6">
+                  <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                     <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Anlagenkonfiguration</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                       <StatCard label="Anlagengröße" value={lead.kwp != null ? `${lead.kwp} kWp` : '—'} icon={<Zap className="w-3.5 h-3.5" />} accent="text-yellow-400" />
@@ -652,7 +690,7 @@ export default function LeadDetailsPage() {
 
                   {/* Lead-Score */}
                   {scoreResult && (
-                    <section className="bg-[#1A1A1A] rounded-xl border border-white/5 p-6">
+                    <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                       <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Lead-Score</h2>
                       <div className="flex items-center gap-4">
                         <div className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center ${scoreResult.bgColor} border`}>
@@ -701,10 +739,10 @@ export default function LeadDetailsPage() {
                   )}
 
                   {/* Schnellaktionen */}
-                  <section className="bg-[#1A1A1A] rounded-xl border border-white/5 p-6">
+                  <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                     <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Schnellaktionen</h2>
                     <div className="flex flex-wrap gap-3">
-                      <a href={`mailto:${lead.email}`} className="flex items-center gap-2 bg-[#F5A623] text-[#1A3A5C] font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-[#E09000] transition-colors shadow-sm">
+                      <a href={`mailto:${lead.email}`} className="flex items-center gap-2 bg-brand-primary text-brand-secondary font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-brand-primary-hover transition-colors shadow-sm">
                         <Mail className="w-4 h-4" />
                         E-Mail senden
                       </a>
@@ -725,7 +763,7 @@ export default function LeadDetailsPage() {
 
                   {/* Vor-Ort-Info */}
                   {(lead.site_visit_date || lead.site_visit_done || lead.roof_area_measured) && (
-                    <section className="bg-[#1A1A1A] rounded-xl border border-white/5 p-6">
+                    <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                       <div className="flex items-center justify-between mb-4">
                         <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest">Vor-Ort-Termin</h2>
                         {lead.site_visit_done ? (

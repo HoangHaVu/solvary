@@ -32,14 +32,14 @@ Deno.serve(async (req) => {
       method: 'POST',
       headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: 'Voltify <noreply@vu-studio.de>',
+        from: 'Solvary <noreply@vu-studio.de>',
         to: agency_email,
         subject: `Partner-Update: ${lead_name || 'Lead'} ${statusLabels[status] || status}`,
         html: `
           <h2>Partner-Update</h2>
           <p><strong>${partner_name || 'Partner'}</strong> hat den Lead <strong>${lead_name || '—'}</strong> ${statusLabels[status] || status}.</p>
           ${notes ? `<p><strong>Notiz:</strong> ${notes}</p>` : ''}
-          <p><a href="https://voltify-app.vercel.app/admin/router" style="background:#F5A623;color:#1A3A5C;padding:12px 24px;text-decoration:none;border-radius:8px;font-weight:bold;">Zum Lead-Router</a></p>
+          <p><a href="https://solvary.de/admin/router" style="background:#F5A623;color:#1A3A5C;padding:12px 24px;text-decoration:none;border-radius:8px;font-weight:bold;">Zum Lead-Router</a></p>
         `,
       }),
     });

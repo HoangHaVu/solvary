@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Zap, Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Dribbble, ArrowRight } from 'lucide-react';
+import { LOGO_WHITE_PATH } from '../../lib/branding';
 
 const usefulLinks = [
   { label: 'Home', href: '/' },
@@ -21,17 +22,14 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row gap-6 mb-16">
           {/* Logo */}
           <div className="flex items-center gap-2 lg:mr-auto">
-            <div className="w-10 h-10 rounded-full bg-[#F5A623] flex items-center justify-center">
-              <Zap className="w-5 h-5 text-[#1A3A5C]" fill="currentColor" />
-            </div>
-            <span className="text-xl font-medium text-white">Voltify</span>
+            <img src={LOGO_WHITE_PATH} alt="Solvary" className="h-12 w-auto" />
           </div>
 
           {/* Contact Boxes */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 flex-1 max-w-[700px]">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-[#F5A623] rounded-xl flex items-center justify-center flex-shrink-0">
-                <Phone className="w-5 h-5 text-[#1A3A5C]" />
+              <div className="w-12 h-12 bg-brand-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                <Phone className="w-5 h-5 text-brand-secondary" />
               </div>
               <div>
                 <div className="text-xs text-gray-400 mb-0.5">Telefonnummer</div>
@@ -39,17 +37,17 @@ export default function Footer() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-[#F5A623] rounded-xl flex items-center justify-center flex-shrink-0">
-                <Mail className="w-5 h-5 text-[#1A3A5C]" />
+              <div className="w-12 h-12 bg-brand-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                <Mail className="w-5 h-5 text-brand-secondary" />
               </div>
               <div>
                 <div className="text-xs text-gray-400 mb-0.5">E-Mail</div>
-                <div className="text-sm text-white">info@voltify.com</div>
+                <div className="text-sm text-white">info@solvary.de</div>
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-[#F5A623] rounded-xl flex items-center justify-center flex-shrink-0">
-                <MapPin className="w-5 h-5 text-[#1A3A5C]" />
+              <div className="w-12 h-12 bg-brand-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                <MapPin className="w-5 h-5 text-brand-secondary" />
               </div>
               <div>
                 <div className="text-xs text-gray-400 mb-0.5">Unsere Adresse</div>
@@ -63,9 +61,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* About */}
           <div>
-            <h4 className="text-base font-medium text-white mb-4">Über Voltify</h4>
+            <h4 className="text-base font-medium text-white mb-4">Über Solvary</h4>
             <p className="text-sm text-gray-400 leading-relaxed">
-              Voltify ist die All-in-One Software für Solar-Installateure. Verwalte Leads, erstelle Angebote und Rechnungen, und skaliere dein Geschäft — alles an einem Ort.
+              Solvary ist die All-in-One Software für Solar-Installateure. Verwalte Leads, erstelle Angebote und Rechnungen, und skaliere dein Geschäft — alles an einem Ort.
             </p>
           </div>
 
@@ -90,11 +88,11 @@ export default function Footer() {
             <h4 className="text-base font-medium text-white mb-4">Kontakt</h4>
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-[#F5A623] flex-shrink-0" />
-                <span className="text-sm text-gray-400">kontakt@voltify.de</span>
+                <Mail className="w-4 h-4 text-brand-primary flex-shrink-0" />
+                <span className="text-sm text-gray-400">kontakt@solvary.de</span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-[#F5A623] flex-shrink-0" />
+                <Phone className="w-4 h-4 text-brand-primary flex-shrink-0" />
                 <span className="text-sm text-gray-400">+49 89 12345678</span>
               </div>
             </div>
@@ -112,9 +110,9 @@ export default function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Ihre E-Mail-Adresse"
-                className="flex-1 bg-transparent border border-gray-700 rounded-l-full px-4 py-2.5 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-[#F5A623]"
+                className="flex-1 bg-transparent border border-gray-700 rounded-l-full px-4 py-2.5 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-brand-primary"
               />
-              <button className="bg-[#F5A623] text-[#1A3A5C] text-sm font-medium px-5 py-2.5 rounded-r-full hover:bg-[#E09000] transition-colors flex items-center gap-1">
+              <button className="bg-brand-primary text-brand-secondary text-sm font-medium px-5 py-2.5 rounded-r-full hover:bg-brand-primary-hover transition-colors flex items-center gap-1">
                 Anmelden
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
@@ -131,7 +129,7 @@ export default function Footer() {
           </div>
 
           <p className="text-xs text-gray-500">
-            © 2025 Voltify GmbH. Alle Rechte vorbehalten.
+            © 2026 Solvary. Alle Rechte vorbehalten.
           </p>
 
           <div className="flex items-center gap-4">

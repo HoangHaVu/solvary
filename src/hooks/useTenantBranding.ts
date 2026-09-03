@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { getFunnelSource } from '../lib/funnelTracking';
+import { COLORS } from '../lib/theme';
 
 export interface TenantBranding {
   firmenname: string;
@@ -13,11 +14,11 @@ export interface TenantBranding {
 }
 
 const VOLTIFY_DEFAULTS: TenantBranding = {
-  firmenname: 'Voltify',
+  firmenname: 'Solvary',
   slogan: 'Ihre Solaranlage — einfach konfiguriert.',
   logoDataUrl: '',
-  primaryColor: '#1A3A5C',
-  accentColor: '#F5A623',
+  primaryColor: COLORS.secondary,
+  accentColor: COLORS.primary,
   poweredByVoltify: false,
   isTenant: false,
 };

@@ -1,73 +1,131 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { pdf } from '@react-pdf/renderer';
+import { COLORS } from "../lib/theme";
+import { useState, useEffect, useRef, useMemo } from "react";
 import {
-  Search, Zap, Pencil, X, Filter, Download,
-  Plus, TrendingUp, DollarSign, CheckCircle2, Clock,
-  Mail, Phone, Tag, Percent, ToggleLeft, ToggleRight, Trash2,
-  AlertTriangle, Loader2, Send, Eye, FileText as FileTextIcon, Receipt, FilePlus,
-  ChevronRight, ChevronDown, MapPin, BatteryCharging, Car, Thermometer, Sun, Users, BarChart3,
-  Trophy, FilterX, Calendar, FolderOpen, TrendingDown, Activity, Target, Home,
-  Crown, Compass, FileDown,
-} from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
-import OfferPdfDocument, { type CompanySettings } from '../components/pdf/OfferPdfDocument';
-import { useLeads } from '../hooks/useLeads';
-import { recalculateLead } from '../lib/calculations';
-import { computeLeadScoreFromLead } from '../utils/leadScore';
-import { useProjects } from '../hooks/useProjects';
-import { AdminSidebar } from '../components/layout/AdminSidebar';
-import AddLeadModal from '../components/modals/AddLeadModal';
-import { KanbanColumn } from '../components/pipeline/KanbanColumn';
-import { LeadCard } from '../components/pipeline/LeadCard';
-import { ProjectCard } from '../components/pipeline/ProjectCard';
+  Link,
+  useNavigate,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
+import { pdf } from "@react-pdf/renderer";
 import {
-  fetchOwnerDiscountCodes, createDiscountCode, toggleDiscountCode, deleteDiscountCode,
-  fetchPendingDiscountRequestsScoped, resolveDiscountRequest,
-  updateLeadOfferStatus, updateLeadStatus, updatePaymentStatus, updateLeadFields,
-  applyDiscountCode, requestDiscount, clearDiscount, redeemDiscountCode,
+  Search,
+  Zap,
+  Pencil,
+  X,
+  Filter,
+  Download,
+  Plus,
+  TrendingUp,
+  DollarSign,
+  CheckCircle2,
+  Clock,
+  Mail,
+  Phone,
+  Tag,
+  Percent,
+  ToggleLeft,
+  ToggleRight,
+  Trash2,
+  AlertTriangle,
+  Loader2,
+  Send,
+  Eye,
+  FileText as FileTextIcon,
+  Receipt,
+  FilePlus,
+  ChevronRight,
+  ChevronDown,
+  MapPin,
+  BatteryCharging,
+  Car,
+  Thermometer,
+  Sun,
+  Users,
+  BarChart3,
+  Trophy,
+  FilterX,
+  Calendar,
+  FolderOpen,
+  TrendingDown,
+  Activity,
+  Target,
+  Home,
+  Crown,
+  Compass,
+  FileDown,
+} from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
+import OfferPdfDocument, {
+  type CompanySettings,
+} from "../components/pdf/OfferPdfDocument";
+import { useLeads } from "../hooks/useLeads";
+import { recalculateLead } from "../lib/calculations";
+import { computeLeadScoreFromLead } from "../utils/leadScore";
+import { useProjects } from "../hooks/useProjects";
+import { AdminSidebar } from "../components/layout/AdminSidebar";
+import AddLeadModal from "../components/modals/AddLeadModal";
+import { KanbanColumn } from "../components/pipeline/KanbanColumn";
+import { LeadCard } from "../components/pipeline/LeadCard";
+import { ProjectCard } from "../components/pipeline/ProjectCard";
+import {
+  fetchOwnerDiscountCodes,
+  createDiscountCode,
+  toggleDiscountCode,
+  deleteDiscountCode,
+  fetchPendingDiscountRequestsScoped,
+  resolveDiscountRequest,
+  updateLeadOfferStatus,
+  updateLeadStatus,
+  updatePaymentStatus,
+  updateLeadFields,
+  applyDiscountCode,
+  requestDiscount,
+  clearDiscount,
+  redeemDiscountCode,
   upsertSiteVisitAppointment,
-  type DiscountCode, type Lead,
-} from '../services/data';
-import { OfferPreviewCard } from '../components/settings/OfferPreviewCard';
-import { fetchAgencyLeads } from '../services/agency';
-import { resolveAgencyId } from '../services/auth';
-import { AgencyLeadDrawer } from '../components/agency/AgencyLeadDrawer';
-import { getOfferDraftForLead, type OfferDraft } from '../services/offers';
+  type DiscountCode,
+  type Lead,
+} from "../services/data";
+import { OfferPreviewCard } from "../components/settings/OfferPreviewCard";
+import { fetchAgencyLeads } from "../services/agency";
+import { resolveAgencyId } from "../services/auth";
+import { AgencyLeadDrawer } from "../components/agency/AgencyLeadDrawer";
+import { getOfferDraftForLead, type OfferDraft } from "../services/offers";
 
 // ─── PDF Helpers ───
 const DEFAULT_COMPANY: CompanySettings = {
-  firmenname: 'Voltify Solar',
-  slogan: 'Ihre Solaranlage — einfach konfiguriert.',
-  logoDataUrl: '',
-  primaryColor: '#1A3A5C',
-  accentColor: '#F5A623',
-  iban: '',
-  zahlungsziel: '14',
-  steuernummer: '',
-  adresse: '',
-  ort: '',
-  geschaeftsfuehrer: '',
-  rechnungskreis: 'RE',
+  firmenname: "Voltify Solar",
+  slogan: "Ihre Solaranlage — einfach konfiguriert.",
+  logoDataUrl: "",
+  primaryColor: COLORS.secondary,
+  accentColor: COLORS.primary,
+  iban: "",
+  zahlungsziel: "14",
+  steuernummer: "",
+  adresse: "",
+  ort: "",
+  geschaeftsfuehrer: "",
+  rechnungskreis: "RE",
 };
 
 function loadCompanySettings(): CompanySettings {
   try {
-    const raw = localStorage.getItem('voltify_settings_v1');
+    const raw = localStorage.getItem("voltify_settings_v1");
     if (raw) return { ...DEFAULT_COMPANY, ...JSON.parse(raw) };
-  } catch { /* ignore */ }
+  } catch {
+    /* ignore */
+  }
   return DEFAULT_COMPANY;
 }
 
 function generateOfferNumber(lead: Lead): string {
-  const prefix = loadCompanySettings().rechnungskreis || 'RE';
-  const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  const prefix = loadCompanySettings().rechnungskreis || "RE";
+  const date = new Date().toISOString().slice(0, 10).replace(/-/g, "");
   const leadId = lead.id.slice(0, 4).toUpperCase();
   return `${prefix}-${date}-${leadId}`;
 }
-import { InvoicePreviewCard } from '../components/settings/InvoicePreviewCard';
-import { supabase } from '../lib/supabase';
-
+import { InvoicePreviewCard } from "../components/settings/InvoicePreviewCard";
+import { supabase } from "../lib/supabase";
 
 // ── Settings Types & Defaults ──
 
@@ -98,50 +156,60 @@ interface OwnerSettings {
 }
 
 const DEFAULT_SETTINGS: OwnerSettings = {
-  firmenname: 'Voltify Solar',
-  slogan: 'Ihre Solaranlage — einfach konfiguriert.',
-  logoDataUrl: '',
-  primaryColor: '#1A3A5C',
-  accentColor: '#F5A623',
-  mindestpreis: '12000',
-  marge: '18',
-  iban: '',
-  zahlungsziel: '14',
-  panelHersteller: 'Heckert Solar, JA Solar, Trina Solar',
-  wechselrichterHersteller: 'SMA, Fronius, Huawei',
-  strompreis: '32',
-  strompreissteigerung: '3',
-  kfwZinssatz: '5.25',
-  eigenverbrauch: '65',
-  co2Faktor: '0.38',
-  plzGebiete: '',
-  maxEntfernung: '80',
-  steuernummer: '',
-  adresse: '',
-  ort: '',
-  geschaeftsfuehrer: '',
-  rechnungskreis: 'RE',
+  firmenname: "Voltify Solar",
+  slogan: "Ihre Solaranlage — einfach konfiguriert.",
+  logoDataUrl: "",
+  primaryColor: COLORS.secondary,
+  accentColor: COLORS.primary,
+  mindestpreis: "12000",
+  marge: "18",
+  iban: "",
+  zahlungsziel: "14",
+  panelHersteller: "Heckert Solar, JA Solar, Trina Solar",
+  wechselrichterHersteller: "SMA, Fronius, Huawei",
+  strompreis: "32",
+  strompreissteigerung: "3",
+  kfwZinssatz: "5.25",
+  eigenverbrauch: "65",
+  co2Faktor: "0.38",
+  plzGebiete: "",
+  maxEntfernung: "80",
+  steuernummer: "",
+  adresse: "",
+  ort: "",
+  geschaeftsfuehrer: "",
+  rechnungskreis: "RE",
 };
 
 /* ─── PIPELINE CONFIG ─── */
 
 // Lead-Pipeline Spalten
-const LEAD_COLUMNS: { key: Lead['status']; label: string; color: string }[] = [
-  { key: 'neu',         label: 'Neu',               color: 'bg-emerald-500' },
-  { key: 'kontaktiert', label: 'Kontaktiert',       color: 'bg-blue-500' },
-  { key: 'vorort',      label: 'Vor Ort',           color: 'bg-purple-500' },
-  { key: 'angebot',     label: 'Angebot versendet', color: 'bg-indigo-500' },
-  { key: 'abschluss',   label: 'Abschluss',         color: 'bg-amber-500' },
+const LEAD_COLUMNS: { key: Lead["status"]; label: string; color: string }[] = [
+  { key: "neu", label: "Neu", color: "bg-emerald-500" },
+  { key: "kontaktiert", label: "Kontaktiert", color: "bg-blue-500" },
+  { key: "vorort", label: "Vor Ort", color: "bg-purple-500" },
+  { key: "angebot", label: "Angebot versendet", color: "bg-indigo-500" },
+  { key: "abschluss", label: "Abschluss", color: "bg-amber-500" },
 ];
 
-const ACTIVE_LEAD_STATUSES = new Set(LEAD_COLUMNS.map(c => c.key));
+const ACTIVE_LEAD_STATUSES = new Set(LEAD_COLUMNS.map((c) => c.key));
 
 // Projekt-Pipeline Spalten
-const PROJECT_COLUMNS: { key: 'planung' | 'genehmigung' | 'installation' | 'inbetrieb'; label: string; color: string; done?: boolean }[] = [
-  { key: 'planung',      label: 'In Planung',      color: 'bg-indigo-500' },
-  { key: 'genehmigung',  label: 'Genehmigung',     color: 'bg-amber-500' },
-  { key: 'installation', label: 'In Installation', color: 'bg-purple-500' },
-  { key: 'inbetrieb',    label: 'Abgeschlossen',   color: 'bg-green-500', done: true },
+const PROJECT_COLUMNS: {
+  key: "planung" | "genehmigung" | "installation" | "inbetrieb";
+  label: string;
+  color: string;
+  done?: boolean;
+}[] = [
+  { key: "planung", label: "In Planung", color: "bg-indigo-500" },
+  { key: "genehmigung", label: "Genehmigung", color: "bg-amber-500" },
+  { key: "installation", label: "In Installation", color: "bg-purple-500" },
+  {
+    key: "inbetrieb",
+    label: "Abgeschlossen",
+    color: "bg-green-500",
+    done: true,
+  },
 ];
 
 // ─── Lead Pipeline Sub-Component ───
@@ -153,39 +221,43 @@ function LeadPipelineView({
   onLeadClick,
 }: {
   leads: Lead[];
-  moveCard: (id: string, status: Lead['status']) => Promise<void>;
+  moveCard: (id: string, status: Lead["status"]) => Promise<void>;
   markWon: (lead: Lead) => Promise<string | null>;
   markLost: (id: string) => Promise<void>;
   onLeadClick: (lead: Lead) => void;
 }) {
-  const [filterZip, setFilterZip] = useState('');
-  const [filterMinKwp, setFilterMinKwp] = useState('');
-  const [filterDate, setFilterDate] = useState('');
-  const [filterSource, setFilterSource] = useState('');
+  const [filterZip, setFilterZip] = useState("");
+  const [filterMinKwp, setFilterMinKwp] = useState("");
+  const [filterDate, setFilterDate] = useState("");
+  const [filterSource, setFilterSource] = useState("");
 
-  const hasActiveFilter = filterZip || filterMinKwp || filterDate || filterSource;
+  const hasActiveFilter =
+    filterZip || filterMinKwp || filterDate || filterSource;
 
   function resetFilters() {
-    setFilterZip('');
-    setFilterMinKwp('');
-    setFilterDate('');
-    setFilterSource('');
+    setFilterZip("");
+    setFilterMinKwp("");
+    setFilterDate("");
+    setFilterSource("");
   }
 
-  const allActiveLeads = leads.filter(l => ACTIVE_LEAD_STATUSES.has(l.status));
-  const activeLeads = allActiveLeads.filter(l => {
+  const allActiveLeads = leads.filter((l) =>
+    ACTIVE_LEAD_STATUSES.has(l.status),
+  );
+  const activeLeads = allActiveLeads.filter((l) => {
     if (filterZip && !l.zip?.startsWith(filterZip.trim())) return false;
-    if (filterMinKwp && (l.kwp == null || l.kwp < Number(filterMinKwp))) return false;
+    if (filterMinKwp && (l.kwp == null || l.kwp < Number(filterMinKwp)))
+      return false;
     if (filterDate && l.created_at < filterDate) return false;
     if (filterSource && l.source !== filterSource) return false;
     return true;
   });
 
-  const wonCount = leads.filter(l => l.status === 'gewonnen').length;
-  const lostCount = leads.filter(l => l.status === 'verloren').length;
+  const wonCount = leads.filter((l) => l.status === "gewonnen").length;
+  const lostCount = leads.filter((l) => l.status === "verloren").length;
 
   const byStatus = LEAD_COLUMNS.reduce<Record<string, Lead[]>>((acc, col) => {
-    acc[col.key] = activeLeads.filter(l => l.status === col.key);
+    acc[col.key] = activeLeads.filter((l) => l.status === col.key);
     return acc;
   }, {});
 
@@ -196,20 +268,25 @@ function LeadPipelineView({
         <div>
           <h1 className="text-2xl font-semibold text-white">Lead-Pipeline</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            {activeLeads.length} aktive Lead{activeLeads.length !== 1 ? 's' : ''} im Trichter
+            {activeLeads.length} aktive Lead
+            {activeLeads.length !== 1 ? "s" : ""} im Trichter
           </p>
         </div>
         <div className="flex items-center gap-3 shrink-0">
           {wonCount > 0 && (
             <div className="flex items-center gap-2 bg-green-500/10 border border-green-500/20 rounded-xl px-4 py-2">
               <Trophy className="w-4 h-4 text-green-400" />
-              <span className="text-sm font-bold text-green-400">{wonCount} gewonnen</span>
+              <span className="text-sm font-bold text-green-400">
+                {wonCount} gewonnen
+              </span>
             </div>
           )}
           {lostCount > 0 && (
             <div className="flex items-center gap-2 bg-[#252525] border border-white/5 rounded-xl px-4 py-2">
               <X className="w-4 h-4 text-gray-500" />
-              <span className="text-sm font-bold text-gray-500">{lostCount} verloren</span>
+              <span className="text-sm font-bold text-gray-500">
+                {lostCount} verloren
+              </span>
             </div>
           )}
         </div>
@@ -218,28 +295,38 @@ function LeadPipelineView({
       {/* Filter */}
       <div className="flex flex-wrap gap-3 items-end bg-[#141414] p-4 rounded-xl border border-white/5">
         <div className="flex flex-col gap-1 w-full sm:w-40">
-          <label className="text-xs font-bold text-gray-500" htmlFor="filter-plz">Postleitzahl</label>
+          <label
+            className="text-xs font-bold text-gray-500"
+            htmlFor="filter-plz"
+          >
+            Postleitzahl
+          </label>
           <div className="relative">
             <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 w-4 h-4" />
             <input
-              className="w-full bg-[#0F0F0F] border border-white/10 text-white rounded-lg pl-10 pr-3 py-2.5 text-sm focus:ring-1 focus:ring-[#F5A623] outline-none placeholder:text-gray-600"
+              className="w-full bg-[#0F0F0F] border border-white/10 text-white rounded-lg pl-10 pr-3 py-2.5 text-sm focus:ring-1 focus:ring-brand-primary outline-none placeholder:text-gray-600"
               id="filter-plz"
               placeholder="z.B. 20457"
               type="text"
               value={filterZip}
-              onChange={e => setFilterZip(e.target.value)}
+              onChange={(e) => setFilterZip(e.target.value)}
             />
           </div>
         </div>
         <div className="flex flex-col gap-1 w-full sm:w-48">
-          <label className="text-xs font-bold text-gray-500" htmlFor="filter-size">Min. Anlagengröße</label>
+          <label
+            className="text-xs font-bold text-gray-500"
+            htmlFor="filter-size"
+          >
+            Min. Anlagengröße
+          </label>
           <div className="relative">
             <Sun className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 w-4 h-4" />
             <select
-              className="w-full bg-[#0F0F0F] border border-white/10 text-white rounded-lg pl-10 pr-8 py-2.5 text-sm focus:ring-1 focus:ring-[#F5A623] outline-none appearance-none"
+              className="w-full bg-[#0F0F0F] border border-white/10 text-white rounded-lg pl-10 pr-8 py-2.5 text-sm focus:ring-1 focus:ring-brand-primary outline-none appearance-none"
               id="filter-size"
               value={filterMinKwp}
-              onChange={e => setFilterMinKwp(e.target.value)}
+              onChange={(e) => setFilterMinKwp(e.target.value)}
             >
               <option value="">Alle Größen</option>
               <option value="5">Ab 5 kWp</option>
@@ -249,27 +336,37 @@ function LeadPipelineView({
           </div>
         </div>
         <div className="flex flex-col gap-1 w-full sm:w-44">
-          <label className="text-xs font-bold text-gray-500" htmlFor="filter-date">Eingangsdatum ab</label>
+          <label
+            className="text-xs font-bold text-gray-500"
+            htmlFor="filter-date"
+          >
+            Eingangsdatum ab
+          </label>
           <div className="relative">
             <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 w-4 h-4" />
             <input
-              className="w-full bg-[#0F0F0F] border border-white/10 text-white rounded-lg pl-10 pr-3 py-2.5 text-sm focus:ring-1 focus:ring-[#F5A623] outline-none"
+              className="w-full bg-[#0F0F0F] border border-white/10 text-white rounded-lg pl-10 pr-3 py-2.5 text-sm focus:ring-1 focus:ring-brand-primary outline-none"
               id="filter-date"
               type="date"
               value={filterDate}
-              onChange={e => setFilterDate(e.target.value)}
+              onChange={(e) => setFilterDate(e.target.value)}
             />
           </div>
         </div>
         <div className="flex flex-col gap-1 w-full sm:w-44">
-          <label className="text-xs font-bold text-gray-500" htmlFor="filter-source">Quelle</label>
+          <label
+            className="text-xs font-bold text-gray-500"
+            htmlFor="filter-source"
+          >
+            Quelle
+          </label>
           <div className="relative">
             <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 w-4 h-4" />
             <select
-              className="w-full bg-[#0F0F0F] border border-white/10 text-white rounded-lg pl-10 pr-8 py-2.5 text-sm focus:ring-1 focus:ring-[#F5A623] outline-none appearance-none"
+              className="w-full bg-[#0F0F0F] border border-white/10 text-white rounded-lg pl-10 pr-8 py-2.5 text-sm focus:ring-1 focus:ring-brand-primary outline-none appearance-none"
               id="filter-source"
               value={filterSource}
-              onChange={e => setFilterSource(e.target.value)}
+              onChange={(e) => setFilterSource(e.target.value)}
             >
               <option value="">Alle Quellen</option>
               <option value="landingpage">Landingpage</option>
@@ -283,7 +380,7 @@ function LeadPipelineView({
         </div>
         <div className="w-full sm:w-auto sm:ml-auto flex items-center gap-3">
           {hasActiveFilter && (
-            <span className="text-xs font-bold text-[#F5A623]">
+            <span className="text-xs font-bold text-brand-primary">
               {activeLeads.length} von {allActiveLeads.length} Leads
             </span>
           )}
@@ -303,13 +400,15 @@ function LeadPipelineView({
         <div className="flex gap-5 overflow-x-auto pb-4 h-full items-start">
           {LEAD_COLUMNS.map((col) => {
             const colLeads = byStatus[col.key] ?? [];
-            const isAbschluss = col.key === 'abschluss';
+            const isAbschluss = col.key === "abschluss";
 
             return (
               <KanbanColumn
                 key={col.key}
                 columnKey={col.key}
-                onCardDrop={(id, status) => moveCard(id, status as Lead['status'])}
+                onCardDrop={(id, status) =>
+                  moveCard(id, status as Lead["status"])
+                }
                 title={col.label}
                 count={colLeads.length}
                 color={col.color}
@@ -351,13 +450,20 @@ function ProjectPipelineView({
   projects,
   moveProject,
 }: {
-  projects: import('../services/data').Project[];
-  moveProject: (id: string, status: import('../services/data').Project['status']) => Promise<void>;
+  projects: import("../services/data").Project[];
+  moveProject: (
+    id: string,
+    status: import("../services/data").Project["status"],
+  ) => Promise<void>;
 }) {
   const navigate = useNavigate();
-  const boardProjects = projects.filter(p => p.status !== 'angebot');
-  const activeCount = boardProjects.filter(p => p.status !== 'inbetrieb').length;
-  const doneCount = boardProjects.filter(p => p.status === 'inbetrieb').length;
+  const boardProjects = projects.filter((p) => p.status !== "angebot");
+  const activeCount = boardProjects.filter(
+    (p) => p.status !== "inbetrieb",
+  ).length;
+  const doneCount = boardProjects.filter(
+    (p) => p.status === "inbetrieb",
+  ).length;
 
   return (
     <div className="flex flex-col gap-5 h-full">
@@ -371,19 +477,23 @@ function ProjectPipelineView({
         </div>
         <div className="flex items-center gap-3">
           <button
-            onClick={() => navigate('/admin/completed')}
-            className="flex items-center gap-2 bg-[#1A1A1A] border border-white/10 hover:border-[#F5A623]/30 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-all"
+            onClick={() => navigate("/admin/completed")}
+            className="flex items-center gap-2 bg-brand-secondary-hover border border-white/10 hover:border-brand-primary/30 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-all"
           >
             <CheckCircle2 className="w-4 h-4 text-green-400" />
             Alle abgeschlossenen Aufträge
           </button>
-          <div className="bg-[#1A1A1A] rounded-xl border border-white/5 px-5 py-3 text-center shadow-sm min-w-[80px]">
+          <div className="bg-brand-secondary-hover rounded-xl border border-white/5 px-5 py-3 text-center shadow-sm min-w-[80px]">
             <p className="text-2xl font-black text-white">{activeCount}</p>
-            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Laufend</p>
+            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+              Laufend
+            </p>
           </div>
-          <div className="bg-[#1A1A1A] rounded-xl border border-white/5 px-5 py-3 text-center shadow-sm min-w-[80px]">
+          <div className="bg-brand-secondary-hover rounded-xl border border-white/5 px-5 py-3 text-center shadow-sm min-w-[80px]">
             <p className="text-2xl font-black text-green-400">{doneCount}</p>
-            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Fertig</p>
+            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+              Fertig
+            </p>
           </div>
         </div>
       </div>
@@ -391,17 +501,19 @@ function ProjectPipelineView({
       {/* Kanban Board */}
       <div className="flex-1 overflow-hidden">
         {boardProjects.length === 0 ? (
-          <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-16 text-center max-w-[600px] mx-auto mt-8">
+          <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-16 text-center max-w-[600px] mx-auto mt-8">
             <FolderOpen className="w-12 h-12 text-gray-700 mx-auto mb-4" />
-            <p className="font-bold text-gray-500">Noch keine Projekte vorhanden.</p>
+            <p className="font-bold text-gray-500">
+              Noch keine Projekte vorhanden.
+            </p>
             <p className="text-sm text-gray-600 mt-1">
               Neue Projekte entstehen wenn du einen Lead als gewonnen markierst.
             </p>
           </div>
         ) : (
           <div className="flex gap-5 overflow-x-auto pb-4 h-full items-start">
-            {PROJECT_COLUMNS.map(col => {
-              const cards = boardProjects.filter(p => p.status === col.key);
+            {PROJECT_COLUMNS.map((col) => {
+              const cards = boardProjects.filter((p) => p.status === col.key);
               return (
                 <KanbanColumn
                   key={col.key}
@@ -409,19 +521,31 @@ function ProjectPipelineView({
                   count={cards.length}
                   color={col.color}
                   columnKey={col.key}
-                  onCardDrop={col.done ? () => {} : (id, status) => moveProject(id, status as import('../services/data').Project['status'])}
+                  onCardDrop={
+                    col.done
+                      ? () => {}
+                      : (id, status) =>
+                          moveProject(
+                            id,
+                            status as import("../services/data").Project["status"],
+                          )
+                  }
                   done={col.done}
                 >
                   {cards.length === 0 ? (
-                    <div className={`flex items-center justify-center h-24 text-sm font-medium border-2 border-dashed rounded-xl ${
-                      col.done
-                        ? 'border-green-500/20 text-green-500/30'
-                        : 'border-white/5 text-gray-700'
-                    }`}>
-                      {col.done ? 'Noch keine abgeschlossenen Projekte' : 'Keine Projekte'}
+                    <div
+                      className={`flex items-center justify-center h-24 text-sm font-medium border-2 border-dashed rounded-xl ${
+                        col.done
+                          ? "border-green-500/20 text-green-500/30"
+                          : "border-white/5 text-gray-700"
+                      }`}
+                    >
+                      {col.done
+                        ? "Noch keine abgeschlossenen Projekte"
+                        : "Keine Projekte"}
                     </div>
                   ) : (
-                    cards.map(project => (
+                    cards.map((project) => (
                       <ProjectCard
                         key={project.id}
                         project={project}
@@ -444,9 +568,24 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const { leads, moveCard, markWon, markLost } = useLeads();
   const { projects, moveProject } = useProjects();
-  const [activeTab, setActiveTab] = useState('dashboard');
+  // Aktiver Tab lebt in der URL (?tab=discounts) — damit Sidebar-Links von
+  // anderen Seiten (/admin/calendar etc.) den richtigen Tab treffen und
+  // Zurück-Button + Reload den Tab behalten.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") ?? "dashboard";
+  const setActiveTab = (tab: string) => {
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        if (tab === "dashboard") next.delete("tab");
+        else next.set("tab", tab);
+        return next;
+      },
+      { replace: true },
+    );
+  };
   const [selectedLeads, setSelectedLeads] = useState<string[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   // ── Lead Detail Drawer ──
   const openLeadDetail = (lead: Lead) => setSelectedLead(lead);
@@ -457,24 +596,28 @@ export default function AdminDashboard() {
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
 
   // ── Rabatt UI State ──
-  const [discountCodeInput, setDiscountCodeInput] = useState('');
+  const [discountCodeInput, setDiscountCodeInput] = useState("");
   const [requestPercentage, setRequestPercentage] = useState(5);
-  const [requestNote, setRequestNote] = useState('');
+  const [requestNote, setRequestNote] = useState("");
   const [showDiscountRequest, setShowDiscountRequest] = useState(false);
-  const [availableDiscountCodes, setAvailableDiscountCodes] = useState<DiscountCode[]>([]);
+  const [availableDiscountCodes, setAvailableDiscountCodes] = useState<
+    DiscountCode[]
+  >([]);
   const [isLoadingCodes, setIsLoadingCodes] = useState(false);
   const [showConfigModal, setShowConfigModal] = useState(false);
   const [showAddLeadModal, setShowAddLeadModal] = useState(false);
 
   // ── Team-Mitglieder laden (für Team-Performance) ──
-  const [teamMembers, setTeamMembers] = useState<{ id: string; full_name: string }[]>([]);
+  const [teamMembers, setTeamMembers] = useState<
+    { id: string; full_name: string }[]
+  >([]);
   useEffect(() => {
     if (!user) return;
-    const ownerId = user.role === 'owner' ? user.id : (user.ownerId || user.id);
+    const ownerId = user.role === "owner" ? user.id : user.ownerId || user.id;
     supabase
-      .from('profiles')
-      .select('id, full_name')
-      .eq('owner_id', ownerId)
+      .from("profiles")
+      .select("id, full_name")
+      .eq("owner_id", ownerId)
       .then(({ data, error }) => {
         if (!error && data) {
           setTeamMembers(data);
@@ -485,21 +628,28 @@ export default function AdminDashboard() {
   // ── Agency-Leads laden (für sales_agency / agency_agent "Meine Leads" Tab) ──
   const [agencyLeads, setAgencyLeads] = useState<Lead[]>([]);
   const [agencyLeadsLoading, setAgencyLeadsLoading] = useState(false);
-  const [agencyAssignments, setAgencyAssignments] = useState<import('../services/agency').LeadAssignment[]>([]);
-  const [agencyTeamMembers, setAgencyTeamMembers] = useState<{ id: string; full_name: string }[]>([]);
-  const [agencyMemberFilter, setAgencyMemberFilter] = useState<string>('all');
+  const [agencyAssignments, setAgencyAssignments] = useState<
+    import("../services/agency").LeadAssignment[]
+  >([]);
+  const [agencyTeamMembers, setAgencyTeamMembers] = useState<
+    { id: string; full_name: string }[]
+  >([]);
+  const [agencyMemberFilter, setAgencyMemberFilter] = useState<string>("all");
 
   useEffect(() => {
-    const isAgencyUser = user?.role === 'sales_agency' || user?.role === 'agency_agent';
-    if (activeTab !== 'leads' || !user || !isAgencyUser) return;
+    const isAgencyUser =
+      user?.role === "sales_agency" || user?.role === "agency_agent";
+    if (activeTab !== "leads" || !user || !isAgencyUser) return;
     const agencyId = resolveAgencyId(user);
     setAgencyLeadsLoading(true);
     Promise.all([
       fetchAgencyLeads(agencyId),
-      import('../services/agency').then(m => m.fetchLeadAssignments(agencyId)),
+      import("../services/agency").then((m) =>
+        m.fetchLeadAssignments(agencyId),
+      ),
       // Team-Mitglieder nur für den Inhaber laden
-      user.role === 'sales_agency'
-        ? import('../services/data').then(m => m.fetchTeamMembers(user.id))
+      user.role === "sales_agency"
+        ? import("../services/data").then((m) => m.fetchTeamMembers(user.id))
         : Promise.resolve([]),
     ])
       .then(([leads, assignments, team]) => {
@@ -507,8 +657,8 @@ export default function AdminDashboard() {
         setAgencyAssignments(assignments);
         setAgencyTeamMembers(
           (team as { id: string; role: string; full_name: string }[])
-            .filter(m => m.role === 'agency_agent')
-            .map(m => ({ id: m.id, full_name: m.full_name }))
+            .filter((m) => m.role === "agency_agent")
+            .map((m) => ({ id: m.id, full_name: m.full_name })),
         );
       })
       .catch(() => setAgencyLeads([]))
@@ -519,15 +669,20 @@ export default function AdminDashboard() {
   useEffect(() => {
     if (selectedLead && user) {
       setIsLoadingCodes(true);
-      const ownerId = user.role === 'owner' ? user.id : (user.ownerId || user.id);
-      console.log('[DEBUG] Lade Rabattcodes für ownerId:', ownerId, 'user.role:', user.role);
+      const ownerId = user.role === "owner" ? user.id : user.ownerId || user.id;
+      console.log(
+        "[DEBUG] Lade Rabattcodes für ownerId:",
+        ownerId,
+        "user.role:",
+        user.role,
+      );
       fetchOwnerDiscountCodes(ownerId)
         .then((codes) => {
-          console.log('[DEBUG] Rabattcodes geladen:', codes.length, codes);
+          console.log("[DEBUG] Rabattcodes geladen:", codes.length, codes);
           setAvailableDiscountCodes(codes);
         })
         .catch((err) => {
-          console.error('[DEBUG] Fehler beim Laden der Rabattcodes:', err);
+          console.error("[DEBUG] Fehler beim Laden der Rabattcodes:", err);
           setAvailableDiscountCodes([]);
         })
         .finally(() => setIsLoadingCodes(false));
@@ -543,7 +698,7 @@ export default function AdminDashboard() {
       getOfferDraftForLead(selectedLead.id)
         .then((draft) => setOfferDraft(draft))
         .catch((e) => {
-          console.error('Fehler beim Laden des Angebots-Entwurfs:', e);
+          console.error("Fehler beim Laden des Angebots-Entwurfs:", e);
           setOfferDraft(null);
         })
         .finally(() => setLoadingOfferDraft(false));
@@ -553,39 +708,55 @@ export default function AdminDashboard() {
   }, [selectedLead?.id]);
 
   // ── Settings State ──
-  const STORAGE_KEY = 'voltify_settings_v1';
+  const STORAGE_KEY = "voltify_settings_v1";
   const [settings, setSettings] = useState<OwnerSettings>(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) return { ...DEFAULT_SETTINGS, ...JSON.parse(raw) };
-    } catch { /* ignore */ }
+    } catch {
+      /* ignore */
+    }
     return { ...DEFAULT_SETTINGS };
   });
-  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'success'>('idle');
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "success">(
+    "idle",
+  );
   const [linkCopied, setLinkCopied] = useState(false);
-  const [profileCompanyName, setProfileCompanyName] = useState('');
-  const [profileWebsite, setProfileWebsite] = useState('');
-  const [profileBio, setProfileBio] = useState('');
+  const [profileCompanyName, setProfileCompanyName] = useState("");
+  const [profileWebsite, setProfileWebsite] = useState("");
+  const [profileBio, setProfileBio] = useState("");
   const logoInputRef = useRef<HTMLInputElement>(null);
 
   // Profil-Daten laden
   useEffect(() => {
     if (!user) return;
-    supabase.from('profiles').select('company_name, website, bio, company_settings').eq('id', user.id).single()
+    supabase
+      .from("profiles")
+      .select("company_name, website, bio, company_settings")
+      .eq("id", user.id)
+      .single()
       .then(({ data }) => {
         if (data) {
-          setProfileCompanyName(data.company_name ?? '');
-          setProfileWebsite(data.website ?? '');
-          setProfileBio(data.bio ?? '');
+          setProfileCompanyName(data.company_name ?? "");
+          setProfileWebsite(data.website ?? "");
+          setProfileBio(data.bio ?? "");
           // WL2: Settings aus DB (Source of Truth) übernehmen
-          if (data.company_settings && typeof data.company_settings === 'object') {
-            setSettings((prev) => ({ ...prev, ...(data.company_settings as Partial<OwnerSettings>) }));
+          if (
+            data.company_settings &&
+            typeof data.company_settings === "object"
+          ) {
+            setSettings((prev) => ({
+              ...prev,
+              ...(data.company_settings as Partial<OwnerSettings>),
+            }));
           }
         }
       });
   }, [user]);
 
-  const profileUrl = user ? `${window.location.origin}/installer/${user.id}` : '';
+  const profileUrl = user
+    ? `${window.location.origin}/installer/${user.id}`
+    : "";
 
   function copyProfileLink() {
     navigator.clipboard.writeText(profileUrl);
@@ -593,7 +764,10 @@ export default function AdminDashboard() {
     setTimeout(() => setLinkCopied(false), 2000);
   }
 
-  function updateSetting<K extends keyof OwnerSettings>(key: K, value: OwnerSettings[K]) {
+  function updateSetting<K extends keyof OwnerSettings>(
+    key: K,
+    value: OwnerSettings[K],
+  ) {
     setSettings((prev) => ({ ...prev, [key]: value }));
   }
 
@@ -601,64 +775,111 @@ export default function AdminDashboard() {
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (ev) => updateSetting('logoDataUrl', ev.target?.result as string);
+    reader.onload = (ev) =>
+      updateSetting("logoDataUrl", ev.target?.result as string);
     reader.readAsDataURL(file);
   }
 
   function resetLogo() {
-    updateSetting('logoDataUrl', '');
-    if (logoInputRef.current) logoInputRef.current.value = '';
+    updateSetting("logoDataUrl", "");
+    if (logoInputRef.current) logoInputRef.current.value = "";
   }
 
   async function saveSettings() {
-    setSaveStatus('saving');
+    setSaveStatus("saving");
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
     if (user) {
-      await supabase.from('profiles').update({
-        company_name: profileCompanyName || null,
-        website: profileWebsite || null,
-        bio: profileBio || null,
-        company_settings: settings, // WL2: Source of Truth in DB
-        branding: {
-          firmenname:       settings.firmenname,
-          slogan:           settings.slogan,
-          logoDataUrl:      settings.logoDataUrl,
-          primaryColor:     settings.primaryColor,
-          accentColor:      settings.accentColor,
-          poweredByVoltify: true,
-        },
-      }).eq('id', user.id);
+      await supabase
+        .from("profiles")
+        .update({
+          company_name: profileCompanyName || null,
+          website: profileWebsite || null,
+          bio: profileBio || null,
+          company_settings: settings, // WL2: Source of Truth in DB
+          branding: {
+            firmenname: settings.firmenname,
+            slogan: settings.slogan,
+            logoDataUrl: settings.logoDataUrl,
+            primaryColor: settings.primaryColor,
+            accentColor: settings.accentColor,
+            poweredByVoltify: true,
+          },
+        })
+        .eq("id", user.id);
     }
-    setSaveStatus('success');
-    setTimeout(() => setSaveStatus('idle'), 2500);
+    setSaveStatus("success");
+    setTimeout(() => setSaveStatus("idle"), 2500);
   }
 
   // ── Angebots-Status Config ──
-  const OFFER_CONFIG: Record<Lead['offer_status'], { label: string; icon: React.ElementType; color: string; bg: string; border: string }> = {
-    created:  { label: 'Noch nicht versendet', icon: FileTextIcon, color: 'text-gray-400', bg: 'bg-gray-500/10', border: 'border-gray-500/20' },
-    sent:     { label: 'Angebot versendet',    icon: Send,         color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
-    viewed:   { label: 'Angebot angesehen',    icon: Eye,          color: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20' },
-    accepted: { label: 'Angebot angenommen',   icon: CheckCircle2, color: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20' },
-    rejected: { label: 'Angebot abgelehnt',    icon: X,            color: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/20' },
+  const OFFER_CONFIG: Record<
+    Lead["offer_status"],
+    {
+      label: string;
+      icon: React.ElementType;
+      color: string;
+      bg: string;
+      border: string;
+    }
+  > = {
+    created: {
+      label: "Noch nicht versendet",
+      icon: FileTextIcon,
+      color: "text-gray-400",
+      bg: "bg-gray-500/10",
+      border: "border-gray-500/20",
+    },
+    sent: {
+      label: "Angebot versendet",
+      icon: Send,
+      color: "text-blue-400",
+      bg: "bg-blue-500/10",
+      border: "border-blue-500/20",
+    },
+    viewed: {
+      label: "Angebot angesehen",
+      icon: Eye,
+      color: "text-purple-400",
+      bg: "bg-purple-500/10",
+      border: "border-purple-500/20",
+    },
+    accepted: {
+      label: "Angebot angenommen",
+      icon: CheckCircle2,
+      color: "text-green-400",
+      bg: "bg-green-500/10",
+      border: "border-green-500/20",
+    },
+    rejected: {
+      label: "Angebot abgelehnt",
+      icon: X,
+      color: "text-red-400",
+      bg: "bg-red-500/10",
+      border: "border-red-500/20",
+    },
   };
 
-  const STATUS_LABELS: Record<Lead['status'], string> = {
-    neu: 'Neu',
-    kontaktiert: 'Kontaktiert',
-    vorort: 'Vor Ort',
-    angebot: 'Angebot versendet',
-    abschluss: 'Abschluss',
-    gewonnen: 'Gewonnen',
-    verloren: 'Verloren',
-    planung: 'In Planung',
-    installation: 'In Installation',
-    abgeschlossen: 'Abgeschlossen',
+  const STATUS_LABELS: Record<Lead["status"], string> = {
+    neu: "Neu",
+    kontaktiert: "Kontaktiert",
+    vorort: "Vor Ort",
+    angebot: "Angebot versendet",
+    abschluss: "Abschluss",
+    gewonnen: "Gewonnen",
+    verloren: "Verloren",
+    planung: "In Planung",
+    installation: "In Installation",
+    abgeschlossen: "Abgeschlossen",
   };
 
   // ── Rabatt-Codes State ──
   const [ownerCodes, setOwnerCodes] = useState<DiscountCode[]>([]);
   const [codesLoading, setCodesLoading] = useState(true);
-  const [newCode, setNewCode] = useState({ code: '', label: '', percentage: '' });
+  const [newCode, setNewCode] = useState({
+    code: "",
+    label: "",
+    percentage: "",
+  });
   const [isAddingCode, setIsAddingCode] = useState(false);
 
   // ── Offene Anfragen State ──
@@ -669,12 +890,15 @@ export default function AdminDashboard() {
   // Rabatt-Codes & Anfragen laden
   useEffect(() => {
     if (!user) return;
-    const ownerId = user.role === 'owner' ? user.id : (user.ownerId || user.id);
+    const ownerId = user.role === "owner" ? user.id : user.ownerId || user.id;
     fetchOwnerDiscountCodes(ownerId)
       .then(setOwnerCodes)
       .catch(console.error)
       .finally(() => setCodesLoading(false));
-    fetchPendingDiscountRequestsScoped(user.id, user.role === 'owner' ? 'owner' : 'installer')
+    fetchPendingDiscountRequestsScoped(
+      user.id,
+      user.role === "owner" ? "owner" : "installer",
+    )
       .then(setPendingRequests)
       .catch(console.error)
       .finally(() => setRequestsLoading(false));
@@ -691,7 +915,7 @@ export default function AdminDashboard() {
         percentage: parseFloat(newCode.percentage),
       });
       setOwnerCodes((prev) => [...prev, created]);
-      setNewCode({ code: '', label: '', percentage: '' });
+      setNewCode({ code: "", label: "", percentage: "" });
     } catch (e) {
       console.error(e);
     } finally {
@@ -701,7 +925,9 @@ export default function AdminDashboard() {
 
   async function handleToggleCode(id: string, active: boolean) {
     await toggleDiscountCode(id, active);
-    setOwnerCodes((prev) => prev.map((c) => c.id === id ? { ...c, active } : c));
+    setOwnerCodes((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, active } : c)),
+    );
   }
 
   async function handleDeleteCode(id: string) {
@@ -720,37 +946,52 @@ export default function AdminDashboard() {
   }
 
   // ── Angebots-Status Handler ──
-  async function handleOfferStatusChange(leadId: string, status: Lead['offer_status'], extra?: { offer_sent_at?: string; offer_viewed_at?: string }) {
+  async function handleOfferStatusChange(
+    leadId: string,
+    status: Lead["offer_status"],
+    extra?: { offer_sent_at?: string; offer_viewed_at?: string },
+  ) {
     setDetailLoading(true);
     try {
       await updateLeadOfferStatus(leadId, status, extra);
       if (selectedLead?.id === leadId) {
-        setSelectedLead((prev) => prev ? { ...prev, offer_status: status, ...extra } : prev);
+        setSelectedLead((prev) =>
+          prev ? { ...prev, offer_status: status, ...extra } : prev,
+        );
       }
     } finally {
       setDetailLoading(false);
     }
   }
 
-  async function handleLeadStatusChange(leadId: string, status: Lead['status']) {
+  async function handleLeadStatusChange(
+    leadId: string,
+    status: Lead["status"],
+  ) {
     setDetailLoading(true);
     try {
       await updateLeadStatus(leadId, status);
       if (selectedLead?.id === leadId) {
-        setSelectedLead((prev) => prev ? { ...prev, status } : prev);
+        setSelectedLead((prev) => (prev ? { ...prev, status } : prev));
       }
     } finally {
       setDetailLoading(false);
     }
   }
 
-  async function handlePaymentToggle(leadId: string, payment: 1 | 2 | 3, current: boolean) {
+  async function handlePaymentToggle(
+    leadId: string,
+    payment: 1 | 2 | 3,
+    current: boolean,
+  ) {
     setDetailLoading(true);
     try {
       await updatePaymentStatus(leadId, payment, !current);
       if (selectedLead?.id === leadId) {
         const field = `payment_${payment}_paid` as const;
-        setSelectedLead((prev) => prev ? { ...prev, [field]: !current } : prev);
+        setSelectedLead((prev) =>
+          prev ? { ...prev, [field]: !current } : prev,
+        );
       }
     } finally {
       setDetailLoading(false);
@@ -763,24 +1004,44 @@ export default function AdminDashboard() {
     setDetailLoading(true);
     try {
       const basePrice = selectedLead.investment ?? 0;
-      const ownerId = user.role === 'owner' ? user.id : (user.ownerId || user.id);
+      const ownerId = user.role === "owner" ? user.id : user.ownerId || user.id;
       const validation = await redeemDiscountCode(ownerId, code, basePrice);
       if (!validation.success) throw new Error(validation.reason);
-      await applyDiscountCode(leadId, code, validation.percentage ?? 0, basePrice);
-      const finalPrice = Math.round(basePrice * (1 - (validation.percentage ?? 0) / 100));
-      setSelectedLead((prev) => prev ? {
-        ...prev,
-        discount_code: code,
-        discount_percentage: validation.percentage ?? 0,
-        discount_status: 'code_applied',
-        final_price: finalPrice,
-        discount_note: null,
-        discount_requested_at: null,
-        discount_resolved_at: null,
-      } : prev);
+      await applyDiscountCode(
+        leadId,
+        code,
+        validation.percentage ?? 0,
+        basePrice,
+      );
+      const finalPrice = Math.round(
+        basePrice * (1 - (validation.percentage ?? 0) / 100),
+      );
+      setSelectedLead((prev) =>
+        prev
+          ? {
+              ...prev,
+              discount_code: code,
+              discount_percentage: validation.percentage ?? 0,
+              discount_status: "code_applied",
+              final_price: finalPrice,
+              discount_note: null,
+              discount_requested_at: null,
+              discount_resolved_at: null,
+            }
+          : prev,
+      );
       // Angebot zurücksetzen damit neues generiert wird
-      await updateLeadOfferStatus(leadId, 'created');
-      setSelectedLead((prev) => prev ? { ...prev, offer_status: 'created', offer_sent_at: null, offer_viewed_at: null } : prev);
+      await updateLeadOfferStatus(leadId, "created");
+      setSelectedLead((prev) =>
+        prev
+          ? {
+              ...prev,
+              offer_status: "created",
+              offer_sent_at: null,
+              offer_viewed_at: null,
+            }
+          : prev,
+      );
     } catch (e) {
       alert((e as Error).message);
     } finally {
@@ -788,23 +1049,31 @@ export default function AdminDashboard() {
     }
   }
 
-  async function handleRequestDiscount(leadId: string, percentage: number, note: string) {
+  async function handleRequestDiscount(
+    leadId: string,
+    percentage: number,
+    note: string,
+  ) {
     if (!selectedLead) return;
     setDetailLoading(true);
     try {
       const basePrice = selectedLead.investment ?? 0;
       await requestDiscount(leadId, percentage, note, basePrice);
       const finalPrice = Math.round(basePrice * (1 - percentage / 100));
-      setSelectedLead((prev) => prev ? {
-        ...prev,
-        discount_code: null,
-        discount_percentage: percentage,
-        discount_status: 'requested',
-        final_price: finalPrice,
-        discount_note: note || null,
-        discount_requested_at: new Date().toISOString(),
-        discount_resolved_at: null,
-      } : prev);
+      setSelectedLead((prev) =>
+        prev
+          ? {
+              ...prev,
+              discount_code: null,
+              discount_percentage: percentage,
+              discount_status: "requested",
+              final_price: finalPrice,
+              discount_note: note || null,
+              discount_requested_at: new Date().toISOString(),
+              discount_resolved_at: null,
+            }
+          : prev,
+      );
     } finally {
       setDetailLoading(false);
     }
@@ -814,16 +1083,20 @@ export default function AdminDashboard() {
     setDetailLoading(true);
     try {
       await clearDiscount(leadId);
-      setSelectedLead((prev) => prev ? {
-        ...prev,
-        discount_code: null,
-        discount_percentage: null,
-        discount_status: 'none',
-        final_price: null,
-        discount_note: null,
-        discount_requested_at: null,
-        discount_resolved_at: null,
-      } : prev);
+      setSelectedLead((prev) =>
+        prev
+          ? {
+              ...prev,
+              discount_code: null,
+              discount_percentage: null,
+              discount_status: "none",
+              final_price: null,
+              discount_note: null,
+              discount_requested_at: null,
+              discount_resolved_at: null,
+            }
+          : prev,
+      );
     } finally {
       setDetailLoading(false);
     }
@@ -835,11 +1108,18 @@ export default function AdminDashboard() {
       const company = loadCompanySettings();
       const offerNumber = generateOfferNumber(lead);
       const signaturePng = lead.offer_signatures?.[0]?.signature_png;
-      const blob = await pdf(<OfferPdfDocument lead={lead} company={company} offerNumber={offerNumber} signaturePng={signaturePng} />).toBlob();
+      const blob = await pdf(
+        <OfferPdfDocument
+          lead={lead}
+          company={company}
+          offerNumber={offerNumber}
+          signaturePng={signaturePng}
+        />,
+      ).toBlob();
 
       // Download
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
       a.download = `Angebot-${offerNumber}.pdf`;
       document.body.appendChild(a);
@@ -847,7 +1127,7 @@ export default function AdminDashboard() {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch (e) {
-      alert('Fehler beim Erstellen des PDFs: ' + (e as Error).message);
+      alert("Fehler beim Erstellen des PDFs: " + (e as Error).message);
     } finally {
       setIsGeneratingPdf(false);
     }
@@ -856,15 +1136,26 @@ export default function AdminDashboard() {
   async function handleResetOffer(leadId: string) {
     setDetailLoading(true);
     try {
-      await updateLeadOfferStatus(leadId, 'created');
-      setSelectedLead((prev) => prev ? { ...prev, offer_status: 'created', offer_sent_at: null, offer_viewed_at: null } : prev);
+      await updateLeadOfferStatus(leadId, "created");
+      setSelectedLead((prev) =>
+        prev
+          ? {
+              ...prev,
+              offer_status: "created",
+              offer_sent_at: null,
+              offer_viewed_at: null,
+            }
+          : prev,
+      );
     } finally {
       setDetailLoading(false);
     }
   }
 
   const toggleLead = (id: string) => {
-    setSelectedLeads((prev) => prev.includes(id) ? prev.filter((lid) => lid !== id) : [...prev, id]);
+    setSelectedLeads((prev) =>
+      prev.includes(id) ? prev.filter((lid) => lid !== id) : [...prev, id],
+    );
   };
 
   const selectAll = () => {
@@ -872,91 +1163,126 @@ export default function AdminDashboard() {
     else setSelectedLeads(leads.map((l) => l.id));
   };
 
-  const filteredLeads = leads.filter((l) =>
-    l.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    l.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    l.email.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredLeads = leads.filter(
+    (l) =>
+      l.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      l.last_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      l.email.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   // ── Reports Statistics ───────────────────────────────────────────────
   const reportStats = useMemo(() => {
     const totalLeads = leads.length;
-    const wonLeads = leads.filter(l => l.status === 'gewonnen');
-    const lostLeads = leads.filter(l => l.status === 'verloren');
-    const openLeads = leads.filter(l => !['gewonnen', 'verloren', 'abgeschlossen'].includes(l.status));
+    const wonLeads = leads.filter((l) => l.status === "gewonnen");
+    const lostLeads = leads.filter((l) => l.status === "verloren");
+    const openLeads = leads.filter(
+      (l) => !["gewonnen", "verloren", "abgeschlossen"].includes(l.status),
+    );
     const revenue = wonLeads.reduce((sum, l) => sum + (l.investment || 0), 0);
     const avgDeal = wonLeads.length > 0 ? revenue / wonLeads.length : 0;
-    const conversionRate = totalLeads > 0 ? (wonLeads.length / totalLeads) * 100 : 0;
-    const winLossRatio = lostLeads.length > 0 ? wonLeads.length / lostLeads.length : wonLeads.length;
+    const conversionRate =
+      totalLeads > 0 ? (wonLeads.length / totalLeads) * 100 : 0;
+    const winLossRatio =
+      lostLeads.length > 0
+        ? wonLeads.length / lostLeads.length
+        : wonLeads.length;
 
     // Pipeline breakdown
     const pipeline = {
-      neu: leads.filter(l => l.status === 'neu').length,
-      kontaktiert: leads.filter(l => l.status === 'kontaktiert').length,
-      angebot: leads.filter(l => l.status === 'angebot').length,
-      abschluss: leads.filter(l => l.status === 'abschluss').length,
+      neu: leads.filter((l) => l.status === "neu").length,
+      kontaktiert: leads.filter((l) => l.status === "kontaktiert").length,
+      angebot: leads.filter((l) => l.status === "angebot").length,
+      abschluss: leads.filter((l) => l.status === "abschluss").length,
       gewonnen: wonLeads.length,
       verloren: lostLeads.length,
-      abgeschlossen: leads.filter(l => l.status === 'abgeschlossen').length,
+      abgeschlossen: leads.filter((l) => l.status === "abgeschlossen").length,
     };
 
     // Monthly leads (last 6 months)
     const now = new Date();
     const monthly = Array.from({ length: 6 }, (_, i) => {
       const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      const monthKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-      const monthLeads = leads.filter(l => l.created_at?.startsWith(monthKey)).length;
+      const monthKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+      const monthLeads = leads.filter((l) =>
+        l.created_at?.startsWith(monthKey),
+      ).length;
       return {
-        label: d.toLocaleDateString('de-DE', { month: 'short' }),
+        label: d.toLocaleDateString("de-DE", { month: "short" }),
         count: monthLeads,
       };
     }).reverse();
 
     // Top deals by investment
     const topDeals = [...wonLeads]
-      .filter(l => l.investment)
+      .filter((l) => l.investment)
       .sort((a, b) => (b.investment || 0) - (a.investment || 0))
       .slice(0, 5);
 
     // Lead-Quellen Verteilung
     const sourceLabels: Record<string, string> = {
-      landingpage: 'Landingpage',
-      direct: 'Direkt',
-      referral: 'Empfehlung',
-      social: 'Social Media',
-      google: 'Google Ads/SEO',
-      other: 'Sonstiges',
+      landingpage: "Landingpage",
+      direct: "Direkt",
+      referral: "Empfehlung",
+      social: "Social Media",
+      google: "Google Ads/SEO",
+      other: "Sonstiges",
     };
     const sourceDistribution = Array.from(
       leads.reduce((map, lead) => {
-        const source = lead.source || 'landingpage';
-        const existing = map.get(source) || { source, label: sourceLabels[source] || source, count: 0 };
+        const source = lead.source || "landingpage";
+        const existing = map.get(source) || {
+          source,
+          label: sourceLabels[source] || source,
+          count: 0,
+        };
         existing.count++;
         map.set(source, existing);
         return map;
-      }, new Map<string, { source: string; label: string; count: number }>())
-    ).map(([, stats]) => stats).sort((a, b) => b.count - a.count);
+      }, new Map<string, { source: string; label: string; count: number }>()),
+    )
+      .map(([, stats]) => stats)
+      .sort((a, b) => b.count - a.count);
 
     // Team-Performance: Leads pro Installateur
     const teamPerformance = Array.from(
       leads.reduce((map, lead) => {
-        const id = lead.installer_id || 'unassigned';
-        const existing = map.get(id) || { id, total: 0, won: 0, lost: 0, revenue: 0 };
+        const id = lead.installer_id || "unassigned";
+        const existing = map.get(id) || {
+          id,
+          total: 0,
+          won: 0,
+          lost: 0,
+          revenue: 0,
+        };
         existing.total++;
-        if (lead.status === 'gewonnen') { existing.won++; existing.revenue += lead.investment || 0; }
-        if (lead.status === 'verloren') existing.lost++;
+        if (lead.status === "gewonnen") {
+          existing.won++;
+          existing.revenue += lead.investment || 0;
+        }
+        if (lead.status === "verloren") existing.lost++;
         map.set(id, existing);
         return map;
-      }, new Map<string, { id: string; total: number; won: number; lost: number; revenue: number }>())
-    ).map(([, stats]) => ({
-      ...stats,
-      conversionRate: stats.total > 0 ? (stats.won / stats.total) * 100 : 0,
-    })).sort((a, b) => b.revenue - a.revenue);
+      }, new Map<string, { id: string; total: number; won: number; lost: number; revenue: number }>()),
+    )
+      .map(([, stats]) => ({
+        ...stats,
+        conversionRate: stats.total > 0 ? (stats.won / stats.total) * 100 : 0,
+      }))
+      .sort((a, b) => b.revenue - a.revenue);
 
     return {
-      totalLeads, wonLeads: wonLeads.length, lostLeads: lostLeads.length,
-      openLeads: openLeads.length, revenue, avgDeal, conversionRate,
-      winLossRatio, pipeline, monthly, topDeals, teamPerformance,
+      totalLeads,
+      wonLeads: wonLeads.length,
+      lostLeads: lostLeads.length,
+      openLeads: openLeads.length,
+      revenue,
+      avgDeal,
+      conversionRate,
+      winLossRatio,
+      pipeline,
+      monthly,
+      topDeals,
+      teamPerformance,
       sourceDistribution,
     };
   }, [leads]);
@@ -968,29 +1294,64 @@ export default function AdminDashboard() {
       <main className="flex-1 overflow-y-auto">
         <div className="p-6">
           {/* ─── DASHBOARD VIEW ─── */}
-          {activeTab === 'dashboard' && (
+          {activeTab === "dashboard" && (
             <div className="flex flex-col gap-6">
               {/* Stats Row */}
               <div className="grid grid-cols-4 gap-4">
                 {[
-                  { label: 'Gesamt-Leads', value: reportStats.totalLeads.toString(), change: `+${reportStats.monthly[5]?.count || 0}`, icon: Users, color: 'bg-[#F5A623]/10 text-[#F5A623]' },
-                  { label: 'Aktive Deals', value: reportStats.openLeads.toString(), change: `${reportStats.wonLeads} gewonnen`, icon: CheckCircle2, color: 'bg-green-500/10 text-green-400' },
-                  { label: 'Pipeline-Wert', value: `€ ${(reportStats.revenue / 1000).toFixed(1)}k`, change: `${reportStats.conversionRate.toFixed(1)}% Conv.`, icon: DollarSign, color: 'bg-blue-500/10 text-blue-400' },
-                  { label: 'Conversion-Rate', value: `${reportStats.conversionRate.toFixed(1)}%`, change: `${reportStats.winLossRatio.toFixed(1)}:1 Win/Loss`, icon: TrendingUp, color: 'bg-purple-500/10 text-purple-400' },
+                  {
+                    label: "Gesamt-Leads",
+                    value: reportStats.totalLeads.toString(),
+                    change: `+${reportStats.monthly[5]?.count || 0}`,
+                    icon: Users,
+                    color: "bg-brand-primary/10 text-brand-primary",
+                  },
+                  {
+                    label: "Aktive Deals",
+                    value: reportStats.openLeads.toString(),
+                    change: `${reportStats.wonLeads} gewonnen`,
+                    icon: CheckCircle2,
+                    color: "bg-green-500/10 text-green-400",
+                  },
+                  {
+                    label: "Pipeline-Wert",
+                    value: `€ ${(reportStats.revenue / 1000).toFixed(1)}k`,
+                    change: `${reportStats.conversionRate.toFixed(1)}% Conv.`,
+                    icon: DollarSign,
+                    color: "bg-blue-500/10 text-blue-400",
+                  },
+                  {
+                    label: "Conversion-Rate",
+                    value: `${reportStats.conversionRate.toFixed(1)}%`,
+                    change: `${reportStats.winLossRatio.toFixed(1)}:1 Win/Loss`,
+                    icon: TrendingUp,
+                    color: "bg-purple-500/10 text-purple-400",
+                  },
                 ].map((stat, i) => {
                   const Icon = stat.icon;
                   return (
-                    <div key={i} className="bg-[#1A1A1A] rounded-2xl p-5 border border-white/5">
+                    <div
+                      key={i}
+                      className="bg-brand-secondary-hover rounded-2xl p-5 border border-white/5"
+                    >
                       <div className="flex items-center justify-between mb-3">
-                        <div className={`w-9 h-9 rounded-lg ${stat.color.split(' ')[0]} flex items-center justify-center`}>
-                          <Icon className={`w-4 h-4 ${stat.color.split(' ')[1]}`} />
+                        <div
+                          className={`w-9 h-9 rounded-lg ${stat.color.split(" ")[0]} flex items-center justify-center`}
+                        >
+                          <Icon
+                            className={`w-4 h-4 ${stat.color.split(" ")[1]}`}
+                          />
                         </div>
                         <span className="text-xs text-green-400 flex items-center gap-0.5">
                           <TrendingUp className="w-3 h-3" /> {stat.change}
                         </span>
                       </div>
-                      <p className="text-2xl font-bold text-white">{stat.value}</p>
-                      <p className="text-xs text-gray-500 mt-0.5">{stat.label}</p>
+                      <p className="text-2xl font-bold text-white">
+                        {stat.value}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-0.5">
+                        {stat.label}
+                      </p>
                     </div>
                   );
                 })}
@@ -998,10 +1359,12 @@ export default function AdminDashboard() {
 
               {/* Aktionen */}
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-white">Pipeline-Übersicht</h3>
+                <h3 className="text-sm font-semibold text-white">
+                  Pipeline-Übersicht
+                </h3>
                 <button
                   onClick={() => setShowAddLeadModal(true)}
-                  className="flex items-center gap-2 bg-[#F5A623] hover:bg-[#E09000] text-[#1A3A5C] font-bold text-sm px-4 py-2 rounded-xl transition-colors"
+                  className="flex items-center gap-2 bg-brand-primary hover:bg-brand-primary-hover text-brand-secondary font-bold text-sm px-4 py-2 rounded-xl transition-colors"
                 >
                   <Plus className="w-4 h-4" />
                   Neuer Lead
@@ -1011,29 +1374,63 @@ export default function AdminDashboard() {
               {/* Charts Row */}
               <div className="grid grid-cols-12 gap-5">
                 {/* Funnel / Pipeline Flow */}
-                <div className="col-span-7 bg-[#1A1A1A] rounded-2xl p-5 border border-white/5">
-                  <h3 className="text-sm font-semibold text-white mb-4">Pipeline Flow</h3>
+                <div className="col-span-7 bg-brand-secondary-hover rounded-2xl p-5 border border-white/5">
+                  <h3 className="text-sm font-semibold text-white mb-4">
+                    Pipeline Flow
+                  </h3>
                   <div className="flex flex-col gap-3">
                     {(() => {
                       const stages = [
-                        { stage: 'Neue Leads', count: reportStats.pipeline.neu, color: '#3B82F6' },
-                        { stage: 'Kontaktiert', count: reportStats.pipeline.kontaktiert, color: '#60A5FA' },
-                        { stage: 'Angebot', count: reportStats.pipeline.angebot, color: '#93C5FD' },
-                        { stage: 'Abschluss', count: reportStats.pipeline.abschluss, color: '#BFDBFE' },
-                        { stage: 'Gewonnen', count: reportStats.pipeline.gewonnen, color: '#F5A623' },
+                        {
+                          stage: "Neue Leads",
+                          count: reportStats.pipeline.neu,
+                          color: "#3B82F6",
+                        },
+                        {
+                          stage: "Kontaktiert",
+                          count: reportStats.pipeline.kontaktiert,
+                          color: "#60A5FA",
+                        },
+                        {
+                          stage: "Angebot",
+                          count: reportStats.pipeline.angebot,
+                          color: "#93C5FD",
+                        },
+                        {
+                          stage: "Abschluss",
+                          count: reportStats.pipeline.abschluss,
+                          color: "#BFDBFE",
+                        },
+                        {
+                          stage: "Gewonnen",
+                          count: reportStats.pipeline.gewonnen,
+                          color: COLORS.primary,
+                        },
                       ];
-                      const maxCount = Math.max(...stages.map(s => s.count), 1);
+                      const maxCount = Math.max(
+                        ...stages.map((s) => s.count),
+                        1,
+                      );
                       return stages.map((s, i) => {
-                        const width = maxCount > 0 ? (s.count / maxCount) * 100 : 0;
+                        const width =
+                          maxCount > 0 ? (s.count / maxCount) * 100 : 0;
                         return (
                           <div key={i} className="flex items-center gap-4">
-                            <span className="text-xs text-gray-500 w-28 text-right flex-shrink-0">{s.stage}</span>
+                            <span className="text-xs text-gray-500 w-28 text-right flex-shrink-0">
+                              {s.stage}
+                            </span>
                             <div className="flex-1 h-8 bg-[#252525] rounded-lg overflow-hidden relative">
                               <div
                                 className="h-full rounded-lg flex items-center px-3 transition-all"
-                                style={{ width: `${Math.max(width, 5)}%`, background: s.color, opacity: 0.7 }}
+                                style={{
+                                  width: `${Math.max(width, 5)}%`,
+                                  background: s.color,
+                                  opacity: 0.7,
+                                }}
                               >
-                                <span className="text-xs font-semibold text-white whitespace-nowrap">{s.count}</span>
+                                <span className="text-xs font-semibold text-white whitespace-nowrap">
+                                  {s.count}
+                                </span>
                               </div>
                             </div>
                           </div>
@@ -1044,27 +1441,60 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Recent Activity */}
-                <div className="col-span-5 bg-[#1A1A1A] rounded-2xl p-5 border border-white/5">
-                  <h3 className="text-sm font-semibold text-white mb-4">Recent Activity</h3>
+                <div className="col-span-5 bg-brand-secondary-hover rounded-2xl p-5 border border-white/5">
+                  <h3 className="text-sm font-semibold text-white mb-4">
+                    Recent Activity
+                  </h3>
                   <div className="flex flex-col gap-4">
                     {[
-                      { action: 'New lead assigned', detail: 'Theresa Webb — McDonald\'s', time: '2m ago', icon: Users },
-                      { action: 'Deal moved to Closed', detail: 'Bank of America — €53,100', time: '15m ago', icon: CheckCircle2 },
-                      { action: 'Proposal sent', detail: 'Sony — €20,700', time: '1h ago', icon: Mail },
-                      { action: 'Follow-up call', detail: 'Nintendo — discussed contract', time: '3h ago', icon: Phone },
-                      { action: 'Lead reactivated', detail: 'Kathryn Murphy — Louis Vuitton', time: '5h ago', icon: Clock },
+                      {
+                        action: "New lead assigned",
+                        detail: "Theresa Webb — McDonald's",
+                        time: "2m ago",
+                        icon: Users,
+                      },
+                      {
+                        action: "Deal moved to Closed",
+                        detail: "Bank of America — €53,100",
+                        time: "15m ago",
+                        icon: CheckCircle2,
+                      },
+                      {
+                        action: "Proposal sent",
+                        detail: "Sony — €20,700",
+                        time: "1h ago",
+                        icon: Mail,
+                      },
+                      {
+                        action: "Follow-up call",
+                        detail: "Nintendo — discussed contract",
+                        time: "3h ago",
+                        icon: Phone,
+                      },
+                      {
+                        action: "Lead reactivated",
+                        detail: "Kathryn Murphy — Louis Vuitton",
+                        time: "5h ago",
+                        icon: Clock,
+                      },
                     ].map((item, i) => {
                       const Icon = item.icon;
                       return (
                         <div key={i} className="flex items-start gap-3">
                           <div className="w-8 h-8 rounded-lg bg-[#252525] flex items-center justify-center flex-shrink-0">
-                            <Icon className="w-4 h-4 text-[#F5A623]" />
+                            <Icon className="w-4 h-4 text-brand-primary" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-xs text-white font-medium">{item.action}</p>
-                            <p className="text-[11px] text-gray-500">{item.detail}</p>
+                            <p className="text-xs text-white font-medium">
+                              {item.action}
+                            </p>
+                            <p className="text-[11px] text-gray-500">
+                              {item.detail}
+                            </p>
                           </div>
-                          <span className="text-[10px] text-gray-600 flex-shrink-0">{item.time}</span>
+                          <span className="text-[10px] text-gray-600 flex-shrink-0">
+                            {item.time}
+                          </span>
                         </div>
                       );
                     })}
@@ -1073,10 +1503,14 @@ export default function AdminDashboard() {
               </div>
 
               {/* Deals Table */}
-              <div className="bg-[#1A1A1A] rounded-2xl p-5 border border-white/5">
+              <div className="bg-brand-secondary-hover rounded-2xl p-5 border border-white/5">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-sm font-semibold text-white">Recent Deals</h3>
-                  <button className="text-xs text-[#F5A623] hover:underline">View All</button>
+                  <h3 className="text-sm font-semibold text-white">
+                    Recent Deals
+                  </h3>
+                  <button className="text-xs text-brand-primary hover:underline">
+                    View All
+                  </button>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full">
@@ -1091,27 +1525,50 @@ export default function AdminDashboard() {
                     </thead>
                     <tbody>
                       {leads.slice(0, 5).map((lead, i) => (
-                        <tr key={i} onClick={() => setSelectedLead(lead)} className="border-b border-white/5 hover:bg-white/3 transition-colors cursor-pointer">
+                        <tr
+                          key={i}
+                          onClick={() => setSelectedLead(lead)}
+                          className="border-b border-white/5 hover:bg-white/3 transition-colors cursor-pointer"
+                        >
                           <td className="py-3">
                             <div className="flex items-center gap-2">
-                              <div className="w-7 h-7 rounded-full bg-[#1A3A5C] flex items-center justify-center text-[10px] font-bold text-white">
-                                {lead.first_name?.[0]}{lead.last_name?.[0]}
+                              <div className="w-7 h-7 rounded-full bg-brand-secondary flex items-center justify-center text-[10px] font-bold text-white">
+                                {lead.first_name?.[0]}
+                                {lead.last_name?.[0]}
                               </div>
-                              <span className="text-xs text-white font-medium">{lead.first_name} {lead.last_name}</span>
+                              <span className="text-xs text-white font-medium">
+                                {lead.first_name} {lead.last_name}
+                              </span>
                             </div>
                           </td>
-                          <td className="py-3 text-xs text-gray-400">{lead.email}</td>
-                          <td className="py-3 text-xs text-white font-medium">{lead.investment ? `${lead.investment.toLocaleString('de-DE')} €` : '-'}</td>
-                          <td className="py-3">
-                            <span className={`text-[10px] px-2 py-0.5 rounded-full border capitalize ${
-                              lead.status === 'neu' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
-                              lead.status === 'kontaktiert' ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' :
-                              lead.status === 'angebot' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
-                              lead.status === 'gewonnen' ? 'bg-green-500/10 text-green-400 border-green-500/20' :
-                              'bg-gray-500/10 text-gray-400 border-gray-500/20'
-                            }`}>{lead.status}</span>
+                          <td className="py-3 text-xs text-gray-400">
+                            {lead.email}
                           </td>
-                          <td className="py-3 text-xs text-gray-400">{lead.kwp ? `${lead.kwp} kWp` : '-'}</td>
+                          <td className="py-3 text-xs text-white font-medium">
+                            {lead.investment
+                              ? `${lead.investment.toLocaleString("de-DE")} €`
+                              : "-"}
+                          </td>
+                          <td className="py-3">
+                            <span
+                              className={`text-[10px] px-2 py-0.5 rounded-full border capitalize ${
+                                lead.status === "neu"
+                                  ? "bg-blue-500/10 text-blue-400 border-blue-500/20"
+                                  : lead.status === "kontaktiert"
+                                    ? "bg-yellow-500/10 text-yellow-400 border-yellow-500/20"
+                                    : lead.status === "angebot"
+                                      ? "bg-purple-500/10 text-purple-400 border-purple-500/20"
+                                      : lead.status === "gewonnen"
+                                        ? "bg-green-500/10 text-green-400 border-green-500/20"
+                                        : "bg-gray-500/10 text-gray-400 border-gray-500/20"
+                              }`}
+                            >
+                              {lead.status}
+                            </span>
+                          </td>
+                          <td className="py-3 text-xs text-gray-400">
+                            {lead.kwp ? `${lead.kwp} kWp` : "-"}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -1121,9 +1578,8 @@ export default function AdminDashboard() {
             </div>
           )}
 
-
           {/* ─── PIPELINE VIEW (Lead Kanban) ─── */}
-          {activeTab === 'pipeline' && (
+          {activeTab === "pipeline" && (
             <LeadPipelineView
               leads={leads}
               moveCard={moveCard}
@@ -1134,7 +1590,7 @@ export default function AdminDashboard() {
           )}
 
           {/* ─── PROJEKTE VIEW (Project Kanban) ─── */}
-          {activeTab === 'projects' && (
+          {activeTab === "projects" && (
             <ProjectPipelineView
               projects={projects}
               moveProject={moveProject}
@@ -1142,17 +1598,21 @@ export default function AdminDashboard() {
           )}
 
           {/* ─── RABATTE VIEW ─── */}
-          {activeTab === 'discounts' && (
+          {activeTab === "discounts" && (
             <div className="flex flex-col gap-6">
-              <h1 className="text-2xl font-semibold text-white">Rabatt-System</h1>
+              <h1 className="text-2xl font-semibold text-white">
+                Rabatt-System
+              </h1>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* ── Rabatt-Codes ── */}
-                <div className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+                <div className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
                   <div className="flex items-center justify-between px-6 py-5 border-b border-white/5">
                     <div className="flex items-center gap-3">
-                      <Tag className="w-5 h-5 text-[#F5A623]" />
-                      <h3 className="text-sm font-semibold text-white">Rabatt-Codes</h3>
+                      <Tag className="w-5 h-5 text-brand-primary" />
+                      <h3 className="text-sm font-semibold text-white">
+                        Rabatt-Codes
+                      </h3>
                     </div>
                     <span className="text-xs text-gray-500">
                       {ownerCodes.filter((c) => c.active).length} aktiv
@@ -1162,43 +1622,69 @@ export default function AdminDashboard() {
                     {/* Neuen Code hinzufügen */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-gray-400">Code</label>
+                        <label className="text-xs font-medium text-gray-400">
+                          Code
+                        </label>
                         <input
                           type="text"
                           value={newCode.code}
-                          onChange={(e) => setNewCode((p) => ({ ...p, code: e.target.value.toUpperCase() }))}
-                          className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                          onChange={(e) =>
+                            setNewCode((p) => ({
+                              ...p,
+                              code: e.target.value.toUpperCase(),
+                            }))
+                          }
+                          className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                           placeholder="SOLAR10"
                         />
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-gray-400">Bezeichnung</label>
+                        <label className="text-xs font-medium text-gray-400">
+                          Bezeichnung
+                        </label>
                         <input
                           type="text"
                           value={newCode.label}
-                          onChange={(e) => setNewCode((p) => ({ ...p, label: e.target.value }))}
-                          className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                          onChange={(e) =>
+                            setNewCode((p) => ({ ...p, label: e.target.value }))
+                          }
+                          className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                           placeholder="Treue-Rabatt"
                         />
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-gray-400">Rabatt (%)</label>
+                        <label className="text-xs font-medium text-gray-400">
+                          Rabatt (%)
+                        </label>
                         <div className="flex gap-2">
                           <input
                             type="number"
                             value={newCode.percentage}
-                            onChange={(e) => setNewCode((p) => ({ ...p, percentage: e.target.value }))}
-                            className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                            onChange={(e) =>
+                              setNewCode((p) => ({
+                                ...p,
+                                percentage: e.target.value,
+                              }))
+                            }
+                            className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                             placeholder="10"
                             min="1"
                             max="50"
                           />
                           <button
                             onClick={handleAddCode}
-                            disabled={isAddingCode || !newCode.code || !newCode.percentage}
-                            className="bg-[#F5A623] hover:bg-[#E09000] text-[#1A3A5C] font-bold px-4 rounded-lg disabled:opacity-50 flex items-center gap-1 transition-colors shrink-0"
+                            disabled={
+                              isAddingCode ||
+                              !newCode.code ||
+                              !newCode.percentage
+                            }
+                            className="bg-brand-primary hover:bg-brand-primary-hover text-brand-secondary font-bold px-4 rounded-lg disabled:opacity-50 flex items-center gap-1 transition-colors shrink-0"
                           >
-                            {isAddingCode ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+                            {isAddingCode ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              <Plus className="w-4 h-4" />
+                            )}
                           </button>
                         </div>
                       </div>
@@ -1210,25 +1696,39 @@ export default function AdminDashboard() {
                         <Loader2 className="w-5 h-5 animate-spin text-gray-600" />
                       </div>
                     ) : ownerCodes.length === 0 ? (
-                      <p className="text-sm text-gray-500 text-center py-4">Noch keine Codes erstellt.</p>
+                      <p className="text-sm text-gray-500 text-center py-4">
+                        Noch keine Codes erstellt.
+                      </p>
                     ) : (
                       <div className="space-y-2">
                         {ownerCodes.map((code) => (
                           <div
                             key={code.id}
-                            className={`flex items-center gap-3 px-4 py-3 rounded-lg border transition-opacity ${code.active ? 'border-white/10 bg-[#252525]' : 'border-white/5 bg-[#1A1A1A] opacity-50'}`}
+                            className={`flex items-center gap-3 px-4 py-3 rounded-lg border transition-opacity ${code.active ? "border-white/10 bg-[#252525]" : "border-white/5 bg-brand-secondary-hover opacity-50"}`}
                           >
-                            <span className="font-mono font-bold text-white text-sm w-24 shrink-0">{code.code}</span>
-                            <span className="text-sm text-gray-400 flex-1 truncate">{code.label ?? '—'}</span>
-                            <span className="text-sm font-bold text-[#F5A623] w-10 text-right shrink-0">{code.percentage}%</span>
+                            <span className="font-mono font-bold text-white text-sm w-24 shrink-0">
+                              {code.code}
+                            </span>
+                            <span className="text-sm text-gray-400 flex-1 truncate">
+                              {code.label ?? "—"}
+                            </span>
+                            <span className="text-sm font-bold text-brand-primary w-10 text-right shrink-0">
+                              {code.percentage}%
+                            </span>
                             <button
-                              onClick={() => handleToggleCode(code.id, !code.active)}
-                              className={`p-1 rounded transition-colors shrink-0 ${code.active ? 'text-green-400 hover:text-gray-400' : 'text-gray-600 hover:text-green-400'}`}
-                              title={code.active ? 'Deaktivieren' : 'Aktivieren'}
+                              onClick={() =>
+                                handleToggleCode(code.id, !code.active)
+                              }
+                              className={`p-1 rounded transition-colors shrink-0 ${code.active ? "text-green-400 hover:text-gray-400" : "text-gray-600 hover:text-green-400"}`}
+                              title={
+                                code.active ? "Deaktivieren" : "Aktivieren"
+                              }
                             >
-                              {code.active
-                                ? <ToggleRight className="w-5 h-5" />
-                                : <ToggleLeft className="w-5 h-5" />}
+                              {code.active ? (
+                                <ToggleRight className="w-5 h-5" />
+                              ) : (
+                                <ToggleLeft className="w-5 h-5" />
+                              )}
                             </button>
                             <button
                               onClick={() => handleDeleteCode(code.id)}
@@ -1245,14 +1745,16 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* ── Offene Rabatt-Anfragen ── */}
-                <div className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+                <div className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
                   <div className="flex items-center justify-between px-6 py-5 border-b border-white/5">
                     <div className="flex items-center gap-3">
-                      <AlertTriangle className="w-5 h-5 text-[#F5A623]" />
-                      <h3 className="text-sm font-semibold text-white">Offene Rabatt-Anfragen</h3>
+                      <AlertTriangle className="w-5 h-5 text-brand-primary" />
+                      <h3 className="text-sm font-semibold text-white">
+                        Offene Rabatt-Anfragen
+                      </h3>
                     </div>
                     {pendingRequests.length > 0 && (
-                      <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[#F5A623]/20 text-[#F5A623]">
+                      <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-brand-primary/20 text-brand-primary">
                         {pendingRequests.length} offen
                       </span>
                     )}
@@ -1265,30 +1767,55 @@ export default function AdminDashboard() {
                     ) : pendingRequests.length === 0 ? (
                       <div className="flex items-center justify-center gap-3 text-gray-500 py-4">
                         <CheckCircle2 className="w-5 h-5 text-green-400" />
-                        <p className="text-sm font-medium">Keine offenen Anfragen</p>
+                        <p className="text-sm font-medium">
+                          Keine offenen Anfragen
+                        </p>
                       </div>
                     ) : (
                       <div className="space-y-3">
                         {pendingRequests.map((req) => (
-                          <div key={req.id} className="flex items-center gap-4 p-4 border border-[#F5A623]/20 bg-[#F5A623]/5 rounded-xl">
+                          <div
+                            key={req.id}
+                            className="flex items-center gap-4 p-4 border border-brand-primary/20 bg-brand-primary/5 rounded-xl"
+                          >
                             <div className="flex-1 min-w-0">
-                              <p className="font-bold text-white text-sm">{req.first_name} {req.last_name}</p>
+                              <p className="font-bold text-white text-sm">
+                                {req.first_name} {req.last_name}
+                              </p>
                               <p className="text-xs text-gray-400 mt-0.5">
-                                Anfrage: <strong className="text-[#F5A623]">{req.discount_percentage}% Rabatt</strong>
+                                Anfrage:{" "}
+                                <strong className="text-brand-primary">
+                                  {req.discount_percentage}% Rabatt
+                                </strong>
                                 {req.investment != null && (
-                                  <> · Originalpreis: {req.investment.toLocaleString('de-DE')} €</>
+                                  <>
+                                    {" "}
+                                    · Originalpreis:{" "}
+                                    {req.investment.toLocaleString("de-DE")} €
+                                  </>
                                 )}
                                 {req.final_price != null && (
-                                  <> → <strong>{req.final_price.toLocaleString('de-DE')} €</strong></>
+                                  <>
+                                    {" "}
+                                    →{" "}
+                                    <strong>
+                                      {req.final_price.toLocaleString("de-DE")}{" "}
+                                      €
+                                    </strong>
+                                  </>
                                 )}
                               </p>
                               {req.discount_note && (
-                                <p className="text-xs text-gray-500 mt-0.5 italic">„{req.discount_note}"</p>
+                                <p className="text-xs text-gray-500 mt-0.5 italic">
+                                  „{req.discount_note}"
+                                </p>
                               )}
                             </div>
                             <div className="flex gap-2 shrink-0">
                               <button
-                                onClick={() => handleResolveRequest(req.id, true)}
+                                onClick={() =>
+                                  handleResolveRequest(req.id, true)
+                                }
                                 disabled={resolvingId === req.id}
                                 className="flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white font-bold text-xs px-3 py-2 rounded-lg disabled:opacity-50 transition-colors"
                               >
@@ -1296,7 +1823,9 @@ export default function AdminDashboard() {
                                 Genehmigen
                               </button>
                               <button
-                                onClick={() => handleResolveRequest(req.id, false)}
+                                onClick={() =>
+                                  handleResolveRequest(req.id, false)
+                                }
                                 disabled={resolvingId === req.id}
                                 className="flex items-center gap-1.5 border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 text-red-400 font-bold text-xs px-3 py-2 rounded-lg disabled:opacity-50 transition-colors"
                               >
@@ -1315,46 +1844,57 @@ export default function AdminDashboard() {
           )}
 
           {/* ─── REPORTS VIEW ─── */}
-          {activeTab === 'reports' && (
+          {activeTab === "reports" && (
             <div className="flex flex-col gap-6">
               {/* KPI Cards */}
               <div className="grid grid-cols-4 gap-4">
                 {[
                   {
-                    label: 'Gesamt-Leads',
+                    label: "Gesamt-Leads",
                     value: reportStats.totalLeads.toString(),
                     icon: Users,
-                    color: 'bg-blue-500/10 text-blue-400',
+                    color: "bg-blue-500/10 text-blue-400",
                   },
                   {
-                    label: 'Gewonnene Deals',
+                    label: "Gewonnene Deals",
                     value: reportStats.wonLeads.toString(),
                     icon: CheckCircle2,
-                    color: 'bg-emerald-500/10 text-emerald-400',
+                    color: "bg-emerald-500/10 text-emerald-400",
                   },
                   {
-                    label: 'Umsatz',
+                    label: "Umsatz",
                     value: `€ ${(reportStats.revenue / 1000).toFixed(1)}k`,
                     icon: DollarSign,
-                    color: 'bg-[#F5A623]/10 text-[#F5A623]',
+                    color: "bg-brand-primary/10 text-brand-primary",
                   },
                   {
-                    label: 'Conversion-Rate',
+                    label: "Conversion-Rate",
                     value: `${reportStats.conversionRate.toFixed(1)}%`,
                     icon: Target,
-                    color: 'bg-purple-500/10 text-purple-400',
+                    color: "bg-purple-500/10 text-purple-400",
                   },
                 ].map((stat, i) => {
                   const Icon = stat.icon;
                   return (
-                    <div key={i} className="bg-[#1A1A1A] rounded-2xl p-5 border border-white/5">
+                    <div
+                      key={i}
+                      className="bg-brand-secondary-hover rounded-2xl p-5 border border-white/5"
+                    >
                       <div className="flex items-center justify-between mb-3">
-                        <div className={`w-9 h-9 rounded-lg ${stat.color.split(' ')[0]} flex items-center justify-center`}>
-                          <Icon className={`w-4 h-4 ${stat.color.split(' ')[1]}`} />
+                        <div
+                          className={`w-9 h-9 rounded-lg ${stat.color.split(" ")[0]} flex items-center justify-center`}
+                        >
+                          <Icon
+                            className={`w-4 h-4 ${stat.color.split(" ")[1]}`}
+                          />
                         </div>
                       </div>
-                      <p className="text-2xl font-bold text-white">{stat.value}</p>
-                      <p className="text-xs text-gray-500 mt-0.5">{stat.label}</p>
+                      <p className="text-2xl font-bold text-white">
+                        {stat.value}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-0.5">
+                        {stat.label}
+                      </p>
                     </div>
                   );
                 })}
@@ -1363,18 +1903,38 @@ export default function AdminDashboard() {
               {/* Secondary Stats */}
               <div className="grid grid-cols-3 gap-4">
                 {[
-                  { label: 'Offene Leads', value: reportStats.openLeads, icon: Activity, color: 'text-blue-400' },
-                  { label: 'Verlorene Deals', value: reportStats.lostLeads, icon: TrendingDown, color: 'text-red-400' },
-                  { label: 'Ø Deal-Wert', value: `€ ${reportStats.avgDeal.toLocaleString('de-DE', { maximumFractionDigits: 0 })}`, icon: DollarSign, color: 'text-[#F5A623]' },
+                  {
+                    label: "Offene Leads",
+                    value: reportStats.openLeads,
+                    icon: Activity,
+                    color: "text-blue-400",
+                  },
+                  {
+                    label: "Verlorene Deals",
+                    value: reportStats.lostLeads,
+                    icon: TrendingDown,
+                    color: "text-red-400",
+                  },
+                  {
+                    label: "Ø Deal-Wert",
+                    value: `€ ${reportStats.avgDeal.toLocaleString("de-DE", { maximumFractionDigits: 0 })}`,
+                    icon: DollarSign,
+                    color: "text-brand-primary",
+                  },
                 ].map((stat, i) => {
                   const Icon = stat.icon;
                   return (
-                    <div key={i} className="bg-[#1A1A1A] rounded-2xl p-4 border border-white/5 flex items-center gap-4">
+                    <div
+                      key={i}
+                      className="bg-brand-secondary-hover rounded-2xl p-4 border border-white/5 flex items-center gap-4"
+                    >
                       <div className="w-10 h-10 rounded-xl bg-[#252525] flex items-center justify-center">
                         <Icon className={`w-5 h-5 ${stat.color}`} />
                       </div>
                       <div>
-                        <p className="text-lg font-bold text-white">{stat.value}</p>
+                        <p className="text-lg font-bold text-white">
+                          {stat.value}
+                        </p>
                         <p className="text-xs text-gray-500">{stat.label}</p>
                       </div>
                     </div>
@@ -1384,32 +1944,51 @@ export default function AdminDashboard() {
 
               {/* Lead-Quellen */}
               {reportStats.sourceDistribution.length > 0 && (
-                <div className="bg-[#1A1A1A] rounded-2xl p-5 border border-white/5">
-                  <h3 className="text-sm font-semibold text-white mb-4">Lead-Quellen</h3>
+                <div className="bg-brand-secondary-hover rounded-2xl p-5 border border-white/5">
+                  <h3 className="text-sm font-semibold text-white mb-4">
+                    Lead-Quellen
+                  </h3>
                   <div className="space-y-3">
                     {reportStats.sourceDistribution.map((s) => {
-                      const maxCount = Math.max(...reportStats.sourceDistribution.map(x => x.count), 1);
-                      const width = maxCount > 0 ? (s.count / maxCount) * 100 : 0;
+                      const maxCount = Math.max(
+                        ...reportStats.sourceDistribution.map((x) => x.count),
+                        1,
+                      );
+                      const width =
+                        maxCount > 0 ? (s.count / maxCount) * 100 : 0;
                       const colors: Record<string, string> = {
-                        landingpage: '#3B82F6',
-                        direct: '#10B981',
-                        referral: '#F5A623',
-                        social: '#EC4899',
-                        google: '#EF4444',
-                        other: '#6B7280',
+                        landingpage: "#3B82F6",
+                        direct: "#10B981",
+                        referral: COLORS.primary,
+                        social: "#EC4899",
+                        google: "#EF4444",
+                        other: "#6B7280",
                       };
                       return (
                         <div key={s.source} className="flex items-center gap-4">
-                          <span className="text-xs text-gray-500 w-28 text-right flex-shrink-0">{s.label}</span>
+                          <span className="text-xs text-gray-500 w-28 text-right flex-shrink-0">
+                            {s.label}
+                          </span>
                           <div className="flex-1 h-8 bg-[#252525] rounded-lg overflow-hidden relative">
                             <div
                               className="h-full rounded-lg flex items-center px-3 transition-all"
-                              style={{ width: `${Math.max(width, 5)}%`, background: colors[s.source] || '#6B7280', opacity: 0.7 }}
+                              style={{
+                                width: `${Math.max(width, 5)}%`,
+                                background: colors[s.source] || "#6B7280",
+                                opacity: 0.7,
+                              }}
                             >
-                              <span className="text-xs font-semibold text-white whitespace-nowrap">{s.count}</span>
+                              <span className="text-xs font-semibold text-white whitespace-nowrap">
+                                {s.count}
+                              </span>
                             </div>
                           </div>
-                          <span className="text-xs text-gray-500 w-12 text-right">{((s.count / reportStats.totalLeads) * 100).toFixed(0)}%</span>
+                          <span className="text-xs text-gray-500 w-12 text-right">
+                            {((s.count / reportStats.totalLeads) * 100).toFixed(
+                              0,
+                            )}
+                            %
+                          </span>
                         </div>
                       );
                     })}
@@ -1419,28 +1998,68 @@ export default function AdminDashboard() {
 
               <div className="grid grid-cols-12 gap-5">
                 {/* Pipeline Breakdown */}
-                <div className="col-span-7 bg-[#1A1A1A] rounded-2xl p-5 border border-white/5">
-                  <h3 className="text-sm font-semibold text-white mb-4">Pipeline-Übersicht</h3>
+                <div className="col-span-7 bg-brand-secondary-hover rounded-2xl p-5 border border-white/5">
+                  <h3 className="text-sm font-semibold text-white mb-4">
+                    Pipeline-Übersicht
+                  </h3>
                   <div className="flex flex-col gap-3">
                     {[
-                      { stage: 'Neu', count: reportStats.pipeline.neu, color: '#3B82F6' },
-                      { stage: 'Kontaktiert', count: reportStats.pipeline.kontaktiert, color: '#60A5FA' },
-                      { stage: 'Angebot', count: reportStats.pipeline.angebot, color: '#93C5FD' },
-                      { stage: 'Abschluss', count: reportStats.pipeline.abschluss, color: '#BFDBFE' },
-                      { stage: 'Gewonnen', count: reportStats.pipeline.gewonnen, color: '#F5A623' },
-                      { stage: 'Verloren', count: reportStats.pipeline.verloren, color: '#EF4444' },
+                      {
+                        stage: "Neu",
+                        count: reportStats.pipeline.neu,
+                        color: "#3B82F6",
+                      },
+                      {
+                        stage: "Kontaktiert",
+                        count: reportStats.pipeline.kontaktiert,
+                        color: "#60A5FA",
+                      },
+                      {
+                        stage: "Angebot",
+                        count: reportStats.pipeline.angebot,
+                        color: "#93C5FD",
+                      },
+                      {
+                        stage: "Abschluss",
+                        count: reportStats.pipeline.abschluss,
+                        color: "#BFDBFE",
+                      },
+                      {
+                        stage: "Gewonnen",
+                        count: reportStats.pipeline.gewonnen,
+                        color: COLORS.primary,
+                      },
+                      {
+                        stage: "Verloren",
+                        count: reportStats.pipeline.verloren,
+                        color: "#EF4444",
+                      },
                     ].map((s, i) => {
-                      const maxCount = Math.max(...Object.values(reportStats.pipeline).filter(v => typeof v === 'number')) || 1;
-                      const width = maxCount > 0 ? (s.count / maxCount) * 100 : 0;
+                      const maxCount =
+                        Math.max(
+                          ...Object.values(reportStats.pipeline).filter(
+                            (v) => typeof v === "number",
+                          ),
+                        ) || 1;
+                      const width =
+                        maxCount > 0 ? (s.count / maxCount) * 100 : 0;
                       return (
                         <div key={i} className="flex items-center gap-4">
-                          <span className="text-xs text-gray-500 w-24 text-right flex-shrink-0">{s.stage}</span>
+                          <span className="text-xs text-gray-500 w-24 text-right flex-shrink-0">
+                            {s.stage}
+                          </span>
                           <div className="flex-1 h-8 bg-[#252525] rounded-lg overflow-hidden relative">
                             <div
                               className="h-full rounded-lg flex items-center px-3 transition-all"
-                              style={{ width: `${Math.max(width, 5)}%`, background: s.color, opacity: 0.7 }}
+                              style={{
+                                width: `${Math.max(width, 5)}%`,
+                                background: s.color,
+                                opacity: 0.7,
+                              }}
                             >
-                              <span className="text-xs font-semibold text-white whitespace-nowrap">{s.count}</span>
+                              <span className="text-xs font-semibold text-white whitespace-nowrap">
+                                {s.count}
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -1450,22 +2069,35 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Monthly Trend */}
-                <div className="col-span-5 bg-[#1A1A1A] rounded-2xl p-5 border border-white/5">
-                  <h3 className="text-sm font-semibold text-white mb-4">Leads pro Monat</h3>
+                <div className="col-span-5 bg-brand-secondary-hover rounded-2xl p-5 border border-white/5">
+                  <h3 className="text-sm font-semibold text-white mb-4">
+                    Leads pro Monat
+                  </h3>
                   <div className="flex items-end gap-3 h-48">
                     {reportStats.monthly.map((m, i) => {
-                      const maxCount = Math.max(...reportStats.monthly.map(x => x.count), 1);
-                      const height = maxCount > 0 ? (m.count / maxCount) * 100 : 0;
+                      const maxCount = Math.max(
+                        ...reportStats.monthly.map((x) => x.count),
+                        1,
+                      );
+                      const height =
+                        maxCount > 0 ? (m.count / maxCount) * 100 : 0;
                       return (
-                        <div key={i} className="flex-1 flex flex-col items-center gap-2">
+                        <div
+                          key={i}
+                          className="flex-1 flex flex-col items-center gap-2"
+                        >
                           <div className="w-full flex-1 bg-[#252525] rounded-t-lg relative overflow-hidden">
                             <div
-                              className="absolute bottom-0 left-0 right-0 bg-[#F5A623] rounded-t-lg transition-all"
+                              className="absolute bottom-0 left-0 right-0 bg-brand-primary rounded-t-lg transition-all"
                               style={{ height: `${height}%`, opacity: 0.7 }}
                             />
                           </div>
-                          <span className="text-[10px] text-gray-500">{m.label}</span>
-                          <span className="text-xs font-bold text-white">{m.count}</span>
+                          <span className="text-[10px] text-gray-500">
+                            {m.label}
+                          </span>
+                          <span className="text-xs font-bold text-white">
+                            {m.count}
+                          </span>
                         </div>
                       );
                     })}
@@ -1475,24 +2107,32 @@ export default function AdminDashboard() {
 
               {/* Top Deals */}
               {reportStats.topDeals.length > 0 && (
-                <div className="bg-[#1A1A1A] rounded-2xl p-5 border border-white/5">
-                  <h3 className="text-sm font-semibold text-white mb-4">Top Deals</h3>
+                <div className="bg-brand-secondary-hover rounded-2xl p-5 border border-white/5">
+                  <h3 className="text-sm font-semibold text-white mb-4">
+                    Top Deals
+                  </h3>
                   <div className="space-y-3">
                     {reportStats.topDeals.map((lead, i) => (
-                      <div key={lead.id} className="flex items-center gap-4 p-3 bg-[#252525]/50 rounded-xl">
-                        <div className="w-8 h-8 rounded-lg bg-[#F5A623]/10 flex items-center justify-center text-xs font-bold text-[#F5A623]">
+                      <div
+                        key={lead.id}
+                        className="flex items-center gap-4 p-3 bg-[#252525]/50 rounded-xl"
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-xs font-bold text-brand-primary">
                           {i + 1}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-white">{lead.first_name} {lead.last_name}</p>
+                          <p className="text-sm font-medium text-white">
+                            {lead.first_name} {lead.last_name}
+                          </p>
                           <p className="text-xs text-gray-500">{lead.email}</p>
                         </div>
                         <div className="text-right">
-                          <p className="text-sm font-bold text-[#F5A623]">
-                            € {lead.investment?.toLocaleString('de-DE')}
+                          <p className="text-sm font-bold text-brand-primary">
+                            € {lead.investment?.toLocaleString("de-DE")}
                           </p>
                           <p className="text-[10px] text-gray-500">
-                            {lead.kwp?.toFixed(1)} kWp · Score {computeLeadScoreFromLead(lead)}
+                            {lead.kwp?.toFixed(1)} kWp · Score{" "}
+                            {computeLeadScoreFromLead(lead)}
                           </p>
                         </div>
                       </div>
@@ -1502,181 +2142,308 @@ export default function AdminDashboard() {
               )}
 
               {/* Team-Performance */}
-              {user?.role === 'owner' && reportStats.teamPerformance.length > 0 && (
-                <div className="bg-[#1A1A1A] rounded-2xl p-5 border border-white/5">
-                  <h3 className="text-sm font-semibold text-white mb-4">Team-Performance</h3>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left">
-                      <thead>
-                        <tr className="border-b border-white/5">
-                          <th className="text-[10px] font-bold text-gray-500 uppercase tracking-widest pb-3 pr-4">Mitarbeiter</th>
-                          <th className="text-[10px] font-bold text-gray-500 uppercase tracking-widest pb-3 pr-4 text-right">Leads</th>
-                          <th className="text-[10px] font-bold text-gray-500 uppercase tracking-widest pb-3 pr-4 text-right">Gewonnen</th>
-                          <th className="text-[10px] font-bold text-gray-500 uppercase tracking-widest pb-3 pr-4 text-right">Verloren</th>
-                          <th className="text-[10px] font-bold text-gray-500 uppercase tracking-widest pb-3 pr-4 text-right">Conversion</th>
-                          <th className="text-[10px] font-bold text-gray-500 uppercase tracking-widest pb-3 text-right">Umsatz</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-white/5">
-                        {reportStats.teamPerformance.map((member) => {
-                          const name = teamMembers.find(t => t.id === member.id)?.full_name
-                            || (member.id === user.id ? 'Du (Owner)' : 'Unbekannt');
-                          return (
-                            <tr key={member.id} className="hover:bg-white/[0.02]">
-                              <td className="py-3 pr-4">
-                                <span className="text-sm font-medium text-white">{name}</span>
-                              </td>
-                              <td className="py-3 pr-4 text-right">
-                                <span className="text-sm text-white">{member.total}</span>
-                              </td>
-                              <td className="py-3 pr-4 text-right">
-                                <span className="text-sm text-emerald-400">{member.won}</span>
-                              </td>
-                              <td className="py-3 pr-4 text-right">
-                                <span className="text-sm text-red-400">{member.lost}</span>
-                              </td>
-                              <td className="py-3 pr-4 text-right">
-                                <span className="text-sm text-[#F5A623]">{member.conversionRate.toFixed(1)}%</span>
-                              </td>
-                              <td className="py-3 text-right">
-                                <span className="text-sm font-bold text-white">€ {member.revenue.toLocaleString('de-DE')}</span>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+              {user?.role === "owner" &&
+                reportStats.teamPerformance.length > 0 && (
+                  <div className="bg-brand-secondary-hover rounded-2xl p-5 border border-white/5">
+                    <h3 className="text-sm font-semibold text-white mb-4">
+                      Team-Performance
+                    </h3>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left">
+                        <thead>
+                          <tr className="border-b border-white/5">
+                            <th className="text-[10px] font-bold text-gray-500 uppercase tracking-widest pb-3 pr-4">
+                              Mitarbeiter
+                            </th>
+                            <th className="text-[10px] font-bold text-gray-500 uppercase tracking-widest pb-3 pr-4 text-right">
+                              Leads
+                            </th>
+                            <th className="text-[10px] font-bold text-gray-500 uppercase tracking-widest pb-3 pr-4 text-right">
+                              Gewonnen
+                            </th>
+                            <th className="text-[10px] font-bold text-gray-500 uppercase tracking-widest pb-3 pr-4 text-right">
+                              Verloren
+                            </th>
+                            <th className="text-[10px] font-bold text-gray-500 uppercase tracking-widest pb-3 pr-4 text-right">
+                              Conversion
+                            </th>
+                            <th className="text-[10px] font-bold text-gray-500 uppercase tracking-widest pb-3 text-right">
+                              Umsatz
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-white/5">
+                          {reportStats.teamPerformance.map((member) => {
+                            const name =
+                              teamMembers.find((t) => t.id === member.id)
+                                ?.full_name ||
+                              (member.id === user.id
+                                ? "Du (Owner)"
+                                : "Unbekannt");
+                            return (
+                              <tr
+                                key={member.id}
+                                className="hover:bg-white/[0.02]"
+                              >
+                                <td className="py-3 pr-4">
+                                  <span className="text-sm font-medium text-white">
+                                    {name}
+                                  </span>
+                                </td>
+                                <td className="py-3 pr-4 text-right">
+                                  <span className="text-sm text-white">
+                                    {member.total}
+                                  </span>
+                                </td>
+                                <td className="py-3 pr-4 text-right">
+                                  <span className="text-sm text-emerald-400">
+                                    {member.won}
+                                  </span>
+                                </td>
+                                <td className="py-3 pr-4 text-right">
+                                  <span className="text-sm text-red-400">
+                                    {member.lost}
+                                  </span>
+                                </td>
+                                <td className="py-3 pr-4 text-right">
+                                  <span className="text-sm text-brand-primary">
+                                    {member.conversionRate.toFixed(1)}%
+                                  </span>
+                                </td>
+                                <td className="py-3 text-right">
+                                  <span className="text-sm font-bold text-white">
+                                    € {member.revenue.toLocaleString("de-DE")}
+                                  </span>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
             </div>
           )}
 
           {/* ─── MEINE LEADS VIEW (sales_agency / agency_agent) ─── */}
-          {activeTab === 'leads' && (() => {
-            // Leads gefiltert nach ausgewähltem Team-Mitglied
-            const leadsForFilter = agencyMemberFilter === 'all'
-              ? agencyLeads
-              : agencyLeads.filter(lead =>
-                  agencyAssignments.some(
-                    a => a.lead_id === lead.id && a.assigned_by === agencyMemberFilter
-                  )
-                );
-            return (
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <h1 className="text-2xl font-semibold text-white">Meine Leads</h1>
-                <div className="flex items-center gap-3">
-                  {/* Team-Filter — nur für Inhaber sichtbar */}
-                  {user?.role === 'sales_agency' && agencyTeamMembers.length > 0 && (
-                    <div className="relative">
-                      <select
-                        value={agencyMemberFilter}
-                        onChange={e => setAgencyMemberFilter(e.target.value)}
-                        className="appearance-none bg-[#1A1A1A] border border-white/10 rounded-xl pl-3 pr-8 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623]/50 cursor-pointer"
-                      >
-                        <option value="all">Alle Vertriebler</option>
-                        {agencyTeamMembers.map(m => (
-                          <option key={m.id} value={m.id}>{m.full_name}</option>
-                        ))}
-                      </select>
-                      <Users className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500 pointer-events-none" />
+          {activeTab === "leads" &&
+            (() => {
+              // Leads gefiltert nach ausgewähltem Team-Mitglied
+              const leadsForFilter =
+                agencyMemberFilter === "all"
+                  ? agencyLeads
+                  : agencyLeads.filter((lead) =>
+                      agencyAssignments.some(
+                        (a) =>
+                          a.lead_id === lead.id &&
+                          a.assigned_by === agencyMemberFilter,
+                      ),
+                    );
+              return (
+                <div className="flex flex-col gap-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <h1 className="text-2xl font-semibold text-white">
+                      Meine Leads
+                    </h1>
+                    <div className="flex items-center gap-3">
+                      {/* Team-Filter — nur für Inhaber sichtbar */}
+                      {user?.role === "sales_agency" &&
+                        agencyTeamMembers.length > 0 && (
+                          <div className="relative">
+                            <select
+                              value={agencyMemberFilter}
+                              onChange={(e) =>
+                                setAgencyMemberFilter(e.target.value)
+                              }
+                              className="appearance-none bg-brand-secondary-hover border border-white/10 rounded-xl pl-3 pr-8 py-2 text-sm text-white focus:outline-none focus:border-brand-primary/50 cursor-pointer"
+                            >
+                              <option value="all">Alle Vertriebler</option>
+                              {agencyTeamMembers.map((m) => (
+                                <option key={m.id} value={m.id}>
+                                  {m.full_name}
+                                </option>
+                              ))}
+                            </select>
+                            <Users className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500 pointer-events-none" />
+                          </div>
+                        )}
+                      <span className="text-sm text-gray-500">
+                        {leadsForFilter.length} Lead
+                        {leadsForFilter.length !== 1 ? "s" : ""}
+                      </span>
                     </div>
-                  )}
-                  <span className="text-sm text-gray-500">{leadsForFilter.length} Lead{leadsForFilter.length !== 1 ? 's' : ''}</span>
-                </div>
-              </div>
+                  </div>
 
-              {/* Stats */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                {[
-                  { label: 'Gesamt', value: leadsForFilter.length, color: 'text-white' },
-                  { label: 'Neu', value: leadsForFilter.filter(l => l.status === 'neu').length, color: 'text-[#F5A623]' },
-                  { label: 'In Bearbeitung', value: leadsForFilter.filter(l => !['neu','gewonnen','verloren','abgeschlossen'].includes(l.status)).length, color: 'text-blue-400' },
-                  { label: 'Gewonnen', value: leadsForFilter.filter(l => l.status === 'gewonnen').length, color: 'text-green-400' },
-                ].map(stat => (
-                  <div key={stat.label} className="bg-[#1A1A1A] rounded-2xl border border-white/5 p-5">
-                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">{stat.label}</p>
-                    <p className={`text-3xl font-bold ${stat.color}`}>{stat.value}</p>
+                  {/* Stats */}
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    {[
+                      {
+                        label: "Gesamt",
+                        value: leadsForFilter.length,
+                        color: "text-white",
+                      },
+                      {
+                        label: "Neu",
+                        value: leadsForFilter.filter((l) => l.status === "neu")
+                          .length,
+                        color: "text-brand-primary",
+                      },
+                      {
+                        label: "In Bearbeitung",
+                        value: leadsForFilter.filter(
+                          (l) =>
+                            ![
+                              "neu",
+                              "gewonnen",
+                              "verloren",
+                              "abgeschlossen",
+                            ].includes(l.status),
+                        ).length,
+                        color: "text-blue-400",
+                      },
+                      {
+                        label: "Gewonnen",
+                        value: leadsForFilter.filter(
+                          (l) => l.status === "gewonnen",
+                        ).length,
+                        color: "text-green-400",
+                      },
+                    ].map((stat) => (
+                      <div
+                        key={stat.label}
+                        className="bg-brand-secondary-hover rounded-2xl border border-white/5 p-5"
+                      >
+                        <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">
+                          {stat.label}
+                        </p>
+                        <p className={`text-3xl font-bold ${stat.color}`}>
+                          {stat.value}
+                        </p>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
 
-              {/* Leads Tabelle */}
-              <div className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
-                {agencyLeadsLoading ? (
-                  <div className="flex items-center justify-center py-16 gap-3 text-gray-500">
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    <span className="text-sm">Leads werden geladen…</span>
-                  </div>
-                ) : leadsForFilter.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center py-16 gap-3 text-gray-500">
-                    <Sun className="w-10 h-10 opacity-20" />
-                    <p className="text-sm">{agencyMemberFilter !== 'all' ? 'Dieser Vertriebler hat noch keine Leads zugewiesen.' : 'Noch keine Leads über deinen Funnel eingegangen.'}</p>
-                  </div>
-                ) : (
-                  <table className="w-full text-left">
-                    <thead>
-                      <tr className="border-b border-white/5">
-                        {['Name', 'PLZ', 'kWp', 'Investition', 'Status', 'Eingegangen', ''].map(h => (
-                          <th key={h} className="text-[10px] font-bold text-gray-500 uppercase tracking-widest px-6 py-4">{h}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {leadsForFilter.map((lead, i) => {
-                        const statusColors: Record<string, string> = {
-                          neu: 'bg-[#F5A623]/10 text-[#F5A623]',
-                          kontaktiert: 'bg-blue-500/10 text-blue-400',
-                          vorort: 'bg-purple-500/10 text-purple-400',
-                          angebot: 'bg-cyan-500/10 text-cyan-400',
-                          abschluss: 'bg-orange-500/10 text-orange-400',
-                          gewonnen: 'bg-green-500/10 text-green-400',
-                          verloren: 'bg-red-500/10 text-red-400',
-                          planung: 'bg-indigo-500/10 text-indigo-400',
-                          installation: 'bg-teal-500/10 text-teal-400',
-                          abgeschlossen: 'bg-gray-500/10 text-gray-400',
-                        };
-                        return (
-                          <tr key={lead.id} onClick={() => openLeadDetail(lead)} className={`border-b border-white/5 hover:bg-white/5 transition-colors cursor-pointer ${i % 2 === 0 ? '' : 'bg-white/[0.02]'}`}>
-                            <td className="px-6 py-4 text-sm font-medium text-white">{lead.first_name} {lead.last_name}</td>
-                            <td className="px-6 py-4 text-sm text-gray-400">{lead.zip || '—'}</td>
-                            <td className="px-6 py-4 text-sm text-gray-400">{lead.kwp ? `${lead.kwp} kWp` : '—'}</td>
-                            <td className="px-6 py-4 text-sm text-gray-400">{lead.investment ? `${lead.investment.toLocaleString('de-DE')} €` : '—'}</td>
-                            <td className="px-6 py-4">
-                              <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-lg capitalize ${statusColors[lead.status] || 'bg-gray-500/10 text-gray-400'}`}>
-                                {lead.status}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 text-sm text-gray-500">
-                              {new Date(lead.created_at).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}
-                            </td>
-                            <td className="px-6 py-4 text-right">
-                              <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-gray-400" />
-                            </td>
+                  {/* Leads Tabelle */}
+                  <div className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
+                    {agencyLeadsLoading ? (
+                      <div className="flex items-center justify-center py-16 gap-3 text-gray-500">
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <span className="text-sm">Leads werden geladen…</span>
+                      </div>
+                    ) : leadsForFilter.length === 0 ? (
+                      <div className="flex flex-col items-center justify-center py-16 gap-3 text-gray-500">
+                        <Sun className="w-10 h-10 opacity-20" />
+                        <p className="text-sm">
+                          {agencyMemberFilter !== "all"
+                            ? "Dieser Vertriebler hat noch keine Leads zugewiesen."
+                            : "Noch keine Leads über deinen Funnel eingegangen."}
+                        </p>
+                      </div>
+                    ) : (
+                      <table className="w-full text-left">
+                        <thead>
+                          <tr className="border-b border-white/5">
+                            {[
+                              "Name",
+                              "PLZ",
+                              "kWp",
+                              "Investition",
+                              "Status",
+                              "Eingegangen",
+                              "",
+                            ].map((h) => (
+                              <th
+                                key={h}
+                                className="text-[10px] font-bold text-gray-500 uppercase tracking-widest px-6 py-4"
+                              >
+                                {h}
+                              </th>
+                            ))}
                           </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                )}
-              </div>
-            </div>
-            );
-          })()}
+                        </thead>
+                        <tbody>
+                          {leadsForFilter.map((lead, i) => {
+                            const statusColors: Record<string, string> = {
+                              neu: "bg-brand-primary/10 text-brand-primary",
+                              kontaktiert: "bg-blue-500/10 text-blue-400",
+                              vorort: "bg-purple-500/10 text-purple-400",
+                              angebot: "bg-cyan-500/10 text-cyan-400",
+                              abschluss: "bg-orange-500/10 text-orange-400",
+                              gewonnen: "bg-green-500/10 text-green-400",
+                              verloren: "bg-red-500/10 text-red-400",
+                              planung: "bg-indigo-500/10 text-indigo-400",
+                              installation: "bg-teal-500/10 text-teal-400",
+                              abgeschlossen: "bg-gray-500/10 text-gray-400",
+                            };
+                            return (
+                              <tr
+                                key={lead.id}
+                                onClick={() => openLeadDetail(lead)}
+                                className={`border-b border-white/5 hover:bg-white/5 transition-colors cursor-pointer ${i % 2 === 0 ? "" : "bg-white/[0.02]"}`}
+                              >
+                                <td className="px-6 py-4 text-sm font-medium text-white">
+                                  {lead.first_name} {lead.last_name}
+                                </td>
+                                <td className="px-6 py-4 text-sm text-gray-400">
+                                  {lead.zip || "—"}
+                                </td>
+                                <td className="px-6 py-4 text-sm text-gray-400">
+                                  {lead.kwp ? `${lead.kwp} kWp` : "—"}
+                                </td>
+                                <td className="px-6 py-4 text-sm text-gray-400">
+                                  {lead.investment
+                                    ? `${lead.investment.toLocaleString("de-DE")} €`
+                                    : "—"}
+                                </td>
+                                <td className="px-6 py-4">
+                                  <span
+                                    className={`text-[11px] font-semibold px-2.5 py-1 rounded-lg capitalize ${statusColors[lead.status] || "bg-gray-500/10 text-gray-400"}`}
+                                  >
+                                    {lead.status}
+                                  </span>
+                                </td>
+                                <td className="px-6 py-4 text-sm text-gray-500">
+                                  {new Date(lead.created_at).toLocaleDateString(
+                                    "de-DE",
+                                    {
+                                      day: "2-digit",
+                                      month: "2-digit",
+                                      year: "numeric",
+                                    },
+                                  )}
+                                </td>
+                                <td className="px-6 py-4 text-right">
+                                  <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-gray-400" />
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    )}
+                  </div>
+                </div>
+              );
+            })()}
 
           {/* ─── SETTINGS VIEW ─── */}
-          {activeTab === 'settings' && (
+          {activeTab === "settings" && (
             <div className="flex flex-col items-center justify-center gap-6 py-20">
-              <div className="w-16 h-16 rounded-2xl bg-[#1A3A5C] flex items-center justify-center">
-                <Crown className="w-8 h-8 text-[#F5A623]" />
+              <div className="w-16 h-16 rounded-2xl bg-brand-secondary flex items-center justify-center">
+                <Crown className="w-8 h-8 text-brand-primary" />
               </div>
               <div className="text-center">
-                <h1 className="text-2xl font-semibold text-white mb-2">Einstellungen</h1>
-                <p className="text-gray-500 mb-6">Verwalte dein Firmenprofil, Branding und Kalkulationsparameter.</p>
+                <h1 className="text-2xl font-semibold text-white mb-2">
+                  Einstellungen
+                </h1>
+                <p className="text-gray-500 mb-6">
+                  Verwalte dein Firmenprofil, Branding und
+                  Kalkulationsparameter.
+                </p>
                 <Link
                   to="/admin/settings"
-                  className="inline-flex items-center gap-2 bg-[#F5A623] hover:bg-[#E09000] text-[#1A3A5C] text-sm font-bold px-6 py-3 rounded-xl transition-all"
+                  className="inline-flex items-center gap-2 bg-brand-primary hover:bg-brand-primary-hover text-brand-secondary text-sm font-bold px-6 py-3 rounded-xl transition-all"
                 >
                   <Crown className="w-4 h-4" />
                   Inhaber-Einstellungen öffnen
@@ -1691,479 +2458,361 @@ export default function AdminDashboard() {
       <AddLeadModal
         isOpen={showAddLeadModal}
         onClose={() => setShowAddLeadModal(false)}
-        installerId={user?.id || ''}
+        installerId={user?.id || ""}
         onSuccess={() => window.location.reload()}
       />
 
       {/* ─── LEAD DETAIL DRAWER — Agentur ─── */}
-      {selectedLead && (user?.role === 'sales_agency' || user?.role === 'agency_agent') && (
-        <AgencyLeadDrawer lead={selectedLead} onClose={() => setSelectedLead(null)} />
-      )}
+      {selectedLead &&
+        (user?.role === "sales_agency" || user?.role === "agency_agent") && (
+          <AgencyLeadDrawer
+            lead={selectedLead}
+            onClose={() => setSelectedLead(null)}
+          />
+        )}
 
       {/* ─── LEAD DETAIL DRAWER — Installateur/Owner ─── */}
-      {selectedLead && user?.role !== 'sales_agency' && user?.role !== 'agency_agent' && (
-        <div className="fixed inset-0 z-50 flex justify-end">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setSelectedLead(null)}
-          />
-          {/* Drawer */}
-          <div className="relative w-full max-w-lg bg-[#0F0F0F] border-l border-white/10 h-full overflow-y-auto">
-            {/* Header */}
-            <div className="sticky top-0 bg-[#0F0F0F]/95 backdrop-blur border-b border-white/10 px-6 py-4 flex items-center justify-between z-10">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#1A3A5C] flex items-center justify-center text-sm font-bold text-white">
-                  {selectedLead.first_name?.[0]}{selectedLead.last_name?.[0]}
-                </div>
-                <div>
-                  <h2 className="text-sm font-semibold text-white">{selectedLead.first_name} {selectedLead.last_name}</h2>
-                  <p className="text-xs text-gray-500">{selectedLead.email}</p>
-                </div>
-              </div>
-              <button
-                onClick={() => setSelectedLead(null)}
-                className="w-8 h-8 rounded-lg bg-[#1A1A1A] border border-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="p-6 space-y-6">
-              {detailLoading && (
-                <div className="flex justify-center py-2">
-                  <Loader2 className="w-5 h-5 animate-spin text-[#F5A623]" />
-                </div>
-              )}
-
-              {/* Lead Status */}
-              <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-4">
-                <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 block">Lead-Status</label>
-                <select
-                  value={selectedLead.status}
-                  onChange={(e) => handleLeadStatusChange(selectedLead.id, e.target.value as Lead['status'])}
-                  className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#F5A623]/50"
-                >
-                  {Object.entries(STATUS_LABELS).map(([value, label]) => (
-                    <option key={value} value={value}>{label}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Kontaktdaten */}
-              <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-4 space-y-3">
-                <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Kontaktdaten</h3>
+      {selectedLead &&
+        user?.role !== "sales_agency" &&
+        user?.role !== "agency_agent" && (
+          <div className="fixed inset-0 z-50 flex justify-end">
+            {/* Backdrop */}
+            <div
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+              onClick={() => setSelectedLead(null)}
+            />
+            {/* Drawer */}
+            <div className="relative w-full max-w-lg bg-[#0F0F0F] border-l border-white/10 h-full overflow-y-auto">
+              {/* Header */}
+              <div className="sticky top-0 bg-[#0F0F0F]/95 backdrop-blur border-b border-white/10 px-6 py-4 flex items-center justify-between z-10">
                 <div className="flex items-center gap-3">
-                  <Mail className="w-4 h-4 text-gray-500" />
-                  <span className="text-sm text-gray-300">{selectedLead.email}</span>
+                  <div className="w-10 h-10 rounded-full bg-brand-secondary flex items-center justify-center text-sm font-bold text-white">
+                    {selectedLead.first_name?.[0]}
+                    {selectedLead.last_name?.[0]}
+                  </div>
+                  <div>
+                    <h2 className="text-sm font-semibold text-white">
+                      {selectedLead.first_name} {selectedLead.last_name}
+                    </h2>
+                    <p className="text-xs text-gray-500">
+                      {selectedLead.email}
+                    </p>
+                  </div>
                 </div>
-                {selectedLead.phone && (
-                  <div className="flex items-center gap-3">
-                    <Phone className="w-4 h-4 text-gray-500" />
-                    <span className="text-sm text-gray-300">{selectedLead.phone}</span>
-                  </div>
-                )}
-                {selectedLead.zip && (
-                  <div className="flex items-center gap-3">
-                    <MapPin className="w-4 h-4 text-gray-500" />
-                    <span className="text-sm text-gray-300">{selectedLead.zip}</span>
-                  </div>
-                )}
+                <button
+                  onClick={() => setSelectedLead(null)}
+                  className="w-8 h-8 rounded-lg bg-brand-secondary-hover border border-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
               </div>
 
-              {/* Konfiguration */}
-              <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-4 space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Konfiguration</h3>
-                  <button
-                    onClick={() => setShowConfigModal(true)}
-                    className="flex items-center gap-1.5 bg-[#F5A623]/10 hover:bg-[#F5A623]/20 text-[#F5A623] font-bold text-[10px] px-2.5 py-1 rounded-md transition-colors"
-                  >
-                    <Pencil className="w-3 h-3" />
-                    Bearbeiten
-                  </button>
-                </div>
-
-                {/* Details immer anzeigen */}
-                <div className="grid grid-cols-2 gap-3">
-                  {selectedLead.kwp != null && (
-                    <div className="flex items-center gap-2">
-                      <Sun className="w-4 h-4 text-[#F5A623]" />
-                      <span className="text-sm text-gray-300">{selectedLead.kwp} kWp</span>
-                    </div>
-                  )}
-                  {selectedLead.investment != null && (
-                    <div className="flex items-center gap-2">
-                      <DollarSign className="w-4 h-4 text-[#F5A623]" />
-                      <span className="text-sm text-gray-300">
-                        {selectedLead.final_price != null ? (
-                          <>
-                            <span className="text-gray-500 line-through text-xs mr-1">{selectedLead.investment.toLocaleString('de-DE')} €</span>
-                            <span className="text-[#F5A623] font-bold">{selectedLead.final_price.toLocaleString('de-DE')} €</span>
-                          </>
-                        ) : (
-                          <>{selectedLead.investment.toLocaleString('de-DE')} €</>
-                        )}
-                      </span>
-                    </div>
-                  )}
-                  {selectedLead.roof_orientation && (
-                    <div className="flex items-center gap-2">
-                      <Compass className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm text-gray-300">{selectedLead.roof_orientation}</span>
-                    </div>
-                  )}
-                  {selectedLead.consumption != null && (
-                    <div className="flex items-center gap-2">
-                      <Zap className="w-4 h-4 text-blue-400" />
-                      <span className="text-sm text-gray-300">{selectedLead.consumption.toLocaleString('de-DE')} kWh</span>
-                    </div>
-                  )}
-                  {selectedLead.electricity_price != null && (
-                    <div className="flex items-center gap-2">
-                      <TrendingUp className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm text-gray-300">{selectedLead.electricity_price} ct/kWh</span>
-                    </div>
-                  )}
-                  {selectedLead.roof_area != null && (
-                    <div className="flex items-center gap-2">
-                      <Home className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm text-gray-300">{selectedLead.roof_area} m²</span>
-                    </div>
-                  )}
-                  {selectedLead.construction_year && (
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm text-gray-300">Baujahr {selectedLead.construction_year}</span>
-                    </div>
-                  )}
-                  {selectedLead.annual_savings != null && (
-                    <div className="flex items-center gap-2">
-                      <TrendingDown className="w-4 h-4 text-green-400" />
-                      <span className="text-sm text-gray-300">{selectedLead.annual_savings.toLocaleString('de-DE')} €/Jahr</span>
-                    </div>
-                  )}
-                  {selectedLead.amortization != null && (
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm text-gray-300">~{selectedLead.amortization} J. Amort.</span>
-                    </div>
-                  )}
-                  {selectedLead.autarky != null && (
-                    <div className="flex items-center gap-2">
-                      <BatteryCharging className="w-4 h-4 text-green-400" />
-                      <span className="text-sm text-gray-300">{selectedLead.autarky}% Autarkie</span>
-                    </div>
-                  )}
-                  {selectedLead.has_battery && (
-                    <div className="flex items-center gap-2">
-                      <BatteryCharging className="w-4 h-4 text-green-400" />
-                      <span className="text-sm text-gray-300">Speicher</span>
-                    </div>
-                  )}
-                  {selectedLead.has_e_car && (
-                    <div className="flex items-center gap-2">
-                      <Car className="w-4 h-4 text-blue-400" />
-                      <span className="text-sm text-gray-300">E-Auto</span>
-                    </div>
-                  )}
-                  {selectedLead.has_heat_pump && (
-                    <div className="flex items-center gap-2">
-                      <Thermometer className="w-4 h-4 text-orange-400" />
-                      <span className="text-sm text-gray-300">Wärmepumpe</span>
-                    </div>
-                  )}
-                  {selectedLead.shading_issues && (
-                    <div className="flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4 text-amber-400" />
-                      <span className="text-sm text-amber-400">Verschattung</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Vor-Ort-Termin */}
-              {(selectedLead.status === 'kontaktiert' || selectedLead.status === 'vorort' || selectedLead.status === 'angebot' || selectedLead.status === 'abschluss') && (
-                <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-4 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Termin vereinbaren</h3>
-                    {selectedLead.site_visit_done && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-500/10 text-green-400">
-                        Durchgeführt
-                      </span>
-                    )}
+              <div className="p-6 space-y-6">
+                {detailLoading && (
+                  <div className="flex justify-center py-2">
+                    <Loader2 className="w-5 h-5 animate-spin text-brand-primary" />
                   </div>
+                )}
 
-                  {/* Termin-Datum */}
-                  <div className="space-y-1">
-                    <label className="text-xs text-gray-500">Termin-Datum</label>
-                    <input
-                      type="date"
-                      value={selectedLead.site_visit_date?.slice(0, 10) || ''}
-                      onChange={(e) => setSelectedLead((prev) => prev ? { ...prev, site_visit_date: e.target.value ? new Date(e.target.value).toISOString() : null } : prev)}
-                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623]/50"
-                    />
-                  </div>
-
-                  {/* Notizen */}
-                  <div className="space-y-1">
-                    <label className="text-xs text-gray-500">Vor-Ort-Notizen</label>
-                    <textarea
-                      value={selectedLead.site_visit_notes || ''}
-                      onChange={(e) => setSelectedLead((prev) => prev ? { ...prev, site_visit_notes: e.target.value || null } : prev)}
-                      placeholder="Notizen vom Termin..."
-                      rows={2}
-                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50 resize-none"
-                    />
-                  </div>
-
-                  {/* Termin durchgeführt Toggle */}
-                  <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer pt-2 border-t border-white/5">
-                    <input
-                      type="checkbox"
-                      checked={selectedLead.site_visit_done}
-                      onChange={(e) => setSelectedLead((prev) => prev ? { ...prev, site_visit_done: e.target.checked } : prev)}
-                      className="w-4 h-4 rounded border-white/10 bg-[#252525] text-[#F5A623] focus:ring-[#F5A623]/50"
-                    />
-                    Termin wurde durchgeführt
+                {/* Lead Status */}
+                <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-4">
+                  <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2 block">
+                    Lead-Status
                   </label>
+                  <select
+                    value={selectedLead.status}
+                    onChange={(e) =>
+                      handleLeadStatusChange(
+                        selectedLead.id,
+                        e.target.value as Lead["status"],
+                      )
+                    }
+                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-primary/50"
+                  >
+                    {Object.entries(STATUS_LABELS).map(([value, label]) => (
+                      <option key={value} value={value}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-                  {/* Speichern & Status-Wechsel */}
-                  <div className="flex flex-col gap-2 pt-2">
+                {/* Kontaktdaten */}
+                <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-4 space-y-3">
+                  <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                    Kontaktdaten
+                  </h3>
+                  <div className="flex items-center gap-3">
+                    <Mail className="w-4 h-4 text-gray-500" />
+                    <span className="text-sm text-gray-300">
+                      {selectedLead.email}
+                    </span>
+                  </div>
+                  {selectedLead.phone && (
+                    <div className="flex items-center gap-3">
+                      <Phone className="w-4 h-4 text-gray-500" />
+                      <span className="text-sm text-gray-300">
+                        {selectedLead.phone}
+                      </span>
+                    </div>
+                  )}
+                  {selectedLead.zip && (
+                    <div className="flex items-center gap-3">
+                      <MapPin className="w-4 h-4 text-gray-500" />
+                      <span className="text-sm text-gray-300">
+                        {selectedLead.zip}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Konfiguration */}
+                <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                      Konfiguration
+                    </h3>
                     <button
-                      onClick={async () => {
-                        setDetailLoading(true);
-                        try {
-                          await updateLeadFields(selectedLead.id, {
-                            site_visit_date: selectedLead.site_visit_date,
-                            site_visit_notes: selectedLead.site_visit_notes,
-                            site_visit_done: selectedLead.site_visit_done,
-                            roof_area_measured: selectedLead.roof_area_measured,
-                            roof_angle: selectedLead.roof_angle,
-                            shading_issues: selectedLead.shading_issues,
-                            roof_area: selectedLead.roof_area_measured ?? selectedLead.roof_area,
-                            roof_orientation: selectedLead.roof_orientation,
-                            consumption: selectedLead.consumption,
-                            electricity_price: selectedLead.electricity_price,
-                            has_battery: selectedLead.has_battery,
-                            has_e_car: selectedLead.has_e_car,
-                            has_heat_pump: selectedLead.has_heat_pump,
-                            kwp: selectedLead.kwp,
-                            investment: selectedLead.investment,
-                            annual_savings: selectedLead.annual_savings,
-                            amortization: selectedLead.amortization,
-                            autarky: selectedLead.autarky,
-                            profit_20_years: selectedLead.profit_20_years,
-                            score: computeLeadScoreFromLead(selectedLead),
-                          });
-                          // Termin automatisch mit Kalender synchronisieren
-                          if (selectedLead.site_visit_date && user) {
-                            await upsertSiteVisitAppointment(user.id, selectedLead);
-                          }
-                        } finally {
-                          setDetailLoading(false);
-                        }
-                      }}
-                      className="w-full bg-[#252525] hover:bg-white/5 text-white font-bold text-xs px-4 py-2.5 rounded-lg transition-colors border border-white/10"
+                      onClick={() => setShowConfigModal(true)}
+                      className="flex items-center gap-1.5 bg-brand-primary/10 hover:bg-brand-primary/20 text-brand-primary font-bold text-[10px] px-2.5 py-1 rounded-md transition-colors"
                     >
-                      Speichern
+                      <Pencil className="w-3 h-3" />
+                      Bearbeiten
                     </button>
+                  </div>
 
-                    {selectedLead.status === 'kontaktiert' && (
-                      <button
-                        onClick={() => handleLeadStatusChange(selectedLead.id, 'vorort')}
-                        className="w-full flex items-center justify-center gap-2 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 font-bold text-xs px-4 py-2.5 rounded-lg transition-colors border border-purple-500/20"
-                      >
-                        <MapPin className="w-3.5 h-3.5" />
-                        Termin vereinbart → Vor Ort
-                      </button>
+                  {/* Details immer anzeigen */}
+                  <div className="grid grid-cols-2 gap-3">
+                    {selectedLead.kwp != null && (
+                      <div className="flex items-center gap-2">
+                        <Sun className="w-4 h-4 text-brand-primary" />
+                        <span className="text-sm text-gray-300">
+                          {selectedLead.kwp} kWp
+                        </span>
+                      </div>
                     )}
-
-                    {selectedLead.status === 'vorort' && selectedLead.site_visit_done && (
-                      <button
-                        onClick={() => handleLeadStatusChange(selectedLead.id, 'angebot')}
-                        className="w-full flex items-center justify-center gap-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 font-bold text-xs px-4 py-2.5 rounded-lg transition-colors border border-indigo-500/20"
-                      >
-                        <FileTextIcon className="w-3.5 h-3.5" />
-                        Angebot erstellen → Angebot versendet
-                      </button>
+                    {selectedLead.investment != null && (
+                      <div className="flex items-center gap-2">
+                        <DollarSign className="w-4 h-4 text-brand-primary" />
+                        <span className="text-sm text-gray-300">
+                          {selectedLead.final_price != null ? (
+                            <>
+                              <span className="text-gray-500 line-through text-xs mr-1">
+                                {selectedLead.investment.toLocaleString(
+                                  "de-DE",
+                                )}{" "}
+                                €
+                              </span>
+                              <span className="text-brand-primary font-bold">
+                                {selectedLead.final_price.toLocaleString(
+                                  "de-DE",
+                                )}{" "}
+                                €
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              {selectedLead.investment.toLocaleString("de-DE")}{" "}
+                              €
+                            </>
+                          )}
+                        </span>
+                      </div>
+                    )}
+                    {selectedLead.roof_orientation && (
+                      <div className="flex items-center gap-2">
+                        <Compass className="w-4 h-4 text-gray-500" />
+                        <span className="text-sm text-gray-300">
+                          {selectedLead.roof_orientation}
+                        </span>
+                      </div>
+                    )}
+                    {selectedLead.consumption != null && (
+                      <div className="flex items-center gap-2">
+                        <Zap className="w-4 h-4 text-blue-400" />
+                        <span className="text-sm text-gray-300">
+                          {selectedLead.consumption.toLocaleString("de-DE")} kWh
+                        </span>
+                      </div>
+                    )}
+                    {selectedLead.electricity_price != null && (
+                      <div className="flex items-center gap-2">
+                        <TrendingUp className="w-4 h-4 text-gray-500" />
+                        <span className="text-sm text-gray-300">
+                          {selectedLead.electricity_price} ct/kWh
+                        </span>
+                      </div>
+                    )}
+                    {selectedLead.roof_area != null && (
+                      <div className="flex items-center gap-2">
+                        <Home className="w-4 h-4 text-gray-500" />
+                        <span className="text-sm text-gray-300">
+                          {selectedLead.roof_area} m²
+                        </span>
+                      </div>
+                    )}
+                    {selectedLead.construction_year && (
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4 text-gray-500" />
+                        <span className="text-sm text-gray-300">
+                          Baujahr {selectedLead.construction_year}
+                        </span>
+                      </div>
+                    )}
+                    {selectedLead.annual_savings != null && (
+                      <div className="flex items-center gap-2">
+                        <TrendingDown className="w-4 h-4 text-green-400" />
+                        <span className="text-sm text-gray-300">
+                          {selectedLead.annual_savings.toLocaleString("de-DE")}{" "}
+                          €/Jahr
+                        </span>
+                      </div>
+                    )}
+                    {selectedLead.amortization != null && (
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-gray-500" />
+                        <span className="text-sm text-gray-300">
+                          ~{selectedLead.amortization} J. Amort.
+                        </span>
+                      </div>
+                    )}
+                    {selectedLead.autarky != null && (
+                      <div className="flex items-center gap-2">
+                        <BatteryCharging className="w-4 h-4 text-green-400" />
+                        <span className="text-sm text-gray-300">
+                          {selectedLead.autarky}% Autarkie
+                        </span>
+                      </div>
+                    )}
+                    {selectedLead.has_battery && (
+                      <div className="flex items-center gap-2">
+                        <BatteryCharging className="w-4 h-4 text-green-400" />
+                        <span className="text-sm text-gray-300">Speicher</span>
+                      </div>
+                    )}
+                    {selectedLead.has_e_car && (
+                      <div className="flex items-center gap-2">
+                        <Car className="w-4 h-4 text-blue-400" />
+                        <span className="text-sm text-gray-300">E-Auto</span>
+                      </div>
+                    )}
+                    {selectedLead.has_heat_pump && (
+                      <div className="flex items-center gap-2">
+                        <Thermometer className="w-4 h-4 text-orange-400" />
+                        <span className="text-sm text-gray-300">
+                          Wärmepumpe
+                        </span>
+                      </div>
+                    )}
+                    {selectedLead.shading_issues && (
+                      <div className="flex items-center gap-2">
+                        <AlertTriangle className="w-4 h-4 text-amber-400" />
+                        <span className="text-sm text-amber-400">
+                          Verschattung
+                        </span>
+                      </div>
                     )}
                   </div>
                 </div>
-              )}
 
-              {/* Konfiguration bearbeiten Modal */}
-              {showConfigModal && selectedLead && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-                  <div className="bg-[#1A1A1A] rounded-xl border border-white/10 w-full max-w-lg max-h-[90vh] overflow-y-auto">
-                    <div className="flex items-center justify-between p-4 border-b border-white/5">
-                      <h3 className="text-sm font-bold text-white">Konfiguration bearbeiten</h3>
-                      <button
-                        onClick={() => setShowConfigModal(false)}
-                        className="text-gray-500 hover:text-white transition-colors"
-                      >
-                        <X className="w-5 h-5" />
-                      </button>
+                {/* Vor-Ort-Termin */}
+                {(selectedLead.status === "kontaktiert" ||
+                  selectedLead.status === "vorort" ||
+                  selectedLead.status === "angebot" ||
+                  selectedLead.status === "abschluss") && (
+                  <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-4 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                        Termin vereinbaren
+                      </h3>
+                      {selectedLead.site_visit_done && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-500/10 text-green-400">
+                          Durchgeführt
+                        </span>
+                      )}
                     </div>
 
-                    <div className="p-4 space-y-4">
-                      {/* Gemessene Daten */}
-                      <div className="space-y-3">
-                        <h4 className="text-xs font-bold text-gray-400">Gemessene Daten</h4>
-                        <div className="grid grid-cols-2 gap-3">
-                          <div className="space-y-1">
-                            <label className="text-xs text-gray-500">Dachfläche (m²)</label>
-                            <input
-                              type="number"
-                              value={selectedLead.roof_area_measured ?? ''}
-                              onChange={(e) => setSelectedLead((prev) => prev ? { ...prev, roof_area_measured: e.target.value ? Number(e.target.value) : null } : prev)}
-                              className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623]/50"
-                            />
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-xs text-gray-500">Dachneigung (°)</label>
-                            <input
-                              type="number"
-                              value={selectedLead.roof_angle ?? ''}
-                              onChange={(e) => setSelectedLead((prev) => prev ? { ...prev, roof_angle: e.target.value ? Number(e.target.value) : null } : prev)}
-                              className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623]/50"
-                            />
-                          </div>
-                        </div>
-                        <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={selectedLead.shading_issues || false}
-                            onChange={(e) => setSelectedLead((prev) => prev ? { ...prev, shading_issues: e.target.checked } : prev)}
-                            className="w-4 h-4 rounded border-white/10 bg-[#252525] text-[#F5A623] focus:ring-[#F5A623]/50"
-                          />
-                          Verschattungsprobleme festgestellt
-                        </label>
-                      </div>
-
-                      {/* Konfiguration */}
-                      <div className="space-y-3 pt-2 border-t border-white/5">
-                        <h4 className="text-xs font-bold text-gray-400">Konfiguration</h4>
-                        <div className="grid grid-cols-2 gap-3">
-                          <div className="space-y-1">
-                            <label className="text-xs text-gray-500">Dachausrichtung</label>
-                            <select
-                              value={selectedLead.roof_orientation || ''}
-                              onChange={(e) => setSelectedLead((prev) => prev ? { ...prev, roof_orientation: e.target.value || null } : prev)}
-                              className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623]/50"
-                            >
-                              <option value="">—</option>
-                              <option value="Süd">Süd</option>
-                              <option value="Süd-Ost">Süd-Ost</option>
-                              <option value="Süd-West">Süd-West</option>
-                              <option value="Ost">Ost</option>
-                              <option value="West">West</option>
-                              <option value="Nord">Nord</option>
-                            </select>
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-xs text-gray-500">Stromverbrauch (kWh/Jahr)</label>
-                            <input
-                              type="number"
-                              value={selectedLead.consumption ?? ''}
-                              onChange={(e) => setSelectedLead((prev) => prev ? { ...prev, consumption: e.target.value ? Number(e.target.value) : null } : prev)}
-                              className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623]/50"
-                            />
-                          </div>
-                        </div>
-
-                        <div className="space-y-1">
-                          <label className="text-xs text-gray-500">Strompreis (ct/kWh)</label>
-                          <input
-                            type="number"
-                            step="0.01"
-                            value={selectedLead.electricity_price ?? ''}
-                            onChange={(e) => setSelectedLead((prev) => prev ? { ...prev, electricity_price: e.target.value ? Number(e.target.value) : null } : prev)}
-                            className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623]/50"
-                          />
-                        </div>
-
-                        <div className="space-y-2">
-                          <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
-                            <input
-                              type="checkbox"
-                              checked={selectedLead.has_battery || false}
-                              onChange={(e) => setSelectedLead((prev) => prev ? { ...prev, has_battery: e.target.checked } : prev)}
-                              className="w-4 h-4 rounded border-white/10 bg-[#252525] text-[#F5A623] focus:ring-[#F5A623]/50"
-                            />
-                            <BatteryCharging className="w-4 h-4 text-green-400" />
-                            Speicher / Batteriespeicher
-                          </label>
-                          <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
-                            <input
-                              type="checkbox"
-                              checked={selectedLead.has_e_car || false}
-                              onChange={(e) => setSelectedLead((prev) => prev ? { ...prev, has_e_car: e.target.checked } : prev)}
-                              className="w-4 h-4 rounded border-white/10 bg-[#252525] text-[#F5A623] focus:ring-[#F5A623]/50"
-                            />
-                            <Car className="w-4 h-4 text-blue-400" />
-                            E-Auto / Wallbox
-                          </label>
-                          <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
-                            <input
-                              type="checkbox"
-                              checked={selectedLead.has_heat_pump || false}
-                              onChange={(e) => setSelectedLead((prev) => prev ? { ...prev, has_heat_pump: e.target.checked } : prev)}
-                              className="w-4 h-4 rounded border-white/10 bg-[#252525] text-[#F5A623] focus:ring-[#F5A623]/50"
-                            />
-                            <Thermometer className="w-4 h-4 text-orange-400" />
-                            Wärmepumpe
-                          </label>
-                        </div>
-                      </div>
-
-                      {/* Neuberechnung */}
-                      <div className="space-y-3 pt-2 border-t border-white/5">
-                        <button
-                          onClick={() => {
-                            const recalculated = recalculateLead(selectedLead);
-                            setSelectedLead((prev) => prev ? { ...prev, ...recalculated } : prev);
-                          }}
-                          className="w-full flex items-center justify-center gap-2 bg-[#1A3A5C]/30 hover:bg-[#1A3A5C]/50 text-blue-400 font-bold text-xs px-4 py-2 rounded-lg transition-colors border border-[#1A3A5C]/30"
-                        >
-                          <Zap className="w-3.5 h-3.5" />
-                          Konfiguration neu berechnen
-                        </button>
-
-                        {(selectedLead.kwp != null || selectedLead.investment != null) && (
-                          <div className="grid grid-cols-3 gap-2 bg-[#252525] rounded-lg p-3">
-                            <div>
-                              <p className="text-[10px] text-gray-500">kWp</p>
-                              <p className="text-sm font-bold text-white">{selectedLead.kwp}</p>
-                            </div>
-                            <div>
-                              <p className="text-[10px] text-gray-500">Investition</p>
-                              <p className="text-sm font-bold text-white">{selectedLead.investment?.toLocaleString('de-DE')} €</p>
-                            </div>
-                            <div>
-                              <p className="text-[10px] text-gray-500">Ersparnis/Jahr</p>
-                              <p className="text-sm font-bold text-[#F5A623]">{selectedLead.annual_savings?.toLocaleString('de-DE')} €</p>
-                            </div>
-                          </div>
-                        )}
-                      </div>
+                    {/* Termin-Datum */}
+                    <div className="space-y-1">
+                      <label className="text-xs text-gray-500">
+                        Termin-Datum
+                      </label>
+                      <input
+                        type="date"
+                        value={selectedLead.site_visit_date?.slice(0, 10) || ""}
+                        onChange={(e) =>
+                          setSelectedLead((prev) =>
+                            prev
+                              ? {
+                                  ...prev,
+                                  site_visit_date: e.target.value
+                                    ? new Date(e.target.value).toISOString()
+                                    : null,
+                                }
+                              : prev,
+                          )
+                        }
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-primary/50"
+                      />
                     </div>
 
-                    <div className="flex gap-2 p-4 border-t border-white/5">
-                      <button
-                        onClick={() => setShowConfigModal(false)}
-                        className="flex-1 bg-[#252525] border border-white/10 hover:bg-[#333] text-white font-bold text-xs px-4 py-2.5 rounded-lg transition-colors"
-                      >
-                        Abbrechen
-                      </button>
+                    {/* Notizen */}
+                    <div className="space-y-1">
+                      <label className="text-xs text-gray-500">
+                        Vor-Ort-Notizen
+                      </label>
+                      <textarea
+                        value={selectedLead.site_visit_notes || ""}
+                        onChange={(e) =>
+                          setSelectedLead((prev) =>
+                            prev
+                              ? {
+                                  ...prev,
+                                  site_visit_notes: e.target.value || null,
+                                }
+                              : prev,
+                          )
+                        }
+                        placeholder="Notizen vom Termin..."
+                        rows={2}
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50 resize-none"
+                      />
+                    </div>
+
+                    {/* Termin durchgeführt Toggle */}
+                    <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer pt-2 border-t border-white/5">
+                      <input
+                        type="checkbox"
+                        checked={selectedLead.site_visit_done}
+                        onChange={(e) =>
+                          setSelectedLead((prev) =>
+                            prev
+                              ? { ...prev, site_visit_done: e.target.checked }
+                              : prev,
+                          )
+                        }
+                        className="w-4 h-4 rounded border-white/10 bg-[#252525] text-brand-primary focus:ring-brand-primary/50"
+                      />
+                      Termin wurde durchgeführt
+                    </label>
+
+                    {/* Speichern & Status-Wechsel */}
+                    <div className="flex flex-col gap-2 pt-2">
                       <button
                         onClick={async () => {
                           setDetailLoading(true);
                           try {
                             await updateLeadFields(selectedLead.id, {
-                              roof_area_measured: selectedLead.roof_area_measured,
+                              site_visit_date: selectedLead.site_visit_date,
+                              site_visit_notes: selectedLead.site_visit_notes,
+                              site_visit_done: selectedLead.site_visit_done,
+                              roof_area_measured:
+                                selectedLead.roof_area_measured,
                               roof_angle: selectedLead.roof_angle,
                               shading_issues: selectedLead.shading_issues,
+                              roof_area:
+                                selectedLead.roof_area_measured ??
+                                selectedLead.roof_area,
                               roof_orientation: selectedLead.roof_orientation,
                               consumption: selectedLead.consumption,
                               electricity_price: selectedLead.electricity_price,
@@ -2178,127 +2827,564 @@ export default function AdminDashboard() {
                               profit_20_years: selectedLead.profit_20_years,
                               score: computeLeadScoreFromLead(selectedLead),
                             });
-                            setShowConfigModal(false);
-                          } catch (e) {
-                            alert((e as Error).message);
+                            // Termin automatisch mit Kalender synchronisieren
+                            if (selectedLead.site_visit_date && user) {
+                              await upsertSiteVisitAppointment(
+                                user.id,
+                                selectedLead,
+                              );
+                            }
                           } finally {
                             setDetailLoading(false);
                           }
                         }}
-                        disabled={detailLoading}
-                        className="flex-1 bg-[#F5A623] hover:bg-[#E09000] text-[#1A3A5C] font-bold text-xs px-4 py-2.5 rounded-lg transition-colors disabled:opacity-50"
+                        className="w-full bg-[#252525] hover:bg-white/5 text-white font-bold text-xs px-4 py-2.5 rounded-lg transition-colors border border-white/10"
                       >
-                        {detailLoading ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : 'Speichern'}
+                        Speichern
                       </button>
+
+                      {selectedLead.status === "kontaktiert" && (
+                        <button
+                          onClick={() =>
+                            handleLeadStatusChange(selectedLead.id, "vorort")
+                          }
+                          className="w-full flex items-center justify-center gap-2 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 font-bold text-xs px-4 py-2.5 rounded-lg transition-colors border border-purple-500/20"
+                        >
+                          <MapPin className="w-3.5 h-3.5" />
+                          Termin vereinbart → Vor Ort
+                        </button>
+                      )}
+
+                      {selectedLead.status === "vorort" &&
+                        selectedLead.site_visit_done && (
+                          <button
+                            onClick={() =>
+                              handleLeadStatusChange(selectedLead.id, "angebot")
+                            }
+                            className="w-full flex items-center justify-center gap-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 font-bold text-xs px-4 py-2.5 rounded-lg transition-colors border border-indigo-500/20"
+                          >
+                            <FileTextIcon className="w-3.5 h-3.5" />
+                            Angebot erstellen → Angebot versendet
+                          </button>
+                        )}
                     </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Angebot */}
-              <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-4 space-y-4">
-                <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Angebot</h3>
-
-                {loadingOfferDraft ? (
-                  <div className="flex items-center justify-center py-6">
-                    <Loader2 className="w-6 h-6 text-[#F5A623] animate-spin" />
-                  </div>
-                ) : offerDraft ? (
-                  <div className="space-y-4">
-                    {(() => {
-                      const statusConfig: Record<OfferDraft['status'], { label: string; color: string }> = {
-                        draft:    { label: 'Entwurf vorhanden', color: 'bg-gray-500/10 text-gray-400 border-gray-500/20' },
-                        sent:     { label: 'Angebot versendet', color: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
-                        accepted: { label: 'Angebot angenommen', color: 'bg-green-500/10 text-green-400 border-green-500/20' },
-                        rejected: { label: 'Angebot abgelehnt', color: 'bg-red-500/10 text-red-400 border-red-500/20' },
-                      };
-                      const cfg = statusConfig[offerDraft.status];
-                      return (
-                        <div className={`inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full border ${cfg.color}`}>
-                          <FileTextIcon className="w-3.5 h-3.5" />
-                          {cfg.label}
-                        </div>
-                      );
-                    })()}
-
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Gesamtsumme</span>
-                      <span className="text-2xl font-black text-[#F5A623]">{offerDraft.total.toLocaleString('de-DE')} €</span>
-                    </div>
-
-                    <button
-                      onClick={() => navigate(`/lead/${selectedLead.id}/offer`)}
-                      className="w-full flex items-center justify-center gap-2 bg-[#F5A623] hover:bg-[#E09000] text-[#1A3A5C] font-bold text-sm px-5 py-3 rounded-xl transition-colors shadow-sm"
-                    >
-                      <FilePlus className="w-4 h-4" />
-                      {offerDraft.status === 'draft' ? 'Angebot bearbeiten' : 'Angebot ansehen'}
-                    </button>
-
-                    {selectedLead.offer_status === 'accepted' && selectedLead.investment != null && (
-                      <div className="pt-4 border-t border-white/5">
-                        <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 flex items-center gap-1.5">
-                          <Receipt className="w-3.5 h-3.5" />
-                          Zahlungsstatus
-                        </h4>
-                        <div className="space-y-2">
-                          {[
-                            { num: 1 as const, label: 'Anzahlung', pct: 30 },
-                            { num: 2 as const, label: 'Zwischenzahlung', pct: 60 },
-                            { num: 3 as const, label: 'Schlusszahlung', pct: 10 },
-                          ].map((p) => {
-                            const paid = selectedLead[`payment_${p.num}_paid` as const];
-                            const amount = Math.round((selectedLead.investment ?? 0) * (p.pct / 100));
-                            return (
-                              <button
-                                key={p.num}
-                                onClick={() => handlePaymentToggle(selectedLead.id, p.num, paid)}
-                                className={`w-full flex items-center justify-between px-4 py-3 rounded-lg border transition-all ${
-                                  paid
-                                    ? 'border-green-500/30 bg-green-500/10'
-                                    : 'border-white/5 bg-[#252525] hover:border-white/10'
-                                }`}
-                              >
-                                <div className="flex items-center gap-3">
-                                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                                    paid ? 'bg-green-500 text-white' : 'bg-white/10 text-gray-500'
-                                  }`}>
-                                    {paid ? <CheckCircle2 className="w-3.5 h-3.5" /> : p.num}
-                                  </div>
-                                  <div className="text-left">
-                                    <p className={`text-sm font-medium ${paid ? 'text-green-400' : 'text-gray-300'}`}>{p.label} ({p.pct}%)</p>
-                                    <p className="text-xs text-gray-500">{amount.toLocaleString('de-DE')} €</p>
-                                  </div>
-                                </div>
-                                <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
-                                  paid ? 'bg-green-500/20 text-green-400' : 'bg-white/5 text-gray-500'
-                                }`}>
-                                  {paid ? 'Bezahlt' : 'Offen'}
-                                </span>
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <div className="text-center py-4">
-                    <FileTextIcon className="w-10 h-10 text-gray-600 mx-auto mb-3" />
-                    <p className="text-gray-400 text-sm mb-4">Noch kein Angebot erstellt</p>
-                    <button
-                      onClick={() => navigate(`/lead/${selectedLead.id}/offer`)}
-                      className="w-full flex items-center justify-center gap-2 bg-[#F5A623] hover:bg-[#E09000] text-[#1A3A5C] font-bold text-sm px-5 py-3 rounded-xl transition-colors shadow-sm"
-                    >
-                      <FilePlus className="w-4 h-4" />
-                      Angebot konfigurieren
-                    </button>
                   </div>
                 )}
+
+                {/* Konfiguration bearbeiten Modal */}
+                {showConfigModal && selectedLead && (
+                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+                    <div className="bg-brand-secondary-hover rounded-xl border border-white/10 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+                      <div className="flex items-center justify-between p-4 border-b border-white/5">
+                        <h3 className="text-sm font-bold text-white">
+                          Konfiguration bearbeiten
+                        </h3>
+                        <button
+                          onClick={() => setShowConfigModal(false)}
+                          className="text-gray-500 hover:text-white transition-colors"
+                        >
+                          <X className="w-5 h-5" />
+                        </button>
+                      </div>
+
+                      <div className="p-4 space-y-4">
+                        {/* Gemessene Daten */}
+                        <div className="space-y-3">
+                          <h4 className="text-xs font-bold text-gray-400">
+                            Gemessene Daten
+                          </h4>
+                          <div className="grid grid-cols-2 gap-3">
+                            <div className="space-y-1">
+                              <label className="text-xs text-gray-500">
+                                Dachfläche (m²)
+                              </label>
+                              <input
+                                type="number"
+                                value={selectedLead.roof_area_measured ?? ""}
+                                onChange={(e) =>
+                                  setSelectedLead((prev) =>
+                                    prev
+                                      ? {
+                                          ...prev,
+                                          roof_area_measured: e.target.value
+                                            ? Number(e.target.value)
+                                            : null,
+                                        }
+                                      : prev,
+                                  )
+                                }
+                                className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-primary/50"
+                              />
+                            </div>
+                            <div className="space-y-1">
+                              <label className="text-xs text-gray-500">
+                                Dachneigung (°)
+                              </label>
+                              <input
+                                type="number"
+                                value={selectedLead.roof_angle ?? ""}
+                                onChange={(e) =>
+                                  setSelectedLead((prev) =>
+                                    prev
+                                      ? {
+                                          ...prev,
+                                          roof_angle: e.target.value
+                                            ? Number(e.target.value)
+                                            : null,
+                                        }
+                                      : prev,
+                                  )
+                                }
+                                className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-primary/50"
+                              />
+                            </div>
+                          </div>
+                          <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={selectedLead.shading_issues || false}
+                              onChange={(e) =>
+                                setSelectedLead((prev) =>
+                                  prev
+                                    ? {
+                                        ...prev,
+                                        shading_issues: e.target.checked,
+                                      }
+                                    : prev,
+                                )
+                              }
+                              className="w-4 h-4 rounded border-white/10 bg-[#252525] text-brand-primary focus:ring-brand-primary/50"
+                            />
+                            Verschattungsprobleme festgestellt
+                          </label>
+                        </div>
+
+                        {/* Konfiguration */}
+                        <div className="space-y-3 pt-2 border-t border-white/5">
+                          <h4 className="text-xs font-bold text-gray-400">
+                            Konfiguration
+                          </h4>
+                          <div className="grid grid-cols-2 gap-3">
+                            <div className="space-y-1">
+                              <label className="text-xs text-gray-500">
+                                Dachausrichtung
+                              </label>
+                              <select
+                                value={selectedLead.roof_orientation || ""}
+                                onChange={(e) =>
+                                  setSelectedLead((prev) =>
+                                    prev
+                                      ? {
+                                          ...prev,
+                                          roof_orientation:
+                                            e.target.value || null,
+                                        }
+                                      : prev,
+                                  )
+                                }
+                                className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-primary/50"
+                              >
+                                <option value="">—</option>
+                                <option value="Süd">Süd</option>
+                                <option value="Süd-Ost">Süd-Ost</option>
+                                <option value="Süd-West">Süd-West</option>
+                                <option value="Ost">Ost</option>
+                                <option value="West">West</option>
+                                <option value="Nord">Nord</option>
+                              </select>
+                            </div>
+                            <div className="space-y-1">
+                              <label className="text-xs text-gray-500">
+                                Stromverbrauch (kWh/Jahr)
+                              </label>
+                              <input
+                                type="number"
+                                value={selectedLead.consumption ?? ""}
+                                onChange={(e) =>
+                                  setSelectedLead((prev) =>
+                                    prev
+                                      ? {
+                                          ...prev,
+                                          consumption: e.target.value
+                                            ? Number(e.target.value)
+                                            : null,
+                                        }
+                                      : prev,
+                                  )
+                                }
+                                className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-primary/50"
+                              />
+                            </div>
+                          </div>
+
+                          <div className="space-y-1">
+                            <label className="text-xs text-gray-500">
+                              Strompreis (ct/kWh)
+                            </label>
+                            <input
+                              type="number"
+                              step="0.01"
+                              value={selectedLead.electricity_price ?? ""}
+                              onChange={(e) =>
+                                setSelectedLead((prev) =>
+                                  prev
+                                    ? {
+                                        ...prev,
+                                        electricity_price: e.target.value
+                                          ? Number(e.target.value)
+                                          : null,
+                                      }
+                                    : prev,
+                                )
+                              }
+                              className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-primary/50"
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={selectedLead.has_battery || false}
+                                onChange={(e) =>
+                                  setSelectedLead((prev) =>
+                                    prev
+                                      ? {
+                                          ...prev,
+                                          has_battery: e.target.checked,
+                                        }
+                                      : prev,
+                                  )
+                                }
+                                className="w-4 h-4 rounded border-white/10 bg-[#252525] text-brand-primary focus:ring-brand-primary/50"
+                              />
+                              <BatteryCharging className="w-4 h-4 text-green-400" />
+                              Speicher / Batteriespeicher
+                            </label>
+                            <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={selectedLead.has_e_car || false}
+                                onChange={(e) =>
+                                  setSelectedLead((prev) =>
+                                    prev
+                                      ? { ...prev, has_e_car: e.target.checked }
+                                      : prev,
+                                  )
+                                }
+                                className="w-4 h-4 rounded border-white/10 bg-[#252525] text-brand-primary focus:ring-brand-primary/50"
+                              />
+                              <Car className="w-4 h-4 text-blue-400" />
+                              E-Auto / Wallbox
+                            </label>
+                            <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={selectedLead.has_heat_pump || false}
+                                onChange={(e) =>
+                                  setSelectedLead((prev) =>
+                                    prev
+                                      ? {
+                                          ...prev,
+                                          has_heat_pump: e.target.checked,
+                                        }
+                                      : prev,
+                                  )
+                                }
+                                className="w-4 h-4 rounded border-white/10 bg-[#252525] text-brand-primary focus:ring-brand-primary/50"
+                              />
+                              <Thermometer className="w-4 h-4 text-orange-400" />
+                              Wärmepumpe
+                            </label>
+                          </div>
+                        </div>
+
+                        {/* Neuberechnung */}
+                        <div className="space-y-3 pt-2 border-t border-white/5">
+                          <button
+                            onClick={() => {
+                              const recalculated =
+                                recalculateLead(selectedLead);
+                              setSelectedLead((prev) =>
+                                prev ? { ...prev, ...recalculated } : prev,
+                              );
+                            }}
+                            className="w-full flex items-center justify-center gap-2 bg-brand-secondary/30 hover:bg-brand-secondary/50 text-blue-400 font-bold text-xs px-4 py-2 rounded-lg transition-colors border border-brand-secondary/30"
+                          >
+                            <Zap className="w-3.5 h-3.5" />
+                            Konfiguration neu berechnen
+                          </button>
+
+                          {(selectedLead.kwp != null ||
+                            selectedLead.investment != null) && (
+                            <div className="grid grid-cols-3 gap-2 bg-[#252525] rounded-lg p-3">
+                              <div>
+                                <p className="text-[10px] text-gray-500">kWp</p>
+                                <p className="text-sm font-bold text-white">
+                                  {selectedLead.kwp}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="text-[10px] text-gray-500">
+                                  Investition
+                                </p>
+                                <p className="text-sm font-bold text-white">
+                                  {selectedLead.investment?.toLocaleString(
+                                    "de-DE",
+                                  )}{" "}
+                                  €
+                                </p>
+                              </div>
+                              <div>
+                                <p className="text-[10px] text-gray-500">
+                                  Ersparnis/Jahr
+                                </p>
+                                <p className="text-sm font-bold text-brand-primary">
+                                  {selectedLead.annual_savings?.toLocaleString(
+                                    "de-DE",
+                                  )}{" "}
+                                  €
+                                </p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="flex gap-2 p-4 border-t border-white/5">
+                        <button
+                          onClick={() => setShowConfigModal(false)}
+                          className="flex-1 bg-[#252525] border border-white/10 hover:bg-[#333] text-white font-bold text-xs px-4 py-2.5 rounded-lg transition-colors"
+                        >
+                          Abbrechen
+                        </button>
+                        <button
+                          onClick={async () => {
+                            setDetailLoading(true);
+                            try {
+                              await updateLeadFields(selectedLead.id, {
+                                roof_area_measured:
+                                  selectedLead.roof_area_measured,
+                                roof_angle: selectedLead.roof_angle,
+                                shading_issues: selectedLead.shading_issues,
+                                roof_orientation: selectedLead.roof_orientation,
+                                consumption: selectedLead.consumption,
+                                electricity_price:
+                                  selectedLead.electricity_price,
+                                has_battery: selectedLead.has_battery,
+                                has_e_car: selectedLead.has_e_car,
+                                has_heat_pump: selectedLead.has_heat_pump,
+                                kwp: selectedLead.kwp,
+                                investment: selectedLead.investment,
+                                annual_savings: selectedLead.annual_savings,
+                                amortization: selectedLead.amortization,
+                                autarky: selectedLead.autarky,
+                                profit_20_years: selectedLead.profit_20_years,
+                                score: computeLeadScoreFromLead(selectedLead),
+                              });
+                              setShowConfigModal(false);
+                            } catch (e) {
+                              alert((e as Error).message);
+                            } finally {
+                              setDetailLoading(false);
+                            }
+                          }}
+                          disabled={detailLoading}
+                          className="flex-1 bg-brand-primary hover:bg-brand-primary-hover text-brand-secondary font-bold text-xs px-4 py-2.5 rounded-lg transition-colors disabled:opacity-50"
+                        >
+                          {detailLoading ? (
+                            <Loader2 className="w-4 h-4 animate-spin mx-auto" />
+                          ) : (
+                            "Speichern"
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Angebot */}
+                <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-4 space-y-4">
+                  <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                    Angebot
+                  </h3>
+
+                  {loadingOfferDraft ? (
+                    <div className="flex items-center justify-center py-6">
+                      <Loader2 className="w-6 h-6 text-brand-primary animate-spin" />
+                    </div>
+                  ) : offerDraft ? (
+                    <div className="space-y-4">
+                      {(() => {
+                        const statusConfig: Record<
+                          OfferDraft["status"],
+                          { label: string; color: string }
+                        > = {
+                          draft: {
+                            label: "Entwurf vorhanden",
+                            color:
+                              "bg-gray-500/10 text-gray-400 border-gray-500/20",
+                          },
+                          sent: {
+                            label: "Angebot versendet",
+                            color:
+                              "bg-blue-500/10 text-blue-400 border-blue-500/20",
+                          },
+                          accepted: {
+                            label: "Angebot angenommen",
+                            color:
+                              "bg-green-500/10 text-green-400 border-green-500/20",
+                          },
+                          rejected: {
+                            label: "Angebot abgelehnt",
+                            color:
+                              "bg-red-500/10 text-red-400 border-red-500/20",
+                          },
+                        };
+                        const cfg = statusConfig[offerDraft.status];
+                        return (
+                          <div
+                            className={`inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full border ${cfg.color}`}
+                          >
+                            <FileTextIcon className="w-3.5 h-3.5" />
+                            {cfg.label}
+                          </div>
+                        );
+                      })()}
+
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                          Gesamtsumme
+                        </span>
+                        <span className="text-2xl font-black text-brand-primary">
+                          {offerDraft.total.toLocaleString("de-DE")} €
+                        </span>
+                      </div>
+
+                      <button
+                        onClick={() =>
+                          navigate(`/lead/${selectedLead.id}/offer`)
+                        }
+                        className="w-full flex items-center justify-center gap-2 bg-brand-primary hover:bg-brand-primary-hover text-brand-secondary font-bold text-sm px-5 py-3 rounded-xl transition-colors shadow-sm"
+                      >
+                        <FilePlus className="w-4 h-4" />
+                        {offerDraft.status === "draft"
+                          ? "Angebot bearbeiten"
+                          : "Angebot ansehen"}
+                      </button>
+
+                      {selectedLead.offer_status === "accepted" &&
+                        selectedLead.investment != null && (
+                          <div className="pt-4 border-t border-white/5">
+                            <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                              <Receipt className="w-3.5 h-3.5" />
+                              Zahlungsstatus
+                            </h4>
+                            <div className="space-y-2">
+                              {[
+                                {
+                                  num: 1 as const,
+                                  label: "Anzahlung",
+                                  pct: 30,
+                                },
+                                {
+                                  num: 2 as const,
+                                  label: "Zwischenzahlung",
+                                  pct: 60,
+                                },
+                                {
+                                  num: 3 as const,
+                                  label: "Schlusszahlung",
+                                  pct: 10,
+                                },
+                              ].map((p) => {
+                                const paid =
+                                  selectedLead[
+                                    `payment_${p.num}_paid` as const
+                                  ];
+                                const amount = Math.round(
+                                  (selectedLead.investment ?? 0) *
+                                    (p.pct / 100),
+                                );
+                                return (
+                                  <button
+                                    key={p.num}
+                                    onClick={() =>
+                                      handlePaymentToggle(
+                                        selectedLead.id,
+                                        p.num,
+                                        paid,
+                                      )
+                                    }
+                                    className={`w-full flex items-center justify-between px-4 py-3 rounded-lg border transition-all ${
+                                      paid
+                                        ? "border-green-500/30 bg-green-500/10"
+                                        : "border-white/5 bg-[#252525] hover:border-white/10"
+                                    }`}
+                                  >
+                                    <div className="flex items-center gap-3">
+                                      <div
+                                        className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                                          paid
+                                            ? "bg-green-500 text-white"
+                                            : "bg-white/10 text-gray-500"
+                                        }`}
+                                      >
+                                        {paid ? (
+                                          <CheckCircle2 className="w-3.5 h-3.5" />
+                                        ) : (
+                                          p.num
+                                        )}
+                                      </div>
+                                      <div className="text-left">
+                                        <p
+                                          className={`text-sm font-medium ${paid ? "text-green-400" : "text-gray-300"}`}
+                                        >
+                                          {p.label} ({p.pct}%)
+                                        </p>
+                                        <p className="text-xs text-gray-500">
+                                          {amount.toLocaleString("de-DE")} €
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <span
+                                      className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                                        paid
+                                          ? "bg-green-500/20 text-green-400"
+                                          : "bg-white/5 text-gray-500"
+                                      }`}
+                                    >
+                                      {paid ? "Bezahlt" : "Offen"}
+                                    </span>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
+                    </div>
+                  ) : (
+                    <div className="text-center py-4">
+                      <FileTextIcon className="w-10 h-10 text-gray-600 mx-auto mb-3" />
+                      <p className="text-gray-400 text-sm mb-4">
+                        Noch kein Angebot erstellt
+                      </p>
+                      <button
+                        onClick={() =>
+                          navigate(`/lead/${selectedLead.id}/offer`)
+                        }
+                        className="w-full flex items-center justify-center gap-2 bg-brand-primary hover:bg-brand-primary-hover text-brand-secondary font-bold text-sm px-5 py-3 rounded-xl transition-colors shadow-sm"
+                      >
+                        <FilePlus className="w-4 h-4" />
+                        Angebot konfigurieren
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-  </div>
-);
+        )}
+    </div>
+  );
 }

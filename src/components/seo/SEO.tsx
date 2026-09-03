@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from "react-helmet-async";
 
 interface Props {
   title?: string;
@@ -13,10 +13,11 @@ interface Props {
   };
 }
 
-const SITE_NAME = 'Voltify';
-const DEFAULT_DESCRIPTION = 'Voltify — Ihr persönlicher Solar-Konfigurator. Berechnen Sie die Wirtschaftlichkeit Ihrer Photovoltaik-Anlage in wenigen Minuten.';
-const DEFAULT_OG_IMAGE = '/images/og-default.jpg';
-const SITE_URL = 'https://voltify.de';
+const SITE_NAME = "Solvary";
+const DEFAULT_DESCRIPTION =
+  "Solvary — die All-in-One-Software für Solo-Solarteure: Solar-Konfigurator auf deiner Webseite, Leads, Angebote und Rechnungen an einem Ort.";
+const DEFAULT_OG_IMAGE = "/images/og-default.jpg";
+const SITE_URL = "https://solvary.de";
 
 export default function SEO({
   title,
@@ -29,7 +30,7 @@ export default function SEO({
   const ogTitle = og?.title ?? title ?? SITE_NAME;
   const ogDescription = og?.description ?? description;
   const ogImage = og?.image ?? DEFAULT_OG_IMAGE;
-  const ogType = og?.type ?? 'website';
+  const ogType = og?.type ?? "website";
 
   return (
     <Helmet>
@@ -48,7 +49,9 @@ export default function SEO({
       <meta property="og:description" content={ogDescription} />
       <meta property="og:image" content={`${SITE_URL}${ogImage}`} />
       <meta property="og:type" content={ogType} />
-      {canonical && <meta property="og:url" content={`${SITE_URL}${canonical}`} />}
+      {canonical && (
+        <meta property="og:url" content={`${SITE_URL}${canonical}`} />
+      )}
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -59,19 +62,16 @@ export default function SEO({
       {/* Strukturierte Daten — Organization */}
       <script type="application/ld+json">
         {JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'Organization',
-          name: 'Voltify GmbH',
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Solvary",
           url: SITE_URL,
-          logo: `${SITE_URL}/images/logo.png`,
-          sameAs: [
-            'https://www.linkedin.com/company/voltify',
-          ],
+          logo: `${SITE_URL}/images/solvary-logo.png`,
           contactPoint: {
-            '@type': 'ContactPoint',
-            telephone: '+49-89-12345678',
-            contactType: 'customer service',
-            availableLanguage: ['German'],
+            "@type": "ContactPoint",
+            email: "kontakt@solvary.de",
+            contactType: "customer support",
+            availableLanguage: ["German"],
           },
         })}
       </script>

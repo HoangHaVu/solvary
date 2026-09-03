@@ -193,7 +193,7 @@ export default function InstallerPlanner({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <div className="bg-[#111] border border-white/10 rounded-2xl w-full max-w-5xl max-h-[95vh] overflow-hidden flex flex-col">
+      <div className="bg-brand-secondary-hover border border-white/10 rounded-2xl w-full max-w-5xl max-h-[95vh] overflow-hidden flex flex-col">
 
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
@@ -221,7 +221,7 @@ export default function InstallerPlanner({
                   placeholder="Straße & Hausnr."
                   value={street}
                   onChange={(e) => setStreet(e.target.value)}
-                  className="w-full bg-[#1A1A1A] border border-white/10 text-white text-sm rounded-lg px-3 py-2.5 placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                  className="w-full bg-brand-secondary-hover border border-white/10 text-white text-sm rounded-lg px-3 py-2.5 placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                 />
                 <div className="grid grid-cols-2 gap-2">
                   <input
@@ -229,20 +229,20 @@ export default function InstallerPlanner({
                     placeholder="PLZ"
                     value={zipInput}
                     onChange={(e) => setZipInput(e.target.value)}
-                    className="w-full bg-[#1A1A1A] border border-white/10 text-white text-sm rounded-lg px-3 py-2.5 placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                    className="w-full bg-brand-secondary-hover border border-white/10 text-white text-sm rounded-lg px-3 py-2.5 placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                   />
                   <input
                     type="text"
                     placeholder="Ort (opt.)"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    className="w-full bg-[#1A1A1A] border border-white/10 text-white text-sm rounded-lg px-3 py-2.5 placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                    className="w-full bg-brand-secondary-hover border border-white/10 text-white text-sm rounded-lg px-3 py-2.5 placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                   />
                 </div>
                 <button
                   onClick={loadSatellite}
                   disabled={!street.trim() || !zipInput.trim() || status === 'geocoding' || !hasApiKey}
-                  className="flex items-center justify-center gap-2 bg-[#1A3A5C] hover:bg-[#0F2440] disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg px-4 py-2.5 transition-colors"
+                  className="flex items-center justify-center gap-2 bg-brand-secondary hover:bg-brand-secondary-hover disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg px-4 py-2.5 transition-colors"
                 >
                   {status === 'geocoding' ? (
                     <><Loader2 className="w-4 h-4 animate-spin" /> Lädt…</>
@@ -270,7 +270,7 @@ export default function InstallerPlanner({
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-400">Leistung</span>
-                  <span className="text-[#F5A623] font-bold">{effectiveKwp} kWp</span>
+                  <span className="text-brand-primary font-bold">{effectiveKwp} kWp</span>
                 </div>
               </div>
             </div>
@@ -287,7 +287,7 @@ export default function InstallerPlanner({
                 max={Math.max(effectiveModuleCount + 10, 50)}
                 value={effectiveModuleCount}
                 onChange={(e) => setModuleOverride(Number(e.target.value))}
-                className="w-full accent-[#F5A623]"
+                className="w-full accent-brand-primary"
               />
               <div className="flex justify-between text-[10px] text-gray-600 mt-1">
                 <span>1</span>
@@ -308,7 +308,7 @@ export default function InstallerPlanner({
               <button
                 onClick={handleSave}
                 disabled={status !== 'ready' || isSaving}
-                className="flex items-center justify-center gap-2 bg-[#F5A623] hover:bg-[#E09000] disabled:opacity-40 disabled:cursor-not-allowed text-[#1A3A5C] font-bold text-sm rounded-lg px-4 py-2.5 transition-colors"
+                className="flex items-center justify-center gap-2 bg-brand-primary hover:bg-brand-primary-hover disabled:opacity-40 disabled:cursor-not-allowed text-brand-secondary font-bold text-sm rounded-lg px-4 py-2.5 transition-colors"
               >
                 {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                 Planung speichern
@@ -317,13 +317,13 @@ export default function InstallerPlanner({
                 <button
                   onClick={handleExportPng}
                   disabled={status !== 'ready'}
-                  className="flex items-center justify-center gap-1.5 bg-[#1A1A1A] hover:bg-[#252525] disabled:opacity-40 disabled:cursor-not-allowed border border-white/10 text-gray-300 text-xs font-medium rounded-lg px-3 py-2 transition-colors"
+                  className="flex items-center justify-center gap-1.5 bg-brand-secondary-hover hover:bg-brand-secondary disabled:opacity-40 disabled:cursor-not-allowed border border-white/10 text-gray-300 text-xs font-medium rounded-lg px-3 py-2 transition-colors"
                 >
                   <Download className="w-3.5 h-3.5" /> PNG
                 </button>
                 <button
                   onClick={handleReset}
-                  className="flex items-center justify-center gap-1.5 bg-[#1A1A1A] hover:bg-[#252525] border border-white/10 text-gray-300 text-xs font-medium rounded-lg px-3 py-2 transition-colors"
+                  className="flex items-center justify-center gap-1.5 bg-brand-secondary-hover hover:bg-brand-secondary border border-white/10 text-gray-300 text-xs font-medium rounded-lg px-3 py-2 transition-colors"
                 >
                   <RotateCcw className="w-3.5 h-3.5" /> Reset
                 </button>
@@ -332,7 +332,7 @@ export default function InstallerPlanner({
           </div>
 
           {/* Right — Canvas */}
-          <div className="flex-1 flex items-center justify-center bg-[#0A0A0A] relative min-h-0 p-4">
+          <div className="flex-1 flex items-center justify-center bg-brand-secondary-hover relative min-h-0 p-4">
             {(status === 'idle' || status === 'error') && !coords && (
               <div className="flex flex-col items-center gap-3 text-center">
                 <MapPin className="w-12 h-12 text-gray-700" />
@@ -344,7 +344,7 @@ export default function InstallerPlanner({
 
             {status === 'geocoding' && (
               <div className="flex flex-col items-center gap-3">
-                <Loader2 className="w-8 h-8 text-[#F5A623] animate-spin" />
+                <Loader2 className="w-8 h-8 text-brand-primary animate-spin" />
                 <p className="text-gray-400 text-sm">Koordinaten werden abgerufen…</p>
               </div>
             )}
@@ -362,8 +362,8 @@ export default function InstallerPlanner({
 
             {/* Badge overlay */}
             {status === 'ready' && (
-              <div className="absolute top-6 right-6 flex items-center gap-1.5 bg-[#1A3A5C]/90 backdrop-blur-sm text-white rounded-full px-3 py-1.5 border border-white/10">
-                <Zap className="w-3.5 h-3.5 text-[#F5A623]" />
+              <div className="absolute top-6 right-6 flex items-center gap-1.5 bg-brand-secondary/90 backdrop-blur-sm text-white rounded-full px-3 py-1.5 border border-white/10">
+                <Zap className="w-3.5 h-3.5 text-brand-primary" />
                 <span className="text-xs font-bold">{effectiveModuleCount} Module · {effectiveKwp} kWp</span>
               </div>
             )}

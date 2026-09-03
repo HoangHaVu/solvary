@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Zap, Eye, EyeOff, User, Building2, CheckCircle, AlertCircle, ArrowRight } from 'lucide-react';
+import { Eye, EyeOff, User, Building2, CheckCircle, AlertCircle, ArrowRight } from 'lucide-react';
 import { signUpCustomer, signUpInstaller } from '../services/auth';
+import { LOGO_PATH } from '../lib/branding';
+import { COLORS } from '../lib/theme';
 import SEO from '../components/seo/SEO';
 
 type Role = 'customer' | 'installer';
@@ -68,21 +70,18 @@ export default function Register() {
       <div className="w-full lg:w-[45%] xl:w-[40%] flex flex-col justify-between p-8 md:p-12 lg:p-16 bg-white">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 mb-12">
-          <div className="w-8 h-8 rounded-full bg-[#F5A623] flex items-center justify-center">
-            <Zap className="w-4 h-4 text-[#1A3A5C]" fill="currentColor" />
-          </div>
-          <span className="text-lg font-medium text-[#1A3A5C]">Voltify</span>
+          <img src={LOGO_PATH} alt="Solvary" className="h-7 w-auto" />
         </Link>
 
         {/* Form */}
         <div className="flex-1 flex flex-col justify-center max-w-[420px] mx-auto w-full">
-          <h1 className="text-3xl md:text-4xl font-semibold text-[#1A3A5C] mb-3">Create Account</h1>
+          <h1 className="text-3xl md:text-4xl font-semibold text-brand-secondary mb-3">Create Account</h1>
           <p className="text-gray-500 text-sm mb-8">Fill in your details to get started with Voltify.</p>
 
           {success ? (
             <div className="flex flex-col items-center gap-4 py-8 text-center">
               <CheckCircle className="w-14 h-14 text-green-500" />
-              <h2 className="text-xl font-bold text-[#1A3A5C]">Konto erstellt!</h2>
+              <h2 className="text-xl font-bold text-brand-secondary">Konto erstellt!</h2>
               <p className="text-gray-500 text-sm">
                 {role === 'customer'
                   ? 'Bitte bestätige deine E-Mail-Adresse. Danach kannst du dich anmelden.'
@@ -90,7 +89,7 @@ export default function Register() {
               </p>
               <button
                 onClick={() => navigate('/login')}
-                className="mt-4 bg-[#1A3A5C] text-white font-medium px-6 py-3 rounded-xl hover:bg-[#0F2440] transition-colors"
+                className="mt-4 bg-brand-secondary text-white font-medium px-6 py-3 rounded-xl hover:bg-brand-secondary-hover transition-colors"
               >
                 Zum Login
               </button>
@@ -113,7 +112,7 @@ export default function Register() {
                     onClick={() => setRole('customer')}
                     className={`flex items-center justify-center gap-2 py-3 rounded-xl border-2 text-sm font-medium transition-all ${
                       role === 'customer'
-                        ? 'border-[#1A3A5C] bg-[#1A3A5C]/5 text-[#1A3A5C]'
+                        ? 'border-brand-secondary bg-brand-secondary/5 text-brand-secondary'
                         : 'border-gray-200 text-gray-500 hover:border-gray-300'
                     }`}
                   >
@@ -125,7 +124,7 @@ export default function Register() {
                     onClick={() => setRole('installer')}
                     className={`flex items-center justify-center gap-2 py-3 rounded-xl border-2 text-sm font-medium transition-all ${
                       role === 'installer'
-                        ? 'border-[#1A3A5C] bg-[#1A3A5C]/5 text-[#1A3A5C]'
+                        ? 'border-brand-secondary bg-brand-secondary/5 text-brand-secondary'
                         : 'border-gray-200 text-gray-500 hover:border-gray-300'
                     }`}
                   >
@@ -146,7 +145,7 @@ export default function Register() {
                       onChange={(e) => setFirstName(e.target.value)}
                       placeholder="Max"
                       required
-                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C] transition-all"
+                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
@@ -157,7 +156,7 @@ export default function Register() {
                       onChange={(e) => setLastName(e.target.value)}
                       placeholder="Mustermann"
                       required
-                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C] transition-all"
+                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                     />
                   </div>
                 </div>
@@ -174,7 +173,7 @@ export default function Register() {
                       onChange={(e) => setCompanyName(e.target.value)}
                       placeholder="Dein Unternehmen GmbH"
                       required
-                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C] transition-all"
+                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-3">
@@ -186,7 +185,7 @@ export default function Register() {
                         onChange={(e) => setZip(e.target.value)}
                         placeholder="12345"
                         required
-                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C] transition-all"
+                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                       />
                     </div>
                     <div className="flex flex-col gap-1.5">
@@ -196,7 +195,7 @@ export default function Register() {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="+49 171 1234567"
-                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C] transition-all"
+                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                       />
                     </div>
                   </div>
@@ -212,7 +211,7 @@ export default function Register() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="info@voltify.com"
                   required
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C] transition-all"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                 />
               </div>
 
@@ -227,7 +226,7 @@ export default function Register() {
                     placeholder="Mindestens 6 Zeichen"
                     required
                     minLength={6}
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C] transition-all"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                   />
                   <button
                     type="button"
@@ -249,7 +248,7 @@ export default function Register() {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Confirm your password"
                     required
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C] transition-all"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                   />
                   <button
                     type="button"
@@ -267,13 +266,13 @@ export default function Register() {
                   type="checkbox"
                   checked={agreeTerms}
                   onChange={(e) => setAgreeTerms(e.target.checked)}
-                  className="w-4 h-4 mt-0.5 rounded border-gray-300 text-[#1A3A5C] focus:ring-[#1A3A5C]"
+                  className="w-4 h-4 mt-0.5 rounded border-gray-300 text-brand-secondary focus:ring-brand-secondary"
                 />
                 <span className="text-xs text-gray-500">
                   Ich akzeptiere die{' '}
-                  <Link to="/agb" className="text-[#1A3A5C] font-medium hover:underline">AGB</Link>
+                  <Link to="/agb" className="text-brand-secondary font-medium hover:underline">AGB</Link>
                   {' '}und die{' '}
-                  <Link to="/datenschutz" className="text-[#1A3A5C] font-medium hover:underline">Datenschutzerklärung</Link>
+                  <Link to="/datenschutz" className="text-brand-secondary font-medium hover:underline">Datenschutzerklärung</Link>
                 </span>
               </label>
 
@@ -281,7 +280,7 @@ export default function Register() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-[#1A3A5C] text-white font-medium py-3 rounded-xl hover:bg-[#0F2440] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full bg-brand-secondary text-white font-medium py-3 rounded-xl hover:bg-brand-secondary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isLoading ? 'Konto wird erstellt…' : 'Create Account'}
                 {!isLoading && <ArrowRight className="w-4 h-4" />}
@@ -292,15 +291,15 @@ export default function Register() {
 
         {/* Bottom */}
         <p className="text-center text-sm text-gray-500 mt-8">
-          Already Have An Account? <Link to="/login" className="text-[#1A3A5C] font-medium hover:underline">Login Now.</Link>
+          Already Have An Account? <Link to="/login" className="text-brand-secondary font-medium hover:underline">Login Now.</Link>
         </p>
       </div>
 
       {/* RIGHT - Dashboard Preview */}
-      <div className="hidden lg:flex lg:w-[55%] xl:w-[60%] bg-gradient-to-br from-[#1A3A5C] via-[#0F2440] to-black items-center justify-center p-12 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-[55%] xl:w-[60%] bg-gradient-to-br from-brand-secondary via-brand-secondary-hover to-black items-center justify-center p-12 relative overflow-hidden">
         {/* Decorative circles */}
-        <div className="absolute top-20 right-20 w-72 h-72 bg-[#F5A623]/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-20 w-96 h-96 bg-[#1A3A5C]/40 rounded-full blur-3xl" />
+        <div className="absolute top-20 right-20 w-72 h-72 bg-brand-primary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-20 w-96 h-96 bg-brand-secondary/40 rounded-full blur-3xl" />
 
         <div className="relative max-w-[540px] w-full">
           {/* Tagline */}
@@ -316,17 +315,17 @@ export default function Register() {
               <div className="bg-white/10 rounded-xl p-3">
                 <p className="text-[10px] text-white/60 mb-1">ROI Potential</p>
                 <p className="text-lg font-bold text-white">24.5%</p>
-                <span className="text-[10px] text-[#F5A623]">+5% vs last year</span>
+                <span className="text-[10px] text-brand-primary">+5% vs last year</span>
               </div>
               <div className="bg-white/10 rounded-xl p-3">
                 <p className="text-[10px] text-white/60 mb-1">Panel Efficiency</p>
                 <p className="text-lg font-bold text-white">21.8%</p>
-                <span className="text-[10px] text-[#F5A623]">Top tier</span>
+                <span className="text-[10px] text-brand-primary">Top tier</span>
               </div>
               <div className="bg-white/10 rounded-xl p-3">
                 <p className="text-[10px] text-white/60 mb-1">Payback Time</p>
                 <p className="text-lg font-bold text-white">7.2 yrs</p>
-                <span className="text-[10px] text-[#F5A623]">Above average</span>
+                <span className="text-[10px] text-brand-primary">Above average</span>
               </div>
             </div>
 
@@ -342,17 +341,17 @@ export default function Register() {
               <svg viewBox="0 0 400 120" className="w-full h-24">
                 <defs>
                   <linearGradient id="chartGrad2" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#F5A623" stopOpacity="0.3"/>
-                    <stop offset="100%" stopColor="#F5A623" stopOpacity="0"/>
+                    <stop offset="0%" stopColor={COLORS.primary} stopOpacity="0.3"/>
+                    <stop offset="100%" stopColor={COLORS.primary} stopOpacity="0"/>
                   </linearGradient>
                 </defs>
                 <path d="M0 110 Q50 90 100 75 T200 45 T300 35 T400 15 L400 120 L0 120 Z" fill="url(#chartGrad2)" />
-                <path d="M0 110 Q50 90 100 75 T200 45 T300 35 T400 15" fill="none" stroke="#F5A623" strokeWidth="2.5" strokeLinecap="round" />
-                <circle cx="0" cy="110" r="4" fill="#F5A623" />
-                <circle cx="100" cy="75" r="4" fill="#F5A623" />
-                <circle cx="200" cy="45" r="4" fill="#F5A623" />
-                <circle cx="300" cy="35" r="4" fill="#F5A623" />
-                <circle cx="400" cy="15" r="4" fill="#F5A623" />
+                <path d="M0 110 Q50 90 100 75 T200 45 T300 35 T400 15" fill="none" stroke={COLORS.primary} strokeWidth="2.5" strokeLinecap="round" />
+                <circle cx="0" cy="110" r="4" fill={COLORS.primary} />
+                <circle cx="100" cy="75" r="4" fill={COLORS.primary} />
+                <circle cx="200" cy="45" r="4" fill={COLORS.primary} />
+                <circle cx="300" cy="35" r="4" fill={COLORS.primary} />
+                <circle cx="400" cy="15" r="4" fill={COLORS.primary} />
               </svg>
             </div>
 
@@ -362,7 +361,7 @@ export default function Register() {
                 <div className="w-16 h-16 relative">
                   <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
                     <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="8" />
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="#F5A623" strokeWidth="8" strokeLinecap="round" strokeDasharray="175 251" />
+                    <circle cx="50" cy="50" r="40" fill="none" stroke={COLORS.primary} strokeWidth="8" strokeLinecap="round" strokeDasharray="175 251" />
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
                     <span className="text-lg font-bold text-white">70%</span>

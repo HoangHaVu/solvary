@@ -34,10 +34,10 @@ export default function Team() {
       <div className="max-w-[1280px] mx-auto px-6">
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Info Card */}
-          <div className="team-info lg:w-[240px] flex-shrink-0 bg-gradient-to-br from-[#1A3A5C] via-[#0F2440] to-black rounded-2xl p-8 flex flex-col justify-between opacity-0">
+          <div className="team-info lg:w-[240px] flex-shrink-0 bg-gradient-to-br from-brand-secondary via-brand-secondary-hover to-black rounded-2xl p-8 flex flex-col justify-between opacity-0">
             <div>
-              <div className="w-10 h-10 rounded-full bg-[#F5A623] flex items-center justify-center mb-6">
-                <User className="w-5 h-5 text-[#1A3A5C]" />
+              <div className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center mb-6">
+                <User className="w-5 h-5 text-brand-secondary" />
               </div>
               <h3 className="text-2xl font-medium text-white leading-tight mb-2">
                 Unsere preisgekrönten<br />Referenten & Mentoren
@@ -45,7 +45,7 @@ export default function Team() {
             </div>
             <a
               href="#team"
-              className="inline-flex items-center gap-2 bg-[#1A3A5C] text-white text-sm font-medium px-5 py-3 rounded-full hover:bg-[#0F2440] transition-all mt-6 w-fit group"
+              className="inline-flex items-center gap-2 bg-brand-secondary text-white text-sm font-medium px-5 py-3 rounded-full hover:bg-brand-secondary-hover transition-all mt-6 w-fit group"
             >
               Alle Mitglieder anzeigen
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />

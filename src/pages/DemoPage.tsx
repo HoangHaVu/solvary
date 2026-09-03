@@ -1,22 +1,22 @@
 import SEO from '../components/seo/SEO';
 import FloatingBetaCTA from '../components/layout/FloatingBetaCTA';
-import Header from '../sections/Header';
-import Hero from '../sections/Hero';
-import Partners from '../sections/Partners';
-import ExcellentServices from '../sections/ExcellentServices';
-import OurServices from '../sections/OurServices';
-import USP from '../sections/USP';
-import FurtherServices from '../sections/FurtherServices';
-import Team from '../sections/Team';
-import ExploreSection from '../sections/ExploreSection';
-import Marquee from '../sections/Marquee';
-import About from '../sections/About';
-import PartnersGrid from '../sections/PartnersGrid';
-import News from '../sections/News';
-import FAQ from '../sections/FAQ';
-import Footer from '../sections/Footer';
+import Header from '../sections/demo/Header';
+import Hero from '../sections/demo/Hero';
+import Partners from '../sections/demo/Partners';
+import ExcellentServices from '../sections/demo/ExcellentServices';
+import OurServices from '../sections/demo/OurServices';
+import USP from '../sections/demo/USP';
+import FurtherServices from '../sections/demo/FurtherServices';
+import Team from '../sections/demo/Team';
+import ExploreSection from '../sections/demo/ExploreSection';
+import Marquee from '../sections/demo/Marquee';
+import About from '../sections/demo/About';
+import PartnersGrid from '../sections/demo/PartnersGrid';
+import News from '../sections/demo/News';
+import FAQ from '../sections/demo/FAQ';
+import Footer from '../sections/demo/Footer';
 
-export default function Home() {
+export default function DemoPage() {
   return (
     <>
       <SEO

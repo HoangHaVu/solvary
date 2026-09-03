@@ -53,11 +53,11 @@ export default function ServiceCards() {
             <button
               className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
                 card.limeButton
-                  ? 'bg-[#F5A623] hover:bg-[#E09000]'
+                  ? 'bg-brand-primary hover:bg-brand-primary-hover'
                   : 'border border-gray-200 hover:border-gray-300'
               }`}
             >
-              <ArrowUpRight className={`w-4 h-4 ${card.limeButton ? 'text-[#1A3A5C]' : 'text-black'}`} />
+              <ArrowUpRight className={`w-4 h-4 ${card.limeButton ? 'text-brand-secondary' : 'text-black'}`} />
             </button>
           </div>
         ))}

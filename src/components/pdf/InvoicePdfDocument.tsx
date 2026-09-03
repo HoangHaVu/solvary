@@ -2,6 +2,7 @@ import {
   Document, Page, View, Text, StyleSheet, Image,
 } from '@react-pdf/renderer';
 import type { Lead } from '../../services/data';
+import { COLORS } from '../../lib/theme';
 
 interface CompanySettings {
   firmenname: string;
@@ -125,8 +126,8 @@ const INVOICE_DESC: Record<number, string> = {
 export default function InvoicePdfDocument({ lead, company, invoiceNumber, type }: Props) {
   const today = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
 
-  const primary = company.primaryColor || '#1A3A5C';
-  const accent = company.accentColor || '#F5A623';
+  const primary = company.primaryColor || COLORS.secondary;
+  const accent = company.accentColor || COLORS.primary;
   const s = getStyles(primary, accent);
 
   const totalNet = lead.final_price ?? lead.investment ?? 0;

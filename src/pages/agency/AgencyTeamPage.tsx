@@ -137,7 +137,7 @@ export default function AgencyTeamPage() {
     setShowPassword(false);
   }
 
-  const inputCls = 'w-full bg-[#0F0F0F] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#F5A623]/30 focus:border-[#F5A623]';
+  const inputCls = 'w-full bg-[#0F0F0F] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary';
 
   return (
     <div className="min-h-screen flex bg-[#0F0F0F] text-white">
@@ -147,8 +147,8 @@ export default function AgencyTeamPage() {
         {/* Header */}
         <div className="border-b border-white/5 bg-[#0F0F0F] px-6 py-4 flex items-center justify-between sticky top-0 z-10">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-[#F5A623]/10 flex items-center justify-center">
-              <Users className="w-4 h-4 text-[#F5A623]" />
+            <div className="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center">
+              <Users className="w-4 h-4 text-brand-primary" />
             </div>
             <div>
               <h1 className="text-base font-black text-white">Mein Team</h1>
@@ -157,7 +157,7 @@ export default function AgencyTeamPage() {
           </div>
           <button
             onClick={() => setShowInvite(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-[#F5A623] text-[#1A3A5C] rounded-xl text-sm font-bold hover:bg-[#E09000] transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-brand-primary text-brand-secondary rounded-xl text-sm font-bold hover:bg-brand-primary-hover transition-colors"
           >
             <UserPlus className="w-4 h-4" />
             Vertriebler einladen
@@ -175,7 +175,7 @@ export default function AgencyTeamPage() {
           )}
 
           {/* Team-Liste */}
-          <div className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+          <div className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
             <div className="px-6 py-4 border-b border-white/5 flex items-center justify-between">
               <p className="text-sm font-bold text-white">Vertriebler</p>
               <span className="text-xs text-gray-500">{members.length} Mitglied{members.length !== 1 ? 'er' : ''}</span>
@@ -183,7 +183,7 @@ export default function AgencyTeamPage() {
 
             {isLoading ? (
               <div className="flex justify-center py-12">
-                <Loader2 className="w-6 h-6 text-[#F5A623] animate-spin" />
+                <Loader2 className="w-6 h-6 text-brand-primary animate-spin" />
               </div>
             ) : members.length === 0 ? (
               <div className="py-12 text-center">
@@ -233,7 +233,7 @@ export default function AgencyTeamPage() {
           </div>
 
           {/* Info-Box */}
-          <div className="bg-[#1A1A1A] border border-white/5 rounded-2xl px-5 py-4 space-y-2">
+          <div className="bg-brand-secondary-hover border border-white/5 rounded-2xl px-5 py-4 space-y-2">
             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Was können Vertriebler?</p>
             <ul className="space-y-1.5 text-sm text-gray-400">
               <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0" />Alle Leads der Agentur einsehen</li>
@@ -247,12 +247,12 @@ export default function AgencyTeamPage() {
         {/* ─── Einladen-Modal ─── */}
         {showInvite && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={closeInvite}>
-            <div className="bg-[#1A1A1A] rounded-2xl shadow-2xl w-full max-w-md border border-white/10 overflow-hidden" onClick={e => e.stopPropagation()}>
+            <div className="bg-brand-secondary-hover rounded-2xl shadow-2xl w-full max-w-md border border-white/10 overflow-hidden" onClick={e => e.stopPropagation()}>
 
               <div className="border-b border-white/5 px-6 py-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#F5A623]/10 flex items-center justify-center">
-                    <UserPlus className="w-4 h-4 text-[#F5A623]" />
+                  <div className="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center">
+                    <UserPlus className="w-4 h-4 text-brand-primary" />
                   </div>
                   <h2 className="text-lg font-black text-white">Vertriebler einladen</h2>
                 </div>
@@ -291,7 +291,7 @@ export default function AgencyTeamPage() {
                   </div>
                   <div className="px-6 pb-5 flex gap-2">
                     <button type="submit" disabled={isInviting}
-                      className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#F5A623] text-[#1A3A5C] text-sm font-bold hover:bg-[#E09000] disabled:opacity-60 transition-colors">
+                      className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-brand-primary text-brand-secondary text-sm font-bold hover:bg-brand-primary-hover disabled:opacity-60 transition-colors">
                       {isInviting ? <Loader2 className="w-4 h-4 animate-spin" /> : <UserPlus className="w-4 h-4" />}
                       {isInviting ? 'Wird erstellt…' : 'Einladen'}
                     </button>
@@ -337,7 +337,7 @@ export default function AgencyTeamPage() {
                   </div>
                   <p className="text-xs text-gray-600">Der Vertriebler sollte das Passwort beim ersten Login ändern.</p>
                   <button onClick={closeInvite}
-                    className="w-full py-2.5 rounded-xl bg-[#F5A623] text-[#1A3A5C] text-sm font-bold hover:bg-[#E09000] transition-colors">
+                    className="w-full py-2.5 rounded-xl bg-brand-primary text-brand-secondary text-sm font-bold hover:bg-brand-primary-hover transition-colors">
                     Fertig
                   </button>
                 </div>

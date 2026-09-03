@@ -52,7 +52,7 @@ Deno.serve(async (req) => {
       method: 'POST',
       headers: { Authorization: `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: 'Voltify <noreply@vu-studio.de>',
+        from: 'Solvary <noreply@vu-studio.de>',
         to: installerEmail,
         subject: `⚠️ Angebot läuft in ${daysLeft} Tag${daysLeft === 1 ? '' : 'en'} ab`,
         html: `
@@ -65,7 +65,7 @@ Deno.serve(async (req) => {
               <p>dein Angebot an <strong>${lead.first_name} ${lead.last_name}</strong> läuft in <strong>${daysLeft} Tag${daysLeft === 1 ? '' : 'en'}</strong> ab.</p>
               <p>Melde dich jetzt bei deinem Kunden, um das Angebot zu verlängern oder abzuschließen.</p>
               <div style="margin-top: 16px; padding: 12px; background: #fef3c7; border-radius: 8px; font-size: 13px;">
-                <a href="https://voltify.de/admin" style="color: #1A3A5C; font-weight: bold;">→ Zum Admin-Dashboard</a>
+                <a href="https://solvary.de/admin" style="color: #1A3A5C; font-weight: bold;">→ Zum Admin-Dashboard</a>
               </div>
             </div>
           </div>

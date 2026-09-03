@@ -74,10 +74,10 @@ describe('getScoreResult', () => {
 
   it('gibt korrekte Farben zurück', () => {
     const heiss = getScoreResult(80);
-    expect(heiss.color).toContain('#F5A623');
+    expect(heiss.color).toContain('brand-primary');
 
     const warm = getScoreResult(50);
-    expect(warm.color).toContain('#1A3A5C');
+    expect(warm.color).toContain('brand-secondary');
 
     const kalt = getScoreResult(20);
     expect(kalt.color).toContain('gray');

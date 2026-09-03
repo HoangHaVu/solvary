@@ -1,3 +1,4 @@
+import { COLORS } from '../../lib/theme';
 import { useState } from 'react';
 
 interface KanbanColumnProps {
@@ -24,7 +25,7 @@ export function KanbanColumn({
   return (
     <div
       className={`flex-shrink-0 w-[300px] flex flex-col max-h-full rounded-xl transition-all duration-150 ${
-        isDragOver ? 'ring-2 ring-[#F5A623] scale-[1.01]' : ''
+        isDragOver ? 'ring-2 ring-brand-primary scale-[1.01]' : ''
       }`}
       onDragOver={(e) => {
         if (done) return;
@@ -66,7 +67,7 @@ export function KanbanColumn({
       {/* Cards Container */}
       <div
         className={`flex-1 overflow-y-auto pr-1 space-y-3 pb-6 min-h-[100px] rounded-lg transition-colors ${
-          isDragOver ? 'bg-[#F5A623]/5' : ''
+          isDragOver ? 'bg-brand-primary/5' : ''
         }`}
       >
         {children}

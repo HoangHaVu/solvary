@@ -47,6 +47,14 @@ export async function eraseLead(leadId: string): Promise<void> {
   if (error) throw new Error(error.message);
 }
 
+// DSGVO Art. 20: maschinenlesbarer Export aller Lead-Daten als JSON (RPC, serverseitig,
+// identische Autorisierung wie eraseLead).
+export async function exportLead(leadId: string): Promise<Record<string, unknown>> {
+  const { data, error } = await supabase.rpc('export_lead', { p_lead_id: leadId });
+  if (error) throw new Error(error.message);
+  return data as Record<string, unknown>;
+}
+
 export async function submitLead(
   contact: LeadContact,
   data: WizardData,

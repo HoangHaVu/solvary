@@ -2,10 +2,12 @@
 // PDF Design Tokens — Voltify Brand Colors
 // ============================================================
 
+import { COLORS } from './theme';
+
 export const PDF_COLORS = {
-  primary:          '#1A3A5C',
-  primaryDark:      '#0F2440',
-  secondary:        '#F5A623',
+  primary:          COLORS.secondary,
+  primaryDark:      COLORS.secondaryHover,
+  secondary:        COLORS.primary,
   amberLight:       '#FEF3C7',
   green:            '#16A34A',
   slate50:          '#F8FAFC',

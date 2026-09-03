@@ -29,14 +29,14 @@ export default function Step1_Building({ data, updateData }: Props) {
     <div className="flex flex-col gap-8">
       {/* Heading */}
       <div>
-        <h2 className="text-2xl md:text-3xl font-semibold text-[#1A3A5C] mb-2">Gebäude & Eigentum</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">Gebäude & Eigentum</h2>
         <p className="text-gray-500 text-sm">Wählen Sie Ihren Gebäudetyp und Ihre Eigentumsform aus.</p>
       </div>
 
       {/* PLZ */}
       <div className="bg-white/60 backdrop-blur-sm rounded-2xl border border-gray-200 p-5">
-        <label className="text-sm font-medium text-[#1A3A5C] mb-3 flex items-center gap-2">
-          <MapPin className="w-4 h-4 text-[#F5A623]" />
+        <label className="text-sm font-medium text-brand-secondary mb-3 flex items-center gap-2">
+          <MapPin className="w-4 h-4 text-brand-primary" />
           Ihr Standort
         </label>
         <div className="relative">
@@ -46,7 +46,7 @@ export default function Step1_Building({ data, updateData }: Props) {
             onChange={(e) => updateData({ zipCode: e.target.value.replace(/\D/g, '').slice(0, 5) })}
             placeholder="z.B. 80331"
             maxLength={5}
-            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C]"
+            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary"
           />
         </div>
         <p className="text-xs text-gray-400 mt-2">
@@ -56,7 +56,7 @@ export default function Step1_Building({ data, updateData }: Props) {
 
       {/* Building Type */}
       <div>
-        <label className="text-sm font-medium text-[#1A3A5C] mb-3 block">Gebäudetyp</label>
+        <label className="text-sm font-medium text-brand-secondary mb-3 block">Gebäudetyp</label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {buildingTypes.map((type) => {
             const Icon = type.icon;
@@ -67,17 +67,17 @@ export default function Step1_Building({ data, updateData }: Props) {
                 onClick={() => updateData({ buildingType: type.id })}
                 className={`flex items-start gap-3 p-4 rounded-xl border-2 text-left transition-all ${
                   selected
-                    ? 'border-[#1A3A5C] bg-[#1A3A5C]/5'
+                    ? 'border-brand-secondary bg-brand-secondary/5'
                     : 'border-gray-200 hover:border-gray-300 bg-white/60'
                 }`}
               >
                 <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                  selected ? 'bg-[#F5A623]' : 'bg-gray-100'
+                  selected ? 'bg-brand-primary' : 'bg-gray-100'
                 }`}>
-                  <Icon className={`w-5 h-5 ${selected ? 'text-[#1A3A5C]' : 'text-gray-500'}`} />
+                  <Icon className={`w-5 h-5 ${selected ? 'text-brand-secondary' : 'text-gray-500'}`} />
                 </div>
                 <div>
-                  <p className={`text-sm font-medium ${selected ? 'text-[#1A3A5C]' : 'text-gray-700'}`}>{type.label}</p>
+                  <p className={`text-sm font-medium ${selected ? 'text-brand-secondary' : 'text-gray-700'}`}>{type.label}</p>
                   <p className="text-xs text-gray-400 mt-0.5">{type.desc}</p>
                 </div>
               </button>
@@ -88,7 +88,7 @@ export default function Step1_Building({ data, updateData }: Props) {
 
       {/* Construction Year */}
       <div>
-        <label className="text-sm font-medium text-[#1A3A5C] mb-3 block">Baujahr</label>
+        <label className="text-sm font-medium text-brand-secondary mb-3 block">Baujahr</label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {constructionYearOptions.map((opt) => {
             const Icon = opt.icon;
@@ -99,17 +99,17 @@ export default function Step1_Building({ data, updateData }: Props) {
                 onClick={() => updateData({ constructionYear: opt.id })}
                 className={`flex items-start gap-3 p-4 rounded-xl border-2 text-left transition-all ${
                   selected
-                    ? 'border-[#1A3A5C] bg-[#1A3A5C]/5'
+                    ? 'border-brand-secondary bg-brand-secondary/5'
                     : 'border-gray-200 hover:border-gray-300 bg-white/60'
                 }`}
               >
                 <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                  selected ? 'bg-[#F5A623]' : 'bg-gray-100'
+                  selected ? 'bg-brand-primary' : 'bg-gray-100'
                 }`}>
-                  <Icon className={`w-5 h-5 ${selected ? 'text-[#1A3A5C]' : 'text-gray-500'}`} />
+                  <Icon className={`w-5 h-5 ${selected ? 'text-brand-secondary' : 'text-gray-500'}`} />
                 </div>
                 <div>
-                  <p className={`text-sm font-medium ${selected ? 'text-[#1A3A5C]' : 'text-gray-700'}`}>{opt.label}</p>
+                  <p className={`text-sm font-medium ${selected ? 'text-brand-secondary' : 'text-gray-700'}`}>{opt.label}</p>
                   <p className="text-xs text-gray-400 mt-0.5">{opt.desc}</p>
                 </div>
               </button>
@@ -120,7 +120,7 @@ export default function Step1_Building({ data, updateData }: Props) {
 
       {/* Ownership */}
       <div>
-        <label className="text-sm font-medium text-[#1A3A5C] mb-3 block">Eigentumsform</label>
+        <label className="text-sm font-medium text-brand-secondary mb-3 block">Eigentumsform</label>
         <div className="grid grid-cols-2 gap-3">
           {ownershipTypes.map((type) => {
             const Icon = type.icon;
@@ -131,17 +131,17 @@ export default function Step1_Building({ data, updateData }: Props) {
                 onClick={() => updateData({ ownership: type.id })}
                 className={`flex items-center gap-3 p-4 rounded-xl border-2 text-left transition-all ${
                   selected
-                    ? 'border-[#1A3A5C] bg-[#1A3A5C]/5'
+                    ? 'border-brand-secondary bg-brand-secondary/5'
                     : 'border-gray-200 hover:border-gray-300 bg-white/60'
                 }`}
               >
                 <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                  selected ? 'bg-[#F5A623]' : 'bg-gray-100'
+                  selected ? 'bg-brand-primary' : 'bg-gray-100'
                 }`}>
-                  <Icon className={`w-5 h-5 ${selected ? 'text-[#1A3A5C]' : 'text-gray-500'}`} />
+                  <Icon className={`w-5 h-5 ${selected ? 'text-brand-secondary' : 'text-gray-500'}`} />
                 </div>
                 <div>
-                  <p className={`text-sm font-medium ${selected ? 'text-[#1A3A5C]' : 'text-gray-700'}`}>{type.label}</p>
+                  <p className={`text-sm font-medium ${selected ? 'text-brand-secondary' : 'text-gray-700'}`}>{type.label}</p>
                   <p className="text-xs text-gray-400 mt-0.5">{type.desc}</p>
                 </div>
               </button>
@@ -152,9 +152,9 @@ export default function Step1_Building({ data, updateData }: Props) {
 
       {/* Help Note */}
       {data.ownership === 'mieter' && (
-        <div className="flex items-start gap-3 p-4 rounded-xl bg-[#F5A623]/10 border border-[#F5A623]/20">
-          <HelpCircle className="w-5 h-5 text-[#F5A623] flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-[#1A3A5C]">
+        <div className="flex items-start gap-3 p-4 rounded-xl bg-brand-primary/10 border border-brand-primary/20">
+          <HelpCircle className="w-5 h-5 text-brand-primary flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-brand-secondary">
             Als Mieter empfehlen wir Ihnen, das Mieterstrommodell zu prüfen. Sprechen Sie mit Ihrem Vermieter über eine gemeinsame Solaranlage.
           </p>
         </div>

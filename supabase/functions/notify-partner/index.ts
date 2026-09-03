@@ -86,7 +86,7 @@ Deno.serve(async (req) => {
     <!-- Header -->
     <tr>
       <td style="background:#1a3a5c;padding:24px 32px;text-align:center;">
-        <span style="color:#f5a623;font-size:28px;font-weight:800;letter-spacing:-0.5px;">⚡ Voltify</span>
+        <span style="color:#f5a623;font-size:28px;font-weight:800;letter-spacing:-0.5px;">⚡ Solvary</span>
         <div style="color:#93c5fd;font-size:13px;margin-top:4px;">Neuer Lead für Sie</div>
       </td>
     </tr>
@@ -179,7 +179,7 @@ Deno.serve(async (req) => {
     <!-- Footer -->
     <tr>
       <td style="background:#f9fafb;padding:16px 32px;text-align:center;border-top:1px solid #e5e7eb;">
-        <span style="color:#d1d5db;font-size:12px;">Powered by ⚡ Voltify · Solar-Vertrieb</span>
+        <span style="color:#d1d5db;font-size:12px;">Powered by ⚡ Solvary · Solar-Vertrieb</span>
       </td>
     </tr>
 
@@ -193,7 +193,7 @@ Deno.serve(async (req) => {
       method: 'POST',
       headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from:    'Voltify Partner <noreply@vu-studio.de>',
+        from:    'Solvary Partner <noreply@vu-studio.de>',
         to:      partner_email,
         subject: `Neuer Lead: ${lead_name || 'Solaranfrage'}${lead_zip ? ' · PLZ ' + lead_zip : ''}`,
         html,

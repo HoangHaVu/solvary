@@ -1,3 +1,4 @@
+import { COLORS } from '../../lib/theme';
 import { useState } from 'react';
 import { X, User, Mail, Phone, MapPin, Home, Zap, Sun, DollarSign, Calendar, Car, Thermometer, Battery } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
@@ -119,12 +120,12 @@ export default function AddLeadModal({ isOpen, onClose, installerId, onSuccess }
     }
   };
 
-  const inputClass = "w-full bg-[#0F0F0F] border border-white/10 text-white rounded-lg px-3 py-2.5 text-sm focus:ring-1 focus:ring-[#F5A623] outline-none placeholder:text-gray-600";
+  const inputClass = "w-full bg-[#0F0F0F] border border-white/10 text-white rounded-lg px-3 py-2.5 text-sm focus:ring-1 focus:ring-brand-primary outline-none placeholder:text-gray-600";
   const labelClass = "text-xs font-bold text-gray-500 mb-1 block";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-[#1A1A1A] rounded-2xl border border-white/10 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+      <div className="bg-brand-secondary-hover rounded-2xl border border-white/10 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-white/5">
           <div>
@@ -264,7 +265,7 @@ export default function AddLeadModal({ isOpen, onClose, installerId, onSuccess }
           <div>
             <label className={labelClass}>Zusätzliche Optionen</label>
             <div className="flex flex-wrap gap-2">
-              <button type="button" onClick={() => setForm({...form, hasECar: !form.hasECar})} className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold border transition-colors ${form.hasECar ? 'bg-[#F5A623]/10 border-[#F5A623]/30 text-[#F5A623]' : 'bg-[#252525] border-white/10 text-gray-400'}`}>
+              <button type="button" onClick={() => setForm({...form, hasECar: !form.hasECar})} className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold border transition-colors ${form.hasECar ? 'bg-brand-primary/10 border-brand-primary/30 text-brand-primary' : 'bg-[#252525] border-white/10 text-gray-400'}`}>
                 <Car className="w-3.5 h-3.5" /> E-Auto
               </button>
               <button type="button" onClick={() => setForm({...form, hasHeatPump: !form.hasHeatPump})} className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold border transition-colors ${form.hasHeatPump ? 'bg-orange-500/10 border-orange-500/30 text-orange-400' : 'bg-[#252525] border-white/10 text-gray-400'}`}>
@@ -281,7 +282,7 @@ export default function AddLeadModal({ isOpen, onClose, installerId, onSuccess }
             <button type="button" onClick={onClose} className="text-sm font-bold text-gray-400 hover:text-white px-4 py-2.5 transition-colors">
               Abbrechen
             </button>
-            <button type="submit" disabled={isSubmitting} className="flex items-center gap-2 bg-[#F5A623] hover:bg-[#E09000] text-[#1A3A5C] font-bold text-sm px-6 py-2.5 rounded-xl transition-colors disabled:opacity-50">
+            <button type="submit" disabled={isSubmitting} className="flex items-center gap-2 bg-brand-primary hover:bg-brand-primary-hover text-brand-secondary font-bold text-sm px-6 py-2.5 rounded-xl transition-colors disabled:opacity-50">
               {isSubmitting ? 'Speichern…' : 'Lead speichern'}
             </button>
           </div>

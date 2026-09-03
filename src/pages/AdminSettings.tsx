@@ -1,3 +1,4 @@
+import { COLORS } from '../lib/theme';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import {
   Crown, Palette, Building2, Zap, Calculator, Euro, Loader2,
@@ -60,8 +61,8 @@ const DEFAULT_SETTINGS: OwnerSettings = {
   firmenname: 'Voltify Solar',
   slogan: 'Ihre Solaranlage — einfach konfiguriert.',
   logoDataUrl: '',
-  primaryColor: '#1A3A5C',
-  accentColor: '#F5A623',
+  primaryColor: COLORS.secondary,
+  accentColor: COLORS.primary,
   mindestpreis: '12000',
   marge: '18',
   iban: '',
@@ -323,7 +324,7 @@ export default function AdminSettings() {
         {/* Header */}
         <div className="px-6 py-5 border-b border-white/5">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-[#F5A623]/10 flex items-center justify-center text-[#F5A623]">
+            <div className="w-10 h-10 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary">
               <Crown className="w-5 h-5" />
             </div>
             <div>
@@ -332,14 +333,14 @@ export default function AdminSettings() {
             </div>
           </div>
           {/* Tab Navigation */}
-          <div className="flex items-center gap-1 bg-[#1A1A1A] rounded-xl p-1 border border-white/5">
+          <div className="flex items-center gap-1 bg-brand-secondary-hover rounded-xl p-1 border border-white/5">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                   activeTab === tab.id
-                    ? 'bg-[#F5A623] text-[#1A3A5C] font-bold'
+                    ? 'bg-brand-primary text-brand-secondary font-bold'
                     : 'text-gray-500 hover:text-white hover:bg-white/5'
                 }`}
               >
@@ -355,9 +356,9 @@ export default function AdminSettings() {
             {activeTab === 'abo' && (
             <>
             {/* ── Abo & Limits ── */}
-            <div className="lg:col-span-2 bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+            <div className="lg:col-span-2 bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
               <div className="flex items-center gap-3 px-6 py-5 border-b border-white/5">
-                <CreditCard className="w-5 h-5 text-[#F5A623]" />
+                <CreditCard className="w-5 h-5 text-brand-primary" />
                 <h3 className="text-sm font-semibold text-white">Abo & Limits</h3>
                 <span className="ml-auto text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-medium">Aktiv</span>
               </div>
@@ -369,7 +370,7 @@ export default function AdminSettings() {
                     <p className="text-xl font-bold text-white">Professional</p>
                     <p className="text-xs text-gray-500">299 €/Monat · 5 Nutzer · unbegrenzte Leads</p>
                   </div>
-                  <button className="px-5 py-2.5 bg-[#F5A623] text-[#1A3A5C] rounded-xl text-sm font-bold hover:bg-[#E09000] transition-colors">
+                  <button className="px-5 py-2.5 bg-brand-primary text-brand-secondary rounded-xl text-sm font-bold hover:bg-brand-primary-hover transition-colors">
                     Upgrade
                   </button>
                 </div>
@@ -380,10 +381,10 @@ export default function AdminSettings() {
                   <div className="bg-[#252525]/50 rounded-xl p-4">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs text-gray-500">Leads diesen Monat</span>
-                      <span className="text-xs font-bold text-[#F5A623]">Unbegrenzt</span>
+                      <span className="text-xs font-bold text-brand-primary">Unbegrenzt</span>
                     </div>
                     <div className="h-2 bg-[#0F0F0F] rounded-full overflow-hidden">
-                      <div className="h-full bg-[#F5A623] rounded-full" style={{ width: '35%' }} />
+                      <div className="h-full bg-brand-primary rounded-full" style={{ width: '35%' }} />
                     </div>
                     <p className="text-xs text-gray-500 mt-1.5">12 Leads erstellt</p>
                   </div>
@@ -451,9 +452,9 @@ export default function AdminSettings() {
             {activeTab === 'profil' && (
             <>
             {/* ── Öffentliches Profil ── */}
-            <div className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+            <div className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
               <div className="flex items-center gap-3 px-6 py-5 border-b border-white/5">
-                <Globe className="w-5 h-5 text-[#F5A623]" />
+                <Globe className="w-5 h-5 text-brand-primary" />
                 <h3 className="text-sm font-semibold text-white">Öffentliches Profil</h3>
               </div>
               <div className="px-6 py-6 space-y-5">
@@ -485,7 +486,7 @@ export default function AdminSettings() {
                         type="text"
                         value={profileCompanyName}
                         onChange={(e) => setProfileCompanyName(e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         placeholder="Muster Solar GmbH"
                       />
                     </div>
@@ -498,7 +499,7 @@ export default function AdminSettings() {
                         type="url"
                         value={profileWebsite}
                         onChange={(e) => setProfileWebsite(e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         placeholder="https://muster-solar.de"
                       />
                     </div>
@@ -537,7 +538,7 @@ export default function AdminSettings() {
                     <textarea
                       value={profileBio}
                       onChange={(e) => setProfileBio(e.target.value)}
-                      className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50 resize-none h-20"
+                      className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50 resize-none h-20"
                       placeholder="Wir sind ein erfahrener Solarbetrieb..."
                       maxLength={400}
                     />
@@ -548,9 +549,9 @@ export default function AdminSettings() {
             </div>
 
             {/* ── Firmenprofil ── */}
-            <div className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+            <div className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
               <div className="flex items-center gap-3 px-6 py-5 border-b border-white/5">
-                <Building2 className="w-5 h-5 text-[#F5A623]" />
+                <Building2 className="w-5 h-5 text-brand-primary" />
                 <h3 className="text-sm font-semibold text-white">Firmenprofil</h3>
               </div>
               <div className="px-6 py-6 space-y-5">
@@ -590,7 +591,7 @@ export default function AdminSettings() {
                       type="text"
                       value={settings.firmenname}
                       onChange={(e) => updateSetting('firmenname', e.target.value)}
-                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                       placeholder="Muster Solar GmbH"
                     />
                   </div>
@@ -600,7 +601,7 @@ export default function AdminSettings() {
                       type="text"
                       value={settings.slogan}
                       onChange={(e) => updateSetting('slogan', e.target.value)}
-                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                       placeholder="Ihr Partner für Solarenergie"
                     />
                   </div>
@@ -609,9 +610,9 @@ export default function AdminSettings() {
             </div>
 
             {/* ── Branding & Farben ── */}
-            <div className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden lg:col-span-2">
+            <div className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden lg:col-span-2">
               <div className="flex items-center gap-3 px-6 py-5 border-b border-white/5">
-                <Palette className="w-5 h-5 text-[#F5A623]" />
+                <Palette className="w-5 h-5 text-brand-primary" />
                 <h3 className="text-sm font-semibold text-white">Branding & Farben</h3>
               </div>
               <div className="px-6 py-6">
@@ -629,7 +630,7 @@ export default function AdminSettings() {
                         type="text"
                         value={settings.primaryColor}
                         onChange={(e) => updateSetting('primaryColor', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         placeholder="#1A3A5C"
                       />
                     </div>
@@ -647,7 +648,7 @@ export default function AdminSettings() {
                         type="text"
                         value={settings.accentColor}
                         onChange={(e) => updateSetting('accentColor', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         placeholder="#F5A623"
                       />
                     </div>
@@ -673,9 +674,9 @@ export default function AdminSettings() {
             {activeTab === 'kalkulation' && (
             <>
             {/* ── Konfigurator-Annahmen (ROI, was der Kunde im Funnel sieht) ── */}
-            <div className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+            <div className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
               <div className="flex items-center gap-3 px-6 py-5 border-b border-white/5">
-                <Calculator className="w-5 h-5 text-[#F5A623]" />
+                <Calculator className="w-5 h-5 text-brand-primary" />
                 <h3 className="text-sm font-semibold text-white">Konfigurator-Annahmen (ROI)</h3>
               </div>
               <div className="px-6 py-6 space-y-5">
@@ -693,7 +694,7 @@ export default function AdminSettings() {
                         type="number"
                         value={calcAssumptions.investPerKwp ?? ''}
                         onChange={(e) => updateAssumption('investPerKwp', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         placeholder="Standard: 1800"
                         min="0" step="50"
                       />
@@ -707,7 +708,7 @@ export default function AdminSettings() {
                         type="number"
                         value={calcAssumptions.electricityPrice ?? ''}
                         onChange={(e) => updateAssumption('electricityPrice', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         placeholder="Standard: 0.32"
                         min="0" step="0.01"
                       />
@@ -721,7 +722,7 @@ export default function AdminSettings() {
                         type="number"
                         value={calcAssumptions.feedInTariff ?? ''}
                         onChange={(e) => updateAssumption('feedInTariff', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         placeholder="Standard: 0.082"
                         min="0" step="0.001"
                       />
@@ -735,7 +736,7 @@ export default function AdminSettings() {
                         type="number"
                         value={calcAssumptions.maintenancePerYear ?? ''}
                         onChange={(e) => updateAssumption('maintenancePerYear', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         placeholder="Standard: 200"
                         min="0" step="50"
                       />
@@ -746,9 +747,9 @@ export default function AdminSettings() {
             </div>
 
             {/* ── Angebots-Konfiguration ── */}
-            <div className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+            <div className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
               <div className="flex items-center gap-3 px-6 py-5 border-b border-white/5">
-                <Zap className="w-5 h-5 text-[#F5A623]" />
+                <Zap className="w-5 h-5 text-brand-primary" />
                 <h3 className="text-sm font-semibold text-white">Angebots-Konfiguration</h3>
               </div>
               <div className="px-6 py-6 space-y-5">
@@ -761,7 +762,7 @@ export default function AdminSettings() {
                         type="number"
                         value={settings.mindestpreis}
                         onChange={(e) => updateSetting('mindestpreis', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         min="0" step="500"
                       />
                     </div>
@@ -774,7 +775,7 @@ export default function AdminSettings() {
                         type="number"
                         value={settings.marge}
                         onChange={(e) => updateSetting('marge', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         min="0" max="100" step="0.5"
                       />
                     </div>
@@ -787,7 +788,7 @@ export default function AdminSettings() {
                         type="text"
                         value={settings.iban}
                         onChange={(e) => updateSetting('iban', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         placeholder="DE89 3704 0044 0532 0130 00"
                       />
                     </div>
@@ -800,7 +801,7 @@ export default function AdminSettings() {
                         type="number"
                         value={settings.zahlungsziel}
                         onChange={(e) => updateSetting('zahlungsziel', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         min="0" max="90"
                       />
                     </div>
@@ -812,7 +813,7 @@ export default function AdminSettings() {
                     type="text"
                     value={settings.panelHersteller}
                     onChange={(e) => updateSetting('panelHersteller', e.target.value)}
-                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                     placeholder="Heckert Solar, JA Solar, Trina Solar"
                   />
                 </div>
@@ -822,7 +823,7 @@ export default function AdminSettings() {
                     type="text"
                     value={settings.wechselrichterHersteller}
                     onChange={(e) => updateSetting('wechselrichterHersteller', e.target.value)}
-                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                     placeholder="SMA, Fronius, Huawei"
                   />
                 </div>
@@ -836,7 +837,7 @@ export default function AdminSettings() {
                         type="number"
                         value={settings.modulePricePerKwp}
                         onChange={(e) => updateSetting('modulePricePerKwp', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-primary/50"
                         min="0" step="50"
                       />
                     </div>
@@ -846,7 +847,7 @@ export default function AdminSettings() {
                         type="number"
                         value={settings.inverterPricePerKwp}
                         onChange={(e) => updateSetting('inverterPricePerKwp', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-primary/50"
                         min="0" step="10"
                       />
                     </div>
@@ -856,7 +857,7 @@ export default function AdminSettings() {
                         type="number"
                         value={settings.storagePricePerKwh}
                         onChange={(e) => updateSetting('storagePricePerKwh', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-primary/50"
                         min="0" step="50"
                       />
                     </div>
@@ -866,7 +867,7 @@ export default function AdminSettings() {
                         type="number"
                         value={settings.mountingFixed}
                         onChange={(e) => updateSetting('mountingFixed', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-primary/50"
                         min="0" step="100"
                       />
                     </div>
@@ -876,7 +877,7 @@ export default function AdminSettings() {
                         type="number"
                         value={settings.electricalFixed}
                         onChange={(e) => updateSetting('electricalFixed', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-primary/50"
                         min="0" step="100"
                       />
                     </div>
@@ -886,7 +887,7 @@ export default function AdminSettings() {
                         type="number"
                         value={settings.scaffoldingFixed}
                         onChange={(e) => updateSetting('scaffoldingFixed', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-primary/50"
                         min="0" step="100"
                       />
                     </div>
@@ -896,7 +897,7 @@ export default function AdminSettings() {
                         type="number"
                         value={settings.travelFixed}
                         onChange={(e) => updateSetting('travelFixed', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-primary/50"
                         min="0" step="50"
                       />
                     </div>
@@ -906,7 +907,7 @@ export default function AdminSettings() {
                         type="number"
                         value={settings.vatRate}
                         onChange={(e) => updateSetting('vatRate', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-primary/50"
                         min="0" max="100" step="0.5"
                       />
                     </div>
@@ -916,9 +917,9 @@ export default function AdminSettings() {
             </div>
 
             {/* ── Kalkulations-Parameter ── */}
-            <div className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+            <div className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
               <div className="flex items-center gap-3 px-6 py-5 border-b border-white/5">
-                <Calculator className="w-5 h-5 text-[#F5A623]" />
+                <Calculator className="w-5 h-5 text-brand-primary" />
                 <h3 className="text-sm font-semibold text-white">Kalkulations-Parameter</h3>
               </div>
               <div className="px-6 py-6">
@@ -931,7 +932,7 @@ export default function AdminSettings() {
                         type="number"
                         value={settings.strompreis}
                         onChange={(e) => updateSetting('strompreis', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         min="0" step="0.5"
                       />
                     </div>
@@ -944,7 +945,7 @@ export default function AdminSettings() {
                         type="number"
                         value={settings.strompreissteigerung}
                         onChange={(e) => updateSetting('strompreissteigerung', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         min="0" step="0.1"
                       />
                     </div>
@@ -957,7 +958,7 @@ export default function AdminSettings() {
                         type="number"
                         value={settings.kfwZinssatz}
                         onChange={(e) => updateSetting('kfwZinssatz', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         min="0" step="0.05"
                       />
                     </div>
@@ -970,7 +971,7 @@ export default function AdminSettings() {
                         type="number"
                         value={settings.eigenverbrauch}
                         onChange={(e) => updateSetting('eigenverbrauch', e.target.value)}
-                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                        className="w-full bg-[#252525] border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                         min="0" max="100"
                       />
                     </div>
@@ -981,7 +982,7 @@ export default function AdminSettings() {
                       type="number"
                       value={settings.co2Faktor}
                       onChange={(e) => updateSetting('co2Faktor', e.target.value)}
-                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                       min="0" step="0.01"
                     />
                   </div>
@@ -990,9 +991,9 @@ export default function AdminSettings() {
             </div>
 
             {/* ── Region & Verfügbarkeit ── */}
-            <div className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+            <div className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
               <div className="flex items-center gap-3 px-6 py-5 border-b border-white/5">
-                <MapPin className="w-5 h-5 text-[#F5A623]" />
+                <MapPin className="w-5 h-5 text-brand-primary" />
                 <h3 className="text-sm font-semibold text-white">Region & Verfügbarkeit</h3>
               </div>
               <div className="px-6 py-6 space-y-5">
@@ -1001,7 +1002,7 @@ export default function AdminSettings() {
                   <textarea
                     value={settings.plzGebiete}
                     onChange={(e) => updateSetting('plzGebiete', e.target.value)}
-                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50 resize-none h-20"
+                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50 resize-none h-20"
                     placeholder="80, 81, 82, 83, 84, 85"
                   />
                   <p className="text-xs text-gray-500">Komma-getrennte Postleitzahlen oder Präfixe — leer = überregional</p>
@@ -1012,7 +1013,7 @@ export default function AdminSettings() {
                     type="number"
                     value={settings.maxEntfernung}
                     onChange={(e) => updateSetting('maxEntfernung', e.target.value)}
-                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                     min="0" step="5"
                   />
                 </div>
@@ -1025,9 +1026,9 @@ export default function AdminSettings() {
             {activeTab === 'rechtliches' && (
             <>
             {/* ── Rechtliche Pflichtangaben ── */}
-            <div className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+            <div className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
               <div className="flex items-center gap-3 px-6 py-5 border-b border-white/5">
-                <CreditCard className="w-5 h-5 text-[#F5A623]" />
+                <CreditCard className="w-5 h-5 text-brand-primary" />
                 <h3 className="text-sm font-semibold text-white">Rechtliche Pflichtangaben</h3>
               </div>
               <div className="px-6 py-6 space-y-5">
@@ -1038,7 +1039,7 @@ export default function AdminSettings() {
                       type="text"
                       value={settings.steuernummer}
                       onChange={(e) => updateSetting('steuernummer', e.target.value)}
-                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                       placeholder="123/456/78901"
                     />
                   </div>
@@ -1048,7 +1049,7 @@ export default function AdminSettings() {
                       type="text"
                       value={settings.rechnungskreis}
                       onChange={(e) => updateSetting('rechnungskreis', e.target.value)}
-                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                       placeholder="RE"
                     />
                   </div>
@@ -1058,7 +1059,7 @@ export default function AdminSettings() {
                       type="text"
                       value={settings.adresse}
                       onChange={(e) => updateSetting('adresse', e.target.value)}
-                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                       placeholder="Musterstraße 1"
                     />
                   </div>
@@ -1068,7 +1069,7 @@ export default function AdminSettings() {
                       type="text"
                       value={settings.ort}
                       onChange={(e) => updateSetting('ort', e.target.value)}
-                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                       placeholder="80331 München"
                     />
                   </div>
@@ -1078,7 +1079,7 @@ export default function AdminSettings() {
                       type="text"
                       value={settings.geschaeftsfuehrer}
                       onChange={(e) => updateSetting('geschaeftsfuehrer', e.target.value)}
-                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                       placeholder="Max Mustermann"
                     />
                   </div>
@@ -1092,7 +1093,7 @@ export default function AdminSettings() {
             {activeTab === 'vorlagen' && (
             <>
             {/* ── Platzhalter-Referenz ── */}
-            <div className="lg:col-span-2 bg-[#1A1A1A] rounded-2xl border border-white/5 p-5">
+            <div className="lg:col-span-2 bg-brand-secondary-hover rounded-2xl border border-white/5 p-5">
               <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Verfügbare Platzhalter</p>
               <div className="flex flex-wrap gap-2">
                 {([
@@ -1105,7 +1106,7 @@ export default function AdminSettings() {
                   ['{{zahlungsziel}}', 'Zahlungsziel in Tagen'],
                 ] as [string, string][]).map(([ph, desc]) => (
                   <div key={ph} className="flex items-center gap-1.5 bg-[#252525] border border-white/5 rounded-lg px-2.5 py-1.5">
-                    <code className="text-[10px] text-[#F5A623] font-mono">{ph}</code>
+                    <code className="text-[10px] text-brand-primary font-mono">{ph}</code>
                     <span className="text-[10px] text-gray-500">{desc}</span>
                   </div>
                 ))}
@@ -1113,9 +1114,9 @@ export default function AdminSettings() {
             </div>
 
             {/* ── PDF-Texte ── */}
-            <div className="lg:col-span-2 bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+            <div className="lg:col-span-2 bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
               <div className="flex items-center gap-3 px-6 py-5 border-b border-white/5">
-                <FileText className="w-5 h-5 text-[#F5A623]" />
+                <FileText className="w-5 h-5 text-brand-primary" />
                 <div>
                   <h3 className="text-sm font-semibold text-white">Angebotsvorlage — PDF-Texte</h3>
                   <p className="text-xs text-gray-500 mt-0.5">Diese Texte erscheinen im PDF. Platzhalter werden beim Rendern ersetzt.</p>
@@ -1130,7 +1131,7 @@ export default function AdminSettings() {
                     value={offerTextTemplate.anschreiben}
                     onChange={(e) => setOfferTextTemplate((prev) => ({ ...prev, anschreiben: e.target.value }))}
                     rows={4}
-                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-3 text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50 resize-y font-mono"
+                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-3 text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50 resize-y font-mono"
                     placeholder="Sehr geehrte/r {{nachname}},..."
                   />
                 </div>
@@ -1141,7 +1142,7 @@ export default function AdminSettings() {
                     value={offerTextTemplate.zahlungsbedingungen}
                     onChange={(e) => setOfferTextTemplate((prev) => ({ ...prev, zahlungsbedingungen: e.target.value }))}
                     rows={4}
-                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-3 text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50 resize-y font-mono"
+                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-3 text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50 resize-y font-mono"
                   />
                 </div>
                 {/* Folgekosten */}
@@ -1152,7 +1153,7 @@ export default function AdminSettings() {
                       type="checkbox"
                       checked={offerTextTemplate.showFolgekosten}
                       onChange={(e) => setOfferTextTemplate((prev) => ({ ...prev, showFolgekosten: e.target.checked }))}
-                      className="w-4 h-4 rounded border-white/10 bg-[#252525] text-[#F5A623] focus:ring-[#F5A623]"
+                      className="w-4 h-4 rounded border-white/10 bg-[#252525] text-brand-primary focus:ring-brand-primary"
                     />
                   </div>
                   {offerTextTemplate.showFolgekosten && (
@@ -1160,7 +1161,7 @@ export default function AdminSettings() {
                       value={offerTextTemplate.folgekostenHinweis}
                       onChange={(e) => setOfferTextTemplate((prev) => ({ ...prev, folgekostenHinweis: e.target.value }))}
                       rows={5}
-                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-3 text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50 resize-y font-mono"
+                      className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-3 text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50 resize-y font-mono"
                     />
                   )}
                 </div>
@@ -1172,7 +1173,7 @@ export default function AdminSettings() {
                     value={offerTextTemplate.schlusstext}
                     onChange={(e) => setOfferTextTemplate((prev) => ({ ...prev, schlusstext: e.target.value }))}
                     rows={3}
-                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-3 text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50 resize-y font-mono"
+                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-3 text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50 resize-y font-mono"
                     placeholder="Mit freundlichen Grüßen&#10;{{firmenname}}"
                   />
                 </div>
@@ -1180,9 +1181,9 @@ export default function AdminSettings() {
             </div>
 
             {/* ── E-Mail-Vorlage ── */}
-            <div className="lg:col-span-2 bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+            <div className="lg:col-span-2 bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
               <div className="flex items-center gap-3 px-6 py-5 border-b border-white/5">
-                <Mail className="w-5 h-5 text-[#F5A623]" />
+                <Mail className="w-5 h-5 text-brand-primary" />
                 <div>
                   <h3 className="text-sm font-semibold text-white">E-Mail-Vorlage</h3>
                   <p className="text-xs text-gray-500 mt-0.5">Beim Öffnen des Sende-Dialogs automatisch vorausgefüllt.</p>
@@ -1195,7 +1196,7 @@ export default function AdminSettings() {
                     type="text"
                     value={emailTemplate.betreff}
                     onChange={(e) => setEmailTemplate((prev) => ({ ...prev, betreff: e.target.value }))}
-                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50"
+                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50"
                     placeholder="Ihr persönliches Solar-Angebot {{angebotsnummer}}..."
                   />
                 </div>
@@ -1205,7 +1206,7 @@ export default function AdminSettings() {
                     value={emailTemplate.nachricht}
                     onChange={(e) => setEmailTemplate((prev) => ({ ...prev, nachricht: e.target.value }))}
                     rows={8}
-                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-3 text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F5A623]/50 resize-y font-mono"
+                    className="w-full bg-[#252525] border border-white/10 rounded-lg px-4 py-3 text-xs text-white placeholder:text-gray-600 focus:outline-none focus:border-brand-primary/50 resize-y font-mono"
                     placeholder="Guten Tag {{vorname}} {{nachname}},..."
                   />
                 </div>
@@ -1217,10 +1218,10 @@ export default function AdminSettings() {
             {activeTab === 'vorschauen' && (
             <>
             {/* ── Angebots-Vorschau DIN A4 ── */}
-            <div className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+            <div className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
               <div className="flex items-center justify-between px-6 py-5 border-b border-white/5">
                 <div className="flex items-center gap-3">
-                  <Sun className="w-5 h-5 text-[#F5A623]" />
+                  <Sun className="w-5 h-5 text-brand-primary" />
                   <h3 className="text-sm font-semibold text-white">Angebots-Vorschau</h3>
                 </div>
                 <p className="text-xs text-gray-500">Musterkunde · 9,5 kWp · inkl. deiner Vorlagen-Texte</p>
@@ -1244,9 +1245,9 @@ export default function AdminSettings() {
             </div>
 
             {/* ── Rechnungs-Vorschau ── */}
-            <div className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+            <div className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
               <div className="flex items-center gap-3 px-6 py-5 border-b border-white/5">
-                <Euro className="w-5 h-5 text-[#F5A623]" />
+                <Euro className="w-5 h-5 text-brand-primary" />
                 <h3 className="text-sm font-semibold text-white">Rechnungs-Vorschau</h3>
               </div>
               <div className="px-6 py-6 bg-[#0F0F0F]">
@@ -1287,7 +1288,7 @@ export default function AdminSettings() {
               <button
                 onClick={saveSettings}
                 disabled={saveStatus === 'saving'}
-                className="flex items-center gap-2 bg-[#F5A623] hover:bg-[#E09000] text-[#1A3A5C] font-bold px-8 py-3 rounded-lg transition-colors disabled:opacity-60 shadow-sm"
+                className="flex items-center gap-2 bg-brand-primary hover:bg-brand-primary-hover text-brand-secondary font-bold px-8 py-3 rounded-lg transition-colors disabled:opacity-60 shadow-sm"
               >
                 {saveStatus === 'saving'
                   ? <><Loader2 className="w-4 h-4 animate-spin" />Speichern…</>

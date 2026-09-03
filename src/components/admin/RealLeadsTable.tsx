@@ -1,3 +1,4 @@
+import { COLORS } from '../../lib/theme';
 import { useState } from 'react';
 import { Search, Phone } from 'lucide-react';
 import { useLeads } from '../../hooks/useLeads';
@@ -16,7 +17,7 @@ export default function RealLeadsTable() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="w-8 h-8 border-2 border-[#F5A623] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-brand-primary border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -38,7 +39,7 @@ export default function RealLeadsTable() {
           placeholder="Leads suchen..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-[#1A1A1A] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-[#F5A623]/50"
+          className="w-full bg-brand-secondary-hover border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-brand-primary/50"
         />
       </div>
 
@@ -52,11 +53,11 @@ export default function RealLeadsTable() {
           return (
             <div
               key={lead.id}
-              className="bg-[#1A1A1A] border border-white/5 rounded-xl p-4 hover:border-[#F5A623]/30 transition-colors"
+              className="bg-brand-secondary-hover border border-white/5 rounded-xl p-4 hover:border-brand-primary/30 transition-colors"
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#1A3A5C] flex items-center justify-center text-white font-semibold text-sm">
+                  <div className="w-10 h-10 rounded-full bg-brand-secondary flex items-center justify-center text-white font-semibold text-sm">
                     {lead.first_name[0]}{lead.last_name[0]}
                   </div>
                   <div>

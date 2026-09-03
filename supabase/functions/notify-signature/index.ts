@@ -53,7 +53,7 @@ Deno.serve(async (req) => {
     );
   }
 
-  const from = `Voltify <noreply@vu-studio.de>`;
+  const from = `Solvary <noreply@vu-studio.de>`;
   const dateStr = new Date(signedAt).toLocaleDateString('de-DE', {
     day: '2-digit',
     month: 'long',
@@ -72,7 +72,7 @@ Deno.serve(async (req) => {
       <p>Wir werden uns in Kürze bei Ihnen melden, um die nächsten Schritte zu besprechen.</p>
       <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;" />
       <p style="font-size: 12px; color: #6b7280;">
-        Dies ist eine automatische Nachricht von Voltify.<br/>
+        Dies ist eine automatische Nachricht von Solvary.<br/>
         Bei Fragen antworten Sie einfach auf diese E-Mail.
       </p>
     </div>
@@ -92,7 +92,7 @@ Deno.serve(async (req) => {
       </table>
       <p>Die unterschriebene Version des Angebots ist im Dashboard verfügbar.</p>
       <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;" />
-      <p style="font-size: 12px; color: #6b7280;">Voltify — Automatische Benachrichtigung</p>
+      <p style="font-size: 12px; color: #6b7280;">Solvary — Automatische Benachrichtigung</p>
     </div>
   `;
 

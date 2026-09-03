@@ -77,11 +77,11 @@ export default function PartnerPortalPage() {
   return (
     <div className="min-h-screen bg-[#0F0F0F] text-white">
       {/* Header */}
-      <header className="bg-[#1A1A1A] border-b border-white/5 px-6 py-4">
+      <header className="bg-brand-secondary-hover border-b border-white/5 px-6 py-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#F5A623] flex items-center justify-center">
-              <Handshake className="w-5 h-5 text-[#1A3A5C]" />
+            <div className="w-10 h-10 rounded-xl bg-brand-primary flex items-center justify-center">
+              <Handshake className="w-5 h-5 text-brand-secondary" />
             </div>
             <div>
               <h1 className="font-semibold text-white">{partner.company_name}</h1>
@@ -90,7 +90,7 @@ export default function PartnerPortalPage() {
           </div>
           <div className="text-right">
             <p className="text-xs text-gray-500">Provision</p>
-            <p className="text-sm font-medium text-[#F5A623]">
+            <p className="text-sm font-medium text-brand-primary">
               {partner.commission_value}{partner.commission_type === 'fixed' ? ' €' : ' %'}
             </p>
           </div>
@@ -102,7 +102,7 @@ export default function PartnerPortalPage() {
         <section className="mb-8">
           <h2 className="text-lg font-semibold text-white mb-4">Neue Leads ({pending.length})</h2>
           {pending.length === 0 ? (
-            <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-8 text-center text-gray-500">
+            <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-8 text-center text-gray-500">
               Keine neuen Leads
             </div>
           ) : (
@@ -118,13 +118,13 @@ export default function PartnerPortalPage() {
         <section>
           <h2 className="text-lg font-semibold text-white mb-4">Meine Leads ({active.length})</h2>
           {active.length === 0 ? (
-            <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-8 text-center text-gray-500">
+            <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-8 text-center text-gray-500">
               Keine aktiven Leads
             </div>
           ) : (
             <div className="space-y-3">
               {active.map((a) => (
-                <div key={a.id} className="bg-[#1A1A1A] rounded-xl border border-white/5 p-4">
+                <div key={a.id} className="bg-brand-secondary-hover rounded-xl border border-white/5 p-4">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="font-medium text-white">{a.lead?.first_name} {a.lead?.last_name}</h3>
                     {a.status === 'accepted' && (
@@ -160,7 +160,7 @@ function LeadCard({ assignment, onAccept, onReject }: {
   onReject: () => void;
 }) {
   return (
-    <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-4">
+    <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-4">
       <h3 className="font-medium text-white mb-2">{assignment.lead?.first_name} {assignment.lead?.last_name}</h3>
       <LeadInfo lead={assignment.lead} />
       <div className="flex gap-2 mt-4">
@@ -205,12 +205,12 @@ function LeadInfo({ lead }: { lead?: LeadAssignment['lead'] }) {
       {(lead.kwp || lead.investment) && (
         <div className="flex items-center gap-4 mt-2">
           {lead.kwp && (
-            <span className="flex items-center gap-1 text-xs text-[#F5A623]">
+            <span className="flex items-center gap-1 text-xs text-brand-primary">
               <Zap className="w-3 h-3" />{lead.kwp} kWp
             </span>
           )}
           {lead.investment && (
-            <span className="text-xs text-[#F5A623]">{lead.investment.toLocaleString()} €</span>
+            <span className="text-xs text-brand-primary">{lead.investment.toLocaleString()} €</span>
           )}
         </div>
       )}

@@ -49,10 +49,10 @@ export default function PartnersGrid() {
           </div>
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 bg-[#F5A623] text-[#1A3A5C] text-sm font-medium px-6 py-3.5 rounded-full hover:bg-[#E09000] transition-all duration-250 hover:scale-[1.02] group w-fit"
+            className="inline-flex items-center gap-2 bg-brand-primary text-brand-secondary text-sm font-medium px-6 py-3.5 rounded-full hover:bg-brand-primary-hover transition-all duration-250 hover:scale-[1.02] group w-fit"
           >
             Partner werden
-            <span className="w-7 h-7 bg-[#1A3A5C] rounded-full flex items-center justify-center group-hover:bg-[#0F2440] transition-colors group-hover:translate-x-1 transition-transform">
+            <span className="w-7 h-7 bg-brand-secondary rounded-full flex items-center justify-center group-hover:bg-brand-secondary-hover transition-colors group-hover:translate-x-1 transition-transform">
               <ArrowRight className="w-3.5 h-3.5 text-white" />
             </span>
           </a>

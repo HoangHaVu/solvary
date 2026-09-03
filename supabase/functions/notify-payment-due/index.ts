@@ -57,7 +57,7 @@ Deno.serve(async (req) => {
       method: 'POST',
       headers: { Authorization: `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: 'Voltify <noreply@vu-studio.de>',
+        from: 'Solvary <noreply@vu-studio.de>',
         to: customerEmail,
         subject: `Zahlungserinnerung — ${nextUnpaid.label}`,
         html: `
@@ -74,7 +74,7 @@ Deno.serve(async (req) => {
               </div>
               <p>Bitte überweise den Betrag an deinen Installateur.</p>
               <p style="margin-top: 16px; font-size: 12px; color: #94a3b8;">
-                Bei Fragen erreichst du uns unter <a href="mailto:kontakt@voltify.de" style="color: #F5A623;">kontakt@voltify.de</a>
+                Bei Fragen erreichst du uns unter <a href="mailto:kontakt@solvary.de" style="color: #F5A623;">kontakt@solvary.de</a>
               </p>
             </div>
           </div>

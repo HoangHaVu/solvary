@@ -1,3 +1,4 @@
+import { COLORS } from '../../lib/theme';
 // PROJECT: Voltify | PURPOSE: Last-Chance-CTA beim Verlassen der Landingpage
 // Wird durch useExitIntent ausgelöst. Fängt abspringende Besucher mit dem
 // stärksten Angebot (Scarcity + kostenlos + Rabatt) ab.
@@ -26,8 +27,8 @@ export default function ExitIntentModal({ onClose }: Props) {
         </button>
 
         {/* Top accent */}
-        <div className="bg-gradient-to-br from-[#1A3A5C] to-[#0F2440] px-8 pt-8 pb-10 text-center">
-          <span className="inline-flex items-center gap-1.5 bg-[#F5A623]/20 border border-[#F5A623]/30 text-[#F5A623] text-xs font-bold px-3 py-1 rounded-full mb-4">
+        <div className="bg-gradient-to-br from-brand-secondary to-brand-secondary-hover px-8 pt-8 pb-10 text-center">
+          <span className="inline-flex items-center gap-1.5 bg-brand-primary/20 border border-brand-primary/30 text-brand-primary text-xs font-bold px-3 py-1 rounded-full mb-4">
             <Zap className="w-3.5 h-3.5" fill="currentColor" /> {BETA_COPY.spotsBadge}
           </span>
           <h2 className="text-2xl font-bold text-white leading-snug">
@@ -39,14 +40,14 @@ export default function ExitIntentModal({ onClose }: Props) {
         <div className="px-8 py-6 text-center -mt-4">
           <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 mb-5">
             <p className="text-gray-600 text-sm leading-relaxed">
-              <span className="font-bold text-[#1A3A5C]">{BETA.freeMonths} Monate komplett kostenlos</span> testen —
-              danach dauerhaft <span className="font-bold text-[#F5A623]">{BETA.discountPercent}% Gründerrabatt</span>.
+              <span className="font-bold text-brand-secondary">{BETA.freeMonths} Monate komplett kostenlos</span> testen —
+              danach dauerhaft <span className="font-bold text-brand-secondary">{BETA.discountPercent}% Gründerrabatt</span>.
               Nur ein {BETA.callMinutes}-Min Demo-Call, kein Setup-Aufwand.
             </p>
           </div>
           <button
             onClick={() => { onClose(); navigate('/beta'); }}
-            className="w-full flex items-center justify-center gap-2 bg-[#F5A623] text-[#1A3A5C] font-bold py-3.5 rounded-xl hover:bg-[#E09000] transition-colors"
+            className="w-full flex items-center justify-center gap-2 bg-brand-primary text-brand-secondary font-bold py-3.5 rounded-xl hover:bg-brand-primary-hover transition-colors"
           >
             Jetzt Beta-Platz sichern <ArrowRight className="w-4 h-4" />
           </button>

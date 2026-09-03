@@ -37,13 +37,13 @@ export default function ROIPdfDocument({ data, calc }: Props) {
   const today = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
 
   return (
-    <Document title="Wirtschaftlichkeitsanalyse — Voltify" author="Voltify GmbH">
+    <Document title="Wirtschaftlichkeitsanalyse — Solvary" author="Solvary GmbH">
       <Page size="A4" style={s.page}>
 
         {/* Header */}
         <View style={s.header}>
           <View>
-            <Text style={s.headerTitle}>Voltify</Text>
+            <Text style={s.headerTitle}>Solvary</Text>
             <Text style={s.headerSub}>Persönliche Wirtschaftlichkeitsanalyse</Text>
           </View>
           <View>
@@ -193,7 +193,7 @@ export default function ROIPdfDocument({ data, calc }: Props) {
 
         {/* Footer */}
         <View style={s.footer} fixed>
-          <Text style={s.footerText}>Voltify GmbH • kontakt@voltify.de • voltify.de</Text>
+          <Text style={s.footerText}>Solvary GmbH • kontakt@solvary.de • solvary.de</Text>
           <Text style={s.footerText}>Erstellt am {today} • 100 % DSGVO-konform</Text>
         </View>
 

@@ -59,7 +59,7 @@ export const InvoicePreviewCard: React.FC<InvoicePreviewProps> = ({
   ];
 
   return (
-    <div className="w-full max-w-lg mx-auto rounded-2xl overflow-hidden shadow-lg border border-white/10 bg-[#1A1A1A] text-sm select-none">
+    <div className="w-full max-w-lg mx-auto rounded-2xl overflow-hidden shadow-lg border border-white/10 bg-brand-secondary-hover text-sm select-none">
       {/* Briefkopf */}
       <div className="px-6 py-4 flex items-center gap-4" style={{ backgroundColor: primaryColor }}>
         <div className="w-10 h-10 rounded-lg bg-white/15 flex items-center justify-center shrink-0 overflow-hidden">

@@ -64,8 +64,8 @@ export default function OurServices() {
 
                   {/* Arrow icon top-right for middle card */}
                   {i === 1 && (
-                    <div className="absolute top-4 right-4 w-10 h-10 bg-[#F5A623] rounded-full flex items-center justify-center">
-                      <ArrowUpRight className="w-4 h-4 text-[#1A3A5C]" />
+                    <div className="absolute top-4 right-4 w-10 h-10 bg-brand-primary rounded-full flex items-center justify-center">
+                      <ArrowUpRight className="w-4 h-4 text-brand-secondary" />
                     </div>
                   )}
 
@@ -85,8 +85,8 @@ export default function OurServices() {
           <button className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 rounded-full border border-gray-200 bg-white items-center justify-center hover:bg-gray-50 transition-colors z-10">
             <ChevronLeft className="w-5 h-5 text-black" />
           </button>
-          <button className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 rounded-full bg-[#F5A623] items-center justify-center hover:bg-[#E09000] transition-colors z-10">
-            <ChevronRight className="w-5 h-5 text-[#1A3A5C]" />
+          <button className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 rounded-full bg-brand-primary items-center justify-center hover:bg-brand-primary-hover transition-colors z-10">
+            <ChevronRight className="w-5 h-5 text-brand-secondary" />
           </button>
         </div>
       </div>

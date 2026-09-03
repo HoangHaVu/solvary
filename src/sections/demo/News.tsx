@@ -8,19 +8,19 @@ gsap.registerPlugin(ScrollTrigger);
 const posts = [
   {
     img: '/images/blog-1.jpg',
-    author: 'Voltify',
+    author: 'Solvary',
     readTime: '4 Min. Lesedauer',
     title: 'Wie eine überzeugende Solar-Website mehr Leads generiert',
   },
   {
     img: '/images/blog-2.jpg',
-    author: 'Voltify',
+    author: 'Solvary',
     readTime: '3 Min. Lesedauer',
     title: 'Solar-Website-Design-Trends, die Sie 2025 beobachten sollten',
   },
   {
     img: '/images/blog-3.jpg',
-    author: 'Voltify',
+    author: 'Solvary',
     readTime: '2 Min. Lesedauer',
     title: 'Erstellen Sie eine beeindruckende Online-Präsenz für Solarlösungen',
   },
@@ -76,7 +76,7 @@ export default function News() {
                   />
                 </div>
                 {/* Author badge strip */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-[#1A3A5C] via-[#0F2440] to-black px-4 py-2 flex items-center gap-4">
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-brand-secondary via-brand-secondary-hover to-black px-4 py-2 flex items-center gap-4">
                   <div className="flex items-center gap-1.5">
                     <User className="w-3.5 h-3.5 text-white" />
                     <span className="text-xs font-medium text-white">{post.author}</span>
@@ -103,10 +103,10 @@ export default function News() {
         <div className="text-center">
           <a
             href="#news"
-            className="news-btn inline-flex items-center gap-2 bg-[#F5A623] text-[#1A3A5C] text-sm font-medium px-6 py-3.5 rounded-full hover:bg-[#E09000] transition-all duration-250 hover:scale-[1.02] group opacity-0"
+            className="news-btn inline-flex items-center gap-2 bg-brand-primary text-brand-secondary text-sm font-medium px-6 py-3.5 rounded-full hover:bg-brand-primary-hover transition-all duration-250 hover:scale-[1.02] group opacity-0"
           >
             Weitere Neuigkeiten
-            <span className="w-7 h-7 bg-[#1A3A5C] rounded-full flex items-center justify-center group-hover:bg-[#0F2440] transition-colors group-hover:translate-x-1 transition-transform">
+            <span className="w-7 h-7 bg-brand-secondary rounded-full flex items-center justify-center group-hover:bg-brand-secondary-hover transition-colors group-hover:translate-x-1 transition-transform">
               <ArrowRight className="w-3.5 h-3.5 text-white" />
             </span>
           </a>

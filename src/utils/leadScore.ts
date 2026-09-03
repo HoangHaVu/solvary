@@ -1,3 +1,4 @@
+import { COLORS } from '../lib/theme';
 import { getIrradiationByZip } from '../data/plzIrradiation';
 import type { Lead } from '../services/data';
 
@@ -176,10 +177,10 @@ export function computeLeadScoreDetailed(params: LeadScoreParams): DetailedScore
 
 export function getScoreResult(score: number): ScoreResult {
   if (score >= 70) {
-    return { score, tier: 'heiss', label: 'Heiß', color: 'text-[#F5A623]', bgColor: 'bg-[#F5A623]/10 border-[#F5A623]/30' };
+    return { score, tier: 'heiss', label: 'Heiß', color: 'text-brand-primary', bgColor: 'bg-brand-primary/10 border-brand-primary/30' };
   }
   if (score >= 40) {
-    return { score, tier: 'warm', label: 'Warm', color: 'text-[#1A3A5C]', bgColor: 'bg-[#1A3A5C]/10 border-[#1A3A5C]/30' };
+    return { score, tier: 'warm', label: 'Warm', color: 'text-brand-secondary', bgColor: 'bg-brand-secondary/10 border-brand-secondary/30' };
   }
   return { score, tier: 'kalt', label: 'Kalt', color: 'text-gray-500', bgColor: 'bg-gray-100 border-gray-300' };
 }

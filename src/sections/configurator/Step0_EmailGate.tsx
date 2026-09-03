@@ -1,6 +1,8 @@
 // PROJECT: Voltify | PURPOSE: Lead-Capture vor dem Konfigurator (E-Mail + Vorname)
 import { useState } from 'react';
-import { Zap, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { LOGO_WHITE_PATH } from '../../lib/branding';
+import { COLORS } from '../../lib/theme';
 import type { TenantBranding } from '../../hooks/useTenantBranding';
 
 interface Props {
@@ -14,9 +16,9 @@ export default function Step0_EmailGate({ onSubmit, onSkip, branding }: Props) {
   const [email, setEmail]         = useState('');
   const [error, setError]         = useState('');
 
-  const primary = branding?.primaryColor || '#1A3A5C';
-  const accent  = branding?.accentColor  || '#F5A623';
-  const name    = branding?.firmenname   || 'Voltify';
+  const primary = branding?.primaryColor || COLORS.secondary;
+  const accent  = branding?.accentColor  || COLORS.primary;
+  const name    = branding?.firmenname   || 'Solvary';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,19 +40,10 @@ export default function Step0_EmailGate({ onSubmit, onSkip, branding }: Props) {
         <div className="flex items-center gap-2 mb-10 justify-center">
           {branding?.isTenant && branding.logoDataUrl ? (
             <img src={branding.logoDataUrl} alt={name} className="h-9 object-contain" />
-          ) : (
-            <>
-              <div
-                className="w-9 h-9 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: accent }}
-              >
-                <Zap className="w-5 h-5" style={{ color: primary }} fill="currentColor" />
-              </div>
-              <span className="text-xl font-semibold text-white">{name}</span>
-            </>
-          )}
-          {branding?.isTenant && !branding.logoDataUrl && (
+          ) : branding?.isTenant ? (
             <span className="text-xl font-semibold text-white">{name}</span>
+          ) : (
+            <img src={LOGO_WHITE_PATH} alt="Solvary" className="h-10 w-auto" />
           )}
         </div>
 
@@ -114,10 +107,10 @@ export default function Step0_EmailGate({ onSubmit, onSkip, branding }: Props) {
           </p>
         </div>
 
-        {/* Powered by Voltify — nur wenn Tenant und poweredByVoltify=true */}
+        {/* Powered by Solvary — nur wenn Tenant und poweredByVoltify=true */}
         {branding?.isTenant && branding.poweredByVoltify && (
           <p className="text-center text-white/20 text-[10px] mt-4">
-            Powered by Voltify
+            Powered by Solvary
           </p>
         )}
       </div>

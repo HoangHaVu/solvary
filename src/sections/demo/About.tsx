@@ -75,7 +75,7 @@ export default function About() {
             </h3>
             <div className="w-24 h-px bg-gray-300 mb-8" />
             <p className="text-gray-600 text-base leading-relaxed max-w-[400px]">
-              Voltify ist ein Software-Unternehmen der neuen Generation, das sich darauf spezialisiert hat, intelligente Solarsysteme zu entwickeln, die Nachhaltigkeit mit smarten Technologien verbinden.
+              Solvary ist ein Software-Unternehmen der neuen Generation, das sich darauf spezialisiert hat, intelligente Solarsysteme zu entwickeln, die Nachhaltigkeit mit smarten Technologien verbinden.
             </p>
           </div>
 

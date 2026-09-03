@@ -161,7 +161,7 @@ export default function CommissionsPage() {
           ].map(s => {
             const Icon = s.icon;
             return (
-              <div key={s.label} className="bg-[#1A1A1A] border border-white/5 rounded-xl p-4 flex items-center gap-3">
+              <div key={s.label} className="bg-brand-secondary-hover border border-white/5 rounded-xl p-4 flex items-center gap-3">
                 <div className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
                   <Icon className={`w-4 h-4 ${s.color}`} />
                 </div>
@@ -178,16 +178,16 @@ export default function CommissionsPage() {
         {partnerStats.length > 0 && (
           <div className="grid grid-cols-2 gap-4 mb-6">
             {/* Meiste Aufträge */}
-            <div className="bg-[#1A1A1A] border border-white/5 rounded-xl p-5">
+            <div className="bg-brand-secondary-hover border border-white/5 rounded-xl p-5">
               <div className="flex items-center gap-2 mb-4">
-                <Trophy className="w-4 h-4 text-[#F5A623]" />
+                <Trophy className="w-4 h-4 text-brand-primary" />
                 <h2 className="text-sm font-semibold text-white">Meiste Aufträge</h2>
               </div>
               <div className="space-y-3">
                 {topByOrders.map((p, i) => (
                   <div key={p.name} className="flex items-center gap-3">
                     <span className={`text-[11px] font-bold w-5 text-center flex-shrink-0 ${
-                      i === 0 ? 'text-[#F5A623]' : i === 1 ? 'text-gray-400' : 'text-gray-600'
+                      i === 0 ? 'text-brand-primary' : i === 1 ? 'text-gray-400' : 'text-gray-600'
                     }`}>{i + 1}</span>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between mb-1">
@@ -196,7 +196,7 @@ export default function CommissionsPage() {
                       </div>
                       <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
                         <div
-                          className={`h-full rounded-full transition-all ${i === 0 ? 'bg-[#F5A623]' : 'bg-white/20'}`}
+                          className={`h-full rounded-full transition-all ${i === 0 ? 'bg-brand-primary' : 'bg-white/20'}`}
                           style={{ width: `${(p.count / maxOrders) * 100}%` }}
                         />
                       </div>
@@ -207,7 +207,7 @@ export default function CommissionsPage() {
             </div>
 
             {/* Höchste Provisionen bezahlt */}
-            <div className="bg-[#1A1A1A] border border-white/5 rounded-xl p-5">
+            <div className="bg-brand-secondary-hover border border-white/5 rounded-xl p-5">
               <div className="flex items-center gap-2 mb-4">
                 <TrendingUp className="w-4 h-4 text-green-400" />
                 <h2 className="text-sm font-semibold text-white">Höchste bezahlte Provision</h2>
@@ -244,14 +244,14 @@ export default function CommissionsPage() {
 
         {/* ── Filter-Leiste ── */}
         <div className="flex items-center gap-3 mb-4 flex-wrap">
-          <div className="flex items-center gap-1 bg-[#1A1A1A] border border-white/5 rounded-xl p-1">
+          <div className="flex items-center gap-1 bg-brand-secondary-hover border border-white/5 rounded-xl p-1">
             {(['all', 'pending', 'invoiced', 'paid', 'cancelled'] as StatusFilter[]).map(f => (
               <button
                 key={f}
                 onClick={() => setStatusFilter(f)}
                 className={`text-[11px] font-medium px-3 py-1.5 rounded-lg transition-all ${
                   statusFilter === f
-                    ? 'bg-[#1A3A5C] text-white'
+                    ? 'bg-brand-secondary text-white'
                     : 'text-gray-500 hover:text-white hover:bg-white/5'
                 }`}
               >
@@ -265,7 +265,7 @@ export default function CommissionsPage() {
               <select
                 value={partnerFilter}
                 onChange={e => setPartnerFilter(e.target.value)}
-                className="appearance-none bg-[#1A1A1A] border border-white/5 text-sm text-gray-400 rounded-xl px-4 py-2 pr-8 focus:outline-none focus:border-white/20 hover:border-white/15 transition-colors cursor-pointer"
+                className="appearance-none bg-brand-secondary-hover border border-white/5 text-sm text-gray-400 rounded-xl px-4 py-2 pr-8 focus:outline-none focus:border-white/20 hover:border-white/15 transition-colors cursor-pointer"
               >
                 <option value="all">Alle Partner</option>
                 {uniquePartners.map(([id, name]) => (
@@ -282,7 +282,7 @@ export default function CommissionsPage() {
               <select
                 value={memberFilter}
                 onChange={e => setMemberFilter(e.target.value)}
-                className="appearance-none bg-[#1A1A1A] border border-white/5 text-sm text-gray-400 rounded-xl px-4 py-2 pr-8 focus:outline-none focus:border-white/20 hover:border-white/15 transition-colors cursor-pointer"
+                className="appearance-none bg-brand-secondary-hover border border-white/5 text-sm text-gray-400 rounded-xl px-4 py-2 pr-8 focus:outline-none focus:border-white/20 hover:border-white/15 transition-colors cursor-pointer"
               >
                 <option value="all">Alle Vertriebler</option>
                 {teamMembers.map(m => (
@@ -307,7 +307,7 @@ export default function CommissionsPage() {
         </div>
 
         {/* ── Tabelle ── */}
-        <div className="bg-[#1A1A1A] border border-white/5 rounded-xl overflow-hidden">
+        <div className="bg-brand-secondary-hover border border-white/5 rounded-xl overflow-hidden">
           {loading ? (
             <div className="text-center py-12 text-gray-500 text-sm">Laden…</div>
           ) : filtered.length === 0 ? (

@@ -1,3 +1,4 @@
+import { COLORS } from '../lib/theme';
 import { useState, useEffect } from 'react';
 import { Settings, Webhook, Eye, EyeOff, CheckCircle, XCircle, Loader2, ExternalLink, Copy, AlertCircle } from 'lucide-react';
 import { AdminSidebar } from '../components/layout/AdminSidebar';
@@ -158,7 +159,7 @@ export default function InstallerSettings() {
       <div className="min-h-screen flex bg-[#0F0F0F] text-white">
       <AdminSidebar />
       <main className="flex-1 flex items-center justify-center">
-          <Loader2 className="w-8 h-8 text-[#F5A623] animate-spin" />
+          <Loader2 className="w-8 h-8 text-brand-primary animate-spin" />
         </main>
       </div>
     );
@@ -171,8 +172,8 @@ export default function InstallerSettings() {
         {/* Header */}
         <div className="px-6 py-6 border-b border-white/5">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#1A3A5C] flex items-center justify-center">
-              <Settings className="w-5 h-5 text-[#F5A623]" />
+            <div className="w-10 h-10 rounded-xl bg-brand-secondary flex items-center justify-center">
+              <Settings className="w-5 h-5 text-brand-primary" />
             </div>
             <div>
               <h2 className="text-xl font-bold text-white">Einstellungen</h2>
@@ -186,9 +187,9 @@ export default function InstallerSettings() {
           {/* Webhook-Konfiguration */}
           <section className="bg-[#141414] rounded-2xl border border-white/5 overflow-hidden">
             <div className="flex items-center gap-3 px-6 py-5 border-b border-white/5">
-              <Webhook className="w-5 h-5 text-[#F5A623]" />
+              <Webhook className="w-5 h-5 text-brand-primary" />
               <h3 className="font-bold text-white text-lg">CRM-Webhook</h3>
-              <span className="ml-auto text-xs font-bold px-2 py-0.5 rounded-full bg-[#F5A623]/10 text-[#F5A623]">PRIO</span>
+              <span className="ml-auto text-xs font-bold px-2 py-0.5 rounded-full bg-brand-primary/10 text-brand-primary">PRIO</span>
             </div>
 
             <div className="px-6 py-6 space-y-6">
@@ -205,7 +206,7 @@ export default function InstallerSettings() {
                 </div>
                 <button
                   onClick={() => setIsActive(!isActive)}
-                  className={`relative w-12 h-6 rounded-full overflow-hidden transition-colors ${isActive ? 'bg-[#F5A623]' : 'bg-gray-700'}`}
+                  className={`relative w-12 h-6 rounded-full overflow-hidden transition-colors ${isActive ? 'bg-brand-primary' : 'bg-gray-700'}`}
                 >
                   <span className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200 ${isActive ? 'translate-x-6' : 'translate-x-0'}`} />
                 </button>
@@ -222,7 +223,7 @@ export default function InstallerSettings() {
                   value={webhookUrl}
                   onChange={(e) => setWebhookUrl(e.target.value)}
                   placeholder="https://hooks.zapier.com/hooks/catch/..."
-                  className="w-full bg-[#0F0F0F] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#F5A623]/30 focus:border-[#F5A623]"
+                  className="w-full bg-[#0F0F0F] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary"
                 />
               </div>
 
@@ -238,7 +239,7 @@ export default function InstallerSettings() {
                     value={webhookSecret}
                     onChange={(e) => setWebhookSecret(e.target.value)}
                     placeholder="Geheimer Schlüssel für HMAC-SHA256-Signatur"
-                    className="w-full bg-[#0F0F0F] border border-white/10 rounded-xl px-4 py-3 pr-12 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#F5A623]/30 focus:border-[#F5A623]"
+                    className="w-full bg-[#0F0F0F] border border-white/10 rounded-xl px-4 py-3 pr-12 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary"
                   />
                   <button
                     onClick={() => setShowSecret(!showSecret)}
@@ -258,7 +259,7 @@ export default function InstallerSettings() {
                 <button
                   onClick={save}
                   disabled={isSaving}
-                  className="flex items-center justify-center gap-2 bg-[#F5A623] hover:bg-[#F5A623]/90 text-[#1A3A5C] font-semibold px-6 py-2.5 rounded-xl transition-colors disabled:opacity-60"
+                  className="flex items-center justify-center gap-2 bg-brand-primary hover:bg-brand-primary/90 text-brand-secondary font-semibold px-6 py-2.5 rounded-xl transition-colors disabled:opacity-60"
                 >
                   {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
                   {isSaving ? 'Speichern…' : 'Einstellungen speichern'}

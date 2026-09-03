@@ -29,9 +29,9 @@ const EMPTY: AgencyProfile = {
   agency_notify_on_response: true,
 };
 
-const inputCls = 'w-full bg-[#0F0F0F] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#F5A623]/30 focus:border-[#F5A623]';
+const inputCls = 'w-full bg-[#0F0F0F] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary';
 const labelCls = 'text-xs font-semibold text-gray-400';
-const sectionCls = 'bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden';
+const sectionCls = 'bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden';
 const sectionHeaderCls = 'px-6 py-4 border-b border-white/5 flex items-center gap-3';
 
 export default function AgencySettingsPage() {
@@ -106,7 +106,7 @@ export default function AgencySettingsPage() {
       <div className="min-h-screen flex bg-[#0F0F0F] text-white">
         <AdminSidebar />
         <main className="flex-1 flex items-center justify-center">
-          <Loader2 className="w-8 h-8 text-[#F5A623] animate-spin" />
+          <Loader2 className="w-8 h-8 text-brand-primary animate-spin" />
         </main>
       </div>
     );
@@ -120,8 +120,8 @@ export default function AgencySettingsPage() {
         {/* Header */}
         <div className="border-b border-white/5 bg-[#0F0F0F] px-6 py-4 flex items-center justify-between sticky top-0 z-10">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-[#F5A623]/10 flex items-center justify-center">
-              <Settings className="w-4 h-4 text-[#F5A623]" />
+            <div className="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center">
+              <Settings className="w-4 h-4 text-brand-primary" />
             </div>
             <div>
               <h1 className="text-base font-black text-white">Einstellungen</h1>
@@ -133,7 +133,7 @@ export default function AgencySettingsPage() {
             type="submit"
             disabled={saving}
             className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-colors disabled:opacity-60
-              bg-[#F5A623] text-[#1A3A5C] hover:bg-[#E09000]"
+              bg-brand-primary text-brand-secondary hover:bg-brand-primary-hover"
           >
             {saving ? <Loader2 className="w-4 h-4 animate-spin" /> :
               saved  ? <CheckCircle2 className="w-4 h-4" />       :
@@ -154,7 +154,7 @@ export default function AgencySettingsPage() {
             {/* ── Firmenprofil ── */}
             <div className={sectionCls}>
               <div className={sectionHeaderCls}>
-                <Building2 className="w-4 h-4 text-[#F5A623]" />
+                <Building2 className="w-4 h-4 text-brand-primary" />
                 <h2 className="text-sm font-bold text-white">Firmenprofil</h2>
               </div>
               <div className="px-6 py-5 space-y-4">
@@ -212,7 +212,7 @@ export default function AgencySettingsPage() {
             {/* ── Standard-Provision ── */}
             <div className={sectionCls}>
               <div className={sectionHeaderCls}>
-                <Euro className="w-4 h-4 text-[#F5A623]" />
+                <Euro className="w-4 h-4 text-brand-primary" />
                 <div>
                   <h2 className="text-sm font-bold text-white">Standard-Provision</h2>
                   <p className="text-xs text-gray-500 mt-0.5">Vorausgefüllte Werte beim Anlegen neuer Partner</p>
@@ -232,7 +232,7 @@ export default function AgencySettingsPage() {
                         onClick={() => set('agency_default_commission_type', value)}
                         className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-semibold transition-colors ${
                           form.agency_default_commission_type === value
-                            ? 'bg-[#F5A623]/10 border-[#F5A623]/40 text-[#F5A623]'
+                            ? 'bg-brand-primary/10 border-brand-primary/40 text-brand-primary'
                             : 'bg-[#0F0F0F] border-white/10 text-gray-500 hover:border-white/20'
                         }`}
                       >
@@ -264,7 +264,7 @@ export default function AgencySettingsPage() {
             {/* ── Benachrichtigungen ── */}
             <div className={sectionCls}>
               <div className={sectionHeaderCls}>
-                <Bell className="w-4 h-4 text-[#F5A623]" />
+                <Bell className="w-4 h-4 text-brand-primary" />
                 <h2 className="text-sm font-bold text-white">Benachrichtigungen</h2>
               </div>
               <div className="px-6 py-5">
@@ -275,7 +275,7 @@ export default function AgencySettingsPage() {
                 >
                   <div className="flex items-center gap-3">
                     {form.agency_notify_on_response
-                      ? <Bell className="w-4 h-4 text-[#F5A623]" />
+                      ? <Bell className="w-4 h-4 text-brand-primary" />
                       : <BellOff className="w-4 h-4 text-gray-500" />
                     }
                     <div className="text-left">
@@ -287,8 +287,8 @@ export default function AgencySettingsPage() {
                   </div>
                   <div className={`w-11 h-6 rounded-full border-2 transition-colors relative flex-shrink-0 ${
                     form.agency_notify_on_response
-                      ? 'bg-[#F5A623] border-[#F5A623]'
-                      : 'bg-[#1A1A1A] border-white/20'
+                      ? 'bg-brand-primary border-brand-primary'
+                      : 'bg-brand-secondary-hover border-white/20'
                   }`}>
                     <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-transform ${
                       form.agency_notify_on_response ? 'translate-x-5' : 'translate-x-0.5'
@@ -302,7 +302,7 @@ export default function AgencySettingsPage() {
             <button
               type="button"
               onClick={() => navigate('/admin/agency-team')}
-              className="w-full flex items-center justify-between p-5 bg-[#1A1A1A] rounded-2xl border border-white/5 hover:border-white/10 transition-colors"
+              className="w-full flex items-center justify-between p-5 bg-brand-secondary-hover rounded-2xl border border-white/5 hover:border-white/10 transition-colors"
             >
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">

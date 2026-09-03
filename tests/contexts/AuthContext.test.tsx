@@ -6,7 +6,11 @@ const mockSignIn = vi.fn();
 const mockSignOut = vi.fn();
 const mockFetchProfile = vi.fn();
 const mockGetSession = vi.fn();
-const mockOnAuthStateChange = vi.fn((_cb?: any) => ({ data: { subscription: { unsubscribe: vi.fn() } } }));
+let emitAuth: ((event: string, session: any) => void) | null = null;
+const mockOnAuthStateChange = vi.fn((cb: any) => {
+  emitAuth = cb;
+  return { data: { subscription: { unsubscribe: vi.fn() } } };
+});
 
 vi.mock('@/lib/supabase', () => ({
   supabase: {
@@ -41,12 +45,12 @@ function TestConsumer() {
 
 beforeEach(() => {
   vi.clearAllMocks();
+  emitAuth = null;
 });
 
 describe('AuthProvider', () => {
   it('startet im Ladezustand ohne Session', async () => {
     mockGetSession.mockResolvedValue({ data: { session: null } });
-    mockOnAuthStateChange.mockReturnValue({ data: { subscription: { unsubscribe: vi.fn() } } });
 
     render(
       <AuthProvider>
@@ -56,6 +60,8 @@ describe('AuthProvider', () => {
 
     expect(screen.getByTestId('loading')).toHaveTextContent('yes');
 
+    emitAuth!('INITIAL_SESSION', null);
+
     await waitFor(() => {
       expect(screen.getByTestId('loading')).toHaveTextContent('no');
     });
@@ -64,13 +70,6 @@ describe('AuthProvider', () => {
   });
 
   it('setzt User bei bestehender Session', async () => {
-    mockGetSession.mockResolvedValue({
-      data: {
-        session: {
-          user: { id: '123', email: 'test@test.de', user_metadata: {} },
-        },
-      },
-    });
     mockFetchProfile.mockResolvedValue({
       id: '123',
       role: 'owner',
@@ -80,13 +79,16 @@ describe('AuthProvider', () => {
       phone: null,
       zip: null,
     });
-    mockOnAuthStateChange.mockReturnValue({ data: { subscription: { unsubscribe: vi.fn() } } });
 
     render(
       <AuthProvider>
         <TestConsumer />
       </AuthProvider>
     );
+
+    emitAuth!('INITIAL_SESSION', {
+      user: { id: '123', email: 'test@test.de', user_metadata: {} },
+    });
 
     await waitFor(() => {
       expect(screen.getByTestId('authenticated')).toHaveTextContent('yes');
@@ -99,13 +101,6 @@ describe('AuthProvider', () => {
   });
 
   it('setzt Employee korrekt für installer', async () => {
-    mockGetSession.mockResolvedValue({
-      data: {
-        session: {
-          user: { id: '456', email: 'inst@test.de', user_metadata: {} },
-        },
-      },
-    });
     mockFetchProfile.mockResolvedValue({
       id: '456',
       role: 'installer',
@@ -115,13 +110,16 @@ describe('AuthProvider', () => {
       phone: null,
       zip: null,
     });
-    mockOnAuthStateChange.mockReturnValue({ data: { subscription: { unsubscribe: vi.fn() } } });
 
     render(
       <AuthProvider>
         <TestConsumer />
       </AuthProvider>
     );
+
+    emitAuth!('INITIAL_SESSION', {
+      user: { id: '456', email: 'inst@test.de', user_metadata: {} },
+    });
 
     await waitFor(() => {
       expect(screen.getByTestId('authenticated')).toHaveTextContent('yes');
@@ -134,13 +132,6 @@ describe('AuthProvider', () => {
   });
 
   it('setzt super_employee korrekt', async () => {
-    mockGetSession.mockResolvedValue({
-      data: {
-        session: {
-          user: { id: '789', email: 'super@test.de', user_metadata: {} },
-        },
-      },
-    });
     mockFetchProfile.mockResolvedValue({
       id: '789',
       role: 'super_employee',
@@ -150,13 +141,16 @@ describe('AuthProvider', () => {
       phone: null,
       zip: null,
     });
-    mockOnAuthStateChange.mockReturnValue({ data: { subscription: { unsubscribe: vi.fn() } } });
 
     render(
       <AuthProvider>
         <TestConsumer />
       </AuthProvider>
     );
+
+    emitAuth!('INITIAL_SESSION', {
+      user: { id: '789', email: 'super@test.de', user_metadata: {} },
+    });
 
     await waitFor(() => {
       expect(screen.getByTestId('authenticated')).toHaveTextContent('yes');
@@ -169,8 +163,6 @@ describe('AuthProvider', () => {
   });
 
   it('login setzt den User', async () => {
-    mockGetSession.mockResolvedValue({ data: { session: null } });
-    mockOnAuthStateChange.mockReturnValue({ data: { subscription: { unsubscribe: vi.fn() } } });
     mockSignIn.mockResolvedValue({
       user: { id: '999', email: 'new@test.de' },
     });
@@ -190,11 +182,18 @@ describe('AuthProvider', () => {
       </AuthProvider>
     );
 
+    emitAuth!('INITIAL_SESSION', null);
+
     await waitFor(() => {
       expect(screen.getByTestId('loading')).toHaveTextContent('no');
     });
 
     fireEvent.click(screen.getByText('Login'));
+
+    // signIn triggert onAuthStateChange(SIGNED_IN) in der echten App — hier simuliert
+    emitAuth!('SIGNED_IN', {
+      user: { id: '999', email: 'new@test.de', user_metadata: {} },
+    });
 
     await waitFor(() => {
       expect(screen.getByTestId('authenticated')).toHaveTextContent('yes');
@@ -204,13 +203,6 @@ describe('AuthProvider', () => {
   });
 
   it('logout entfernt den User', async () => {
-    mockGetSession.mockResolvedValue({
-      data: {
-        session: {
-          user: { id: '123', email: 'test@test.de', user_metadata: {} },
-        },
-      },
-    });
     mockFetchProfile.mockResolvedValue({
       id: '123',
       role: 'owner',
@@ -220,7 +212,6 @@ describe('AuthProvider', () => {
       phone: null,
       zip: null,
     });
-    mockOnAuthStateChange.mockReturnValue({ data: { subscription: { unsubscribe: vi.fn() } } });
     mockSignOut.mockResolvedValue(undefined);
 
     render(
@@ -229,11 +220,16 @@ describe('AuthProvider', () => {
       </AuthProvider>
     );
 
+    emitAuth!('INITIAL_SESSION', {
+      user: { id: '123', email: 'test@test.de', user_metadata: {} },
+    });
+
     await waitFor(() => {
       expect(screen.getByTestId('authenticated')).toHaveTextContent('yes');
     });
 
     fireEvent.click(screen.getByText('Logout'));
+    emitAuth!('SIGNED_OUT', null);
 
     await waitFor(() => {
       expect(screen.getByTestId('authenticated')).toHaveTextContent('no');

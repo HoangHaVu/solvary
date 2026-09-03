@@ -138,7 +138,7 @@ export default function PartnersPage() {
           {limitReached ? (
             <Link
               to="/pricing"
-              className="flex items-center gap-2 bg-white/10 border border-[#F5A623]/30 text-[#F5A623] font-bold text-sm px-4 py-2.5 rounded-xl hover:bg-white/15 transition-colors"
+              className="flex items-center gap-2 bg-white/10 border border-brand-primary/30 text-brand-primary font-bold text-sm px-4 py-2.5 rounded-xl hover:bg-white/15 transition-colors"
             >
               <Crown className="w-4 h-4" />
               Upgrade erforderlich
@@ -146,7 +146,7 @@ export default function PartnersPage() {
           ) : (
             <button
               onClick={() => openModal()}
-              className="flex items-center gap-2 bg-[#F5A623] text-[#1A3A5C] font-bold text-sm px-4 py-2.5 rounded-xl hover:bg-[#E09000] transition-colors"
+              className="flex items-center gap-2 bg-brand-primary text-brand-secondary font-bold text-sm px-4 py-2.5 rounded-xl hover:bg-brand-primary-hover transition-colors"
             >
               <Plus className="w-4 h-4" />
               Partner hinzufügen
@@ -155,8 +155,8 @@ export default function PartnersPage() {
         </div>
 
         {limitReached && (
-          <div className="mb-5 bg-[#1A3A5C]/40 border border-[#F5A623]/20 rounded-xl p-4 flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-[#F5A623] flex-shrink-0 mt-0.5" />
+          <div className="mb-5 bg-brand-secondary/40 border border-brand-primary/20 rounded-xl p-4 flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-brand-primary flex-shrink-0 mt-0.5" />
             <div className="flex-1">
               <p className="text-sm font-semibold text-white">
                 Partner-Limit erreicht ({activeCount}/{partnerLimit})
@@ -167,7 +167,7 @@ export default function PartnersPage() {
             </div>
             <Link
               to="/pricing"
-              className="text-xs font-bold text-[#1A3A5C] bg-[#F5A623] px-3 py-2 rounded-lg hover:bg-[#E09000] transition-colors flex-shrink-0"
+              className="text-xs font-bold text-brand-secondary bg-brand-primary px-3 py-2 rounded-lg hover:bg-brand-primary-hover transition-colors flex-shrink-0"
             >
               Tarife ansehen
             </Link>
@@ -177,7 +177,7 @@ export default function PartnersPage() {
         {loading ? (
           <div className="text-center py-20 text-gray-500">Laden...</div>
         ) : partners.length === 0 ? (
-          <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-12 text-center">
+          <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-12 text-center">
             <Handshake className="w-12 h-12 text-gray-600 mx-auto mb-4" />
             <p className="text-gray-400">Noch keine Partner</p>
             <p className="text-sm text-gray-600 mt-1">Fügen Sie Ihre ersten Installateur-Partner hinzu</p>
@@ -185,7 +185,7 @@ export default function PartnersPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {partners.map((partner) => (
-              <div key={partner.id} className="bg-[#1A1A1A] rounded-xl border border-white/5 p-5">
+              <div key={partner.id} className="bg-brand-secondary-hover rounded-xl border border-white/5 p-5">
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h3 className="font-semibold text-white">{partner.company_name}</h3>
@@ -211,24 +211,24 @@ export default function PartnersPage() {
 
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2 text-gray-400">
-                    <Mail className="w-4 h-4 text-[#F5A623]" />
+                    <Mail className="w-4 h-4 text-brand-primary" />
                     {partner.email}
                   </div>
                   {partner.phone && (
                     <div className="flex items-center gap-2 text-gray-400">
-                      <Phone className="w-4 h-4 text-[#F5A623]" />
+                      <Phone className="w-4 h-4 text-brand-primary" />
                       {partner.phone}
                     </div>
                   )}
                   {partner.zip_regions?.length > 0 && (
                     <div className="flex items-center gap-2 text-gray-400">
-                      <MapPin className="w-4 h-4 text-[#F5A623]" />
+                      <MapPin className="w-4 h-4 text-brand-primary" />
                       PLZ: {partner.zip_regions.join(', ')}
                     </div>
                   )}
                   {partner.website && (
                     <div className="flex items-center gap-2 text-gray-400">
-                      <Globe className="w-4 h-4 text-[#F5A623]" />
+                      <Globe className="w-4 h-4 text-brand-primary" />
                       <a
                         href={partner.website}
                         target="_blank"
@@ -241,9 +241,9 @@ export default function PartnersPage() {
                   )}
                   <div className="flex items-center gap-2 text-gray-400">
                     {partner.commission_type === 'fixed' ? (
-                      <Euro className="w-4 h-4 text-[#F5A623]" />
+                      <Euro className="w-4 h-4 text-brand-primary" />
                     ) : (
-                      <Percent className="w-4 h-4 text-[#F5A623]" />
+                      <Percent className="w-4 h-4 text-brand-primary" />
                     )}
                     Provision: {partner.commission_value} {partner.commission_type === 'fixed' ? '€' : '%'}
                   </div>
@@ -255,7 +255,7 @@ export default function PartnersPage() {
 
                 <div className="mt-4 pt-3 border-t border-white/5">
                   <p className="text-[10px] text-gray-600">
-                    Portal-Link: <code className="text-[#F5A623]">/partner/{partner.access_token.slice(0, 8)}...</code>
+                    Portal-Link: <code className="text-brand-primary">/partner/{partner.access_token.slice(0, 8)}...</code>
                   </p>
                 </div>
               </div>
@@ -267,7 +267,7 @@ export default function PartnersPage() {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={() => setShowModal(false)}>
-          <div className="bg-[#1A1A1A] rounded-2xl border border-white/10 p-6 w-full max-w-md mx-4" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-brand-secondary-hover rounded-2xl border border-white/10 p-6 w-full max-w-md mx-4" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-white">{editing ? 'Partner bearbeiten' : 'Neuer Partner'}</h2>
               <button onClick={() => setShowModal(false)} className="text-gray-500 hover:text-white">
@@ -280,7 +280,7 @@ export default function PartnersPage() {
                 placeholder="Firmenname *"
                 value={form.company_name}
                 onChange={(e) => setForm({ ...form, company_name: e.target.value })}
-                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-[#F5A623] outline-none"
+                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
                 required
               />
               <input
@@ -288,14 +288,14 @@ export default function PartnersPage() {
                 placeholder="Ansprechpartner"
                 value={form.contact_name}
                 onChange={(e) => setForm({ ...form, contact_name: e.target.value })}
-                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-[#F5A623] outline-none"
+                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
               />
               <input
                 type="email"
                 placeholder="E-Mail *"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-[#F5A623] outline-none"
+                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
                 required
               />
               <input
@@ -303,20 +303,20 @@ export default function PartnersPage() {
                 placeholder="Telefon"
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-[#F5A623] outline-none"
+                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
               />
               <input
                 type="text"
                 placeholder="PLZ-Gebiete (z.B. 80, 81, 82)"
                 value={form.zip_regions}
                 onChange={(e) => setForm({ ...form, zip_regions: e.target.value })}
-                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-[#F5A623] outline-none"
+                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
               />
               <div className="flex gap-2">
                 <select
                   value={form.commission_type}
                   onChange={(e) => setForm({ ...form, commission_type: e.target.value as 'fixed' | 'percentage' })}
-                  className="bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-[#F5A623] outline-none"
+                  className="bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
                 >
                   <option value="fixed">Fester Betrag (€)</option>
                   <option value="percentage">Prozentual (%)</option>
@@ -326,7 +326,7 @@ export default function PartnersPage() {
                   placeholder="Wert"
                   value={form.commission_value}
                   onChange={(e) => setForm({ ...form, commission_value: Number(e.target.value) })}
-                  className="flex-1 bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-[#F5A623] outline-none"
+                  className="flex-1 bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
                 />
               </div>
               <input
@@ -334,24 +334,24 @@ export default function PartnersPage() {
                 placeholder="kWh-Preis (optional)"
                 value={form.kwh_price}
                 onChange={(e) => setForm({ ...form, kwh_price: e.target.value })}
-                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-[#F5A623] outline-none"
+                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
               />
               <input
                 type="url"
                 placeholder="Webseite (z.B. https://muster-solar.de)"
                 value={form.website}
                 onChange={(e) => setForm({ ...form, website: e.target.value })}
-                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-[#F5A623] outline-none"
+                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
               />
               <textarea
                 placeholder="Notizen"
                 value={form.notes}
                 onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-[#F5A623] outline-none h-20 resize-none"
+                className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none h-20 resize-none"
               />
               <button
                 type="submit"
-                className="w-full bg-[#F5A623] text-[#1A3A5C] font-bold text-sm py-2.5 rounded-xl hover:bg-[#E09000] transition-colors"
+                className="w-full bg-brand-primary text-brand-secondary font-bold text-sm py-2.5 rounded-xl hover:bg-brand-primary-hover transition-colors"
               >
                 {editing ? 'Speichern' : 'Hinzufügen'}
               </button>

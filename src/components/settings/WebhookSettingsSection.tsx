@@ -1,3 +1,4 @@
+import { COLORS } from '../../lib/theme';
 import { useState, useEffect } from 'react';
 import { Webhook, CheckCircle, XCircle, Loader2, Eye, EyeOff, Copy, ExternalLink } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
@@ -115,7 +116,7 @@ export function WebhookSettingsSection() {
   if (isLoading) {
     return (
       <div className="flex justify-center py-12">
-        <Loader2 className="w-8 h-8 text-[#F5A623] animate-spin" />
+        <Loader2 className="w-8 h-8 text-brand-primary animate-spin" />
       </div>
     );
   }
@@ -123,11 +124,11 @@ export function WebhookSettingsSection() {
   return (
     <div className="space-y-8">
       {/* Webhook-Konfiguration */}
-      <section className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+      <section className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
         <div className="flex items-center gap-3 px-6 py-5 border-b border-white/5">
-          <Webhook className="w-5 h-5 text-[#F5A623]" />
+          <Webhook className="w-5 h-5 text-brand-primary" />
           <h3 className="font-bold text-white text-lg">CRM-Webhook</h3>
-          <span className="ml-auto text-xs font-bold px-2 py-0.5 rounded-full bg-[#F5A623]/10 text-[#F5A623]">PRIO</span>
+          <span className="ml-auto text-xs font-bold px-2 py-0.5 rounded-full bg-brand-primary/10 text-brand-primary">PRIO</span>
         </div>
         <div className="px-6 py-6 space-y-6">
           <p className="text-sm text-gray-400">
@@ -140,7 +141,7 @@ export function WebhookSettingsSection() {
               <p className="font-semibold text-white text-sm">Webhook aktiv</p>
               <p className="text-xs text-gray-500 mt-0.5">Leads werden automatisch weitergeleitet</p>
             </div>
-            <button onClick={() => setIsActive(!isActive)} className={`relative w-12 h-6 rounded-full overflow-hidden transition-colors ${isActive ? 'bg-[#F5A623]' : 'bg-gray-700'}`}>
+            <button onClick={() => setIsActive(!isActive)} className={`relative w-12 h-6 rounded-full overflow-hidden transition-colors ${isActive ? 'bg-brand-primary' : 'bg-gray-700'}`}>
               <span className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200 ${isActive ? 'translate-x-6' : 'translate-x-0'}`} />
             </button>
           </div>
@@ -148,14 +149,14 @@ export function WebhookSettingsSection() {
           <div className="space-y-1.5">
             <label className="text-sm font-semibold text-gray-300">Webhook-URL</label>
             <input type="url" value={webhookUrl} onChange={e => setWebhookUrl(e.target.value)} placeholder="https://hooks.zapier.com/hooks/catch/..."
-              className="w-full bg-[#0F0F0F] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#F5A623]/30 focus:border-[#F5A623]" />
+              className="w-full bg-[#0F0F0F] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary" />
           </div>
 
           <div className="space-y-1.5">
             <label className="text-sm font-semibold text-gray-300">Webhook-Secret <span className="text-gray-500 font-normal">(optional)</span></label>
             <div className="relative">
               <input type={showSecret ? 'text' : 'password'} value={webhookSecret} onChange={e => setWebhookSecret(e.target.value)} placeholder="Geheimer Schlüssel für HMAC-SHA256-Signatur"
-                className="w-full bg-[#0F0F0F] border border-white/10 rounded-xl px-4 py-3 pr-12 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#F5A623]/30 focus:border-[#F5A623]" />
+                className="w-full bg-[#0F0F0F] border border-white/10 rounded-xl px-4 py-3 pr-12 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary" />
               <button onClick={() => setShowSecret(!showSecret)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white">
                 {showSecret ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
@@ -164,7 +165,7 @@ export function WebhookSettingsSection() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 pt-2">
-            <button onClick={save} disabled={isSaving} className="flex items-center justify-center gap-2 bg-[#F5A623] hover:bg-[#F5A623]/90 text-[#1A3A5C] font-semibold px-6 py-2.5 rounded-xl transition-colors disabled:opacity-60">
+            <button onClick={save} disabled={isSaving} className="flex items-center justify-center gap-2 bg-brand-primary hover:bg-brand-primary/90 text-brand-secondary font-semibold px-6 py-2.5 rounded-xl transition-colors disabled:opacity-60">
               {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
               {isSaving ? 'Speichern…' : 'Einstellungen speichern'}
             </button>
@@ -187,7 +188,7 @@ export function WebhookSettingsSection() {
       </section>
 
       {/* Payload-Vorschau */}
-      <section className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+      <section className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
         <div className="flex items-center justify-between px-6 py-5 border-b border-white/5">
           <h3 className="font-bold text-white text-lg">Payload-Format (JSON)</h3>
           <button onClick={copyPayload} className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-white transition-colors">
@@ -198,7 +199,7 @@ export function WebhookSettingsSection() {
       </section>
 
       {/* CRM-Templates */}
-      <section className="bg-[#1A1A1A] rounded-2xl border border-white/5 overflow-hidden">
+      <section className="bg-brand-secondary-hover rounded-2xl border border-white/5 overflow-hidden">
         <div className="px-6 py-5 border-b border-white/5">
           <h3 className="font-bold text-white text-lg">Integrationen</h3>
           <p className="text-sm text-gray-500 mt-1">Kompatible Systeme — Webhook-URL aus dem jeweiligen Tool einfügen</p>

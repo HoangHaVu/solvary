@@ -1,3 +1,4 @@
+import { COLORS } from '../../lib/theme';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -80,7 +81,7 @@ export default function About() {
                   <defs>
                     <path id="circlePath" d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" />
                   </defs>
-                  <circle cx="50" cy="50" r="48" fill="#1A3A5C" />
+                  <circle cx="50" cy="50" r="48" fill={COLORS.secondary} />
                   <text className="text-[9px] font-semibold uppercase fill-white tracking-widest">
                     <textPath href="#circlePath">
                       Über uns ★ Über uns ★ Über uns ★
@@ -99,17 +100,17 @@ export default function About() {
             <div className="flex flex-col gap-4 mb-8">
               {checklist.map((item, i) => (
                 <div key={i} className="check-item flex items-center gap-3 opacity-0">
-                  <CheckCircle className="w-5 h-5 text-[#F5A623] flex-shrink-0" />
+                  <CheckCircle className="w-5 h-5 text-brand-primary flex-shrink-0" />
                   <span className="text-black text-sm">{item}</span>
                 </div>
               ))}
             </div>
             <a
               href="#about"
-              className="inline-flex items-center gap-2 bg-[#F5A623] text-[#1A3A5C] text-sm font-medium px-6 py-3.5 rounded-full hover:bg-[#E09000] transition-all duration-250 hover:scale-[1.02] group w-fit"
+              className="inline-flex items-center gap-2 bg-brand-primary text-brand-secondary text-sm font-medium px-6 py-3.5 rounded-full hover:bg-brand-primary-hover transition-all duration-250 hover:scale-[1.02] group w-fit"
             >
               Über uns
-              <span className="w-7 h-7 bg-[#1A3A5C] rounded-full flex items-center justify-center group-hover:bg-[#0F2440] transition-colors">
+              <span className="w-7 h-7 bg-brand-secondary rounded-full flex items-center justify-center group-hover:bg-brand-secondary-hover transition-colors">
                 <ArrowRight className="w-3.5 h-3.5 text-white" />
               </span>
             </a>

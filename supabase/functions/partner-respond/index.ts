@@ -7,7 +7,7 @@ import { createClient } from 'jsr:@supabase/supabase-js@2';
 const SUPABASE_URL            = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_KEY    = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 const RESEND_API_KEY          = Deno.env.get('RESEND_API_KEY');
-const APP_URL                 = Deno.env.get('APP_URL') || 'https://voltify-app.vercel.app';
+const APP_URL                 = Deno.env.get('APP_URL') || 'https://solvary.de';
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -21,7 +21,7 @@ function htmlPage(title: string, icon: string, message: string, sub: string, col
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>${title} — Voltify</title>
+  <title>${title} — Solvary</title>
 </head>
 <body style="margin:0;padding:0;background:#f3f4f6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;">
   <div style="background:#fff;border-radius:16px;padding:48px 40px;max-width:420px;width:90%;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
@@ -29,7 +29,7 @@ function htmlPage(title: string, icon: string, message: string, sub: string, col
     <h1 style="color:#111827;font-size:22px;margin:0 0 10px;font-weight:700;">${title}</h1>
     <p style="color:#374151;font-size:15px;margin:0 0 8px;">${message}</p>
     <p style="color:#9ca3af;font-size:13px;margin:0 0 28px;">${sub}</p>
-    <div style="display:inline-block;background:#1a3a5c;color:#f5a623;font-weight:800;font-size:18px;padding:8px 20px;border-radius:8px;">⚡ Voltify</div>
+    <div style="display:inline-block;background:#1a3a5c;color:#f5a623;font-weight:800;font-size:18px;padding:8px 20px;border-radius:8px;">⚡ Solvary</div>
   </div>
 </body>
 </html>`;
@@ -133,7 +133,7 @@ async function notifyAgency(
   const html = `
     <div style="font-family:-apple-system,sans-serif;max-width:500px;margin:0 auto;">
       <div style="background:#1a3a5c;padding:20px;border-radius:12px 12px 0 0;text-align:center;">
-        <span style="color:#f5a623;font-size:22px;font-weight:800;">⚡ Voltify</span>
+        <span style="color:#f5a623;font-size:22px;font-weight:800;">⚡ Solvary</span>
       </div>
       <div style="background:#fff;border:1px solid #e5e7eb;border-radius:0 0 12px 12px;padding:24px;">
         <h2 style="margin:0 0 12px;color:#111827;">Partner-Update</h2>
@@ -160,7 +160,7 @@ async function notifyAgency(
     method: 'POST',
     headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      from:    'Voltify <noreply@vu-studio.de>',
+      from:    'Solvary <noreply@vu-studio.de>',
       to:      profile.email,
       subject: `${partner.company_name} hat Lead ${leadName} ${action === 'accepted' ? 'angenommen ✅' : 'abgelehnt ❌'}`,
       html,

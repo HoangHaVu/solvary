@@ -45,7 +45,7 @@ export function CalendarGrid({ appointments, currentDate, onSelect, personColorM
   });
 
   return (
-    <div className="bg-[#1A1A1A] rounded-xl border border-white/5 overflow-hidden flex flex-col" style={{ minHeight: 600 }}>
+    <div className="bg-brand-secondary-hover rounded-xl border border-white/5 overflow-hidden flex flex-col" style={{ minHeight: 600 }}>
       {/* Days Header */}
       <div className="grid grid-cols-7 border-b border-white/5 bg-[#0F0F0F]/50">
         {['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'].map((day) => (
@@ -69,7 +69,7 @@ export function CalendarGrid({ appointments, currentDate, onSelect, personColorM
             : dayNum;
 
           return (
-            <div key={i} className={`bg-[#1A1A1A] p-2 flex flex-col min-h-[80px] ${!inMonth ? 'opacity-40' : ''}`}>
+            <div key={i} className={`bg-brand-secondary-hover p-2 flex flex-col min-h-[80px] ${!inMonth ? 'opacity-40' : ''}`}>
               <span className={`text-xs font-bold mb-1 ${inMonth ? 'text-white' : 'text-gray-600'}`}>
                 {displayNum}
               </span>

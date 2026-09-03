@@ -12,22 +12,28 @@
     --card-foreground: 0 0% 0%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
-    --primary: 72 76% 56%;
+    --primary: 54 96% 49%;
     --primary-foreground: 0 0% 0%;
     --secondary: 0 0% 96%;
     --secondary-foreground: 0 0% 0%;
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 40%;
-    --accent: 72 76% 56%;
+    --accent: 54 96% 49%;
     --accent-foreground: 0 0% 0%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 90%;
     --input: 0 0% 90%;
-    --ring: 72 76% 56%;
+    --ring: 54 96% 49%;
     --radius: 0.625rem;
-    --lime: #1A3A5C;
-    --lime-dark: #0F2440;
+
+    /* Brand color primitives (space-separated RGB for Tailwind opacity modifiers) */
+    --color-primary: 250 238 0;
+    --color-primary-hover: 227 214 0;
+    --color-secondary: 48 48 48;
+    --color-secondary-hover: 26 26 26;
+    --color-bg-alt: 248 250 251;
+    --color-tint: 232 244 253;
   }
 
   body {
@@ -37,21 +43,6 @@
 
   html {
     scroll-behavior: smooth;
-  }
-}
-
-@layer utilities {
-  .text-lime {
-    color: var(--lime);
-  }
-  .bg-lime {
-    background-color: var(--lime);
-  }
-  .bg-lime-dark {
-    background-color: var(--lime-dark);
-  }
-  .border-lime {
-    border-color: var(--lime);
   }
 }
 

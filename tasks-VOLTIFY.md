@@ -1,5 +1,59 @@
 # Voltify — Tasks & Roadmap
-<!-- Zuletzt aktualisiert: 2026-06-25 — Attribution + Embed + ROI-Annahmen + WL2 + Lösungs-Check + DSGVO-Löschung (Art. 17) deployed; erster Test-Kunde onboardet & E2E-verifiziert -->
+<!-- Zuletzt aktualisiert: 2026-06-29 — DSGVO-Datenexport (Art. 20) deployed; Rebrand-Plan Voltify→Solvary dokumentiert -->
+
+---
+
+## 🏷️ REBRAND: Voltify → Solvary [AKTIVER PLAN]
+
+> **Anlass:** Eigene Domain `solvary.de` gesichert. Marke + alle Vorkommen von „Voltify" auf „Solvary" umstellen.
+> **Bestandsaufnahme (2026-06-29):** ~80 Dateien mit „Voltify". Logo ist textbasiert (kein Asset), kein Favicon vorhanden, Impressum/AGB enthalten nur Platzhalter-Firmendaten.
+> **Leitprinzip:** Anzeige-Strings sind gefahrlos. **Identifier sind Verträge mit der Außenwelt** und brechen still — nur koordiniert ändern.
+> **Empfohlene Reihenfolge:** Phase 1 + 9 → 3 → 6 → (parallel) 4 → 5 → 7 → zuletzt 8.
+
+### Phase 1 — 🟢 Anzeige-Strings im Code (gefahrlos, Hauptblock)
+- [ ] SEO + Titel: `src/components/seo/SEO.tsx` (`SITE_NAME`, `DEFAULT_DESCRIPTION`) + `index.html` `<title>`
+- [ ] Default-Markenname: `useTenantBranding.ts` (`VOLTIFY_DEFAULTS.firmenname`) + Fallbacks `'Voltify Solar'` in `AdminDashboard`, `AdminSettings`, `LeadDetailsPage`, `OfferBuilderPage`, `OfferPreviewCard`; `'Voltify'` in `Step0_EmailGate`, `Step8_Contact`
+- [ ] Marketing/Landing: `LandingPage`, `Hero`, `Header`, `Footer`, `About`, `News` (3× author), `Dashboard`, `Register`, `Login`, `PricingPage`, `SolutionCheck`, `BetaSignupPage`, `DemoBanner`, `ExitIntentModal`, `FloatingBetaCTA`
+- [ ] PDF: `ROIPdfDocument`, `CalculationPdfDocument`, `pdfTheme`, ROI-Dateiname in `Step7_Analysis`
+- [ ] „Powered by Voltify" → „Powered by Solvary": Anzeige in `Configurator.tsx` + `Step0_EmailGate.tsx`
+
+### Phase 2 — 🟡 Identifier / Keys (bewusst entscheiden, nicht blind ersetzen)
+- [ ] localStorage-Keys (`voltify_settings_v1`, `voltify_funnel_session/source`, `voltify_exit_intent_shown`) — alte Werte verwaisen (harmlos bei MVP), jetzt mitziehen solange wenig Nutzer
+- [ ] `voltify:resize` postMessage (`useEmbedAutoResize.ts`) — NUR zusammen mit Embed-Snippet ändern, sonst bricht Auto-Resize
+- [ ] `X-Voltify-Signature` Header (`WebhookSettingsSection`, `InstallerSettings`) — bricht externe Webhook-Empfänger → mit Scoutly/Make.com abstimmen oder vorerst lassen
+- [ ] `voltify_conversion` GTM-Event (`Configurator.tsx:210`) — bricht Analytics-Trigger → mit GTM-Setup abstimmen
+- [ ] `poweredByVoltify` (TS-Feld + in `company_settings` JSONB gespeichert) — nur Anzeige-Text ändern; Feldname lassen (Umbenennung = JSONB-Daten-Migration)
+
+### Phase 3 — 🟡 Edge Functions / E-Mail-Versand
+- [ ] Absendername `Voltify <…>` → `Solvary <noreply@solvary.de>` in `send-offer`, `notify-signature`, `notify-partner`, `notify-agency`, `notify-beta`, `notify-payment-due`, `notify-offer-expiry`, `partner-respond`
+- [ ] Hardcodierte Links: `kontakt@voltify.de` → `kontakt@solvary.de`, `voltify.de/admin`, `APP_URL`-Default `voltify-app.vercel.app` → auf Env-Var `APP_URL` umstellen
+- [ ] Functions nach Änderung neu deployen
+
+### Phase 4 — 🔴 Infrastruktur (manuell, externe Abhängigkeiten)
+- [ ] DNS `solvary.de` → Vercel verbinden + als Custom Domain im Projekt hinzufügen
+- [ ] Resend: Domain `solvary.de` verifizieren (SPF/DKIM/DMARC), `noreply@` + `kontakt@solvary.de`
+- [ ] Google-Maps-API-Key: HTTP-Referrer-Restriction um `solvary.de` + `*.solvary.de` ergänzen (sonst Karte tot!)
+- [ ] Supabase Auth E-Mail-Templates (Bestätigung/Reset) auf Solvary (Dashboard, nicht Repo)
+- [ ] Vercel-Projekt ggf. umbenennen; `voltify-app.vercel.app`-Referenzen ablösen
+
+### Phase 5 — 🔵 Assets
+- [ ] Favicon anlegen + in `index.html` einbinden (existiert noch nicht)
+- [ ] OG-Image für SEO/Social-Preview
+- [ ] (Optional) echtes Logo als SVG statt Text in Header/Footer/`Step0_EmailGate`
+
+### Phase 6 — 🟡 DB-Inhalt
+- [ ] `company_settings` / `branding` JSONB der Plattform-Eigentümer-Accounts auf „Solvary" prüfen/setzen (Test-Accounts + Haupt-Account). Tenant-Accounts (z.B. sunwinwin) NICHT anfassen — eigenes Branding
+
+### Phase 7 — 🔵 Rechtstexte (Platzhalter → echt)
+- [ ] `Impressum.tsx`, `AGB.tsx` (22×), `Datenschutz.tsx`: „Voltify GmbH" → echter Firmenname/Rechtsform — echte Firmendaten nötig (hängt mit DSGVO-Unterbau zusammen)
+
+### Phase 8 — ⚪ Projektdateien / Ordner (eure Naming-Convention) — ZULETZT
+- [ ] Doku-Dateien umbenennen: `Voltify-DNA.md`, `Voltify-Mission.md`, `tasks-VOLTIFY.md`, `resume-point-VOLTIFY.md`, `AGENTS-VOLTIFY.md`, `docs/embed/voltify-embed.md` → `Solvary-*`
+- [ ] Ordner `myprojects/Voltify/` → `myprojects/Solvary/` (betrifft alle Pfade + globale Memory-Dateien) — separater, bewusster Schritt
+
+### Phase 9 — 🟢 Tests grün halten (parallel zu Phase 1)
+- [ ] `Login.test.tsx` (Placeholder `info@voltify.com`), `BetaSignupPage.test.tsx`, `offers.test.ts` an geänderte Strings anpassen
+- [ ] `npm test` (121/121) + `npm run build` (0 TS-Fehler) nach jeder Phase
 
 ---
 
@@ -298,7 +352,7 @@ GROUP BY source_id;
 - [ ] **Check-Antworten auswerten** — nach ersten Durchläufen `solution_check_responses` ansehen: welcher Schmerz brennt am häufigsten? → Wedge-Entscheidung
 - [x] **DSGVO-Löschung (Art. 17)** ✅ — `erase_lead`-RPC (Migration `054`) löscht PII über alle Tabellen, anonymisiert `commissions` (Aufbewahrungspflicht); Bestätigungs-Modal in LeadDetailsPage. Doppelt verifiziert (SQL + UI-Auth-Pfad). (2026-06-25)
 - [ ] **DSGVO-Unterbau (kein Code)** — AVV/Auftragsverarbeitungsvertrag + Datenschutzerklärung für Kunden (Anwalt/Generator), Supabase-Region (EU) bestätigen, TOMs dokumentieren
-- [ ] **Datenexport (Art. 20)** — Lead-Daten als JSON/PDF exportieren (Gegenstück zur Löschung)
+- [x] **Datenexport (Art. 20)** ✅ — `export_lead`-RPC (Migration `055`, gleiche Autorisierung wie `erase_lead`) liefert alle Lead-Daten als maschinenlesbares JSON; `exportLead`-Service + Button „Datenexport (Art. 20)" in `LeadDetailsPage` (Download als `.json`). 121/121 Tests, 0 TS-Fehler (2026-06-29)
 - [ ] **ROI-Annahmen Stufe 3 (optional)** — Annahmen pro Lead mitspeichern, damit `LeadDetailsPage`-Neuberechnung exakt zur gespeicherten ROI passt
 - [ ] **Angebots-E-Mail mit Varianten** — Kunde wählt im E-Mail-Link → Tracking
 

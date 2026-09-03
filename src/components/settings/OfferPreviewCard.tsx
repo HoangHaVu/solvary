@@ -74,7 +74,7 @@ export const OfferPreviewCard: React.FC<OfferPreviewProps> = ({
     vorname: 'Max',
     nachname: 'Mustermann',
     angebotsnummer: 'ANG-20260619-DEMO',
-    firmenname: firmenname || 'Voltify Solar',
+    firmenname: firmenname || 'Solvary',
     datum: new Date().toLocaleDateString('de-DE'),
     gueltig_bis: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('de-DE'),
     zahlungsziel: zahlungsziel || '14',
@@ -88,7 +88,7 @@ export const OfferPreviewCard: React.FC<OfferPreviewProps> = ({
     : '';
 
   return (
-    <div className="w-full max-w-lg mx-auto rounded-2xl overflow-hidden shadow-lg border border-white/10 bg-[#1A1A1A] text-sm select-none">
+    <div className="w-full max-w-lg mx-auto rounded-2xl overflow-hidden shadow-lg border border-white/10 bg-brand-secondary-hover text-sm select-none">
       {/* Briefkopf */}
       <div className="px-6 py-5 flex items-center gap-4" style={{ backgroundColor: primaryColor }}>
         <div className="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center shrink-0 overflow-hidden">

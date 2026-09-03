@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Zap, ArrowRight, ArrowLeft, Check } from 'lucide-react';
+import { LOGO_PATH, LOGO_WHITE_PATH } from '../lib/branding';
 import SEO from '../components/seo/SEO';
 import DemoBanner from '../components/layout/DemoBanner';
 import { submitLead } from '../services/leads';
@@ -280,20 +281,11 @@ export default function Configurator() {
           {/* Logo / Firmenname */}
           <button onClick={() => navigate('/')} className="flex items-center gap-2 mb-10">
             {branding.isTenant && branding.logoDataUrl ? (
-              <img src={branding.logoDataUrl} alt={branding.firmenname} className="h-8 object-contain" />
-            ) : (
-              <>
-                <div
-                  className="w-8 h-8 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: branding.accentColor }}
-                >
-                  <Zap className="w-4 h-4" style={{ color: branding.primaryColor }} fill="currentColor" />
-                </div>
-                <span className="text-lg font-medium">{branding.firmenname}</span>
-              </>
-            )}
-            {branding.isTenant && !branding.logoDataUrl && (
+              <img src={branding.logoDataUrl} alt={branding.firmenname} className="h-10 object-contain" />
+            ) : branding.isTenant ? (
               <span className="text-lg font-medium">{branding.firmenname}</span>
+            ) : (
+              <img src={LOGO_WHITE_PATH} alt="Solvary" className="h-10 w-auto" />
             )}
           </button>
 
@@ -322,9 +314,9 @@ export default function Configurator() {
                     <div
                       className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0 transition-all ${
                         isCompleted
-                          ? 'bg-[#F5A623] text-[#1A3A5C]'
+                          ? 'bg-brand-primary text-brand-secondary'
                           : isActive
-                          ? 'bg-white text-[#1A3A5C]'
+                          ? 'bg-white text-brand-secondary'
                           : 'bg-white/20 text-white/60'
                       }`}
                     >
@@ -357,7 +349,7 @@ export default function Configurator() {
               />
             </div>
             {branding.isTenant && branding.poweredByVoltify && (
-              <p className="text-[10px] text-white/20 mt-4 text-center">Powered by Voltify</p>
+              <p className="text-[10px] text-white/20 mt-4 text-center">Powered by Solvary</p>
             )}
           </div>
         </div>
@@ -382,16 +374,10 @@ export default function Configurator() {
             <button onClick={() => navigate('/')} className="flex items-center gap-2">
               {branding.isTenant && branding.logoDataUrl ? (
                 <img src={branding.logoDataUrl} alt={branding.firmenname} className="h-6 object-contain" />
-              ) : (
-                <>
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center" style={{ backgroundColor: branding.accentColor }}>
-                    <Zap className="w-3.5 h-3.5" style={{ color: branding.primaryColor }} fill="currentColor" />
-                  </div>
-                  <span className="text-sm font-medium" style={{ color: branding.primaryColor }}>{branding.firmenname}</span>
-                </>
-              )}
-              {branding.isTenant && !branding.logoDataUrl && (
+              ) : branding.isTenant ? (
                 <span className="text-sm font-medium" style={{ color: branding.primaryColor }}>{branding.firmenname}</span>
+              ) : (
+                <img src={LOGO_PATH} alt="Solvary" className="h-7 w-auto" />
               )}
             </button>
             <span className="text-xs text-gray-500">
@@ -402,7 +388,7 @@ export default function Configurator() {
           {/* Mobile Progress */}
           <div className="lg:hidden w-full h-1 bg-gray-100">
             <div
-              className="h-full bg-[#F5A623] transition-all duration-500"
+              className="h-full bg-brand-primary transition-all duration-500"
               style={{ width: `${(currentStep / 9) * 100}%` }}
             />
           </div>
@@ -424,7 +410,7 @@ export default function Configurator() {
                   className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${
                     currentStep === 1
                       ? 'text-gray-300 cursor-not-allowed'
-                      : 'text-[#1A3A5C] hover:bg-[#1A3A5C]/5'
+                      : 'text-brand-secondary hover:bg-brand-secondary/5'
                   }`}
                 >
                   <ArrowLeft className="w-4 h-4" />
@@ -434,7 +420,7 @@ export default function Configurator() {
                 {currentStep === 6 ? (
                   <button
                     onClick={() => setCurrentStep(7)}
-                    className="flex items-center gap-2 bg-[#F5A623] text-[#1A3A5C] px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#E09000] transition-all"
+                    className="flex items-center gap-2 bg-brand-primary text-brand-secondary px-6 py-3 rounded-xl text-sm font-semibold hover:bg-brand-primary-hover transition-all"
                   >
                     Individuelles Angebot anfordern
                     <ArrowRight className="w-4 h-4" />
@@ -443,14 +429,14 @@ export default function Configurator() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={goNext}
-                      className="flex items-center gap-2 bg-[#1A3A5C] text-white px-6 py-3 rounded-xl text-sm font-medium hover:bg-[#0F2440] transition-all"
+                      className="flex items-center gap-2 bg-brand-secondary text-white px-6 py-3 rounded-xl text-sm font-medium hover:bg-brand-secondary-hover transition-all"
                     >
                       Weiter
                       <ArrowRight className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => setCurrentStep(6)}
-                      className="flex items-center gap-2 bg-[#F5A623]/10 border border-[#F5A623]/30 text-[#F5A623] px-4 py-3 rounded-xl text-sm font-medium hover:bg-[#F5A623]/20 transition-all"
+                      className="flex items-center gap-2 bg-brand-primary/10 border border-brand-primary/30 text-brand-primary px-4 py-3 rounded-xl text-sm font-medium hover:bg-brand-primary/20 transition-all"
                     >
                       <Zap className="w-4 h-4" />
                       Zur Analyse
@@ -459,7 +445,7 @@ export default function Configurator() {
                 ) : (
                   <button
                     onClick={goNext}
-                    className="flex items-center gap-2 bg-[#1A3A5C] text-white px-6 py-3 rounded-xl text-sm font-medium hover:bg-[#0F2440] transition-all"
+                    className="flex items-center gap-2 bg-brand-secondary text-white px-6 py-3 rounded-xl text-sm font-medium hover:bg-brand-secondary-hover transition-all"
                   >
                     Weiter
                     <ArrowRight className="w-4 h-4" />

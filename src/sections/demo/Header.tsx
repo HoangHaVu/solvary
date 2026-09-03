@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Menu, X, ArrowRight, ChevronDown, Zap } from 'lucide-react';
+import { ArrowLeft, Menu, X, ArrowRight, ChevronDown } from 'lucide-react';
+import { LOGO_PATH } from '../../lib/branding';
 
 const navLinks = [
   { label: 'Services', href: '#services' },
@@ -40,12 +41,7 @@ export default function Header() {
         <div className="max-w-[1280px] mx-auto px-6 h-full flex items-center justify-between">
           {/* Logo */}
           <a href="#home" onClick={(e) => { e.preventDefault(); scrollTo('#home'); }} className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#F5A623] flex items-center justify-center">
-              <Zap className="w-4 h-4 text-[#1A3A5C]" fill="currentColor" />
-            </div>
-            <span className={`text-lg font-medium transition-colors duration-300 ${scrolled ? 'text-[#1A3A5C]' : 'text-white'}`}>
-              Voltify
-            </span>
+            <img src={LOGO_PATH} alt="Solvary" className="h-7 w-auto" />
           </a>
 
           {/* Desktop Nav */}
@@ -68,13 +64,13 @@ export default function Header() {
           <div className="flex items-center gap-4">
             <Link
               to="/"
-              className={`hidden lg:flex items-center gap-2 text-sm font-medium transition-colors duration-300 hover:opacity-70 ${scrolled ? 'text-[#1A3A5C]' : 'text-white'}`}
+              className={`hidden lg:flex items-center gap-2 text-sm font-medium transition-colors duration-300 hover:opacity-70 ${scrolled ? 'text-brand-secondary' : 'text-white'}`}
             >
               <ArrowLeft className="w-4 h-4" />
               Demo verlassen
             </Link>
             <button
-              className={`lg:hidden transition-colors duration-300 ${scrolled ? 'text-[#1A3A5C]' : 'text-white'}`}
+              className={`lg:hidden transition-colors duration-300 ${scrolled ? 'text-brand-secondary' : 'text-white'}`}
               onClick={() => setMenuOpen(true)}
             >
               <Menu className="w-5 h-5" />
@@ -82,10 +78,10 @@ export default function Header() {
             <a
               href="#explore"
               onClick={(e) => { e.preventDefault(); scrollTo('#explore'); }}
-              className="hidden lg:flex items-center gap-2 bg-[#F5A623] text-[#1A3A5C] text-sm font-medium px-5 py-2.5 rounded-full hover:bg-[#E09000] transition-all duration-250 hover:scale-[1.02] group"
+              className="hidden lg:flex items-center gap-2 bg-brand-primary text-brand-secondary text-sm font-medium px-5 py-2.5 rounded-full hover:bg-brand-primary-hover transition-all duration-250 hover:scale-[1.02] group"
             >
               Jetzt entdecken
-              <span className="w-7 h-7 bg-[#1A3A5C] rounded-full flex items-center justify-center group-hover:bg-[#0F2440] transition-colors">
+              <span className="w-7 h-7 bg-brand-secondary rounded-full flex items-center justify-center group-hover:bg-brand-secondary-hover transition-colors">
                 <ArrowRight className="w-3.5 h-3.5 text-white" />
               </span>
             </a>
@@ -110,7 +106,7 @@ export default function Header() {
               key={link.label}
               href={link.href}
               onClick={(e) => { e.preventDefault(); scrollTo(link.href); }}
-              className="text-3xl font-medium text-black hover:text-[#1A3A5C] transition-colors"
+              className="text-3xl font-medium text-black hover:text-brand-secondary transition-colors"
             >
               {link.label}
             </a>

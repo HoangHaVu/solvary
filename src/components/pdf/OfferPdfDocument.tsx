@@ -3,6 +3,7 @@ import {
 } from '@react-pdf/renderer';
 import type { Lead } from '../../services/data';
 import type { OfferDraft, OfferTextTemplate } from '../../services/offers';
+import { COLORS } from '../../lib/theme';
 
 function interpolate(template: string, vars: Record<string, string>): string {
   return template.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] ?? '');
@@ -148,8 +149,8 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
   const today = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
   const validUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
 
-  const primary = company.primaryColor || '#1A3A5C';
-  const accent = company.accentColor || '#F5A623';
+  const primary = company.primaryColor || COLORS.secondary;
+  const accent = company.accentColor || COLORS.primary;
   const s = getStyles(primary, accent);
 
   const offerNumber = offerNumberProp ?? offerDraft?.offer_number ?? `ANG-${lead.id.slice(0, 8).toUpperCase()}`;
@@ -578,7 +579,7 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
           </View>
           <View style={s.accentBar} />
 
-          <Text style={{ fontSize: 13, fontFamily: 'Helvetica-Bold', color: '#1A3A5C', marginBottom: 6 }}>
+          <Text style={{ fontSize: 13, fontFamily: 'Helvetica-Bold', color: COLORS.secondary, marginBottom: 6 }}>
             Visualisierung Ihrer Solaranlage
           </Text>
           <Text style={{ fontSize: 8, color: BASE.slate400, marginBottom: 14 }}>

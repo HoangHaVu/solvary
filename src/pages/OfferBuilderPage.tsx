@@ -1,3 +1,4 @@
+import { COLORS } from '../lib/theme';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { PDFDownloadLink, pdf } from '@react-pdf/renderer';
@@ -27,8 +28,8 @@ const DEFAULT_COMPANY: CompanySettings = {
   firmenname: 'Voltify Solar',
   slogan: 'Ihre Solaranlage — einfach konfiguriert.',
   logoDataUrl: '',
-  primaryColor: '#1A3A5C',
-  accentColor: '#F5A623',
+  primaryColor: COLORS.secondary,
+  accentColor: COLORS.primary,
   iban: '',
   zahlungsziel: '14',
   steuernummer: '',
@@ -401,7 +402,7 @@ export default function OfferBuilderPage() {
         <p>vielen Dank für Ihr Interesse an einer Photovoltaikanlage. Anbei finden Sie Ihr persönliches Angebot.</p>
         ${signatureLink ? `
           <p>
-            <a href="${signatureLink}" style="display: inline-block; padding: 12px 24px; background-color: #F5A623; color: #1A3A5C; text-decoration: none; font-weight: bold; border-radius: 6px;">
+            <a href="${signatureLink}" style="display: inline-block; padding: 12px 24px; background-color: ${COLORS.primary}; color: ${COLORS.secondary}; text-decoration: none; font-weight: bold; border-radius: 6px;">>
               Angebot digital unterschreiben
             </a>
           </p>
@@ -500,7 +501,7 @@ export default function OfferBuilderPage() {
       <div className="min-h-screen flex bg-[#0F0F0F] text-white">
         <AdminSidebar />
         <main className="flex-1 flex items-center justify-center">
-          <Loader2 className="w-10 h-10 text-[#F5A623] animate-spin" />
+          <Loader2 className="w-10 h-10 text-brand-primary animate-spin" />
         </main>
       </div>
     );
@@ -511,12 +512,12 @@ export default function OfferBuilderPage() {
       <div className="min-h-screen flex bg-[#0F0F0F] text-white">
         <AdminSidebar />
         <main className="flex-1 p-8">
-          <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-8 text-center text-gray-500">
+          <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-8 text-center text-gray-500">
             <AlertTriangle className="w-10 h-10 mx-auto mb-3 text-red-400" />
             <p className="font-semibold">{error || 'Lead nicht gefunden.'}</p>
             <button
               onClick={() => navigate('/admin')}
-              className="mt-4 text-sm text-[#F5A623] hover:underline"
+              className="mt-4 text-sm text-brand-primary hover:underline"
             >
               Zurück zur Pipeline
             </button>
@@ -616,14 +617,14 @@ export default function OfferBuilderPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Linke Spalte: Positionen */}
             <div className="lg:col-span-2 space-y-4">
-              <div className="bg-[#1A1A1A] rounded-xl border border-white/5 overflow-hidden">
+              <div className="bg-brand-secondary-hover rounded-xl border border-white/5 overflow-hidden">
                 <div className="flex items-center justify-between px-5 py-4 border-b border-white/5">
                   <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest">
                     Angebotspositionen
                   </h2>
                   <button
                     onClick={handleAddItem}
-                    className="flex items-center gap-1.5 text-xs font-bold text-[#F5A623] hover:text-white transition-colors"
+                    className="flex items-center gap-1.5 text-xs font-bold text-brand-primary hover:text-white transition-colors"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     Position hinzufügen
@@ -660,7 +661,7 @@ export default function OfferBuilderPage() {
                       className={[
                         'border-b border-white/5 transition-colors',
                         isDragging ? 'opacity-40' : 'hover:bg-white/[0.02]',
-                        isDragOver ? 'ring-1 ring-inset ring-[#F5A623]/40 bg-[#F5A623]/[0.03]' : '',
+                        isDragOver ? 'ring-1 ring-inset ring-brand-primary/40 bg-brand-primary/[0.03]' : '',
                       ].join(' ')}
                     >
                       {/* Haupt-Zeile: Kategorie · Menge · Einheit · Preis · Summe */}
@@ -673,11 +674,11 @@ export default function OfferBuilderPage() {
                         </div>
                         <div className="px-3">
                           <div className="flex items-center gap-1.5">
-                            <Icon className="w-4 h-4 text-[#F5A623] shrink-0" />
+                            <Icon className="w-4 h-4 text-brand-primary shrink-0" />
                             <select
                               value={item.category}
                               onChange={(e) => handleItemChange(item.id, 'category', e.target.value)}
-                              className="w-full bg-[#252525] border border-white/10 text-white text-xs rounded-lg px-2 py-1.5 outline-none focus:border-[#F5A623]"
+                              className="w-full bg-[#252525] border border-white/10 text-white text-xs rounded-lg px-2 py-1.5 outline-none focus:border-brand-primary"
                             >
                               {Object.entries(CATEGORY_LABELS).map(([key, label]) => (
                                 <option key={key} value={key}>{label}</option>
@@ -690,7 +691,7 @@ export default function OfferBuilderPage() {
                             type="number"
                             value={item.quantity}
                             onChange={(e) => handleItemChange(item.id, 'quantity', Number(e.target.value))}
-                            className="w-full bg-[#252525] border border-white/10 text-white text-xs rounded-lg px-2 py-1.5 outline-none focus:border-[#F5A623] text-right"
+                            className="w-full bg-[#252525] border border-white/10 text-white text-xs rounded-lg px-2 py-1.5 outline-none focus:border-brand-primary text-right"
                             min={0}
                             step="0.01"
                           />
@@ -700,7 +701,7 @@ export default function OfferBuilderPage() {
                             type="text"
                             value={item.unit}
                             onChange={(e) => handleItemChange(item.id, 'unit', e.target.value)}
-                            className="w-full bg-[#252525] border border-white/10 text-white text-xs rounded-lg px-2 py-1.5 outline-none focus:border-[#F5A623]"
+                            className="w-full bg-[#252525] border border-white/10 text-white text-xs rounded-lg px-2 py-1.5 outline-none focus:border-brand-primary"
                           />
                         </div>
                         <div className="px-3">
@@ -708,7 +709,7 @@ export default function OfferBuilderPage() {
                             type="number"
                             value={item.unit_price}
                             onChange={(e) => handleItemChange(item.id, 'unit_price', Number(e.target.value))}
-                            className="w-full bg-[#252525] border border-white/10 text-white text-xs rounded-lg px-2 py-1.5 outline-none focus:border-[#F5A623] text-right"
+                            className="w-full bg-[#252525] border border-white/10 text-white text-xs rounded-lg px-2 py-1.5 outline-none focus:border-brand-primary text-right"
                             min={0}
                             step="1"
                           />
@@ -734,7 +735,7 @@ export default function OfferBuilderPage() {
                           value={item.description}
                           onChange={(e) => handleItemChange(item.id, 'description', e.target.value)}
                           placeholder="Beschreibung (z. B. Hersteller, Modell, Details)…"
-                          className="w-full bg-[#1E1E1E] border border-white/[0.07] text-gray-300 text-xs rounded-lg px-3 py-2 outline-none focus:border-[#F5A623] placeholder:text-gray-600"
+                          className="w-full bg-[#1E1E1E] border border-white/[0.07] text-gray-300 text-xs rounded-lg px-3 py-2 outline-none focus:border-brand-primary placeholder:text-gray-600"
                         />
                       </div>
                     </div>
@@ -747,7 +748,7 @@ export default function OfferBuilderPage() {
                     <p className="text-sm">Noch keine Positionen</p>
                     <button
                       onClick={handleAddItem}
-                      className="mt-3 text-xs font-bold text-[#F5A623] hover:text-white transition-colors"
+                      className="mt-3 text-xs font-bold text-brand-primary hover:text-white transition-colors"
                     >
                       Erste Position hinzufügen
                     </button>
@@ -756,7 +757,7 @@ export default function OfferBuilderPage() {
               </div>
 
               {/* Notizen */}
-              <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-5">
+              <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-5">
                 <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-3">
                   Interne Notizen
                 </h2>
@@ -770,7 +771,7 @@ export default function OfferBuilderPage() {
                     }
                   }}
                   rows={3}
-                  className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-xl px-4 py-3 outline-none focus:border-[#F5A623] resize-none"
+                  className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-xl px-4 py-3 outline-none focus:border-brand-primary resize-none"
                   placeholder="Interne Hinweise zum Angebot..."
                 />
               </div>
@@ -778,7 +779,7 @@ export default function OfferBuilderPage() {
 
             {/* Rechte Spalte: Zusammenfassung */}
             <div className="lg:col-span-1">
-              <div className="sticky top-6 bg-[#1A1A1A] rounded-xl border border-white/5 p-5 space-y-5">
+              <div className="sticky top-6 bg-brand-secondary-hover rounded-xl border border-white/5 p-5 space-y-5">
                 <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest">
                   Zusammenfassung
                 </h2>
@@ -805,7 +806,7 @@ export default function OfferBuilderPage() {
                   </div>
                   <div className="pt-3 border-t border-white/5 flex justify-between items-center">
                     <span className="text-base font-bold text-white">Gesamtsumme</span>
-                    <span className="text-2xl font-black text-[#F5A623]">{formatCurrency(calculated.total)}</span>
+                    <span className="text-2xl font-black text-brand-primary">{formatCurrency(calculated.total)}</span>
                   </div>
                 </div>
 
@@ -865,7 +866,7 @@ export default function OfferBuilderPage() {
                       <select
                         value={selectedCodeId}
                         onChange={(e) => setSelectedCodeId(e.target.value)}
-                        className="flex-1 bg-[#252525] border border-white/10 text-white text-xs rounded-lg px-3 py-2 outline-none focus:border-[#F5A623]"
+                        className="flex-1 bg-[#252525] border border-white/10 text-white text-xs rounded-lg px-3 py-2 outline-none focus:border-brand-primary"
                       >
                         <option value="">Code wählen...</option>
                         {discountCodes.map((code) => (
@@ -877,7 +878,7 @@ export default function OfferBuilderPage() {
                       <button
                         onClick={handleApplyDiscountCode}
                         disabled={!selectedCodeId || saving}
-                        className="bg-[#F5A623] hover:bg-[#E09000] disabled:opacity-50 text-[#1A3A5C] font-bold text-xs px-3 py-2 rounded-lg transition-colors"
+                        className="bg-brand-primary hover:bg-brand-primary-hover disabled:opacity-50 text-brand-secondary font-bold text-xs px-3 py-2 rounded-lg transition-colors"
                       >
                         Anwenden
                       </button>
@@ -901,7 +902,7 @@ export default function OfferBuilderPage() {
                           if (e.target.value) setManualDiscountAmount('');
                         }}
                         placeholder="%"
-                        className="w-20 bg-[#252525] border border-white/10 text-white text-xs rounded-lg px-3 py-2 outline-none focus:border-[#F5A623]"
+                        className="w-20 bg-[#252525] border border-white/10 text-white text-xs rounded-lg px-3 py-2 outline-none focus:border-brand-primary"
                       />
                       <input
                         type="number"
@@ -911,7 +912,7 @@ export default function OfferBuilderPage() {
                           if (e.target.value) setManualDiscountPct('');
                         }}
                         placeholder="€"
-                        className="flex-1 bg-[#252525] border border-white/10 text-white text-xs rounded-lg px-3 py-2 outline-none focus:border-[#F5A623]"
+                        className="flex-1 bg-[#252525] border border-white/10 text-white text-xs rounded-lg px-3 py-2 outline-none focus:border-brand-primary"
                       />
                       <button
                         onClick={handleApplyManualDiscount}
@@ -994,7 +995,7 @@ export default function OfferBuilderPage() {
         {/* Send-Modal */}
         {showSendModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-            <div className="bg-[#1A1A1A] rounded-2xl shadow-2xl w-full max-w-lg p-6 border border-white/10 max-h-[90vh] overflow-y-auto">
+            <div className="bg-brand-secondary-hover rounded-2xl shadow-2xl w-full max-w-lg p-6 border border-white/10 max-h-[90vh] overflow-y-auto">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-9 h-9 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0">
                   <Send className="w-4 h-4 text-blue-400" />

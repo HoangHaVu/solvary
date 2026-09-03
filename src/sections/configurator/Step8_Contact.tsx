@@ -10,7 +10,7 @@ interface Props {
   companyName?: string;
 }
 
-export default function Step8_Contact({ data, updateData, onSubmit, isSubmitting, submitError, companyName = 'Voltify' }: Props) {
+export default function Step8_Contact({ data, updateData, onSubmit, isSubmitting, submitError, companyName = 'Solvary' }: Props) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (data.firstName && data.lastName && data.email && data.privacyConsent && !isSubmitting) {
@@ -21,7 +21,7 @@ export default function Step8_Contact({ data, updateData, onSubmit, isSubmitting
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h2 className="text-2xl md:text-3xl font-semibold text-[#1A3A5C] mb-2">Kontaktdaten</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">Kontaktdaten</h2>
         <p className="text-gray-500 text-sm">Geben Sie Ihre Daten ein, damit wir Ihr persönliches Angebot erstellen können.</p>
       </div>
 
@@ -35,75 +35,75 @@ export default function Step8_Contact({ data, updateData, onSubmit, isSubmitting
         {/* Name Row */}
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium text-[#1A3A5C]">Vorname</label>
+            <label className="text-xs font-medium text-brand-secondary">Vorname</label>
             <input
               type="text"
               value={data.firstName}
               onChange={(e) => updateData({ firstName: e.target.value })}
               placeholder="Max"
               required
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C]"
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary"
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium text-[#1A3A5C]">Nachname</label>
+            <label className="text-xs font-medium text-brand-secondary">Nachname</label>
             <input
               type="text"
               value={data.lastName}
               onChange={(e) => updateData({ lastName: e.target.value })}
               placeholder="Mustermann"
               required
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C]"
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary"
             />
           </div>
         </div>
 
         {/* Email */}
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-[#1A3A5C]">E-Mail-Adresse</label>
+          <label className="text-xs font-medium text-brand-secondary">E-Mail-Adresse</label>
           <input
             type="email"
             value={data.email}
             onChange={(e) => updateData({ email: e.target.value })}
             placeholder="max.mustermann@email.de"
             required
-            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C]"
+            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary"
           />
         </div>
 
         {/* Phone */}
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-[#1A3A5C]">Telefonnummer</label>
+          <label className="text-xs font-medium text-brand-secondary">Telefonnummer</label>
           <input
             type="tel"
             value={data.phone}
             onChange={(e) => updateData({ phone: e.target.value })}
             placeholder="+49 170 1234567"
-            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C]"
+            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary"
           />
         </div>
 
         {/* City */}
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-[#1A3A5C]">Ort</label>
+          <label className="text-xs font-medium text-brand-secondary">Ort</label>
           <input
             type="text"
             value={data.city}
             onChange={(e) => updateData({ city: e.target.value })}
             placeholder="Berlin"
-            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C]"
+            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary"
           />
         </div>
 
         {/* Company (optional) */}
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-[#1A3A5C]">Firma <span className="text-gray-400">(optional)</span></label>
+          <label className="text-xs font-medium text-brand-secondary">Firma <span className="text-gray-400">(optional)</span></label>
           <input
             type="text"
             value={data.company}
             onChange={(e) => updateData({ company: e.target.value })}
             placeholder="Muster GmbH"
-            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C]"
+            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary"
           />
         </div>
 
@@ -114,10 +114,10 @@ export default function Step8_Contact({ data, updateData, onSubmit, isSubmitting
             checked={data.privacyConsent}
             onChange={(e) => updateData({ privacyConsent: e.target.checked })}
             required
-            className="w-4 h-4 mt-0.5 rounded border-gray-300 text-[#1A3A5C] focus:ring-[#1A3A5C]"
+            className="w-4 h-4 mt-0.5 rounded border-gray-300 text-brand-secondary focus:ring-brand-secondary"
           />
           <span className="text-xs text-gray-500 leading-relaxed">
-            Ich stimme der <a href="#" className="text-[#1A3A5C] font-medium hover:underline">Datenschutzerklärung</a> zu und erlaube {companyName}, meine Daten zur Erstellung eines Angebots zu verwenden.
+            Ich stimme der <a href="#" className="text-brand-secondary font-medium hover:underline">Datenschutzerklärung</a> zu und erlaube {companyName}, meine Daten zur Erstellung eines Angebots zu verwenden.
           </span>
         </label>
 
@@ -125,7 +125,7 @@ export default function Step8_Contact({ data, updateData, onSubmit, isSubmitting
         <button
           type="submit"
           disabled={isSubmitting}
-          className="flex items-center justify-center gap-2 bg-[#F5A623] text-[#1A3A5C] px-6 py-4 rounded-xl text-sm font-bold hover:bg-[#E09000] transition-all mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center justify-center gap-2 bg-brand-primary text-brand-secondary px-6 py-4 rounded-xl text-sm font-bold hover:bg-brand-primary-hover transition-all mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? (
             <>

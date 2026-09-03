@@ -1,3 +1,4 @@
+import { COLORS } from '../lib/theme';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -208,8 +209,8 @@ export default function MessagesPage() {
         {/* Header */}
         <div className="border-b border-white/5 bg-[#0F0F0F] px-6 py-4 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#F5A623]/10 flex items-center justify-center">
-              <MessageSquare className="w-5 h-5 text-[#F5A623]" />
+            <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center">
+              <MessageSquare className="w-5 h-5 text-brand-primary" />
             </div>
             <div>
               <h1 className="text-xl font-black text-white">Nachrichten</h1>
@@ -224,13 +225,13 @@ export default function MessagesPage() {
             {selectedLead && (
               <button
                 onClick={() => setShowLeadDetail(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-[#1A1A1A] border border-white/5 rounded-xl text-sm font-bold text-gray-400 hover:bg-white/5 transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-brand-secondary-hover border border-white/5 rounded-xl text-sm font-bold text-gray-400 hover:bg-white/5 transition-colors"
               >
                 <User className="w-4 h-4" />
                 Kundendetails
               </button>
             )}
-            <button onClick={loadData} className="w-10 h-10 flex items-center justify-center rounded-xl bg-[#1A1A1A] border border-white/5 text-gray-500 hover:text-white hover:bg-white/5 transition-colors">
+            <button onClick={loadData} className="w-10 h-10 flex items-center justify-center rounded-xl bg-brand-secondary-hover border border-white/5 text-gray-500 hover:text-white hover:bg-white/5 transition-colors">
               <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
             </button>
           </div>
@@ -241,7 +242,7 @@ export default function MessagesPage() {
           {selectedLead ? (
             <button
               onClick={() => { setSelectedLeadId(null); setShowLeadDetail(false); }}
-              className="flex items-center gap-2 px-4 py-2 bg-[#1A1A1A] border border-white/5 rounded-xl text-sm font-bold text-gray-400 hover:bg-white/5 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-brand-secondary-hover border border-white/5 rounded-xl text-sm font-bold text-gray-400 hover:bg-white/5 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               Alle Notizen
@@ -251,28 +252,28 @@ export default function MessagesPage() {
           <div className="relative" ref={pickerRef}>
             <button
               onClick={() => setShowLeadPicker(!showLeadPicker)}
-              className="flex items-center gap-2 px-4 py-2 bg-[#1A1A1A] border border-white/5 rounded-xl text-sm font-bold text-gray-400 hover:bg-white/5 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-brand-secondary-hover border border-white/5 rounded-xl text-sm font-bold text-gray-400 hover:bg-white/5 transition-colors"
             >
               {selectedLead ? `${selectedLead.first_name} ${selectedLead.last_name}` : 'Nach Lead filtern'}
               <ChevronDown className="w-3.5 h-3.5" />
             </button>
 
             {showLeadPicker && (
-              <div className="absolute top-full left-0 mt-2 w-72 bg-[#1A1A1A] rounded-xl border border-white/10 shadow-2xl z-50 overflow-hidden">
+              <div className="absolute top-full left-0 mt-2 w-72 bg-brand-secondary-hover rounded-xl border border-white/10 shadow-2xl z-50 overflow-hidden">
                 <div className="p-3 border-b border-white/5">
                   <input
                     type="text"
                     value={leadFilter}
                     onChange={e => setLeadFilter(e.target.value)}
                     placeholder="Kunde suchen…"
-                    className="w-full bg-[#0F0F0F] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#F5A623]/30 focus:border-[#F5A623]"
+                    className="w-full bg-[#0F0F0F] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary"
                     autoFocus
                   />
                 </div>
                 <div className="max-h-64 overflow-y-auto">
                   <button
                     onClick={() => { setSelectedLeadId(null); setShowLeadPicker(false); }}
-                    className={`w-full px-4 py-2.5 text-left text-sm hover:bg-white/5 transition-colors ${selectedLeadId === null ? 'bg-[#F5A623]/10 text-[#F5A623]' : 'text-gray-400'}`}
+                    className={`w-full px-4 py-2.5 text-left text-sm hover:bg-white/5 transition-colors ${selectedLeadId === null ? 'bg-brand-primary/10 text-brand-primary' : 'text-gray-400'}`}
                   >
                     Alle Notizen
                   </button>
@@ -280,7 +281,7 @@ export default function MessagesPage() {
                     <button
                       key={l.id}
                       onClick={() => { setSelectedLeadId(l.id); setShowLeadPicker(false); }}
-                      className={`w-full px-4 py-2.5 text-left text-sm hover:bg-white/5 transition-colors ${selectedLeadId === l.id ? 'bg-[#F5A623]/10 text-[#F5A623]' : 'text-gray-400'}`}
+                      className={`w-full px-4 py-2.5 text-left text-sm hover:bg-white/5 transition-colors ${selectedLeadId === l.id ? 'bg-brand-primary/10 text-brand-primary' : 'text-gray-400'}`}
                     >
                       <span className="font-semibold text-white">{l.first_name} {l.last_name}</span>
                       <span className="text-xs text-gray-600 ml-2">{l.city}{l.postal_code ? ` · ${l.postal_code}` : ''}</span>
@@ -299,7 +300,7 @@ export default function MessagesPage() {
         <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
           {isLoading ? (
             <div className="flex justify-center py-16">
-              <Loader2 className="w-8 h-8 text-[#F5A623] animate-spin" />
+              <Loader2 className="w-8 h-8 text-brand-primary animate-spin" />
             </div>
           ) : error ? (
             <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-sm text-red-400 text-center">
@@ -318,8 +319,8 @@ export default function MessagesPage() {
           ) : (
             filteredNotes.map(note => (
               <div key={note.id} className="flex gap-3">
-                <div className="shrink-0 w-8 h-8 rounded-full bg-[#F5A623]/10 flex items-center justify-center">
-                  <User className="w-4 h-4 text-[#F5A623]" />
+                <div className="shrink-0 w-8 h-8 rounded-full bg-brand-primary/10 flex items-center justify-center">
+                  <User className="w-4 h-4 text-brand-primary" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline gap-2 mb-1">
@@ -328,7 +329,7 @@ export default function MessagesPage() {
                       {formatDate(note.created_at)} · {formatTime(note.created_at)}
                     </span>
                   </div>
-                  <div className="bg-[#1A1A1A] border border-white/5 rounded-xl px-4 py-3">
+                  <div className="bg-brand-secondary-hover border border-white/5 rounded-xl px-4 py-3">
                     <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap">{note.content}</p>
                   </div>
                 </div>
@@ -346,12 +347,12 @@ export default function MessagesPage() {
               value={newNote}
               onChange={e => setNewNote(e.target.value)}
               placeholder={selectedLead ? `Notiz zu ${selectedLead.first_name} ${selectedLead.last_name}…` : 'Neue Notiz schreiben…'}
-              className="flex-1 bg-[#1A1A1A] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#F5A623]/30 focus:border-[#F5A623]"
+              className="flex-1 bg-brand-secondary-hover border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary"
             />
             <button
               type="submit"
               disabled={isSending || !newNote.trim()}
-              className="shrink-0 w-12 h-12 flex items-center justify-center rounded-xl bg-[#F5A623] text-[#1A3A5C] hover:bg-[#E09000] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="shrink-0 w-12 h-12 flex items-center justify-center rounded-xl bg-brand-primary text-brand-secondary hover:bg-brand-primary-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {isSending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
             </button>
@@ -363,12 +364,12 @@ export default function MessagesPage() {
       {showLeadDetail && selectedLead && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-4"
           onClick={() => setShowLeadDetail(false)}>
-          <div className="bg-[#1A1A1A] rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-white/10"
+          <div className="bg-brand-secondary-hover rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-white/10"
             onClick={e => e.stopPropagation()}>
             <div className="border-b border-white/5 px-6 py-5 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#F5A623]/10 flex items-center justify-center">
-                  <User className="w-5 h-5 text-[#F5A623]" />
+                <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center">
+                  <User className="w-5 h-5 text-brand-primary" />
                 </div>
                 <div>
                   <h2 className="text-lg font-black text-white">{selectedLead.first_name} {selectedLead.last_name}</h2>
@@ -412,7 +413,7 @@ export default function MessagesPage() {
             <div className="px-6 pb-5">
               <button
                 onClick={() => { setShowLeadDetail(false); navigate(`/lead/${selectedLead.id}`); }}
-                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#F5A623] text-[#1A3A5C] text-sm font-bold hover:bg-[#E09000] transition-colors"
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-brand-primary text-brand-secondary text-sm font-bold hover:bg-brand-primary-hover transition-colors"
               >
                 <Building2 className="w-4 h-4" />
                 Lead öffnen

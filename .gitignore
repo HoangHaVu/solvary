@@ -24,3 +24,10 @@ dist-ssr
 *.sw?
 .vercel
 supabase/.temp/
+
+# Agent / tooling scratch
+.playwright-mcp/
+.serena/
+.kimi-code/
+/*.png
+/Berechnungsnachweis-Demo.pdf

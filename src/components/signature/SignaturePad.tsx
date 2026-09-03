@@ -1,5 +1,6 @@
 import { useRef, useState, useCallback } from 'react';
 import { Pen, Trash2, Check } from 'lucide-react';
+import { COLORS } from '../../lib/theme';
 
 interface Props {
   onSave: (signaturePng: string) => void;
@@ -57,7 +58,7 @@ export default function SignaturePad({ onSave, width = 600, height = 200 }: Prop
     ctx.lineWidth = 2.5;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
-    ctx.strokeStyle = '#1A3A5C';
+    ctx.strokeStyle = COLORS.secondary;
     ctx.lineTo(x, y);
     ctx.stroke();
     setHasDrawing(true);
@@ -122,7 +123,7 @@ export default function SignaturePad({ onSave, width = 600, height = 200 }: Prop
           disabled={!hasDrawing}
           className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition-colors ${
             hasDrawing
-              ? 'bg-[#F5A623] text-[#1A3A5C] hover:bg-[#E09000]'
+              ? 'bg-brand-primary text-brand-secondary hover:bg-brand-primary-hover'
               : 'bg-gray-100 text-gray-400 cursor-not-allowed'
           }`}
         >

@@ -33,7 +33,7 @@ Deno.serve(async (req) => {
   const html = `
     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
       <div style="background: #1A3A5C; color: white; padding: 24px; border-radius: 12px 12px 0 0;">
-        <h1 style="margin: 0; font-size: 20px;">⚡ Neue Voltify-Beta-Anfrage</h1>
+        <h1 style="margin: 0; font-size: 20px;">⚡ Neue Solvary-Beta-Anfrage</h1>
       </div>
       <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 12px 12px; padding: 24px;">
         <table style="width: 100%; border-collapse: collapse;">
@@ -78,11 +78,11 @@ Deno.serve(async (req) => {
   `;
 
   // Versuche mit eigener Domain, fallback auf Resend-Standard
-  let fromAddress = 'Voltify Beta <noreply@vu-studio.de>';
+  let fromAddress = 'Solvary Beta <noreply@vu-studio.de>';
   let res = await sendEmail(resendKey, fromAddress, ADMIN_EMAIL, data, html);
 
   if (!res.ok && (res.status === 403 || res.status === 422)) {
-    fromAddress = 'Voltify Beta <onboarding@resend.dev>';
+    fromAddress = 'Solvary Beta <onboarding@resend.dev>';
     res = await sendEmail(resendKey, fromAddress, ADMIN_EMAIL, data, html);
   }
 
@@ -100,7 +100,7 @@ Deno.serve(async (req) => {
       body: JSON.stringify({
         from,
         to,
-        subject: `⚡ Voltify Beta-Anfrage: ${data.company_name} (${data.phone ?? data.email})`,
+        subject: `⚡ Solvary Beta-Anfrage: ${data.company_name} (${data.phone ?? data.email})`,
         html: htmlBody,
       }),
     });

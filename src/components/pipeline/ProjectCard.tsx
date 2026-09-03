@@ -1,3 +1,4 @@
+import { COLORS } from '../../lib/theme';
 import { useNavigate } from 'react-router-dom';
 import { Zap, Euro, CheckCircle } from 'lucide-react';
 import type { Project } from '../../services/data';
@@ -25,7 +26,7 @@ export function ProjectCard({ project, done }: ProjectCardProps) {
       className={`rounded-xl border p-4 transition-all duration-200 group cursor-pointer ${
         done
           ? 'bg-green-500/5 border-green-500/20 opacity-75 hover:opacity-100'
-          : 'bg-[#1A1A1A] border-white/5 hover:border-[#F5A623]/30 hover:shadow-lg cursor-grab active:cursor-grabbing'
+          : 'bg-brand-secondary-hover border-white/5 hover:border-brand-primary/30 hover:shadow-lg cursor-grab active:cursor-grabbing'
       }`}
     >
       <div className="flex items-start justify-between gap-2 mb-1">
@@ -51,7 +52,7 @@ export function ProjectCard({ project, done }: ProjectCardProps) {
         </div>
       </div>
 
-      <p className="text-xs text-gray-500 text-right font-medium group-hover:text-[#F5A623] transition-colors">
+      <p className="text-xs text-gray-500 text-right font-medium group-hover:text-brand-primary transition-colors">
         Details →
       </p>
     </div>

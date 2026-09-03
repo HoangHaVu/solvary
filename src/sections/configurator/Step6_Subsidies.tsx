@@ -9,7 +9,6 @@ import {
   ExternalLink,
   Info,
   Check,
-  ArrowRight,
 } from 'lucide-react';
 import type { WizardData } from '../../pages/Configurator';
 import {
@@ -59,13 +58,13 @@ function GrantCard({ grant }: { grant: Grant }) {
       href={grant.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex flex-col gap-4 p-5 rounded-xl border-2 text-left transition-all duration-200 group relative overflow-hidden hover:border-[#1A3A5C] hover:shadow-md bg-white/60 backdrop-blur-sm"
+      className="flex flex-col gap-4 p-5 rounded-xl border-2 text-left transition-all duration-200 group relative overflow-hidden hover:border-brand-secondary hover:shadow-md bg-white/60 backdrop-blur-sm"
     >
       {/* Type Badge */}
       <div
         className={`absolute top-0 right-0 px-3 py-1 rounded-bl-xl text-[10px] font-semibold flex items-center gap-1 ${
           grant.type === 'national'
-            ? 'bg-[#1A3A5C] text-white'
+            ? 'bg-brand-secondary text-white'
             : 'bg-gray-100 text-gray-600'
         }`}
       >
@@ -74,13 +73,13 @@ function GrantCard({ grant }: { grant: Grant }) {
       </div>
 
       {/* Icon */}
-      <div className="w-10 h-10 rounded-lg bg-[#1A3A5C]/5 flex items-center justify-center text-[#1A3A5C]">
+      <div className="w-10 h-10 rounded-lg bg-brand-secondary/5 flex items-center justify-center text-brand-secondary">
         {iconMap[grant.icon] || <Zap className="w-5 h-5" />}
       </div>
 
       {/* Content */}
       <div>
-        <h4 className="font-semibold text-sm text-[#1A3A5C] mb-1 group-hover:underline underline-offset-2 flex items-center gap-1">
+        <h4 className="font-semibold text-sm text-brand-secondary mb-1 group-hover:underline underline-offset-2 flex items-center gap-1">
           {grant.title}
           <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
         </h4>
@@ -100,7 +99,7 @@ function GrantCard({ grant }: { grant: Grant }) {
             Separates Antragsverfahren
           </div>
         )}
-        <span className="shrink-0 text-[10px] font-semibold text-[#1A3A5C] bg-[#1A3A5C]/5 px-2 py-1 rounded-full">
+        <span className="shrink-0 text-[10px] font-semibold text-brand-secondary bg-brand-secondary/5 px-2 py-1 rounded-full">
           {grant.highlight}
         </span>
       </div>
@@ -118,7 +117,7 @@ export default function Step6_Subsidies({ data }: Props) {
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h2 className="text-2xl md:text-3xl font-semibold text-[#1A3A5C] mb-2">Fördermittel für Ihr Projekt</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">Fördermittel für Ihr Projekt</h2>
         <p className="text-gray-500 text-sm">
           Wir haben <strong>{totalGrants} Förderprogramme</strong> für Ihren Standort
           {zip ? <> (<strong>{zip} — {stateLabel}</strong>)</> : ''} ermittelt.
@@ -127,12 +126,12 @@ export default function Step6_Subsidies({ data }: Props) {
       </div>
 
       {/* Highlight: 0% MwSt */}
-      <div className="bg-[#F5A623]/10 border-2 border-[#F5A623]/30 rounded-xl p-5 flex flex-col md:flex-row items-start md:items-center gap-4">
-        <div className="w-12 h-12 rounded-full bg-[#F5A623] flex items-center justify-center shrink-0">
-          <TrendingUp className="w-6 h-6 text-[#1A3A5C]" />
+      <div className="bg-brand-primary/10 border-2 border-brand-primary/30 rounded-xl p-5 flex flex-col md:flex-row items-start md:items-center gap-4">
+        <div className="w-12 h-12 rounded-full bg-brand-primary flex items-center justify-center shrink-0">
+          <TrendingUp className="w-6 h-6 text-brand-secondary" />
         </div>
         <div>
-          <h3 className="font-semibold text-[#1A3A5C] mb-1">0 % Mehrwertsteuer — Sofort wirksam</h3>
+          <h3 className="font-semibold text-brand-secondary mb-1">0 % Mehrwertsteuer — Sofort wirksam</h3>
           <p className="text-xs text-gray-600">
             <strong>Sparen Sie ~19 % auf den Kaufpreis Ihrer Anlage.</strong> Seit dem 01.01.2023
             entfällt die Umsatzsteuer bundesweit auf PV-Anlagen und Speicher auf Wohngebäuden —
@@ -145,8 +144,8 @@ export default function Step6_Subsidies({ data }: Props) {
       {regionalGrants.length > 0 && (
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4 text-[#F5A623]" />
-            <h3 className="font-semibold text-[#1A3A5C]">Regionale Förderungen — {stateLabel}</h3>
+            <MapPin className="w-4 h-4 text-brand-primary" />
+            <h3 className="font-semibold text-brand-secondary">Regionale Förderungen — {stateLabel}</h3>
           </div>
           {subsidyTotal > 0 && (
             <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-lg px-3 py-2 w-fit">
@@ -167,8 +166,8 @@ export default function Step6_Subsidies({ data }: Props) {
       {/* National Grants */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-2">
-          <Globe className="w-4 h-4 text-[#F5A623]" />
-          <h3 className="font-semibold text-[#1A3A5C]">Bundesweite Förderungen</h3>
+          <Globe className="w-4 h-4 text-brand-primary" />
+          <h3 className="font-semibold text-brand-secondary">Bundesweite Förderungen</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {NATIONAL_GRANTS.filter((g) => g.id !== 'mwst').map((grant) => (

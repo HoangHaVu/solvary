@@ -7,6 +7,7 @@ import type { Lead } from '../../services/data';
 import type { CompanySettings } from './OfferPdfDocument';
 import { getIrradiationByZip } from '../../data/plzIrradiation';
 import { getGrantSubsidyTotal } from '../../data/grants';
+import { COLORS } from '../../lib/theme';
 
 // ── Konstanten (identisch zu calculations.ts) ──────────────────────────
 const PERFORMANCE_RATIO = 0.80;
@@ -144,8 +145,8 @@ interface Props {
 
 export default function CalculationPdfDocument({ lead, company }: Props) {
   const today = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
-  const primary = company.primaryColor || '#1A3A5C';
-  const accent = company.accentColor || '#F5A623';
+  const primary = company.primaryColor || COLORS.secondary;
+  const accent = company.accentColor || COLORS.primary;
   const s = getStyles(primary, accent);
 
   // ── Eingabewerte ─────────────────────────────────────────────────────

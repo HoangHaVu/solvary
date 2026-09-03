@@ -1,3 +1,4 @@
+import { COLORS } from '../../lib/theme';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, Sun, MoreVertical, Flame, Zap, Snowflake } from 'lucide-react';
 import type { Lead } from '../../services/data';
@@ -56,11 +57,11 @@ export function LeadCard({ lead, showClosingActions, onWon, onLost, onClick }: L
         e.dataTransfer.effectAllowed = 'move';
       }}
       onClick={() => onClick ? onClick() : navigate(`/lead/${lead.id}`)}
-      className="bg-[#1A1A1A] rounded-xl p-4 border border-white/5 hover:border-[#F5A623]/30 transition-all cursor-grab active:cursor-grabbing group"
+      className="bg-brand-secondary-hover rounded-xl p-4 border border-white/5 hover:border-brand-primary/30 transition-all cursor-grab active:cursor-grabbing group"
     >
       {/* Header */}
       <div className="flex justify-between items-start mb-3">
-        <h4 className="font-bold text-white text-sm group-hover:text-[#F5A623] transition-colors">
+        <h4 className="font-bold text-white text-sm group-hover:text-brand-primary transition-colors">
           {displayName}
         </h4>
         <div className="flex items-center gap-1.5">
@@ -107,7 +108,7 @@ export function LeadCard({ lead, showClosingActions, onWon, onLost, onClick }: L
           </span>
         )}
         {lead.discount_status !== 'none' && (
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#F5A623]/10 text-[#F5A623]">
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-brand-primary/10 text-brand-primary">
             −{lead.discount_percentage}%
           </span>
         )}
@@ -132,7 +133,7 @@ export function LeadCard({ lead, showClosingActions, onWon, onLost, onClick }: L
         </div>
         <div className="flex items-center gap-1.5">
           {lead.discount_status !== 'none' && (
-            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#F5A623]/10 text-[#F5A623]">
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-brand-primary/10 text-brand-primary">
               −{lead.discount_percentage}%
             </span>
           )}

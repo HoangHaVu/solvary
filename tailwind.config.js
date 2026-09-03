@@ -48,6 +48,14 @@ module.exports = {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        brand: {
+          primary: "rgb(var(--color-primary) / <alpha-value>)",
+          "primary-hover": "rgb(var(--color-primary-hover) / <alpha-value>)",
+          secondary: "rgb(var(--color-secondary) / <alpha-value>)",
+          "secondary-hover": "rgb(var(--color-secondary-hover) / <alpha-value>)",
+          "bg-alt": "rgb(var(--color-bg-alt) / <alpha-value>)",
+          tint: "rgb(var(--color-tint) / <alpha-value>)",
+        },
       },
       borderRadius: {
         xl: "calc(var(--radius) + 4px)",

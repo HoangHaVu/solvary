@@ -30,7 +30,7 @@ const PLANNING_LABELS: Record<string, string> = {
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  neu:           'bg-[#F5A623]/10 text-[#F5A623]',
+  neu:           'bg-brand-primary/10 text-brand-primary',
   kontaktiert:   'bg-blue-500/10 text-blue-400',
   vorort:        'bg-purple-500/10 text-purple-400',
   angebot:       'bg-cyan-500/10 text-cyan-400',
@@ -145,7 +145,7 @@ export function AgencyLeadDrawer({ lead, onClose }: Props) {
         {/* ── Header ── */}
         <div className="sticky top-0 bg-[#0F0F0F]/95 backdrop-blur border-b border-white/10 px-6 py-4 flex items-center justify-between z-10">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#1A3A5C] flex items-center justify-center text-sm font-bold text-[#F5A623]">
+            <div className="w-10 h-10 rounded-full bg-brand-secondary flex items-center justify-center text-sm font-bold text-brand-primary">
               {lead.first_name?.[0]}{lead.last_name?.[0]}
             </div>
             <div>
@@ -155,7 +155,7 @@ export function AgencyLeadDrawer({ lead, onClose }: Props) {
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg bg-[#1A1A1A] border border-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+            className="w-8 h-8 rounded-lg bg-brand-secondary-hover border border-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -176,8 +176,8 @@ export function AgencyLeadDrawer({ lead, onClose }: Props) {
 
           {/* ── Planungshorizont ── */}
           {lead.planning_horizon && (
-            <div className="flex items-center gap-2 bg-[#1A1A1A] border border-white/5 rounded-xl px-4 py-3">
-              <Clock className="w-4 h-4 text-[#F5A623]" />
+            <div className="flex items-center gap-2 bg-brand-secondary-hover border border-white/5 rounded-xl px-4 py-3">
+              <Clock className="w-4 h-4 text-brand-primary" />
               <span className="text-sm text-gray-300">
                 {PLANNING_LABELS[lead.planning_horizon] ?? lead.planning_horizon}
               </span>
@@ -185,15 +185,15 @@ export function AgencyLeadDrawer({ lead, onClose }: Props) {
           )}
 
           {/* ── Kontaktdaten ── */}
-          <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-4 space-y-3">
+          <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-4 space-y-3">
             <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Kontaktdaten</h3>
             <a href={`mailto:${lead.email}`} className="flex items-center gap-3 group">
-              <Mail className="w-4 h-4 text-gray-500 group-hover:text-[#F5A623] transition-colors flex-shrink-0" />
+              <Mail className="w-4 h-4 text-gray-500 group-hover:text-brand-primary transition-colors flex-shrink-0" />
               <span className="text-sm text-gray-300 group-hover:text-white transition-colors truncate">{lead.email}</span>
             </a>
             {lead.phone && (
               <a href={`tel:${lead.phone}`} className="flex items-center gap-3 group">
-                <Phone className="w-4 h-4 text-gray-500 group-hover:text-[#F5A623] transition-colors flex-shrink-0" />
+                <Phone className="w-4 h-4 text-gray-500 group-hover:text-brand-primary transition-colors flex-shrink-0" />
                 <span className="text-sm text-gray-300 group-hover:text-white transition-colors">{lead.phone}</span>
               </a>
             )}
@@ -206,11 +206,11 @@ export function AgencyLeadDrawer({ lead, onClose }: Props) {
           </div>
 
           {/* ── Solaranlage ── */}
-          <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-4 space-y-4">
+          <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-4 space-y-4">
             <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Solaranlage</h3>
             <div className="grid grid-cols-2 gap-2">
               {([
-                { label: 'Leistung',       value: lead.kwp != null ? `${lead.kwp} kWp` : null,                                       color: 'text-[#F5A623]' },
+                { label: 'Leistung',       value: lead.kwp != null ? `${lead.kwp} kWp` : null,                                       color: 'text-brand-primary' },
                 { label: 'Investition',    value: lead.investment != null ? `${lead.investment.toLocaleString('de-DE')} €` : null,     color: 'text-white' },
                 { label: 'Ersparnis/Jahr', value: lead.annual_savings != null ? `${lead.annual_savings.toLocaleString('de-DE')} €` : null, color: 'text-green-400' },
                 { label: 'Autarkie',       value: lead.autarky != null ? `${lead.autarky}%` : null,                                   color: 'text-blue-400' },
@@ -257,7 +257,7 @@ export function AgencyLeadDrawer({ lead, onClose }: Props) {
           </div>
 
           {/* ── Partner-Zuweisung ── */}
-          <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-4 space-y-3">
+          <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-4 space-y-3">
             <div className="flex items-center justify-between">
               <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Partner-Zuweisung</h3>
               {assignment && canReassign && !reassignMode && (
@@ -298,8 +298,8 @@ export function AgencyLeadDrawer({ lead, onClose }: Props) {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#1A3A5C] flex items-center justify-center flex-shrink-0">
-                      <Handshake className="w-4 h-4 text-[#F5A623]" />
+                    <div className="w-8 h-8 rounded-lg bg-brand-secondary flex items-center justify-center flex-shrink-0">
+                      <Handshake className="w-4 h-4 text-brand-primary" />
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-white">{assignment.partner?.company_name ?? '—'}</p>
@@ -385,7 +385,7 @@ export function AgencyLeadDrawer({ lead, onClose }: Props) {
                           disabled={assigning === partner.id}
                           className={`flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-lg transition-all flex-shrink-0 ${
                             score > 0
-                              ? 'bg-[#F5A623] text-[#1A3A5C] hover:bg-[#E09000]'
+                              ? 'bg-brand-primary text-brand-secondary hover:bg-brand-primary-hover'
                               : 'bg-white/10 text-gray-300 hover:bg-white/15'
                           } disabled:opacity-50`}
                         >

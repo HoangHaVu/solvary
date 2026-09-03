@@ -1,3 +1,4 @@
+import { COLORS } from '../lib/theme';
 import { useState, useEffect } from 'react';
 import {
   Users, Loader2, RefreshCw, Trash2, ChevronDown,
@@ -236,8 +237,8 @@ export default function TeamPage() {
         {/* Header */}
         <div className="border-b border-white/5 bg-[#0F0F0F] px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#F5A623]/10 flex items-center justify-center">
-              <Users className="w-5 h-5 text-[#F5A623]" />
+            <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center">
+              <Users className="w-5 h-5 text-brand-primary" />
             </div>
             <div>
               <h1 className="text-xl font-black text-white">Team-Verwaltung</h1>
@@ -247,14 +248,14 @@ export default function TeamPage() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowInvite(true)}
-              className="flex items-center gap-2 px-4 py-2.5 bg-[#F5A623] text-[#1A3A5C] rounded-xl text-sm font-bold hover:bg-[#E09000] transition-colors"
+              className="flex items-center gap-2 px-4 py-2.5 bg-brand-primary text-brand-secondary rounded-xl text-sm font-bold hover:bg-brand-primary-hover transition-colors"
             >
               <UserPlus className="w-4 h-4" />
               Mitarbeiter einladen
             </button>
             <button
               onClick={loadMembers}
-              className="w-10 h-10 flex items-center justify-center rounded-xl bg-[#1A1A1A] border border-white/5 text-gray-500 hover:text-white hover:bg-white/5 transition-colors"
+              className="w-10 h-10 flex items-center justify-center rounded-xl bg-brand-secondary-hover border border-white/5 text-gray-500 hover:text-white hover:bg-white/5 transition-colors"
             >
               <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
             </button>
@@ -265,7 +266,7 @@ export default function TeamPage() {
         <div className="p-6">
           {isLoading ? (
             <div className="flex justify-center py-16">
-              <Loader2 className="w-8 h-8 text-[#F5A623] animate-spin" />
+              <Loader2 className="w-8 h-8 text-brand-primary animate-spin" />
             </div>
           ) : error ? (
             <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-sm text-red-400 text-center">
@@ -287,21 +288,21 @@ export default function TeamPage() {
                 return (
                   <div
                     key={member.id}
-                    className={`flex items-center gap-4 bg-[#1A1A1A] border rounded-xl px-5 py-4 ${
-                      isOwner ? 'border-[#F5A623]/20' : 'border-white/5'
+                    className={`flex items-center gap-4 bg-brand-secondary-hover border rounded-xl px-5 py-4 ${
+                      isOwner ? 'border-brand-primary/20' : 'border-white/5'
                     }`}
                   >
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
-                      isOwner ? 'bg-[#F5A623]/10' : 'bg-[#1A3A5C]'
+                      isOwner ? 'bg-brand-primary/10' : 'bg-brand-secondary'
                     }`}>
-                      <RoleIcon className={`w-5 h-5 ${isOwner ? 'text-[#F5A623]' : 'text-[#F5A623]'}`} />
+                      <RoleIcon className={`w-5 h-5 ${isOwner ? 'text-brand-primary' : 'text-brand-primary'}`} />
                     </div>
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <p className="text-sm font-bold text-white truncate">{member.full_name || 'Unbekannt'}</p>
                         {isOwner && (
-                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#F5A623]/10 text-[#F5A623] font-bold">Inhaber</span>
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-brand-primary/10 text-brand-primary font-bold">Inhaber</span>
                         )}
                       </div>
                       <p className="text-xs text-gray-500">
@@ -319,7 +320,7 @@ export default function TeamPage() {
                             value={member.role}
                             onChange={(e) => handleRoleChange(member.id, e.target.value)}
                             disabled={updatingId === member.id}
-                            className="appearance-none bg-[#0F0F0F] border border-white/10 rounded-lg pl-3 pr-8 py-2 text-sm text-white focus:outline-none focus:border-[#F5A623] disabled:opacity-50"
+                            className="appearance-none bg-[#0F0F0F] border border-white/10 rounded-lg pl-3 pr-8 py-2 text-sm text-white focus:outline-none focus:border-brand-primary disabled:opacity-50"
                           >
                             {ROLE_OPTIONS.map(opt => (
                               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -364,14 +365,14 @@ export default function TeamPage() {
           onClick={() => { if (!isInviting && !inviteResult) closeInvite(); }}
         >
           <div
-            className="bg-[#1A1A1A] rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-white/10"
+            className="bg-brand-secondary-hover rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-white/10"
             onClick={e => e.stopPropagation()}
           >
             {/* Header */}
             <div className="border-b border-white/5 px-6 py-5 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#F5A623]/10 flex items-center justify-center">
-                  <UserPlus className="w-5 h-5 text-[#F5A623]" />
+                <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center">
+                  <UserPlus className="w-5 h-5 text-brand-primary" />
                 </div>
                 <h2 className="text-lg font-black text-white">Mitarbeiter einladen</h2>
               </div>
@@ -415,8 +416,8 @@ export default function TeamPage() {
                   <div className="border-t border-white/5 pt-3">
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1 block">Temporäres Passwort</label>
                     <div className="flex items-center gap-2">
-                      <KeyRound className="w-4 h-4 text-[#F5A623]" />
-                      <code className="flex-1 text-sm text-[#F5A623] font-mono">
+                      <KeyRound className="w-4 h-4 text-brand-primary" />
+                      <code className="flex-1 text-sm text-brand-primary font-mono">
                         {showPassword ? inviteResult.password : '••••••••••••'}
                       </code>
                       <button
@@ -437,10 +438,10 @@ export default function TeamPage() {
                   <div className="border-t border-white/5 pt-3">
                     <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1 block">Rolle</label>
                     <div className="flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-[#F5A623]" />
+                      <Sparkles className="w-4 h-4 text-brand-primary" />
                       <span className="text-sm text-white">{ROLE_LABELS[inviteResult.role] || inviteResult.role}</span>
                       {selectedRoles.length > 1 && (
-                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#F5A623]/10 text-[#F5A623]">
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-brand-primary/10 text-brand-primary">
                           {selectedRoles.length} Rollen kombiniert
                         </span>
                       )}
@@ -458,7 +459,7 @@ export default function TeamPage() {
 
                 <button
                   onClick={closeInvite}
-                  className="w-full py-3 rounded-xl bg-[#F5A623] text-[#1A3A5C] text-sm font-bold hover:bg-[#E09000] transition-colors"
+                  className="w-full py-3 rounded-xl bg-brand-primary text-brand-secondary text-sm font-bold hover:bg-brand-primary-hover transition-colors"
                 >
                   Fertig
                 </button>
@@ -478,7 +479,7 @@ export default function TeamPage() {
                     value={inviteName}
                     onChange={e => setInviteName(e.target.value)}
                     placeholder="Max Mustermann"
-                    className="w-full bg-[#0F0F0F] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#F5A623]/30 focus:border-[#F5A623]"
+                    className="w-full bg-[#0F0F0F] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary"
                     required
                   />
                 </div>
@@ -491,7 +492,7 @@ export default function TeamPage() {
                     value={inviteEmail}
                     onChange={e => setInviteEmail(e.target.value)}
                     placeholder="max@firma.de"
-                    className="w-full bg-[#0F0F0F] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#F5A623]/30 focus:border-[#F5A623]"
+                    className="w-full bg-[#0F0F0F] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary"
                     required
                   />
                 </div>
@@ -513,7 +514,7 @@ export default function TeamPage() {
                           onClick={() => toggleRole(opt.value)}
                           className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-sm transition-all ${
                             isSelected
-                              ? 'bg-[#F5A623]/10 border-[#F5A623]/30 text-[#F5A623]'
+                              ? 'bg-brand-primary/10 border-brand-primary/30 text-brand-primary'
                               : 'bg-[#0F0F0F] border-white/5 text-gray-400 hover:border-white/10 hover:text-white'
                           }`}
                         >
@@ -530,7 +531,7 @@ export default function TeamPage() {
                 {selectedRoles.length > 0 && (
                   <div className="text-xs text-gray-500">
                     Gewählt: {' '}
-                    <span className="text-[#F5A623] font-bold">
+                    <span className="text-brand-primary font-bold">
                       {selectedRoles.map(r => ROLE_LABELS[r] || r).join(', ')}
                     </span>
                     {selectedRoles.length > 1 && (
@@ -549,7 +550,7 @@ export default function TeamPage() {
                 <button
                   type="submit"
                   disabled={isInviting || !inviteEmail.trim() || !inviteName.trim() || selectedRoles.length === 0}
-                  className="w-full py-3 rounded-xl bg-[#F5A623] text-[#1A3A5C] text-sm font-bold hover:bg-[#E09000] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full py-3 rounded-xl bg-brand-primary text-brand-secondary text-sm font-bold hover:bg-brand-primary-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   {isInviting ? (
                     <span className="flex items-center justify-center gap-2">

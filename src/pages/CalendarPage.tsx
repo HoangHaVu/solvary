@@ -1,3 +1,4 @@
+import { COLORS } from '../lib/theme';
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -199,7 +200,7 @@ export default function CalendarPage() {
     setCreateForm(EMPTY_CREATE);
   }
 
-  const inputCls = 'w-full bg-[#0F0F0F] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#F5A623]/30 focus:border-[#F5A623]';
+  const inputCls = 'w-full bg-[#0F0F0F] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary';
 
   return (
     <div className="min-h-screen flex bg-[#0F0F0F] text-white">
@@ -211,7 +212,7 @@ export default function CalendarPage() {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
             <div className="flex items-center gap-6">
               <h1 className="text-xl md:text-3xl font-black text-white">{title}</h1>
-              <div className="flex items-center bg-[#1A1A1A] rounded-xl border border-white/5 p-1">
+              <div className="flex items-center bg-brand-secondary-hover rounded-xl border border-white/5 p-1">
                 <button onClick={prevMonth} className="p-1.5 hover:bg-white/5 rounded-lg text-gray-500 hover:text-white transition-colors">
                   <ChevronLeft className="w-5 h-5" />
                 </button>
@@ -221,12 +222,12 @@ export default function CalendarPage() {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <button onClick={goToday} className="px-5 py-2 bg-[#1A1A1A] border border-white/5 rounded-xl text-sm font-bold text-white hover:bg-white/5 transition-colors">
+              <button onClick={goToday} className="px-5 py-2 bg-brand-secondary-hover border border-white/5 rounded-xl text-sm font-bold text-white hover:bg-white/5 transition-colors">
                 Heute
               </button>
               <button
                 onClick={() => setShowCreate(true)}
-                className="flex items-center gap-2 px-5 py-2 bg-[#F5A623] text-[#1A3A5C] rounded-xl text-sm font-bold hover:bg-[#E09000] transition-colors"
+                className="flex items-center gap-2 px-5 py-2 bg-brand-primary text-brand-secondary rounded-xl text-sm font-bold hover:bg-brand-primary-hover transition-colors"
               >
                 <Plus className="w-4 h-4" />
                 Neuer Termin
@@ -250,7 +251,7 @@ export default function CalendarPage() {
           {/* Grid */}
           {isLoading ? (
             <div className="flex justify-center py-24">
-              <Sun className="w-10 h-10 text-[#F5A623] animate-spin" />
+              <Sun className="w-10 h-10 text-brand-primary animate-spin" />
             </div>
           ) : (
             <CalendarGrid
@@ -270,7 +271,7 @@ export default function CalendarPage() {
             : null;
           return (
             <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={closeDetail}>
-              <div className="bg-[#1A1A1A] rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-white/10" onClick={e => e.stopPropagation()}>
+              <div className="bg-brand-secondary-hover rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-white/10" onClick={e => e.stopPropagation()}>
 
                 {/* Modal-Header */}
                 <div className={`${cfg.bg} ${cfg.border} border-b px-6 py-5 flex items-start justify-between gap-4`}>
@@ -395,7 +396,7 @@ export default function CalendarPage() {
                     </div>
                     <div className="px-6 pb-5 flex gap-2">
                       <button type="submit" disabled={isSaving}
-                        className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#F5A623] text-[#1A3A5C] text-sm font-bold hover:bg-[#E09000] disabled:opacity-60 transition-colors">
+                        className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-brand-primary text-brand-secondary text-sm font-bold hover:bg-brand-primary-hover disabled:opacity-60 transition-colors">
                         {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <RotateCcw className="w-4 h-4" />}
                         {isSaving ? 'Wird gespeichert…' : 'Termin verschieben'}
                       </button>
@@ -440,13 +441,13 @@ export default function CalendarPage() {
         {showCreate && (
           <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-4"
             onClick={() => { setShowCreate(false); setCreateForm(EMPTY_CREATE); }}>
-            <form className="bg-[#1A1A1A] rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-white/10"
+            <form className="bg-brand-secondary-hover rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-white/10"
               onClick={e => e.stopPropagation()} onSubmit={handleCreate}>
 
               <div className="border-b border-white/5 px-6 py-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#F5A623]/10 flex items-center justify-center">
-                    <Plus className="w-4 h-4 text-[#F5A623]" />
+                  <div className="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center">
+                    <Plus className="w-4 h-4 text-brand-primary" />
                   </div>
                   <h2 className="text-lg font-black text-white">Neuer Termin</h2>
                 </div>
@@ -521,7 +522,7 @@ export default function CalendarPage() {
                           onClick={() => setCreateForm(f => ({ ...f, customerMode: mode }))}
                           className={`flex-1 py-2 rounded-lg text-xs font-bold border transition-colors ${
                             createForm.customerMode === mode
-                              ? 'bg-[#F5A623] text-[#1A3A5C] border-[#F5A623]'
+                              ? 'bg-brand-primary text-brand-secondary border-brand-primary'
                               : 'bg-[#0F0F0F] text-gray-500 border-white/10 hover:border-white/20'
                           }`}>
                           {labels[mode]}
@@ -566,7 +567,7 @@ export default function CalendarPage() {
 
               <div className="px-6 pb-5 flex gap-2">
                 <button type="submit" disabled={isSaving}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#F5A623] text-[#1A3A5C] text-sm font-bold hover:bg-[#E09000] disabled:opacity-60 transition-colors">
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-brand-primary text-brand-secondary text-sm font-bold hover:bg-brand-primary-hover disabled:opacity-60 transition-colors">
                   {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
                   {isSaving ? 'Wird angelegt…' : 'Termin anlegen'}
                 </button>

@@ -1,3 +1,4 @@
+import { COLORS } from '../lib/theme';
 import { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import {
@@ -48,7 +49,7 @@ function InfoRow({ icon, label, value }: InfoRowProps) {
 interface StatCardProps { label: string; value: string; sub?: string; icon: React.ReactNode; accent?: string }
 function StatCard({ label, value, sub, icon, accent }: StatCardProps) {
   return (
-    <div className="bg-[#1A1A1A] rounded-xl p-4 flex flex-col gap-1 border border-white/5">
+    <div className="bg-brand-secondary-hover rounded-xl p-4 flex flex-col gap-1 border border-white/5">
       <div className={`flex items-center gap-1.5 mb-1 ${accent ?? 'text-gray-500'}`}>
         {icon}
         <span className="text-[10px] font-bold uppercase tracking-widest">{label}</span>
@@ -84,12 +85,12 @@ export default function ProjectDetailsPage() {
 
           {isLoading && (
             <div className="flex justify-center py-24">
-              <Sun className="w-10 h-10 text-[#F5A623] animate-spin" />
+              <Sun className="w-10 h-10 text-brand-primary animate-spin" />
             </div>
           )}
 
           {!isLoading && !project && (
-            <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-12 text-center text-gray-500">
+            <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-12 text-center text-gray-500">
               <p className="font-semibold">Noch kein Projekt vorhanden.</p>
             </div>
           )}
@@ -139,7 +140,7 @@ export default function ProjectDetailsPage() {
                     <button
                       onClick={advancePhase}
                       disabled={isSaving}
-                      className="bg-[#F5A623] text-[#1A3A5C] font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-[#E09000] transition-colors flex items-center gap-2 shadow-sm disabled:opacity-60"
+                      className="bg-brand-primary text-brand-secondary font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-brand-primary-hover transition-colors flex items-center gap-2 shadow-sm disabled:opacity-60"
                     >
                       {isSaving ? <Sun className="w-4 h-4 animate-spin" /> : <ArrowRight className="w-4 h-4" />}
                       Phase abschließen
@@ -153,7 +154,7 @@ export default function ProjectDetailsPage() {
                 <div className="lg:col-span-5 flex flex-col gap-8">
                   {/* Kundendaten */}
                   {customer && (
-                    <section className="bg-[#1A1A1A] rounded-xl border border-white/5 p-6">
+                    <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                       <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Kundendaten</h2>
                       <div className="space-y-3">
                         <InfoRow
@@ -165,7 +166,7 @@ export default function ProjectDetailsPage() {
                           <InfoRow
                             icon={<Phone className="w-4 h-4 text-gray-400" />}
                             label="Telefon"
-                            value={<a href={`tel:${customer.phone}`} className="hover:text-[#F5A623] transition-colors">{customer.phone}</a>}
+                            value={<a href={`tel:${customer.phone}`} className="hover:text-brand-primary transition-colors">{customer.phone}</a>}
                           />
                         )}
                         {customer.zip && (
@@ -180,7 +181,7 @@ export default function ProjectDetailsPage() {
                   )}
 
                   {/* Konfiguration */}
-                  <section className="bg-[#1A1A1A] rounded-xl border border-white/5 p-6">
+                  <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                     <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Anlagenkonfiguration</h2>
                     <div className="grid grid-cols-2 gap-3">
                       <StatCard label="Anlagengröße" value={project.kwp != null ? `${project.kwp} kWp` : '—'} icon={<Zap className="w-3.5 h-3.5" />} accent="text-yellow-400" />
@@ -196,7 +197,7 @@ export default function ProjectDetailsPage() {
                 {/* Rechte Spalte */}
                 <div className="lg:col-span-7 flex flex-col gap-8">
                   {/* Status */}
-                  <section className="bg-[#1A1A1A] rounded-xl border border-white/5 p-6">
+                  <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                     <h2 className="text-lg font-bold text-white mb-4">Projektstatus</h2>
                     <div className="relative">
                       <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">
@@ -206,7 +207,7 @@ export default function ProjectDetailsPage() {
                         <select
                           value={project.status}
                           onChange={(e) => changeStatus(e.target.value as Project['status'])}
-                          className="w-full appearance-none bg-[#0F0F0F] border border-white/10 text-white font-bold text-sm rounded-xl pl-4 pr-10 py-3 focus:outline-none focus:ring-2 focus:ring-[#F5A623]/30"
+                          className="w-full appearance-none bg-[#0F0F0F] border border-white/10 text-white font-bold text-sm rounded-xl pl-4 pr-10 py-3 focus:outline-none focus:ring-2 focus:ring-brand-primary/30"
                         >
                           <option value="angebot">Angebot erstellt</option>
                           <option value="planung">In Planung</option>
@@ -238,8 +239,8 @@ export default function ProjectDetailsPage() {
                   )}
 
                   {/* Dokumente */}
-                  <section className="bg-[#1A1A1A] rounded-xl border-2 border-dashed border-white/5 p-8 flex flex-col justify-center items-center text-center">
-                    <div className="w-12 h-12 rounded-full bg-[#252525] flex items-center justify-center text-[#F5A623] mb-4">
+                  <section className="bg-brand-secondary-hover rounded-xl border-2 border-dashed border-white/5 p-8 flex flex-col justify-center items-center text-center">
+                    <div className="w-12 h-12 rounded-full bg-[#252525] flex items-center justify-center text-brand-primary mb-4">
                       <UploadCloud className="w-6 h-6" />
                     </div>
                     <h3 className="text-sm font-bold text-white mb-1">Dokumente hochladen</h3>
@@ -250,13 +251,13 @@ export default function ProjectDetailsPage() {
                   </section>
 
                   {/* Notizen */}
-                  <section className="bg-[#1A1A1A] rounded-xl border border-white/5 p-6">
+                  <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                     <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2 border-b border-white/5 pb-4">
                       <FileText className="w-5 h-5 text-gray-500" />
                       Interne Notizen
                     </h2>
                     <textarea
-                      className="w-full h-32 bg-[#0F0F0F] border border-white/10 rounded-xl p-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#F5A623]/30 resize-none placeholder:text-gray-600"
+                      className="w-full h-32 bg-[#0F0F0F] border border-white/10 rounded-xl p-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-primary/30 resize-none placeholder:text-gray-600"
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
                       placeholder="Notizen zur Dachbeschaffenheit, Kundenwünschen oder Besonderheiten..."
@@ -265,7 +266,7 @@ export default function ProjectDetailsPage() {
                       <button
                         onClick={() => saveNotes(notes)}
                         disabled={isSaving || notes === (project.notes ?? '')}
-                        className="bg-[#F5A623] text-[#1A3A5C] font-bold text-sm px-6 py-2 rounded-xl hover:bg-[#E09000] transition-colors disabled:opacity-40 flex items-center gap-2"
+                        className="bg-brand-primary text-brand-secondary font-bold text-sm px-6 py-2 rounded-xl hover:bg-brand-primary-hover transition-colors disabled:opacity-40 flex items-center gap-2"
                       >
                         {isSaving && <Sun className="w-4 h-4 animate-spin" />}
                         Notizen speichern
@@ -275,7 +276,7 @@ export default function ProjectDetailsPage() {
 
                   {/* Zahlungsstatus */}
                   {(project.investment ?? 0) > 0 && (
-                    <section className="bg-[#1A1A1A] rounded-xl border border-white/5 p-6">
+                    <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                       <h2 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
                         <CheckCircle className="w-5 h-5 text-green-400" />
                         Zahlungsstatus
@@ -329,9 +330,9 @@ export default function ProjectDetailsPage() {
                   )}
 
                   {/* Rechnungen */}
-                  <section className="bg-[#1A1A1A] rounded-xl border border-white/5 p-6">
+                  <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                     <h2 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
-                      <Receipt className="w-5 h-5 text-[#F5A623]" />
+                      <Receipt className="w-5 h-5 text-brand-primary" />
                       Rechnungen generieren
                     </h2>
                     <p className="text-xs text-gray-500 mb-4">3-Raten-Zahlungsplan · 0 % MwSt. gem. § 12 Abs. 3 UStG</p>
@@ -346,13 +347,13 @@ export default function ProjectDetailsPage() {
                         return (
                           <button
                             key={type}
-                            className="flex items-center justify-between w-full border border-white/10 hover:border-[#F5A623]/30 text-white font-medium text-sm px-4 py-3 rounded-xl transition-colors group bg-[#0F0F0F]"
+                            className="flex items-center justify-between w-full border border-white/10 hover:border-brand-primary/30 text-white font-medium text-sm px-4 py-3 rounded-xl transition-colors group bg-[#0F0F0F]"
                           >
                             <span className="flex items-center gap-2">
-                              <FileText className="w-4 h-4 text-[#F5A623]" />
+                              <FileText className="w-4 h-4 text-brand-primary" />
                               {labels[type - 1]}
                             </span>
-                            <span className="flex items-center gap-2 text-gray-500 group-hover:text-[#F5A623] transition-colors">
+                            <span className="flex items-center gap-2 text-gray-500 group-hover:text-brand-primary transition-colors">
                               <span className="font-bold text-white">{amounts[type - 1].toLocaleString('de-DE')} €</span>
                               <Download className="w-3.5 h-3.5" />
                               PDF

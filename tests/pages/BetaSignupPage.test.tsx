@@ -50,10 +50,10 @@ describe('BetaSignupPage', () => {
     expect(loginLink).toBeInTheDocument();
   });
 
-  it('zeigt den Voltify-Logo-Button', () => {
+  it('zeigt das Solvary-Logo', () => {
     render(<BetaSignupPage />);
 
-    expect(screen.getByText('Voltify')).toBeInTheDocument();
+    expect(screen.getByAltText('Solvary')).toBeInTheDocument();
   });
 
   it('zeigt Beta-Vorteile auf der rechten Seite', () => {

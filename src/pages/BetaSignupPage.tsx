@@ -1,31 +1,45 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Zap, CheckCircle, ArrowRight, AlertCircle, Phone, Mail, Building2, MapPin, MessageSquare, User, X } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import { BETA, BETA_COPY } from '../lib/betaConfig';
-import SEO from '../components/seo/SEO';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Zap,
+  CheckCircle,
+  ArrowRight,
+  AlertCircle,
+  Phone,
+  Mail,
+  Building2,
+  MapPin,
+  MessageSquare,
+  User,
+  X,
+} from "lucide-react";
+import { supabase } from "../lib/supabase";
+import { BETA, BETA_COPY } from "../lib/betaConfig";
+import { LOGO_PATH } from "../lib/branding";
+import { COLORS } from "../lib/theme";
+import SEO from "../components/seo/SEO";
 
 export default function BetaSignupPage() {
   const navigate = useNavigate();
 
-  const [companyName, setCompanyName] = useState('');
-  const [contactName, setContactName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [zip, setZip] = useState('');
-  const [message, setMessage] = useState('');
+  const [companyName, setCompanyName] = useState("");
+  const [contactName, setContactName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [zip, setZip] = useState("");
+  const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsSubmitting(true);
 
     try {
-      const { error: dbError } = await supabase.from('beta_requests').insert({
+      const { error: dbError } = await supabase.from("beta_requests").insert({
         company_name: companyName.trim(),
         contact_name: contactName.trim(),
         email: email.trim(),
@@ -37,14 +51,29 @@ export default function BetaSignupPage() {
       if (dbError) throw new Error(dbError.message);
 
       // E-Mail-Benachrichtigung fire-and-forget
-      supabase.functions.invoke('notify-beta', {
-        body: { company_name: companyName, contact_name: contactName, email, phone, zip, message },
-      }).catch(() => {/* ignorieren — Daten sind in DB */});
+      supabase.functions
+        .invoke("notify-beta", {
+          body: {
+            company_name: companyName,
+            contact_name: contactName,
+            email,
+            phone,
+            zip,
+            message,
+          },
+        })
+        .catch(() => {
+          /* ignorieren — Daten sind in DB */
+        });
 
       // Calendly Modal öffnen statt success-screen
       setShowCalendly(true);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Etwas ist schiefgelaufen. Bitte versuche es erneut.');
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -54,8 +83,8 @@ export default function BetaSignupPage() {
   useEffect(() => {
     if (!showCalendly) return;
 
-    const script = document.createElement('script');
-    script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
     script.async = true;
     document.body.appendChild(script);
 
@@ -68,16 +97,21 @@ export default function BetaSignupPage() {
 
   return (
     <>
-      <SEO title="Beta-Programm" description="Werde einer der ersten Voltify-Beta-Partner. Kostenloser Zugang, persönliches Onboarding." canonical="/beta" noindex />
+      <SEO
+        title="Beta-Programm"
+        description="Werde einer der ersten Voltify-Beta-Partner. Kostenloser Zugang, persönliches Onboarding."
+        canonical="/beta"
+        noindex
+      />
       <div className="min-h-screen flex">
         {/* LEFT — Beta Formular */}
         <div className="w-full lg:w-[45%] xl:w-[40%] flex flex-col justify-between p-8 md:p-12 lg:p-16 bg-white">
           {/* Logo */}
-          <button onClick={() => navigate('/')} className="flex items-center gap-2 mb-12 cursor-pointer">
-            <div className="w-8 h-8 rounded-full bg-[#F5A623] flex items-center justify-center">
-              <Zap className="w-4 h-4 text-[#1A3A5C]" fill="currentColor" />
-            </div>
-            <span className="text-lg font-medium text-[#1A3A5C]">Voltify</span>
+          <button
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 mb-12 cursor-pointer"
+          >
+            <img src={LOGO_PATH} alt="Solvary" className="h-7 w-auto" />
           </button>
 
           {/* Form */}
@@ -87,24 +121,40 @@ export default function BetaSignupPage() {
                 <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center">
                   <CheckCircle className="w-8 h-8 text-green-500" />
                 </div>
-                <h2 className="text-2xl font-bold text-[#1A3A5C]">Dankeschön für die Anfrage!</h2>
+                <h2 className="text-2xl font-bold text-brand-secondary">
+                  Dankeschön für die Anfrage!
+                </h2>
                 <p className="text-gray-500 text-sm max-w-xs leading-relaxed">
                   Wir werden uns in Kürze bei Ihnen telefonisch melden.
                 </p>
                 <button
-                  onClick={() => navigate('/')}
-                  className="mt-4 bg-[#1A3A5C] text-white font-medium px-6 py-3 rounded-xl hover:bg-[#0F2440] transition-colors"
+                  onClick={() => navigate("/")}
+                  className="mt-4 bg-brand-secondary text-white font-medium px-6 py-3 rounded-xl hover:bg-brand-secondary-hover transition-colors"
                 >
                   Zurück zur Startseite
                 </button>
               </div>
             ) : (
               <>
-                <span className="inline-flex items-center gap-1.5 bg-[#F5A623]/10 text-[#F5A623] text-xs font-bold px-3 py-1 rounded-full mb-3">
+                <span className="inline-flex items-center gap-1.5 bg-brand-primary/10 text-brand-secondary text-xs font-bold px-3 py-1 rounded-full mb-3">
                   🚀 {BETA_COPY.spotsBadge}
                 </span>
-                <h1 className="text-3xl md:text-4xl font-semibold text-[#1A3A5C] mb-3">Jetzt Beta-Partner werden</h1>
-                <p className="text-gray-500 text-sm mb-8">Hinterlasse deine Kontaktdaten — wir melden uns persönlich bei dir. Als Beta-Partner sicherst du dir die nächsten {BETA.freeMonths} Monate <span className="text-[#F5A623] font-bold">kostenlos</span> und danach dauerhaft <span className="text-[#F5A623] font-bold">{BETA.discountPercent}% Gründerrabatt</span>.</p>
+                <h1 className="text-3xl md:text-4xl font-semibold text-brand-secondary mb-3">
+                  Jetzt Beta-Partner werden
+                </h1>
+                <p className="text-gray-500 text-sm mb-8">
+                  Hinterlasse deine Kontaktdaten — wir melden uns persönlich bei
+                  dir. Als Beta-Partner sicherst du dir die nächsten{" "}
+                  {BETA.freeMonths} Monate{" "}
+                  <span className="text-brand-secondary font-bold">
+                    kostenlos
+                  </span>{" "}
+                  und danach dauerhaft{" "}
+                  <span className="text-brand-secondary font-bold">
+                    {BETA.discountPercent}% Gründerrabatt
+                  </span>
+                  .
+                </p>
 
                 {error && (
                   <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm mb-6">
@@ -116,30 +166,34 @@ export default function BetaSignupPage() {
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                   <div className="grid grid-cols-2 gap-3">
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-medium text-gray-700">Firma *</label>
+                      <label className="text-xs font-medium text-gray-700">
+                        Firma *
+                      </label>
                       <div className="relative">
                         <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
                           type="text"
                           required
                           value={companyName}
-                          onChange={e => setCompanyName(e.target.value)}
+                          onChange={(e) => setCompanyName(e.target.value)}
                           placeholder="Mustermann GmbH"
-                          className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C] transition-all"
+                          className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                         />
                       </div>
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-medium text-gray-700">Name *</label>
+                      <label className="text-xs font-medium text-gray-700">
+                        Name *
+                      </label>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
                           type="text"
                           required
                           value={contactName}
-                          onChange={e => setContactName(e.target.value)}
+                          onChange={(e) => setContactName(e.target.value)}
                           placeholder="Max Mustermann"
-                          className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C] transition-all"
+                          className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                         />
                       </div>
                     </div>
@@ -147,45 +201,52 @@ export default function BetaSignupPage() {
 
                   <div className="flex flex-col gap-1.5">
                     <label className="text-xs font-medium text-gray-700">
-                      Handynummer <span className="text-[#F5A623] font-bold">— für Rückruf (empfohlen)</span>
+                      Handynummer{" "}
+                      <span className="text-brand-secondary font-bold">
+                        — für Rückruf (empfohlen)
+                      </span>
                     </label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#F5A623]" />
+                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-primary" />
                       <input
                         type="tel"
                         value={phone}
-                        onChange={e => setPhone(e.target.value)}
+                        onChange={(e) => setPhone(e.target.value)}
                         placeholder="+49 171 1234567"
-                        className="w-full border-2 border-[#F5A623]/30 rounded-xl pl-9 pr-3 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#F5A623] focus:ring-1 focus:ring-[#F5A623] transition-all"
+                        className="w-full border-2 border-brand-primary/30 rounded-xl pl-9 pr-3 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-medium text-gray-700">E-Mail *</label>
+                      <label className="text-xs font-medium text-gray-700">
+                        E-Mail *
+                      </label>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
                           type="email"
                           required
                           value={email}
-                          onChange={e => setEmail(e.target.value)}
+                          onChange={(e) => setEmail(e.target.value)}
                           placeholder="max@firma.de"
-                          className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C] transition-all"
+                          className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                         />
                       </div>
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-medium text-gray-700">PLZ</label>
+                      <label className="text-xs font-medium text-gray-700">
+                        PLZ
+                      </label>
                       <div className="relative">
                         <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
                           type="text"
                           value={zip}
-                          onChange={e => setZip(e.target.value)}
+                          onChange={(e) => setZip(e.target.value)}
                           placeholder="12345"
-                          className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C] transition-all"
+                          className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                         />
                       </div>
                     </div>
@@ -193,16 +254,19 @@ export default function BetaSignupPage() {
 
                   <div className="flex flex-col gap-1.5">
                     <label className="text-xs font-medium text-gray-700">
-                      Kurze Nachricht <span className="font-normal text-gray-400">(optional)</span>
+                      Kurze Nachricht{" "}
+                      <span className="font-normal text-gray-400">
+                        (optional)
+                      </span>
                     </label>
                     <div className="relative">
                       <MessageSquare className="absolute left-3 top-3.5 w-4 h-4 text-gray-400" />
                       <textarea
                         value={message}
-                        onChange={e => setMessage(e.target.value)}
+                        onChange={(e) => setMessage(e.target.value)}
                         placeholder="z.B. Wie viele Leads habt ihr pro Monat?"
                         rows={3}
-                        className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-3 text-sm text-[#1A3A5C] placeholder:text-gray-400 focus:outline-none focus:border-[#1A3A5C] focus:ring-1 focus:ring-[#1A3A5C] transition-all resize-none"
+                        className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all resize-none"
                       />
                     </div>
                   </div>
@@ -210,7 +274,7 @@ export default function BetaSignupPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-[#F5A623] text-[#1A3A5C] font-medium py-3 rounded-xl hover:bg-[#E09000] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full bg-brand-secondary text-white font-bold py-3.5 rounded-full hover:bg-brand-secondary-hover transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {isSubmitting ? (
                       <Zap className="w-4 h-4 animate-spin" />
@@ -232,35 +296,66 @@ export default function BetaSignupPage() {
 
           {/* Bottom */}
           <p className="text-center text-sm text-gray-500 mt-8">
-            Bereits registriert? <button onClick={() => navigate('/login')} className="text-[#1A3A5C] font-medium hover:underline cursor-pointer">Jetzt anmelden.</button>
+            Bereits registriert?{" "}
+            <button
+              onClick={() => navigate("/login")}
+              className="text-brand-secondary font-medium hover:underline cursor-pointer"
+            >
+              Jetzt anmelden.
+            </button>
           </p>
         </div>
 
         {/* RIGHT — Beta Benefits */}
-        <div className="hidden lg:flex lg:w-[55%] xl:w-[60%] bg-gradient-to-br from-[#1A3A5C] via-[#0F2440] to-black items-center justify-center p-12 relative overflow-hidden">
+        <div className="hidden lg:flex lg:w-[55%] xl:w-[60%] bg-gradient-to-br from-brand-secondary via-brand-secondary-hover to-black items-center justify-center p-12 relative overflow-hidden">
           {/* Decorative circles */}
-          <div className="absolute top-20 right-20 w-72 h-72 bg-[#F5A623]/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 left-20 w-96 h-96 bg-[#1A3A5C]/40 rounded-full blur-3xl" />
+          <div className="absolute top-20 right-20 w-72 h-72 bg-brand-primary/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 left-20 w-96 h-96 bg-brand-secondary/40 rounded-full blur-3xl" />
 
           <div className="relative max-w-[540px] w-full">
             {/* Tagline */}
-            <div className="inline-flex items-center gap-2 bg-[#F5A623]/20 border border-[#F5A623]/30 rounded-full px-3 py-1 text-xs font-bold text-[#F5A623] uppercase tracking-widest mb-6">
+            <div className="inline-flex items-center gap-2 bg-brand-primary/20 border border-brand-primary/30 rounded-full px-3 py-1 text-xs font-bold text-brand-primary uppercase tracking-widest mb-6">
               ⭐ Beta-Programm — Nur {BETA.spotsLeft} Plätze
             </div>
             <h2 className="text-3xl font-semibold text-white mb-2 leading-snug">
-              Werde einer der ersten<br />{BETA.spotsLeft} Voltify-Partner
+              Werde einer der ersten
+              <br />
+              {BETA.spotsLeft} Voltify-Partner
             </h2>
-            <p className="text-white/60 text-sm mb-8">{BETA.freeMonths} Monate kostenlos testen. Danach {BETA.discountPercent}% dauerhafter Rabatt. Kein Setup-Aufwand — nur ein Demo-Call mit uns.</p>
+            <p className="text-white/60 text-sm mb-8">
+              {BETA.freeMonths} Monate kostenlos testen. Danach{" "}
+              {BETA.discountPercent}% dauerhafter Rabatt. Kein Setup-Aufwand —
+              nur ein Demo-Call mit uns.
+            </p>
 
             {/* Benefits Cards */}
             <div className="space-y-4">
               {[
-                { icon: '🎁', title: '3 Monate kostenlos', text: 'Vollständiger Zugriff ohne Kreditkarte — null Risiko.' },
-                { icon: '💰', title: '-30% Gründerrabatt', text: 'Dauerhaft auf jeden Tarif — auch nach der Beta-Phase.' },
-                { icon: '🚀', title: 'Persönliches Demo', text: '30-Min Live-Demo. Wir zeigen dir die volle Power von Voltify.' },
-                { icon: '⭐', title: 'Direkter Einfluss', text: 'Dein Feedback formt das Produkt. Werde Case-Study.' },
-              ].map(item => (
-                <div key={item.title} className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10 flex items-start gap-4">
+                {
+                  icon: "🎁",
+                  title: "3 Monate kostenlos",
+                  text: "Vollständiger Zugriff ohne Kreditkarte — null Risiko.",
+                },
+                {
+                  icon: "💰",
+                  title: "-30% Gründerrabatt",
+                  text: "Dauerhaft auf jeden Tarif — auch nach der Beta-Phase.",
+                },
+                {
+                  icon: "🚀",
+                  title: "Persönliches Demo",
+                  text: "30-Min Live-Demo. Wir zeigen dir die volle Power von Voltify.",
+                },
+                {
+                  icon: "⭐",
+                  title: "Direkter Einfluss",
+                  text: "Dein Feedback formt das Produkt. Werde Case-Study.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10 flex items-start gap-4"
+                >
                   <span className="text-2xl">{item.icon}</span>
                   <div>
                     <p className="font-bold text-white text-sm">{item.title}</p>
@@ -277,7 +372,7 @@ export default function BetaSignupPage() {
                 <p className="text-[10px] text-white/50">Kostenlos testen</p>
               </div>
               <div className="bg-white/10 rounded-xl p-3 text-center">
-                <p className="text-2xl font-bold text-[#F5A623]">-30%</p>
+                <p className="text-2xl font-bold text-brand-primary">-30%</p>
                 <p className="text-[10px] text-white/50">Dauerhafter Rabatt</p>
               </div>
               <div className="bg-white/10 rounded-xl p-3 text-center">
@@ -295,8 +390,12 @@ export default function BetaSignupPage() {
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200">
                 <div>
-                  <h2 className="text-xl font-bold text-[#1A3A5C]">Demo-Call buchen</h2>
-                  <p className="text-sm text-gray-500 mt-1">Wähle einen Termin für dein 30-Min Demo-Gespräch</p>
+                  <h2 className="text-xl font-bold text-brand-secondary">
+                    Demo-Call buchen
+                  </h2>
+                  <p className="text-sm text-gray-500 mt-1">
+                    Wähle einen Termin für dein 30-Min Demo-Gespräch
+                  </p>
                 </div>
                 <button
                   onClick={() => setShowCalendly(false)}
@@ -312,17 +411,18 @@ export default function BetaSignupPage() {
                 <div
                   className="calendly-inline-widget"
                   data-url={BETA.calendlyUrl}
-                  style={{ minWidth: '320px', height: '630px' }}
+                  style={{ minWidth: "320px", height: "630px" }}
                 />
               </div>
 
               {/* Footer Info */}
-              <div className="border-t border-gray-200 bg-gradient-to-r from-[#F5A623]/5 to-[#1A3A5C]/5 p-4 text-center">
+              <div className="border-t border-gray-200 bg-gradient-to-r from-brand-primary/5 to-brand-secondary/5 p-4 text-center">
                 <p className="text-xs text-gray-600 font-medium">
                   ✓ Nach Terminbuchung: Bestätigung per Email mit Zoom-Link
                 </p>
                 <p className="text-xs text-gray-500 mt-1">
-                  Die {BETA.freeMonths} Monate kostenlos starten sofort nach der Demo
+                  Die {BETA.freeMonths} Monate kostenlos starten sofort nach der
+                  Demo
                 </p>
               </div>
             </div>

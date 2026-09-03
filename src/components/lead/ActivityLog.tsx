@@ -65,12 +65,12 @@ export default function ActivityLog({ lead, userName }: Props) {
           onChange={e => setNote(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && addNote()}
           placeholder="Notiz hinzufügen…"
-          className="flex-1 bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 placeholder:text-gray-600 focus:ring-1 focus:ring-[#F5A623] outline-none"
+          className="flex-1 bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 placeholder:text-gray-600 focus:ring-1 focus:ring-brand-primary outline-none"
         />
         <button
           onClick={addNote}
           disabled={isSaving || !note.trim()}
-          className="bg-[#F5A623] hover:bg-[#E09000] text-[#1A3A5C] font-bold text-xs px-3 py-2 rounded-lg transition-colors disabled:opacity-50"
+          className="bg-brand-primary hover:bg-brand-primary-hover text-brand-secondary font-bold text-xs px-3 py-2 rounded-lg transition-colors disabled:opacity-50"
         >
           {isSaving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : 'Speichern'}
         </button>
