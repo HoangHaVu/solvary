@@ -47,6 +47,7 @@ Vercel → Deployments → vorheriges Prod-Deployment (`9197864`) → „Promote
 - **Supabase-Projekt** (`Solar Konfigurator` → `Solvary`): **nur im Dashboard** (Settings → General → Project name) — keine MCP/API-Unterstützung. Ref `ecsqbsgbfmvqaqnryvwf` + URL bleiben, reines Label.
 - **Lokaler Ordner** `~/myprojects/Voltify` → `~/myprojects/Solvary`: weiterhin offen, separater Schritt (`tasks-VOLTIFY.md:52`).
 - **www.solvary.de**: funktioniert (User hat www als connected domain + Redirect ergänzt).
+- **Favicon** (Commit `9457dab`): `public/favicon.{ico,png}`, `favicon-{16,32}x32.png`, `apple-touch-icon.png` (Solvary-S-Mark aus `~/Documents/Vu Studio/Projects/Solvary/Logo/Logo Icon.png`, transparenter Hintergrund), `<link>`-Tags + `<meta name="theme-color" content="#FAEE00">` in `index.html`. Live auf `solvary.de` verifiziert (korrekte content-types).
 
 ## Session 2026-09-03 — AGB hell + Firmierung
 

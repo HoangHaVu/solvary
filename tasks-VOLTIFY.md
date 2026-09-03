@@ -1,4 +1,5 @@
 # Voltify — Tasks & Roadmap
+
 <!-- Zuletzt aktualisiert: 2026-06-29 — DSGVO-Datenexport (Art. 20) deployed; Rebrand-Plan Voltify→Solvary dokumentiert -->
 
 ---
@@ -11,6 +12,7 @@
 > **Empfohlene Reihenfolge:** Phase 1 + 9 → 3 → 6 → (parallel) 4 → 5 → 7 → zuletzt 8.
 
 ### Phase 1 — 🟢 Anzeige-Strings im Code (gefahrlos, Hauptblock)
+
 - [ ] SEO + Titel: `src/components/seo/SEO.tsx` (`SITE_NAME`, `DEFAULT_DESCRIPTION`) + `index.html` `<title>`
 - [ ] Default-Markenname: `useTenantBranding.ts` (`VOLTIFY_DEFAULTS.firmenname`) + Fallbacks `'Voltify Solar'` in `AdminDashboard`, `AdminSettings`, `LeadDetailsPage`, `OfferBuilderPage`, `OfferPreviewCard`; `'Voltify'` in `Step0_EmailGate`, `Step8_Contact`
 - [ ] Marketing/Landing: `LandingPage`, `Hero`, `Header`, `Footer`, `About`, `News` (3× author), `Dashboard`, `Register`, `Login`, `PricingPage`, `SolutionCheck`, `BetaSignupPage`, `DemoBanner`, `ExitIntentModal`, `FloatingBetaCTA`
@@ -18,6 +20,7 @@
 - [ ] „Powered by Voltify" → „Powered by Solvary": Anzeige in `Configurator.tsx` + `Step0_EmailGate.tsx`
 
 ### Phase 2 — 🟡 Identifier / Keys (bewusst entscheiden, nicht blind ersetzen)
+
 - [ ] localStorage-Keys (`voltify_settings_v1`, `voltify_funnel_session/source`, `voltify_exit_intent_shown`) — alte Werte verwaisen (harmlos bei MVP), jetzt mitziehen solange wenig Nutzer
 - [ ] `voltify:resize` postMessage (`useEmbedAutoResize.ts`) — NUR zusammen mit Embed-Snippet ändern, sonst bricht Auto-Resize
 - [ ] `X-Voltify-Signature` Header (`WebhookSettingsSection`, `InstallerSettings`) — bricht externe Webhook-Empfänger → mit Scoutly/Make.com abstimmen oder vorerst lassen
@@ -25,11 +28,13 @@
 - [ ] `poweredByVoltify` (TS-Feld + in `company_settings` JSONB gespeichert) — nur Anzeige-Text ändern; Feldname lassen (Umbenennung = JSONB-Daten-Migration)
 
 ### Phase 3 — 🟡 Edge Functions / E-Mail-Versand
+
 - [ ] Absendername `Voltify <…>` → `Solvary <noreply@solvary.de>` in `send-offer`, `notify-signature`, `notify-partner`, `notify-agency`, `notify-beta`, `notify-payment-due`, `notify-offer-expiry`, `partner-respond`
 - [ ] Hardcodierte Links: `kontakt@voltify.de` → `kontakt@solvary.de`, `voltify.de/admin`, `APP_URL`-Default `voltify-app.vercel.app` → auf Env-Var `APP_URL` umstellen
 - [ ] Functions nach Änderung neu deployen
 
 ### Phase 4 — 🔴 Infrastruktur (manuell, externe Abhängigkeiten)
+
 - [ ] DNS `solvary.de` → Vercel verbinden + als Custom Domain im Projekt hinzufügen
 - [ ] Resend: Domain `solvary.de` verifizieren (SPF/DKIM/DMARC), `noreply@` + `kontakt@solvary.de`
 - [ ] Google-Maps-API-Key: HTTP-Referrer-Restriction um `solvary.de` + `*.solvary.de` ergänzen (sonst Karte tot!)
@@ -37,21 +42,26 @@
 - [ ] Vercel-Projekt ggf. umbenennen; `voltify-app.vercel.app`-Referenzen ablösen
 
 ### Phase 5 — 🔵 Assets
-- [ ] Favicon anlegen + in `index.html` einbinden (existiert noch nicht)
+
+- [x] Favicon anlegen + in `index.html` einbinden — `public/favicon.{ico,png}` + `favicon-{16,32}x32.png` + `apple-touch-icon.png` (Solvary-S-Mark, aus `Logo Icon.png`), `<link>`-Tags + `theme-color` `#FAEE00` (Commit `9457dab`)
 - [ ] OG-Image für SEO/Social-Preview
 - [ ] (Optional) echtes Logo als SVG statt Text in Header/Footer/`Step0_EmailGate`
 
 ### Phase 6 — 🟡 DB-Inhalt
+
 - [ ] `company_settings` / `branding` JSONB der Plattform-Eigentümer-Accounts auf „Solvary" prüfen/setzen (Test-Accounts + Haupt-Account). Tenant-Accounts (z.B. sunwinwin) NICHT anfassen — eigenes Branding
 
 ### Phase 7 — 🔵 Rechtstexte (Platzhalter → echt)
+
 - [ ] `Impressum.tsx`, `AGB.tsx` (22×), `Datenschutz.tsx`: „Voltify GmbH" → echter Firmenname/Rechtsform — echte Firmendaten nötig (hängt mit DSGVO-Unterbau zusammen)
 
 ### Phase 8 — ⚪ Projektdateien / Ordner (eure Naming-Convention) — ZULETZT
+
 - [ ] Doku-Dateien umbenennen: `Voltify-DNA.md`, `Voltify-Mission.md`, `tasks-VOLTIFY.md`, `resume-point-VOLTIFY.md`, `AGENTS-VOLTIFY.md`, `docs/embed/voltify-embed.md` → `Solvary-*`
 - [ ] Ordner `myprojects/Voltify/` → `myprojects/Solvary/` (betrifft alle Pfade + globale Memory-Dateien) — separater, bewusster Schritt
 
 ### Phase 9 — 🟢 Tests grün halten (parallel zu Phase 1)
+
 - [ ] `Login.test.tsx` (Placeholder `info@voltify.com`), `BetaSignupPage.test.tsx`, `offers.test.ts` an geänderte Strings anpassen
 - [ ] `npm test` (121/121) + `npm run build` (0 TS-Fehler) nach jeder Phase
 
@@ -63,6 +73,7 @@
 > **Geschäftsmodell entschieden (2026-06-08):** Reines **Subscription-Modell**, gestaffelt nach Value-Metric **„Anzahl aktiver Partner"**. KEINE Take-Rate (Grund: „converted" ist ein manueller Partner-Klick → manipulierbar; Take-Rate würde Inkasso/Finanzdienstleister-Nähe erzeugen, die DNA 9.6 ausschließt). Take-Rate frühestens, wenn Conversion fälschungssicher getrackt wird (digitale Unterschrift) → Backlog.
 
 ### 📋 Executor-Briefing (Kimi/Sonnet — vor dem Start lesen)
+
 - **Stack:** React 19 + TS + Vite + Tailwind v3 + Supabase. Supabase-Ref: `ecsqbsgbfmvqaqnryvwf`.
 - **Invarianten:** `npm test` muss grün bleiben (aktuell 121/121), `npm run build` = 0 TS-Fehler. **Vor jedem Commit beides laufen lassen.**
 - **Schlüssel-Dateien:** `src/services/agency.ts` (Service-Layer), `src/pages/agency/*` (4 Pages), `supabase/migrations/039_partner_module.sql`, `supabase/functions/notify-partner|notify-agency`, `src/services/leads.ts` (`submitLead`), `src/lib/funnelTracking.ts` (sessionStorage-Muster).
@@ -75,6 +86,7 @@
 ### PHASE A — 🔴 KRITISCHE BLOCKER (zuerst! ohne diese funktioniert die Zielgruppe gar nicht)
 
 #### A1 — Partner-Portal über `SECURITY DEFINER`-RPCs entsperren ✅ DONE (2026-06-08)
+
 - **Problem:** `PartnerPortalPage.tsx` ruft `fetchPartnerByToken` / `fetchPartnerAssignments` / `updateAssignmentStatus` anonym auf → RLS blockt alles. Portal zeigt nichts, Annehmen/Ablehnen/Konvertieren tot.
 - **Datei:** neue Migration `040_partner_portal_rpc.sql` + Refactor in `src/services/agency.ts`.
 - **Was:** 3 RPCs anlegen (alle `SECURITY DEFINER`, `SET search_path = public`, Token als Argument, intern Token→Partner auflösen):
@@ -100,6 +112,7 @@
 - **✅ Akzeptanz:** Im Inkognito-Fenster `/partner/<token>` öffnen → Leads sichtbar, Annehmen/Ablehnen/„Auftrag erteilt" funktioniert und persistiert. Ungültiger Token → saubere Fehlermeldung.
 
 #### A2 — `agency_id` durch den Funnel verdrahten (Konfigurator → Lead → Router) ✅ DONE (2026-06-08)
+
 - **Problem:** `leads.agency_id` existiert im Schema, wird aber nirgends gesetzt. `LeadRouterPage` hat `setLeads([])` mit TODO → Agentur hat keine Leads zum Verteilen. Kern-Wertversprechen nicht angeschlossen.
 - **Mechanismus (Empfehlung):** Agentur identifiziert sich per **Slug** in der Konfigurator-URL: `…/konfigurator?a=<agency_slug>`. Spiegelt das bestehende `installer_id`-Muster in `submitLead`.
 - **Schritte:**
@@ -112,6 +125,7 @@
 - **✅ Akzeptanz:** Konfigurator-Lead über `?a=<slug>` abschließen → Lead erscheint in `LeadRouterPage` der zugehörigen Agentur und kann einem Partner zugewiesen werden.
 
 #### A3 — Commission-Automatik bei `converted` ✅ DONE (2026-06-08, im partner_update_assignment RPC)
+
 - **Problem:** `updateAssignmentStatus('converted')` erzeugt **keine** Commission. `createCommission` wird nie aufgerufen → `CommissionsPage` bleibt für immer leer. Percentage-Provision wird bei Zuweisung als `0` gesetzt, nie nachberechnet.
 - **Datei:** `src/services/agency.ts` → `updateAssignmentStatus` (oder besser serverseitig im A1-RPC `partner_update_assignment`, damit es nicht umgehbar ist).
 - **Was:** Beim Übergang auf `converted`:
@@ -128,25 +142,29 @@
 > Ziel: Agentur zahlt fixen Monatspreis, gestaffelt nach aktiver Partner-Anzahl. Volles Stripe-Schema (DNA Sektion 8) bleibt Phase 3 — hier nur das Nötigste fürs Gating.
 
 #### B1 — Minimal-Schema für Agency-Tier ✅ DONE (2026-06-18)
+
 - **Migration:** `profiles.agency_tier text CHECK (agency_tier IN ('start','pro','scale'))` + `profiles.agency_partner_limit int`. Default für neue `sales_agency`: `start` / Limit 5.
 - **✅ Akzeptanz:** Tier + Limit pro Agentur in DB hinterlegbar.
 
 #### B2 — Feature-Gating: Partner-Limit ✅ DONE (2026-06-18)
+
 - **Datei:** `src/services/agency.ts` `createPartner` + UI in `PartnersPage.tsx`.
 - **Was:** Vor Insert `COUNT(*) FROM partners WHERE agency_id = … AND is_active` gegen `agency_partner_limit` prüfen. Bei Erreichen: freundlicher Upgrade-Hinweis statt Insert.
 - **✅ Akzeptanz:** Agentur im `start`-Tier kann keinen 6. aktiven Partner anlegen, sieht Upgrade-CTA.
 
 #### B3 — PricingPage: Agency-Sektion ✅ DONE (2026-06-18)
+
 - **Datei:** `src/pages/PricingPage.tsx`.
 - **Was:** Eigener Block „Für Vertriebsagenturen" mit 3 Tiers (Richtwerte, final mit Hoang abstimmen):
-  | Tier | Richtpreis | Partner | Kern |
-  |------|-----------|---------|------|
-  | Agency Start | ~199 €/Mo | bis 5 | Routing manuell, Portale, Provisions-Tracking |
-  | Agency Pro | ~399 €/Mo | bis 25 | + Reporting/Scorecard |
-  | Agency Scale | ~799 €/Mo | unbegrenzt | + **PLZ-Auto-Routing** (C1) als Lockmittel |
+  | Tier         | Richtpreis | Partner    | Kern                                          |
+  | ------------ | ---------- | ---------- | --------------------------------------------- |
+  | Agency Start | ~199 €/Mo  | bis 5      | Routing manuell, Portale, Provisions-Tracking |
+  | Agency Pro   | ~399 €/Mo  | bis 25     | + Reporting/Scorecard                         |
+  | Agency Scale | ~799 €/Mo  | unbegrenzt | + **PLZ-Auto-Routing** (C1) als Lockmittel    |
 - **✅ Akzeptanz:** Agency-Tiers auf der Pricing-Seite sichtbar, Auto-Routing klar als Scale-Feature markiert.
 
 #### B4 — Stripe-Anbindung Agency [später, mit Phase 3]
+
 - **Hinweis:** Erst bauen, wenn erster zahlender Agentur-Pilot da ist. Hängt am noch nicht existierenden Subscription-Schema. **Nicht** Blocker für Pilot — Pilot kann manuell/Rechnung laufen.
 
 ---
@@ -155,27 +173,32 @@
 
 > Reihenfolge = Impact × Aufwand. C1 zuerst (höchster Hebel + Scale-Tier-Lockmittel).
 
-#### C1 — PLZ-basiertes Auto-Routing  ⭐ höchster Hebel ✅ DONE (2026-06-18)
+#### C1 — PLZ-basiertes Auto-Routing ⭐ höchster Hebel ✅ DONE (2026-06-18)
+
 - **Warum:** `partners.zip_regions` ist im Schema da, ungenutzt. Unterschied zwischen „5 Leads manuell" und „500 Leads/Monat automatisch". = Scale-Tier-Feature (B3).
 - **Was:** Bei neuem Agency-Lead passenden Partner per PLZ-Match vorschlagen (`zip_regions @> lead.zip-Präfix`), bei mehreren Round-Robin (fairste Verteilung). UI in `LeadRouterPage`: „Auto-Zuweisen"-Button + Vorschlag-Badge. Optional vollautomatisch bei Lead-Eingang (Edge Function / DB-Trigger).
 - **✅ Akzeptanz:** Lead mit PLZ X wird automatisch dem Partner mit passender Region vorgeschlagen/zugewiesen; bei mehreren rotiert die Zuweisung.
 
 #### C2 — Annahme-Frist + Auto-Reassignment
+
 - **Warum:** Status `expired` existiert, wird nie gesetzt → Leads bleiben liegen. Garantie „kein Lead verfällt" ist starkes Verkaufsargument.
 - **Was:** Cron (passt zu den geplanten `notify-*`-Crons): Assignments `pending` älter als z. B. 24 h → `expired` + automatisch an nächsten Partner (C1-Logik) reassignen + Agentur benachrichtigen.
 - **✅ Akzeptanz:** Unbeantworteter Lead nach Frist wird automatisch umverteilt, Agentur sieht das.
 
 #### C3 — Partner-Self-Onboarding (Einladungs-Link)
+
 - **Warum:** Aktuell nur manuelles CRUD. Für Agenturen mit 50+ Partnern unbrauchbar.
 - **Was:** Agentur generiert Einladungs-Link → Partner trägt Stammdaten + `zip_regions` selbst ein → landet als `is_active=false` zur Freigabe. (RPC `SECURITY DEFINER`, anon, analog A1.)
 - **✅ Akzeptanz:** Partner registriert sich selbst über Link, Agentur gibt frei.
 
 #### C4 — Lead-Exklusivität vs. Parallelverteilung (Geschäftsregel)
+
 - **Warum:** `UNIQUE(lead_id, partner_id)` erlaubt aktuell ungeplant denselben Lead an mehrere Partner. Exklusiv vs. „an N Partner parallel, first-come" ist ein monetarisierbares Feature (Exklusiv-Leads teurer).
 - **Was:** Einstellung pro Agentur/Lead: `exclusive` (1 Partner) oder `broadcast` (an N, erster der annimmt gewinnt, Rest auto-expired). Datenmodell + Router-Logik + Portal-Verhalten.
 - **✅ Akzeptanz:** Agentur kann Lead exklusiv oder als Broadcast verteilen; bei Broadcast gewinnt der erste Annehmer, Rest wird `expired`.
 
 #### C5 — Agentur-Reporting / Partner-Scorecard
+
 - **Warum:** `CommissionsPage` zeigt nur Summen. Agentur will Conversion-Rate **pro Partner**, Reaktionszeit, Pipeline-Wert. Rechtfertigt Pro-Tier-Preis, erhöht Stickiness.
 - **Was:** Neues Dashboard/Tab: pro Partner Annahmequote, Conversion-Rate, Ø Reaktionszeit, offene vs. konvertierte Provision. Aggregat-Query oder DB-View.
 - **✅ Akzeptanz:** Agentur sieht pro Partner aussagekräftige KPIs.
@@ -194,6 +217,7 @@
 ---
 
 ### ✅ Erledigt (Session 2026-06-09 — Agentur-Rollensystem + Kalender + Einstellungen + Team-Filter)
+
 - [x] **`agency_agent`-Rolle (Vertriebler)** — `UserRole` erweitert, `EMPLOYEE_ROLES`, `isSalesAgency()`, `isAgencyAdmin()`, `isAgencyAgent()`, `resolveAgencyId()`
 - [x] **`AgencyCalendarPage`** — Separater Kalender für Agenturen: 2 Typen (Beratung mit Lead, Partner-Meeting), ohne Installateur-Typen
 - [x] **`AgencyTeamPage`** — Vertriebler einladen (Supabase Auth + Profil-Update), Zugangsdaten mit Blur-Passwort + Copy-Buttons
@@ -207,11 +231,13 @@
 - [x] **Sidebar + Routing** — `AGENCY_AGENT_NAV`, `getNavForRole('agency_agent')`, `AGENCY_ROLES`-Schutz in `App.tsx`
 
 ### ✅ Erledigt (Session 2026-06-08 — vollständig deployed)
+
 - [x] **Test-Agentur-Account** — `agentur@test.de` / `Test123456`, Solar Vertrieb GmbH, slug `solar-vertrieb-gmbh`, 2 Partner, 1 Test-Lead in Supabase
 - [x] **Login-Toggle Installateur/Agentur** — Segment-Control + „Test Agentur"-Schnell-Login-Button mit Badge
 - [x] **Login-Tests repariert** — 113/113 grün nach Toggle-Einbau
 
 ### ✅ Erledigt (Vorarbeit, 2026-06-08)
+
 - [x] Migration 039 deployed (`partners`, `lead_assignments`, `commissions` + RLS) ✅
 - [x] Service-Layer `src/services/agency.ts` (CRUD, Assignments, Commissions)
 - [x] 4 Agency-Pages (`PartnersPage`, `LeadRouterPage`, `CommissionsPage`, `PartnerPortalPage`)
@@ -228,6 +254,7 @@
 > Alles andere (Digitale Unterschrift, Kundenportal, Stripe, WhatsApp, Monitoring…) ist Phase 2.
 
 ### Deployment & Infrastruktur
+
 - [x] **Vercel-Projekt** — https://voltify-app.vercel.app
 - [x] **SPA-Redirect-Regeln** — `vercel.json`
 - [x] **Environment Variables** — Supabase URL + Anon Key in Vercel
@@ -243,6 +270,7 @@
 - [x] **Edge Functions deployen** — `notify-partner` + `notify-agency` ✅ ACTIVE
 
 ### Core Features (bereits implementiert)
+
 - [x] Auth-System — Supabase Auth, 8 Rollen, AuthContext + ProtectedRoute
 - [x] Configurator — 9-Schritt Wizard mit ROI-Berechnung (Step 3=Stromverbrauch, Step 4=Ausstattung & Pläne, PLZ in Step 1)
 - [x] Admin CRM — Kanban-Pipelines, Lead-/Projekt-Details, Kalender, Nachrichten
@@ -255,6 +283,7 @@
 - [x] Rechtliche Seiten — Datenschutz, Impressum, AGB
 
 ### Wirtschaftlichkeit & Transparenz
+
 - [x] **calculateROI erweitert** — PLZ-basierte Einstrahlung, Eigenverbrauchsrate nach Gebäudetyp
 - [x] **Lebenszykluskosten** — Wechselrichter-Austausch, Batterie, Wartung
 - [x] **Amortisationsgraph** — 20-Jahres-Verlauf mit Folgekosten, Zero-Line, neg. Balken
@@ -265,6 +294,7 @@
 - [x] **Optimierungshinweis** — erscheint bei Amortisation > 16 J., personalisiert nach E-Auto/WP
 
 ### Dashboard & Reports
+
 - [x] **Umsatz-Reports** — Pipeline-Wert, Conversion-Rate, monatliche Leads, Top Deals
 - [x] **Team-Performance** — Leads/Conversion/Umsatz pro Mitarbeiter
 - [x] **Lead-Quellen** — Filter + Balkendiagramm im Reports-Tab
@@ -272,6 +302,7 @@
 - [x] **Realistische Amortisation** — Badge im Lead-Drawer
 
 ### Solar-Planer (von Claude erledigt)
+
 - [x] **Module-Layout-Lib** — `src/lib/moduleLayout.ts` + 11 Tests
 - [x] **Geocoding-Service** — `src/services/geocoding.ts` + `034_address_cache.sql`
 - [x] **InstallerPlanner** — Vollbild-Modal mit Satellitenbild + Modul-Overlay
@@ -295,6 +326,7 @@
 ## 🟢 Funnel & Wachstum — Erledigt (2026-06-05)
 
 ### Demo-as-Trojan-Horse Funnel
+
 - [x] **betaConfig.ts** — Single Source of Truth (5 Plätze / 3 Mo / 30% / Calendly)
 - [x] **Step9 demoMode-Pivot** — Beta-CTA statt Endkunden-Sackgasse
 - [x] **DemoBanner** — Konfigurator signalisiert Installateur die Kundensicht
@@ -303,6 +335,7 @@
 - [x] **Demo-Modus via ?demo=1** — URL-Param trennt Demo (kein Gate, Banner) von Live (Gate, kein Banner)
 
 ### Lead-Capture & Tracking
+
 - [x] **Step0_EmailGate** — E-Mail + Vorname vor dem Konfigurator (nur Live-Modus, Skip-Option)
 - [x] **funnelTracking.ts** — fire-and-forget Events in `funnel_events` (started / step_reached / email_captured / skipped_gate / completed)
 - [x] **UTM-Persistenz** — `cacheFunnelSourceFromUrl()` auf Landingpage; Params überleben Navigation zu /konfigurator
@@ -311,6 +344,7 @@
 - [ ] **Cron Jobs einrichten** — `notify-offer-expiry` + `notify-payment-due` täglich 08:00
 
 ### Nützliche SQL-Abfragen (Supabase Dashboard)
+
 ```sql
 -- Abbruchrate pro Step (nur echte Leads, kein Demo)
 SELECT step, COUNT(DISTINCT session_id) FROM funnel_events
@@ -330,6 +364,7 @@ GROUP BY source_id;
 > Erst relevant, wenn echte Installateure das Tool nutzen und Feedback geben.
 
 ### Angebots-Varianten (A/B/C) + Angebots-Konfigurator
+
 - [x] **Schema + Auto-Generator** — Migration `032_offer_variants.sql`, `generateStorageVariants()`
 - [x] **UI: Toggle + Karten** — Lead-Drawer mit 3 Speicher-Optionen
 - [x] **PDF-Vergleichstabelle** — Seite 2 im Angebot
@@ -357,13 +392,17 @@ GROUP BY source_id;
 - [ ] **Angebots-E-Mail mit Varianten** — Kunde wählt im E-Mail-Link → Tracking
 
 ### Digitale Unterschrift
+
 > **Nicht MVP** — Kunde druckt PDF, unterschreibt, scannt ein. Das reicht für 95% der Fälle.
+
 - [ ] ~~**Tabelle `offer_signatures`**~~ → Phase 2 (wenn Kunden digitale Unterschrift wünschen)
 - [ ] ~~**Canvas-Signatur + Public Route**~~ → Phase 2
 - [ ] ~~**E-Mail-Trigger nach Signing**~~ → Phase 2
 
 ### Kundenportal (Magic-Link)
+
 > **Nicht MVP** — Kunde bekommt alles per E-Mail. Portal = Nice-to-Have für Phase 2.
+
 - [ ] ~~**Token-Generator + Public Routes**~~ → Phase 2
 - [ ] ~~**Status-Seite + Angebots-Download**~~ → Phase 2
 - [ ] ~~**Rechnungen einsehen**~~ → Phase 2
@@ -377,6 +416,7 @@ GROUP BY source_id;
 > **Priorität:** WL1 zuerst (Branding-Cleanup) — das ist fast kostenlos und entfernt sofort die Hürde. WL2–WL4 sind schrittweise.
 
 #### WL1 — Branding-Cleanup (kein "Voltify" für Endkunden sichtbar)
+
 - **Was:** Alle public-facing Seiten (`/konfigurator`, `/angebot/:token`, `/partner/:token`) zeigen ausschließlich das Branding des Installateuers/der Agentur. "Voltify" verschwindet für Endkunden komplett.
 - **Konkret:**
   - Konfigurator-Header: Installateur-Logo + Firmenname aus `profiles` statt "Voltify Solar"
@@ -387,15 +427,17 @@ GROUP BY source_id;
 - **✅ Akzeptanz:** Endkunde sieht nirgendwo "Voltify" — nur den Firmennamen des Installateuers.
 
 #### WL2 — Multi-Tenant Settings in DB (statt localStorage) ✅ DONE (2026-06-25)
+
 - **Umgesetzt:**
   - Migration `052_company_settings_db.sql` — `profiles.company_settings jsonb`
   - `src/services/companySettings.ts` — `hydrateCompanySettingsCache` / `fetchCompanySettings` / `persistCompanySettings` / `settingsOwnerId` (Mitarbeiter → `ownerId`)
   - **Strategie: DB = Source of Truth, localStorage = synchronisierter Cache.** `AuthContext` hydratisiert den Cache bei Login aus der DB → die vielen synchronen `loadCompanySettings()`-Aufrufe (OfferBuilder, PDF, LeadDetails, Dashboard) bleiben unverändert, lesen aber jetzt geräteübergreifend frische Daten.
   - `AdminSettings` + `AdminDashboard` laden Settings aus DB und schreiben `company_settings` + `branding` in DB (nicht mehr nur localStorage) → behebt den Überschreib-Bug.
 - **✅ Akzeptanz erfüllt:** Zweites Gerät/Browser zeigt nicht mehr Defaults; DB-Branding kann nicht mehr versehentlich geplättet werden. 121/121 Tests, 0 TS-Fehler.
-- **Offen (Rest):** Team-Mitglieder, die Settings *bearbeiten* dürfen, brauchen ggf. eine RLS-Policy zum Update der Owner-Zeile (aktuell editiert nur der Owner selbst; Mitarbeiter lesen best-effort).
+- **Offen (Rest):** Team-Mitglieder, die Settings _bearbeiten_ dürfen, brauchen ggf. eine RLS-Policy zum Update der Owner-Zeile (aktuell editiert nur der Owner selbst; Mitarbeiter lesen best-effort).
 
 #### WL3 — Custom Domain / Subdomain für Konfigurator
+
 - **Was:** Installateur bekommt `solar.firma.de` statt `voltify-app.vercel.app/konfigurator`.
 - **Konkret:**
   - Vercel: Custom Domains pro Deployment möglich (über Vercel MCP/API)
@@ -406,6 +448,7 @@ GROUP BY source_id;
 - **✅ Akzeptanz:** `solar.muster-gmbh.de` öffnet Konfigurator mit Muster GmbH-Branding.
 
 #### WL4 — Branded E-Mail-Domain
+
 - **Was:** E-Mails kommen von `angebot@firma.de` statt `noreply@vu-studio.de`.
 - **Konkret:**
   - Resend: Custom-Domain pro Installateur (DNS-Verify durch Kunden)
@@ -421,6 +464,7 @@ GROUP BY source_id;
 > Erst relevant, wenn das Produkt marktreif ist und Kunden zahlen sollen.
 
 ### SaaS-Subscription
+
 - [ ] **Stripe-Integration** — Checkout für Setup-Fee + erstes Abo
 - [ ] **Stripe-Webhook-Handler** — subscription.created, invoice.paid, subscription.cancelled
 - [ ] **Feature-Gating** — `<FeatureGate>` Komponente für Tier-Limits
@@ -429,12 +473,14 @@ GROUP BY source_id;
 - [ ] **Jahresabo-Rabatt (-15%)** — Toggle Monatlich/Jährlich
 
 ### PWA für Monteure
+
 - [ ] **vite-plugin-pwa** — Manifest + Service Worker
 - [ ] **Kamera-Upload** — `<input capture="environment">` für Dachfotos
 - [ ] **Offline-Indicator** — Banner wenn keine Verbindung
 - [ ] **Push-Notifications** — Neuer Lead, Termin-Reminder
 
 ### Erweiterte Solar-Planer-Features
+
 - [ ] **Dach-Outline-Tool** — Polygon-Zeichner im InstallerPlanner
 - [ ] **Modul Drag-&-Drop** — Interaktiver Editor
 - [ ] **Wechselrichter-String-Zuordnung** — String A/B/C
