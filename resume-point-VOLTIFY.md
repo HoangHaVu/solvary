@@ -13,6 +13,33 @@
 - **`src/sections/ProductsStackSection.tsx`** — Kachel „Angebotskonfigurator": Link `/login` → `/angebot-demo`, Label „Im Demo-Account ansehen" → „Jetzt live testen".
 - **Qualität:** `npm run build` 0 TS-Fehler ✅ · `tests/lib/offers.test.ts` + `tests/pages/LandingPage.test.tsx` 16/16 ✅ · Browser-Smoke auf :3000 (Positionen, Rabatt+ROI-Recalc, Templates-Panel, PDF-Blob, Sende-Flow → „Versendet", Kachel-Navigation) alles grün, Konsole fehlerfrei.
 
+## Session 2026-09-03 (Teil 2) — Go-Live-Vorbereitung solvary.de + Push
+
+- **Commit `6448de2` → `origin/main` gepusht** (137 Dateien, ~9.6k Insertions). Vercel Git-Integration deployt `main` automatisch → `voltify-app.vercel.app` ist mit dem neuen Stand live (verifiziert: neue `index.html` + `/agb` HTTP 200).
+- **Rebrand-Anzeige-Strings** (keine Identifier): `SEO.tsx` SITE_NAME/SITE_URL → Solvary / `https://solvary.de`, JSON-LD bereinigt (fiktive Telefonnr./LinkedIn raus). `index.html` Titel+Description, `lang=de`. `FaqSection`, `DemoBanner`-Default, `useTenantBranding` VOLTIFY_DEFAULTS.firmenname, `Step8_Contact`/`Step7_Analysis`/`OfferPreviewCard`-Defaults, komplette Demo-Website `src/sections/demo/*` (inkl. `© 2026 Solvary`, `kontakt@solvary.de`/`info@solvary.de`).
+- **Edge Functions**: Absendername `Voltify <noreply@vu-studio.de>` → `Solvary <…>`, Links `voltify.de`/`voltify-app.vercel.app` → `solvary.de`, `kontakt@voltify.de` → `kontakt@solvary.de`. **NOCH NICHT DEPLOYT** — `supabase functions deploy` nötig (siehe unten).
+- **NICHT geändert (Identifier, Verträge nach außen):** `voltify_settings_v1` (localStorage), `voltify:resize` (postMessage), `X-Voltify-Signature` + `User-Agent: Voltify-Webhook/1.0` (forward-lead). → Rebrand-Plan Phase 2 in `tasks-VOLTIFY.md`.
+- **`.gitignore`** ergänzt: `.playwright-mcp/`, `.serena/`, `.kimi-code/`, `/*.png`, `/Berechnungsnachweis-Demo.pdf`.
+
+### OFFENE Go-Live-Schritte für solvary.de (manuell — Reihenfolge einhalten)
+
+1. **Vercel → Project `voltify-app` → Settings → Domains:** `solvary.de` + `www.solvary.de` hinzufügen. Vercel zeigt die nötigen DNS-Records.
+2. **IONOS DNS (NICHT Nameserver wechseln — sonst brechen die Google-Workspace-MX-Records!):** nur die Records für Vercel setzen:
+   - Apex `solvary.de` → **A** `76.76.21.21`
+   - `www` → **CNAME** `cname.vercel-dns.com`
+   - MX/SPF/DKIM für Google Workspace bleiben unangetastet.
+3. Auf Domain-Verification + automatisches SSL in Vercel warten. `www` → Redirect auf Apex (oder umgekehrt) in Vercel einstellen.
+4. **Supabase → Authentication → URL Configuration:** Site URL auf `https://solvary.de`, Redirect-Allow-List um `https://solvary.de/**` erweitern (sonst brechen Bestätigungs-/Reset-Mails).
+5. **Google Cloud Console → APIs → Credentials → Maps-API-Key → Application restrictions (HTTP referrers):** `https://solvary.de/*` und `https://*.solvary.de/*` ergänzen (sonst ist die Karte im InstallerPlanner tot). Alten `voltify-app.vercel.app`-Eintrag vorerst lassen.
+6. **Supabase Edge Functions neu deployen** (Absendernamen/Links): `supabase functions deploy --project-ref ecsqbsgbfmvqaqnryvwf` (alle) — betrifft send-offer, notify-signature, notify-beta, notify-partner, notify-agency, notify-payment-due, notify-offer-expiry, partner-respond.
+7. **Vercel Env-Var** `APP_URL` (falls gesetzt) auf `https://solvary.de` prüfen; sonst nutzt `partner-respond` den neuen Fallback im Code.
+8. **Optional (branded Absender):** eigene Domain `solvary.de` bzw. `send.solvary.de` in **Resend** verifizieren (DKIM/Return-Path als CNAME bei IONOS), dann in den Edge Functions `noreply@vu-studio.de` → `noreply@solvary.de`. Bis dahin läuft der Versand weiter über die verifizierte `vu-studio.de`.
+9. Nach Domain-Live: `git grep` auf Rest-`voltify` im UI (z. B. FAQ-Preis „149 €/Monat" ist noch **nicht** freigegeben zu ändern — widerspricht 179/379/799).
+
+### Rollback
+
+Vercel → Deployments → vorheriges Prod-Deployment (`9197864`) → „Promote to Production".
+
 ## Session 2026-09-03 — AGB hell + Firmierung
 
 - **`src/pages/AGB.tsx`** von Dark-Theme (`bg-brand-secondary-hover`) auf hell umgestellt — gleiches Muster wie `Impressum.tsx` / `Datenschutz.tsx` (`bg-white`, „RECHTLICHES"-Badge, `text-brand-secondary`-Headings, `text-gray-600` Fließtext, Kontakt-Box `bg-gray-50 border-gray-200`, Links dunkel mit gelbem Underline-Akzent).
