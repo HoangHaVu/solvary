@@ -40,6 +40,14 @@
 
 Vercel → Deployments → vorheriges Prod-Deployment (`9197864`) → „Promote to Production".
 
+### Naming (Stand 2026-09-03)
+
+- **GitHub-Repo umbenannt:** `HoangHaVu/voltify` → **`HoangHaVu/solvary`** (`gh repo rename`). Lokales `origin` automatisch aktualisiert, alte URL 301-Redirect aktiv. Keine Repo-URL-Referenzen im Code.
+- **Vercel-Projekt:** vom User umbenannt (`voltify-app` → solvary). Lokale `.vercel/project.json` hat noch `"projectName":"voltify-app"` gecacht — egal, `projectId` stabil; re-synct beim nächsten `vercel`-Befehl. `Vercel → Settings → Git` kurz prüfen, dass es auf `HoangHaVu/solvary` zeigt.
+- **Supabase-Projekt** (`Solar Konfigurator` → `Solvary`): **nur im Dashboard** (Settings → General → Project name) — keine MCP/API-Unterstützung. Ref `ecsqbsgbfmvqaqnryvwf` + URL bleiben, reines Label.
+- **Lokaler Ordner** `~/myprojects/Voltify` → `~/myprojects/Solvary`: weiterhin offen, separater Schritt (`tasks-VOLTIFY.md:52`).
+- **www.solvary.de**: funktioniert (User hat www als connected domain + Redirect ergänzt).
+
 ## Session 2026-09-03 — AGB hell + Firmierung
 
 - **`src/pages/AGB.tsx`** von Dark-Theme (`bg-brand-secondary-hover`) auf hell umgestellt — gleiches Muster wie `Impressum.tsx` / `Datenschutz.tsx` (`bg-white`, „RECHTLICHES"-Badge, `text-brand-secondary`-Headings, `text-gray-600` Fließtext, Kontakt-Box `bg-gray-50 border-gray-200`, Links dunkel mit gelbem Underline-Akzent).
