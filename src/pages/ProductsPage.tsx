@@ -1,5 +1,6 @@
 // PROJECT: Voltify | PURPOSE: Produkt-Uebersichtsseite — helles Landing-Styling, wiederverwendete Sektionen (Produkte, Funktionen, FAQ, CTA, Footer)
 
+import { useTranslation } from "react-i18next";
 import { SectionTag } from "../components/ui/SectionTag";
 import SiteHeader from "../sections/SiteHeader";
 import { ProductsStackSection } from "../sections/ProductsStackSection";
@@ -8,6 +9,7 @@ import FaqSection from "../sections/FaqSection";
 import CtaFooterSection from "../sections/CtaFooterSection";
 
 export default function ProductsPage() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-white text-brand-secondary">
       <SiteHeader />
@@ -16,16 +18,15 @@ export default function ProductsPage() {
       <section className="px-6 pt-36 pb-6 text-center md:pt-44">
         <div className="mx-auto max-w-2xl">
           <div className="flex justify-center">
-            <SectionTag>Produkte</SectionTag>
+            <SectionTag>{t('productsPage.hero.tag')}</SectionTag>
           </div>
           <h1 className="mt-6 text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">
-            Ein System für Lead,
+            {t('productsPage.hero.heading1')}
             <br />
-            Angebot und Projekt
+            {t('productsPage.hero.heading2')}
           </h1>
           <p className="mx-auto mt-4 max-w-lg text-base text-gray-500">
-            Konfigurator auf deiner Webseite, CRM für deine Pipeline, Angebots-
-            und Rechnungs-PDFs auf Knopfdruck — modular kombinierbar.
+            {t('productsPage.hero.sub')}
           </p>
         </div>
       </section>

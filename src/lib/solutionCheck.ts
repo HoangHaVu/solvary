@@ -1,6 +1,8 @@
 // PROJECT: Voltify | PURPOSE: Lösungs-Check — Schmerz-Diagnose → Modul-Empfehlung (Installateur-Pfad)
 // Fragt nach der Welt des Installateurs (nie nach Modulen). Die Übersetzung Schmerz→Modul
-// passiert in evaluateCheck(). Persistierte Antworten = Founder-Learning-Datensatz.
+// passiert in useEvaluateCheck(). Persistierte Antworten = Founder-Learning-Datensatz.
+
+import { useTranslation } from 'react-i18next';
 
 export type CheckRole = 'installer' | 'agency' | 'other';
 export type ModuleKey = 'lead-funnel' | 'crm' | 'offer';
@@ -30,77 +32,89 @@ export interface CheckAnswers {
 }
 
 // ── Frage 1: Identität (routet den Rest; Beta = nur Installateur-Pfad aktiv) ──
-export const IDENTITY_QUESTION: CheckQuestion = {
-  id: 'role',
-  question: 'Was beschreibt dich am besten?',
-  subline: 'Damit der Check zu deinem Geschäft passt.',
-  options: [
-    { value: 'installer', label: 'Installateur / Solarteur — ich installiere selbst' },
-    { value: 'agency', label: 'Vertriebsagentur — ich generiere Leads & gebe sie an Partner' },
-    { value: 'other', label: 'Etwas anderes' },
-  ],
-};
+export function useIdentityQuestion(): CheckQuestion {
+  const { t } = useTranslation();
+  return {
+    id: 'role',
+    question: t('solutionCheckData.identity.question'),
+    subline: t('solutionCheckData.identity.subline'),
+    options: [
+      { value: 'installer', label: t('solutionCheckData.identity.options.0.label') },
+      { value: 'agency', label: t('solutionCheckData.identity.options.1.label') },
+      { value: 'other', label: t('solutionCheckData.identity.options.2.label') },
+    ],
+  };
+}
 
 // ── Frage 2–4: Diagnose (Installateur-Pfad) ──
-export const INSTALLER_QUESTIONS: CheckQuestion[] = [
-  {
-    id: 'leads',
-    question: 'Wie kommst du heute an neue Anfragen?',
-    subline: 'Dein wichtigster Wachstums-Hebel.',
-    options: [
-      { value: 'referral', label: 'Vor allem über Empfehlungen / Mundpropaganda', painFor: 'lead-funnel' },
-      { value: 'website', label: 'Über meine eigene Website' },
-      { value: 'bought', label: 'Ich kaufe Leads über Portale ein' },
-      { value: 'too-few', label: 'Ehrlich gesagt: zu wenige oder unzuverlässig', painFor: 'lead-funnel' },
-    ],
-  },
-  {
-    id: 'offers',
-    question: 'Wie erstellst du heute deine Angebote?',
-    options: [
-      { value: 'manual', label: 'Per Hand, Word oder Excel', painFor: 'offer' },
-      { value: 'software', label: 'Mit einer anderen Software' },
-      { value: 'supplier', label: 'Mein Großhändler macht das für mich' },
-      { value: 'too-slow', label: 'Dauert mir zu lang / sieht unprofessionell aus', painFor: 'offer' },
-    ],
-  },
-  {
-    id: 'manage',
-    question: 'Wo verwaltest du Anfragen & Kunden?',
-    options: [
-      { value: 'head', label: 'Im Kopf, auf Zetteln oder in WhatsApp', painFor: 'crm' },
-      { value: 'excel', label: 'In einer Excel-Tabelle', painFor: 'crm' },
-      { value: 'crm', label: 'In einer richtigen CRM-Software' },
-      { value: 'lost', label: 'Anfragen gehen verloren / Follow-ups vergesse ich', painFor: 'crm' },
-    ],
-  },
-];
+export function useInstallerQuestions(): CheckQuestion[] {
+  const { t } = useTranslation();
+  return [
+    {
+      id: 'leads',
+      question: t('solutionCheckData.installer.0.question'),
+      subline: t('solutionCheckData.installer.0.subline'),
+      options: [
+        { value: 'referral', label: t('solutionCheckData.installer.0.options.0.label'), painFor: 'lead-funnel' },
+        { value: 'website', label: t('solutionCheckData.installer.0.options.1.label') },
+        { value: 'bought', label: t('solutionCheckData.installer.0.options.2.label') },
+        { value: 'too-few', label: t('solutionCheckData.installer.0.options.3.label'), painFor: 'lead-funnel' },
+      ],
+    },
+    {
+      id: 'offers',
+      question: t('solutionCheckData.installer.1.question'),
+      options: [
+        { value: 'manual', label: t('solutionCheckData.installer.1.options.0.label'), painFor: 'offer' },
+        { value: 'software', label: t('solutionCheckData.installer.1.options.1.label') },
+        { value: 'supplier', label: t('solutionCheckData.installer.1.options.2.label') },
+        { value: 'too-slow', label: t('solutionCheckData.installer.1.options.3.label'), painFor: 'offer' },
+      ],
+    },
+    {
+      id: 'manage',
+      question: t('solutionCheckData.installer.2.question'),
+      options: [
+        { value: 'head', label: t('solutionCheckData.installer.2.options.0.label'), painFor: 'crm' },
+        { value: 'excel', label: t('solutionCheckData.installer.2.options.1.label'), painFor: 'crm' },
+        { value: 'crm', label: t('solutionCheckData.installer.2.options.2.label') },
+        { value: 'lost', label: t('solutionCheckData.installer.2.options.3.label'), painFor: 'crm' },
+      ],
+    },
+  ];
+}
 
 // ── Frage 5: Priorität (bestimmt das Hero-Modul + welche Demo) ──
-export const PRIORITY_QUESTION: CheckQuestion = {
-  id: 'priority',
-  question: 'Wenn du EIN Problem sofort lösen könntest — welches?',
-  subline: 'Das bestimmt, wo du den größten Hebel hast.',
-  options: [
-    { value: 'lead-funnel', label: 'Mehr & bessere Anfragen bekommen' },
-    { value: 'offer', label: 'Schneller & professioneller anbieten' },
-    { value: 'crm', label: 'Den Überblick über meine Kunden behalten' },
-  ],
-};
+export function usePriorityQuestion(): CheckQuestion {
+  const { t } = useTranslation();
+  return {
+    id: 'priority',
+    question: t('solutionCheckData.priority.question'),
+    subline: t('solutionCheckData.priority.subline'),
+    options: [
+      { value: 'lead-funnel', label: t('solutionCheckData.priority.options.0.label') },
+      { value: 'offer', label: t('solutionCheckData.priority.options.1.label') },
+      { value: 'crm', label: t('solutionCheckData.priority.options.2.label') },
+    ],
+  };
+}
 
 // ── Frage 6: Quantifizierer (optional, überspringbar) ──
-export const VOLUME_QUESTION: CheckQuestion = {
-  id: 'volume',
-  question: 'Wie viele Angebote schreibst du ungefähr pro Monat?',
-  subline: 'Optional — hilft uns, deine Zeitersparnis konkret zu schätzen.',
-  optional: true,
-  options: [
-    { value: '0-5', label: 'Bis zu 5' },
-    { value: '6-15', label: '6 bis 15' },
-    { value: '16-30', label: '16 bis 30' },
-    { value: '30+', label: 'Mehr als 30' },
-  ],
-};
+export function useVolumeQuestion(): CheckQuestion {
+  const { t } = useTranslation();
+  return {
+    id: 'volume',
+    question: t('solutionCheckData.volume.question'),
+    subline: t('solutionCheckData.volume.subline'),
+    optional: true,
+    options: [
+      { value: '0-5', label: t('solutionCheckData.volume.options.0.label') },
+      { value: '6-15', label: t('solutionCheckData.volume.options.1.label') },
+      { value: '16-30', label: t('solutionCheckData.volume.options.2.label') },
+      { value: '30+', label: t('solutionCheckData.volume.options.3.label') },
+    ],
+  };
+}
 
 export interface ModuleInfo {
   key: ModuleKey;
@@ -110,29 +124,32 @@ export interface ModuleInfo {
   demoLabel: string;
 }
 
-export const MODULES: Record<ModuleKey, ModuleInfo> = {
-  'lead-funnel': {
-    key: 'lead-funnel',
-    name: 'Solar-Konfigurator (Lead-Funnel)',
-    tagline: 'Verwandelt Website-Besucher in qualifizierte Anfragen — mit Wirtschaftlichkeits-Analyse, die verkauft.',
-    demoHref: '/konfigurator?demo=1',
-    demoLabel: 'Lead-Funnel live ausprobieren',
-  },
-  offer: {
-    key: 'offer',
-    name: 'Angebots-Konfigurator',
-    tagline: 'Professionelle Angebote in Minuten statt Stunden — als PDF, direkt per E-Mail, mit deinem Branding.',
-    demoHref: '/login',
-    demoLabel: 'Angebots-Konfigurator ansehen',
-  },
-  crm: {
-    key: 'crm',
-    name: 'Solar-CRM',
-    tagline: 'Jede Anfrage, jeder Kunde, jedes Follow-up an einem Ort — kein Lead geht mehr verloren.',
-    demoHref: '/login',
-    demoLabel: 'CRM-Demo ansehen',
-  },
-};
+export function useModules(): Record<ModuleKey, ModuleInfo> {
+  const { t } = useTranslation();
+  return {
+    'lead-funnel': {
+      key: 'lead-funnel',
+      name: t('solutionCheckData.modules.lead-funnel.name'),
+      tagline: t('solutionCheckData.modules.lead-funnel.tagline'),
+      demoHref: '/konfigurator?demo=1',
+      demoLabel: t('solutionCheckData.modules.lead-funnel.demoLabel'),
+    },
+    offer: {
+      key: 'offer',
+      name: t('solutionCheckData.modules.offer.name'),
+      tagline: t('solutionCheckData.modules.offer.tagline'),
+      demoHref: '/login',
+      demoLabel: t('solutionCheckData.modules.offer.demoLabel'),
+    },
+    crm: {
+      key: 'crm',
+      name: t('solutionCheckData.modules.crm.name'),
+      tagline: t('solutionCheckData.modules.crm.tagline'),
+      demoHref: '/login',
+      demoLabel: t('solutionCheckData.modules.crm.demoLabel'),
+    },
+  };
+}
 
 export interface CheckResult {
   hero: ModuleInfo;
@@ -142,64 +159,78 @@ export interface CheckResult {
 }
 
 // Begründungs-Texte je (Frage, Antwort) mit Schmerz-Signal.
-const REASONS: Partial<Record<keyof CheckAnswers, Record<string, string>>> = {
-  leads: {
-    'too-few': 'Du bekommst aktuell zu wenige verlässliche Anfragen.',
-    referral: 'Du hängst stark an Empfehlungen — planbares Wachstum fehlt.',
-  },
-  offers: {
-    manual: 'Deine Angebote entstehen per Hand — das kostet Zeit und wirkt weniger professionell.',
-    'too-slow': 'Angebote zu schreiben dauert dir zu lang oder sieht nicht professionell genug aus.',
-  },
-  manage: {
-    head: 'Anfragen laufen über Zettel/WhatsApp — da geht leicht etwas verloren.',
-    excel: 'Du verwaltest Kunden in Excel — fehleranfällig und ohne Erinnerungen.',
-    lost: 'Anfragen gehen verloren und Follow-ups vergisst du — bares Geld, das liegen bleibt.',
-  },
-};
-
-const VOLUME_HOURS: Record<string, string> = {
-  '0-5': 'ein paar Stunden im Monat',
-  '6-15': 'ca. 3–5 Stunden pro Woche',
-  '16-30': 'ca. 6–8 Stunden pro Woche',
-  '30+': '10+ Stunden pro Woche',
-};
-
-// Übersetzt die Antworten in eine ehrliche Empfehlung.
-export function evaluateCheck(answers: CheckAnswers): CheckResult {
-  // Hero = explizit gewählte Priorität (Fallback: stärkstes Schmerz-Signal, sonst Lead-Funnel)
-  const heroKey: ModuleKey = answers.priority ?? inferHero(answers) ?? 'lead-funnel';
-  const hero = MODULES[heroKey];
-
-  // Schmerzsignale aus den Diagnose-Fragen sammeln
-  const painModules = collectPainModules(answers);
-
-  const reasons: string[] = [];
-  for (const qid of ['leads', 'offers', 'manage'] as const) {
-    const val = answers[qid];
-    const text = val ? REASONS[qid]?.[val] : undefined;
-    if (text) reasons.push(text);
-  }
-
-  const alsoRelevant = (['lead-funnel', 'offer', 'crm'] as ModuleKey[])
-    .filter((k) => k !== heroKey && painModules.has(k))
-    .map((k) => MODULES[k]);
-
-  const timeRelevant = heroKey === 'offer' || heroKey === 'crm' || painModules.has('offer') || painModules.has('crm');
-  const timeSavedHint =
-    answers.volume && timeRelevant
-      ? `Bei deinem Volumen sparst du grob ${VOLUME_HOURS[answers.volume]} — Zeit, die du in Abschlüsse stecken kannst.`
-      : undefined;
-
-  return { hero, reasons, alsoRelevant, timeSavedHint };
+function useReasons(): Partial<Record<keyof CheckAnswers, Record<string, string>>> {
+  const { t } = useTranslation();
+  return {
+    leads: {
+      'too-few': t('solutionCheckData.reasons.leads.too-few'),
+      referral: t('solutionCheckData.reasons.leads.referral'),
+    },
+    offers: {
+      manual: t('solutionCheckData.reasons.offers.manual'),
+      'too-slow': t('solutionCheckData.reasons.offers.too-slow'),
+    },
+    manage: {
+      head: t('solutionCheckData.reasons.manage.head'),
+      excel: t('solutionCheckData.reasons.manage.excel'),
+      lost: t('solutionCheckData.reasons.manage.lost'),
+    },
+  };
 }
 
-function collectPainModules(answers: CheckAnswers): Set<ModuleKey> {
+function useVolumeHours(): Record<string, string> {
+  const { t } = useTranslation();
+  return {
+    '0-5': t('solutionCheckData.volumeHours.0-5'),
+    '6-15': t('solutionCheckData.volumeHours.6-15'),
+    '16-30': t('solutionCheckData.volumeHours.16-30'),
+    '30+': t('solutionCheckData.volumeHours.30+'),
+  };
+}
+
+// Übersetzt die Antworten in eine ehrliche Empfehlung.
+export function useEvaluateCheck(): (answers: CheckAnswers) => CheckResult {
+  const { t } = useTranslation();
+  const modules = useModules();
+  const reasons = useReasons();
+  const volumeHours = useVolumeHours();
+  const installerQuestions = useInstallerQuestions();
+
+  return (answers: CheckAnswers) => {
+    // Hero = explizit gewählte Priorität (Fallback: stärkstes Schmerz-Signal, sonst Lead-Funnel)
+    const heroKey: ModuleKey = answers.priority ?? inferHero(answers, installerQuestions) ?? 'lead-funnel';
+    const hero = modules[heroKey];
+
+    // Schmerzsignale aus den Diagnose-Fragen sammeln
+    const painModules = collectPainModules(answers, installerQuestions);
+
+    const reasonTexts: string[] = [];
+    for (const qid of ['leads', 'offers', 'manage'] as const) {
+      const val = answers[qid];
+      const text = val ? reasons[qid]?.[val] : undefined;
+      if (text) reasonTexts.push(text);
+    }
+
+    const alsoRelevant = (['lead-funnel', 'offer', 'crm'] as ModuleKey[])
+      .filter((k) => k !== heroKey && painModules.has(k))
+      .map((k) => modules[k]);
+
+    const timeRelevant = heroKey === 'offer' || heroKey === 'crm' || painModules.has('offer') || painModules.has('crm');
+    const timeSavedHint =
+      answers.volume && timeRelevant
+        ? t('solutionCheckData.timeSavedHint', { hours: volumeHours[answers.volume] })
+        : undefined;
+
+    return { hero, reasons: reasonTexts, alsoRelevant, timeSavedHint };
+  };
+}
+
+function collectPainModules(answers: CheckAnswers, installerQuestions: CheckQuestion[]): Set<ModuleKey> {
   const set = new Set<ModuleKey>();
   const lookup: { q: CheckQuestion; val?: string }[] = [
-    { q: INSTALLER_QUESTIONS[0], val: answers.leads },
-    { q: INSTALLER_QUESTIONS[1], val: answers.offers },
-    { q: INSTALLER_QUESTIONS[2], val: answers.manage },
+    { q: installerQuestions[0], val: answers.leads },
+    { q: installerQuestions[1], val: answers.offers },
+    { q: installerQuestions[2], val: answers.manage },
   ];
   for (const { q, val } of lookup) {
     const opt = q.options.find((o) => o.value === val);
@@ -209,8 +240,8 @@ function collectPainModules(answers: CheckAnswers): Set<ModuleKey> {
 }
 
 // Fallback, falls keine Priorität gesetzt wurde: Modul mit dem stärksten Schmerz.
-function inferHero(answers: CheckAnswers): ModuleKey | null {
-  const pains = collectPainModules(answers);
+function inferHero(answers: CheckAnswers, installerQuestions: CheckQuestion[]): ModuleKey | null {
+  const pains = collectPainModules(answers, installerQuestions);
   for (const k of ['lead-funnel', 'offer', 'crm'] as ModuleKey[]) {
     if (pains.has(k)) return k;
   }

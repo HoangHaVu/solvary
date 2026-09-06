@@ -1,10 +1,13 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { useTranslation } from 'react-i18next';
 import { ArrowRight, Star } from 'lucide-react';
 
-const marqueeWords = ['SOLAR', 'GREEN', 'ENERGY', 'FUTURE', 'CLEAN', 'POWER'];
-
 export default function Hero() {
+  const { t } = useTranslation();
+  const headline = t('demoPage.hero.headline', { returnObjects: true }) as string[];
+  const marqueeWords = t('demoPage.hero.marqueeWords', { returnObjects: true }) as string[];
+
   const sectionRef = useRef<HTMLElement>(null);
   const headlineRefs = useRef<(HTMLDivElement | null)[]>([]);
   const descRef = useRef<HTMLParagraphElement>(null);
@@ -59,21 +62,21 @@ export default function Hero() {
       <div className="relative z-[2] max-w-[1280px] mx-auto px-6 w-full pb-24 pt-32">
         {/* Headline */}
         <div className="mb-8">
-          <div ref={(el) => { headlineRefs.current[0] = el; }} className="opacity-0">
-            <h1 className="text-white text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight leading-[1.05]">
-              Solarenergie
-            </h1>
-          </div>
-          <div ref={(el) => { headlineRefs.current[1] = el; }} className="opacity-0">
-            <h1 className="text-white text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight leading-[1.05]">
-              die die Welt
-            </h1>
-          </div>
-          <div ref={(el) => { headlineRefs.current[2] = el; }} className="opacity-0">
-            <h1 className="text-brand-primary text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight leading-[1.05]">
-              voranbringt
-            </h1>
-          </div>
+          {headline.map((line, i) => (
+            <div
+              key={i}
+              ref={(el) => { headlineRefs.current[i] = el; }}
+              className="opacity-0"
+            >
+              <h1
+                className={`text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight leading-[1.05] ${
+                  i === 2 ? 'text-brand-primary' : 'text-white'
+                }`}
+              >
+                {line}
+              </h1>
+            </div>
+          ))}
         </div>
 
         {/* Two column: description + reviews card */}
@@ -82,7 +85,7 @@ export default function Hero() {
             ref={descRef}
             className="text-white/80 text-base max-w-[480px] leading-relaxed opacity-0"
           >
-            Bei Solvary planen und installieren wir Solaranlagen, die Effizienz und langfristigen Wert maximieren. Schließen Sie sich der Energiewende an und übernehmen Sie die Kontrolle über Ihre Energie — heute und für die Zukunft.
+            {t('demoPage.hero.description')}
           </p>
 
           {/* Reviews Card */}
@@ -90,7 +93,7 @@ export default function Hero() {
             ref={cardRef}
             className="bg-white rounded-2xl px-5 py-4 shadow-lg flex items-center gap-4 opacity-0 w-fit"
           >
-            <span className="text-sm font-medium text-black">Jetzt entdecken</span>
+            <span className="text-sm font-medium text-black">{t('demoPage.hero.reviewsCard.discoverNow')}</span>
             <a
               href="#explore"
               onClick={(e) => {
@@ -113,9 +116,9 @@ export default function Hero() {
                 ))}
               </div>
               <div className="ml-3">
-                <div className="text-xs font-semibold text-black">100+ Bewertungen</div>
+                <div className="text-xs font-semibold text-black">{t('demoPage.hero.reviewsCard.ratingsText')}</div>
                 <div className="text-xs text-gray-500 flex items-center gap-1">
-                  <Star className="w-3 h-3 fill-brand-primary text-brand-primary" /> 4,96 von 5
+                  <Star className="w-3 h-3 fill-brand-primary text-brand-primary" /> {t('demoPage.hero.reviewsCard.rating')}
                 </div>
               </div>
             </div>

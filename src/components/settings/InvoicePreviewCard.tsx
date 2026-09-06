@@ -1,4 +1,5 @@
 import { Sun } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface InvoicePreviewProps {
   firmenname: string;
@@ -39,6 +40,7 @@ export const InvoicePreviewCard: React.FC<InvoicePreviewProps> = ({
   geschaeftsfuehrer,
   rechnungskreis,
 }) => {
+  const { t } = useTranslation();
   const fmt = (n: number) => n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   const prefix = rechnungskreis || 'RE';
@@ -55,7 +57,7 @@ export const InvoicePreviewCard: React.FC<InvoicePreviewProps> = ({
   const mwst = 0;
 
   const positionen = [
-    { pos: '1', beschreibung: `PV-Anlage ${MOCK.kwp} kWp inkl. Montage`, menge: 1, einheit: 'Pauschal', preis: netto },
+    { pos: '1', beschreibung: t('adminSettings.invoice.serviceDescription', { kwp: MOCK.kwp }), menge: 1, einheit: t('adminSettings.invoice.flatRate'), preis: netto },
   ];
 
   return (
@@ -68,7 +70,7 @@ export const InvoicePreviewCard: React.FC<InvoicePreviewProps> = ({
             : <Sun className="w-5 h-5 text-white/70" />}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-white font-black text-sm truncate">{firmenname || 'Ihr Firmenname'}</p>
+          <p className="text-white font-black text-sm truncate">{firmenname || t('adminSettings.common.yourCompanyName')}</p>
           {slogan && <p className="text-white/50 text-[10px] truncate">{slogan}</p>}
         </div>
         <span
@@ -91,7 +93,7 @@ export const InvoicePreviewCard: React.FC<InvoicePreviewProps> = ({
       {/* Empfänger + Rechnungsdetails */}
       <div className="px-6 py-4 flex justify-between gap-4 border-b border-white/5">
         <div>
-          <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Rechnungsempfänger</p>
+          <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">{t('adminSettings.invoice.recipientLabel')}</p>
           <p className="font-bold text-white text-xs">{MOCK.name}</p>
           <p className="text-gray-400 text-[11px]">{MOCK.adresse}</p>
           <p className="text-gray-400 text-[11px]">{MOCK.ort}</p>
@@ -99,10 +101,10 @@ export const InvoicePreviewCard: React.FC<InvoicePreviewProps> = ({
         <div className="text-right shrink-0">
           <div className="space-y-1">
             {[
-              { label: 'Rechnungsnr.', value: rechnungsnummer },
-              { label: 'Datum', value: MOCK.datum },
-              { label: 'Fällig am', value: faelligDatum },
-              ...(steuernummer ? [{ label: 'St.-Nr.', value: steuernummer }] : []),
+              { label: t('adminSettings.invoice.invoiceNumber'), value: rechnungsnummer },
+              { label: t('adminSettings.invoice.date'), value: MOCK.datum },
+              { label: t('adminSettings.invoice.dueDate'), value: faelligDatum },
+              ...(steuernummer ? [{ label: t('adminSettings.invoice.taxNumber'), value: steuernummer }] : []),
             ].map(({ label, value }) => (
               <div key={label} className="flex items-center justify-end gap-2">
                 <span className="text-[10px] text-gray-500">{label}</span>
@@ -113,15 +115,15 @@ export const InvoicePreviewCard: React.FC<InvoicePreviewProps> = ({
         </div>
       </div>
 
-      {/* Leistungsbezeichnung */}
+      {/* {t('adminSettings.invoice.serviceLabel')}sbezeichnung */}
       <div className="px-6 py-3 border-b border-white/5">
-        <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-2">Leistung</p>
+        <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-2">{t('adminSettings.invoice.serviceLabel')}</p>
         <table className="w-full">
           <thead>
             <tr className="text-[9px] text-gray-500 uppercase border-b border-white/5">
-              <th className="text-left pb-1.5 font-semibold w-6">Pos.</th>
-              <th className="text-left pb-1.5 font-semibold">Beschreibung</th>
-              <th className="text-right pb-1.5 font-semibold w-16">Betrag</th>
+              <th className="text-left pb-1.5 font-semibold w-6">{t('adminSettings.invoice.table.position')}</th>
+              <th className="text-left pb-1.5 font-semibold">{t('adminSettings.invoice.table.description')}</th>
+              <th className="text-right pb-1.5 font-semibold w-16">{t('adminSettings.invoice.table.amount')}</th>
             </tr>
           </thead>
           <tbody>
@@ -131,7 +133,7 @@ export const InvoicePreviewCard: React.FC<InvoicePreviewProps> = ({
                 <td className="text-[10px] text-gray-300 py-2 pr-2 align-top">
                   <span className="font-semibold">{p.beschreibung}</span>
                   <br />
-                  <span className="text-gray-500">Lieferung und Montage gem. Auftragsbestätigung</span>
+                  <span className="text-gray-500">{t('adminSettings.invoice.serviceNote')}</span>
                 </td>
                 <td className="text-[10px] font-bold text-white py-2 text-right align-top">
                   {fmt(p.preis)} €
@@ -146,18 +148,18 @@ export const InvoicePreviewCard: React.FC<InvoicePreviewProps> = ({
       <div className="px-6 py-3 border-b border-white/5">
         <div className="space-y-1">
           <div className="flex justify-between text-[10px] text-gray-400">
-            <span>Nettobetrag</span>
+            <span>{t('adminSettings.invoice.netAmount')}</span>
             <span>{fmt(netto)} €</span>
           </div>
           <div className="flex justify-between text-[10px] text-gray-500">
-            <span>MwSt. 0 % (§ 12 Abs. 3 UStG — PV-Anlage)</span>
+            <span>{t('adminSettings.invoice.vatNote')}</span>
             <span>{fmt(mwst)} €</span>
           </div>
           <div
             className="flex justify-between text-sm font-black pt-1.5 mt-1.5 border-t border-white/10"
             style={{ color: primaryColor }}
           >
-            <span>Gesamtbetrag</span>
+            <span>{t('adminSettings.invoice.total')}</span>
             <span>{fmt(netto)} €</span>
           </div>
         </div>
@@ -165,24 +167,24 @@ export const InvoicePreviewCard: React.FC<InvoicePreviewProps> = ({
 
       {/* Zahlungsinfo */}
       <div className="px-6 py-3 bg-[#252525] border-b border-white/5">
-        <p className="text-[10px] text-gray-400 font-semibold mb-1">Zahlungshinweis</p>
+        <p className="text-[10px] text-gray-400 font-semibold mb-1">{t('adminSettings.invoice.paymentNoteLabel')}</p>
         <p className="text-[10px] text-gray-500">
-          Bitte überweisen Sie den Betrag innerhalb von{' '}
-          <strong className="text-gray-300">{zahlungsziel || '14'} Tagen</strong> auf folgendes Konto:
+          {t('adminSettings.invoice.paymentInstructionPrefix')}{' '}
+          <strong className="text-gray-300">{zahlungsziel || '14'} {t('adminSettings.invoice.paymentDays', { count: Number(zahlungsziel || 14) })}</strong>{' '}{t('adminSettings.invoice.paymentInstructionSuffix')}
         </p>
         {iban && (
           <p className="text-[10px] font-mono font-bold text-gray-300 mt-1">{iban}</p>
         )}
-        <p className="text-[10px] text-gray-500 mt-0.5">Verwendungszweck: {rechnungsnummer}</p>
+        <p className="text-[10px] text-gray-500 mt-0.5">{t('adminSettings.invoice.referenceLabel')} {rechnungsnummer}</p>
       </div>
 
       {/* Footer */}
       <div className="px-6 py-3 flex flex-wrap gap-x-4 gap-y-0.5">
         {geschaeftsfuehrer && (
-          <p className="text-[9px] text-gray-500">GF: {geschaeftsfuehrer}</p>
+          <p className="text-[9px] text-gray-500">{t('adminSettings.invoice.ceo')}: {geschaeftsfuehrer}</p>
         )}
         {steuernummer && (
-          <p className="text-[9px] text-gray-500">St.-Nr.: {steuernummer}</p>
+          <p className="text-[9px] text-gray-500">{t('adminSettings.invoice.taxNumberShort')}: {steuernummer}</p>
         )}
         {ort && (
           <p className="text-[9px] text-gray-500">{ort}</p>

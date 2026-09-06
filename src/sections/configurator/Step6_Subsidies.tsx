@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
   CheckCircle,
   Landmark,
@@ -49,7 +50,17 @@ function SunIcon() {
   );
 }
 
-function GrantCard({ grant }: { grant: Grant }) {
+function translateGrant(grant: Grant, t: (key: string, options?: Record<string, unknown>) => string): Grant {
+  const base = `configurator.grants.${grant.type}.${grant.id}`;
+  return {
+    ...grant,
+    title: t(`${base}.title`, { defaultValue: grant.title }),
+    description: t(`${base}.description`, { defaultValue: grant.description }),
+    highlight: t(`${base}.highlight`, { defaultValue: grant.highlight }),
+  };
+}
+
+function GrantCard({ grant, t }: { grant: Grant; t: (key: string, options?: Record<string, unknown>) => string }) {
   const isCalculated =
     grant.id === 'mwst' || grant.id === 'eeg' || (grant.subsidyAmount != null && grant.subsidyAmount > 0);
 
@@ -69,7 +80,7 @@ function GrantCard({ grant }: { grant: Grant }) {
         }`}
       >
         {grant.type === 'national' ? <Globe className="w-3 h-3" /> : <MapPin className="w-3 h-3" />}
-        {grant.type === 'national' ? 'National' : 'Regional'}
+        {grant.type === 'national' ? t('configurator.step6.nationalBadge') : t('configurator.step6.regionalBadge')}
       </div>
 
       {/* Icon */}
@@ -91,12 +102,12 @@ function GrantCard({ grant }: { grant: Grant }) {
         {isCalculated ? (
           <div className="flex items-center text-green-600 text-xs font-medium gap-1">
             <Check className="w-3.5 h-3.5" />
-            Im Ergebnis enthalten
+            {t('configurator.step6.included')}
           </div>
         ) : (
           <div className="flex items-center text-gray-400 text-xs font-medium gap-1">
             <Info className="w-3.5 h-3.5" />
-            Separates Antragsverfahren
+            {t('configurator.step6.separateProcess')}
           </div>
         )}
         <span className="shrink-0 text-[10px] font-semibold text-brand-secondary bg-brand-secondary/5 px-2 py-1 rounded-full">
@@ -108,20 +119,24 @@ function GrantCard({ grant }: { grant: Grant }) {
 }
 
 export default function Step6_Subsidies({ data }: Props) {
+  const { t } = useTranslation();
   const zip = data.zipCode;
-  const regionalGrants = getRegionalGrants(zip);
-  const stateLabel = getStateLabel(zip);
+  const regionalGrants = getRegionalGrants(zip).map((g) => translateGrant(g, t));
+  const rawStateLabel = getStateLabel(zip);
+  const stateLabel = t(`configurator.step6.states.${zip ? zip[0] : 'default'}`, { defaultValue: rawStateLabel });
   const totalGrants = NATIONAL_GRANTS.length + regionalGrants.length;
   const subsidyTotal = getGrantSubsidyTotal(zip);
 
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">Fördermittel für Ihr Projekt</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">{t('configurator.step6.title')}</h2>
         <p className="text-gray-500 text-sm">
-          Wir haben <strong>{totalGrants} Förderprogramme</strong> für Ihren Standort
-          {zip ? <> (<strong>{zip} — {stateLabel}</strong>)</> : ''} ermittelt.
-          Diese werden automatisch in Ihrer Wirtschaftlichkeitsberechnung berücksichtigt.
+          {t('configurator.step6.subtitleStart')}{' '}
+          <strong>{totalGrants} {t('configurator.step6.programs')}</strong>{' '}
+          {t('configurator.step6.subtitleLocation')}
+          {zip ? <> (<strong>{zip} — {stateLabel}</strong>)</> : ''}{' '}
+          {t('configurator.step6.subtitleEnd')}
         </p>
       </div>
 
@@ -131,11 +146,10 @@ export default function Step6_Subsidies({ data }: Props) {
           <TrendingUp className="w-6 h-6 text-brand-secondary" />
         </div>
         <div>
-          <h3 className="font-semibold text-brand-secondary mb-1">0 % Mehrwertsteuer — Sofort wirksam</h3>
+          <h3 className="font-semibold text-brand-secondary mb-1">{t('configurator.step6.vatTitle')}</h3>
           <p className="text-xs text-gray-600">
-            <strong>Sparen Sie ~19 % auf den Kaufpreis Ihrer Anlage.</strong> Seit dem 01.01.2023
-            entfällt die Umsatzsteuer bundesweit auf PV-Anlagen und Speicher auf Wohngebäuden —
-            automatisch in unserem Angebotspreis einkalkuliert.
+            <strong>{t('configurator.step6.vatSavings')}</strong>{' '}
+            {t('configurator.step6.vatText')}
           </p>
         </div>
       </div>
@@ -145,19 +159,19 @@ export default function Step6_Subsidies({ data }: Props) {
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4 text-brand-primary" />
-            <h3 className="font-semibold text-brand-secondary">Regionale Förderungen — {stateLabel}</h3>
+            <h3 className="font-semibold text-brand-secondary">{t('configurator.step6.regionalTitle', { state: stateLabel })}</h3>
           </div>
           {subsidyTotal > 0 && (
             <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-lg px-3 py-2 w-fit">
               <CheckCircle className="w-4 h-4 text-green-600" />
               <span className="text-xs font-medium text-green-800">
-                Direktzuschuss-Summe: bis zu {subsidyTotal.toLocaleString()} €
+                {t('configurator.step6.subsidySum', { amount: subsidyTotal.toLocaleString() })}
               </span>
             </div>
           )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {regionalGrants.map((grant) => (
-              <GrantCard key={grant.id} grant={grant} />
+              <GrantCard key={grant.id} grant={grant} t={t} />
             ))}
           </div>
         </div>
@@ -167,11 +181,11 @@ export default function Step6_Subsidies({ data }: Props) {
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-2">
           <Globe className="w-4 h-4 text-brand-primary" />
-          <h3 className="font-semibold text-brand-secondary">Bundesweite Förderungen</h3>
+          <h3 className="font-semibold text-brand-secondary">{t('configurator.step6.nationalTitle')}</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {NATIONAL_GRANTS.filter((g) => g.id !== 'mwst').map((grant) => (
-            <GrantCard key={grant.id} grant={grant} />
+            <GrantCard key={grant.id} grant={translateGrant(grant, t)} t={t} />
           ))}
         </div>
       </div>
@@ -188,13 +202,11 @@ export default function Step6_Subsidies({ data }: Props) {
         </div>
         <div className="flex-1">
           <h4 className="font-semibold text-sm text-blue-800 mb-1 flex items-center gap-1">
-            Unabhängige Informationen der Verbraucherzentrale
+            {t('configurator.step6.consumerTitle')}
             <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
           </h4>
           <p className="text-xs text-blue-600 leading-relaxed">
-            Die Verbraucherzentrale bietet einen umfassenden Ratgeber zur Planung einer Solaranlage — 
-            von der Dachbeschaffenheit über die Wahl des Installateurs bis hin zu Finanzierungstipps.
-            Ideal für alle, die sich vor dem Kauf gründlich informieren möchten.
+            {t('configurator.step6.consumerText')}
           </p>
         </div>
       </a>

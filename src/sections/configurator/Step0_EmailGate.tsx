@@ -1,5 +1,6 @@
 // PROJECT: Voltify | PURPOSE: Lead-Capture vor dem Konfigurator (E-Mail + Vorname)
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ArrowRight } from 'lucide-react';
 import { LOGO_WHITE_PATH } from '../../lib/branding';
 import { COLORS } from '../../lib/theme';
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export default function Step0_EmailGate({ onSubmit, onSkip, branding }: Props) {
+  const { t } = useTranslation();
   const [firstName, setFirstName] = useState('');
   const [email, setEmail]         = useState('');
   const [error, setError]         = useState('');
@@ -23,7 +25,7 @@ export default function Step0_EmailGate({ onSubmit, onSkip, branding }: Props) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.includes('@')) {
-      setError('Bitte gib eine gültige E-Mail-Adresse ein.');
+      setError(t('configurator.emailGate.emailError'));
       return;
     }
     setError('');
@@ -49,23 +51,23 @@ export default function Step0_EmailGate({ onSubmit, onSkip, branding }: Props) {
 
         <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
           <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: accent }}>
-            Kostenloser Konfigurator
+            {t('configurator.emailGate.tag')}
           </p>
           <h1 className="text-2xl font-bold text-white mb-2">
-            Dein persönliches Solar-Angebot in 8 Schritten
+            {t('configurator.emailGate.title')}
           </h1>
           <p className="text-white/60 text-sm mb-8">
-            Ergebnis: ROI-Analyse, Förderungen und ein druckfertiges Angebot — in unter 5 Minuten.
+            {t('configurator.emailGate.subtitle')}
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-white/70 text-sm mb-1.5">Vorname</label>
+              <label className="block text-white/70 text-sm mb-1.5">{t('configurator.emailGate.firstNameLabel')}</label>
               <input
                 type="text"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                placeholder="Max"
+                placeholder={t('configurator.emailGate.firstNamePlaceholder')}
                 className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none transition-colors"
                 style={{ outlineColor: accent }}
               />
@@ -73,13 +75,13 @@ export default function Step0_EmailGate({ onSubmit, onSkip, branding }: Props) {
 
             <div>
               <label className="block text-white/70 text-sm mb-1.5">
-                E-Mail-Adresse <span style={{ color: accent }}>*</span>
+                {t('configurator.emailGate.emailLabel')} <span style={{ color: accent }}>*</span>
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="max@beispiel.de"
+                placeholder={t('configurator.emailGate.emailPlaceholder')}
                 required
                 className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none transition-colors"
               />
@@ -91,18 +93,18 @@ export default function Step0_EmailGate({ onSubmit, onSkip, branding }: Props) {
               className="w-full font-semibold rounded-lg px-6 py-3.5 flex items-center justify-center gap-2 transition-colors hover:opacity-90"
               style={{ backgroundColor: accent, color: primary }}
             >
-              Konfigurator starten
+              {t('configurator.emailGate.submit')}
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
 
           <p className="text-center text-white/30 text-xs mt-4">
-            Keine Werbung · Nur dein Angebot ·{' '}
+            {t('configurator.emailGate.privacyPrefix')}{' '}
             <button
               onClick={onSkip}
               className="underline hover:text-white/60 transition-colors"
             >
-              Ohne Angabe fortfahren
+              {t('configurator.emailGate.skip')}
             </button>
           </p>
         </div>
@@ -110,7 +112,7 @@ export default function Step0_EmailGate({ onSubmit, onSkip, branding }: Props) {
         {/* Powered by Solvary — nur wenn Tenant und poweredByVoltify=true */}
         {branding?.isTenant && branding.poweredByVoltify && (
           <p className="text-center text-white/20 text-[10px] mt-4">
-            Powered by Solvary
+            {t('configurator.sidebar.poweredBy')}
           </p>
         )}
       </div>

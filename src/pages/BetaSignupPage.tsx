@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Zap,
   CheckCircle,
@@ -14,13 +15,24 @@ import {
   X,
 } from "lucide-react";
 import { supabase } from "../lib/supabase";
-import { BETA, BETA_COPY } from "../lib/betaConfig";
+import { BETA } from "../lib/betaConfig";
 import { LOGO_PATH } from "../lib/branding";
-import { COLORS } from "../lib/theme";
 import SEO from "../components/seo/SEO";
+
+interface BenefitItem {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+interface BenefitStat {
+  value: string;
+  label: string;
+}
 
 export default function BetaSignupPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [companyName, setCompanyName] = useState("");
   const [contactName, setContactName] = useState("");
@@ -32,6 +44,13 @@ export default function BetaSignupPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
+
+  const benefitItems = t("betaPage.benefits.items", {
+    returnObjects: true,
+  }) as BenefitItem[];
+  const benefitStats = t("betaPage.benefits.stats", {
+    returnObjects: true,
+  }) as BenefitStat[];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,7 +91,7 @@ export default function BetaSignupPage() {
       setError(
         err instanceof Error
           ? err.message
-          : "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+          : t("betaPage.form.errorFallback"),
       );
     } finally {
       setIsSubmitting(false);
@@ -98,8 +117,8 @@ export default function BetaSignupPage() {
   return (
     <>
       <SEO
-        title="Beta-Programm"
-        description="Werde einer der ersten Voltify-Beta-Partner. Kostenloser Zugang, persönliches Onboarding."
+        title={t("betaPage.seo.title")}
+        description={t("betaPage.seo.description")}
         canonical="/beta"
         noindex
       />
@@ -122,38 +141,31 @@ export default function BetaSignupPage() {
                   <CheckCircle className="w-8 h-8 text-green-500" />
                 </div>
                 <h2 className="text-2xl font-bold text-brand-secondary">
-                  Dankeschön für die Anfrage!
+                  {t("betaPage.form.successTitle")}
                 </h2>
                 <p className="text-gray-500 text-sm max-w-xs leading-relaxed">
-                  Wir werden uns in Kürze bei Ihnen telefonisch melden.
+                  {t("betaPage.form.successText")}
                 </p>
                 <button
                   onClick={() => navigate("/")}
                   className="mt-4 bg-brand-secondary text-white font-medium px-6 py-3 rounded-xl hover:bg-brand-secondary-hover transition-colors"
                 >
-                  Zurück zur Startseite
+                  {t("betaPage.form.successCta")}
                 </button>
               </div>
             ) : (
               <>
                 <span className="inline-flex items-center gap-1.5 bg-brand-primary/10 text-brand-secondary text-xs font-bold px-3 py-1 rounded-full mb-3">
-                  🚀 {BETA_COPY.spotsBadge}
+                  🚀 {t("betaPage.form.tag", { spots: BETA.spotsLeft })}
                 </span>
                 <h1 className="text-3xl md:text-4xl font-semibold text-brand-secondary mb-3">
-                  Jetzt Beta-Partner werden
+                  {t("betaPage.form.title")}
                 </h1>
                 <p className="text-gray-500 text-sm mb-8">
-                  Hinterlasse deine Kontaktdaten — wir melden uns persönlich bei
-                  dir. Als Beta-Partner sicherst du dir die nächsten{" "}
-                  {BETA.freeMonths} Monate{" "}
-                  <span className="text-brand-secondary font-bold">
-                    kostenlos
-                  </span>{" "}
-                  und danach dauerhaft{" "}
-                  <span className="text-brand-secondary font-bold">
-                    {BETA.discountPercent}% Gründerrabatt
-                  </span>
-                  .
+                  {t("betaPage.form.sub", {
+                    freeMonths: BETA.freeMonths,
+                    discount: BETA.discountPercent,
+                  })}
                 </p>
 
                 {error && (
@@ -167,7 +179,7 @@ export default function BetaSignupPage() {
                   <div className="grid grid-cols-2 gap-3">
                     <div className="flex flex-col gap-1.5">
                       <label className="text-xs font-medium text-gray-700">
-                        Firma *
+                        {t("betaPage.form.company")}
                       </label>
                       <div className="relative">
                         <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -176,14 +188,14 @@ export default function BetaSignupPage() {
                           required
                           value={companyName}
                           onChange={(e) => setCompanyName(e.target.value)}
-                          placeholder="Mustermann GmbH"
+                          placeholder={t("betaPage.form.placeholder.company")}
                           className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                         />
                       </div>
                     </div>
                     <div className="flex flex-col gap-1.5">
                       <label className="text-xs font-medium text-gray-700">
-                        Name *
+                        {t("betaPage.form.name")}
                       </label>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -192,7 +204,7 @@ export default function BetaSignupPage() {
                           required
                           value={contactName}
                           onChange={(e) => setContactName(e.target.value)}
-                          placeholder="Max Mustermann"
+                          placeholder={t("betaPage.form.placeholder.name")}
                           className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                         />
                       </div>
@@ -201,9 +213,9 @@ export default function BetaSignupPage() {
 
                   <div className="flex flex-col gap-1.5">
                     <label className="text-xs font-medium text-gray-700">
-                      Handynummer{" "}
+                      {t("betaPage.form.phone")}{" "}
                       <span className="text-brand-secondary font-bold">
-                        — für Rückruf (empfohlen)
+                        {t("betaPage.form.phoneHint")}
                       </span>
                     </label>
                     <div className="relative">
@@ -212,7 +224,7 @@ export default function BetaSignupPage() {
                         type="tel"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        placeholder="+49 171 1234567"
+                        placeholder={t("betaPage.form.placeholder.phone")}
                         className="w-full border-2 border-brand-primary/30 rounded-xl pl-9 pr-3 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
                       />
                     </div>
@@ -221,7 +233,7 @@ export default function BetaSignupPage() {
                   <div className="grid grid-cols-2 gap-3">
                     <div className="flex flex-col gap-1.5">
                       <label className="text-xs font-medium text-gray-700">
-                        E-Mail *
+                        {t("betaPage.form.email")}
                       </label>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -230,14 +242,14 @@ export default function BetaSignupPage() {
                           required
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          placeholder="max@firma.de"
+                          placeholder={t("betaPage.form.placeholder.email")}
                           className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                         />
                       </div>
                     </div>
                     <div className="flex flex-col gap-1.5">
                       <label className="text-xs font-medium text-gray-700">
-                        PLZ
+                        {t("betaPage.form.zip")}
                       </label>
                       <div className="relative">
                         <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -245,7 +257,7 @@ export default function BetaSignupPage() {
                           type="text"
                           value={zip}
                           onChange={(e) => setZip(e.target.value)}
-                          placeholder="12345"
+                          placeholder={t("betaPage.form.placeholder.zip")}
                           className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                         />
                       </div>
@@ -254,9 +266,9 @@ export default function BetaSignupPage() {
 
                   <div className="flex flex-col gap-1.5">
                     <label className="text-xs font-medium text-gray-700">
-                      Kurze Nachricht{" "}
+                      {t("betaPage.form.message")}{" "}
                       <span className="font-normal text-gray-400">
-                        (optional)
+                        {t("betaPage.form.messageHint")}
                       </span>
                     </label>
                     <div className="relative">
@@ -264,7 +276,7 @@ export default function BetaSignupPage() {
                       <textarea
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        placeholder="z.B. Wie viele Leads habt ihr pro Monat?"
+                        placeholder={t("betaPage.form.placeholder.message")}
                         rows={3}
                         className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all resize-none"
                       />
@@ -280,14 +292,14 @@ export default function BetaSignupPage() {
                       <Zap className="w-4 h-4 animate-spin" />
                     ) : (
                       <>
-                        Anfragen
+                        {t("betaPage.form.submit")}
                         <ArrowRight className="w-4 h-4" />
                       </>
                     )}
                   </button>
 
                   <p className="text-center text-xs text-gray-400">
-                    Kein Abo · Keine Kreditkarte · Jederzeit kündbar
+                    {t("betaPage.form.disclaimer")}
                   </p>
                 </form>
               </>
@@ -296,12 +308,12 @@ export default function BetaSignupPage() {
 
           {/* Bottom */}
           <p className="text-center text-sm text-gray-500 mt-8">
-            Bereits registriert?{" "}
+            {t("betaPage.form.login")}{" "}
             <button
               onClick={() => navigate("/login")}
               className="text-brand-secondary font-medium hover:underline cursor-pointer"
             >
-              Jetzt anmelden.
+              {t("betaPage.form.loginCta")}
             </button>
           </p>
         </div>
@@ -315,43 +327,21 @@ export default function BetaSignupPage() {
           <div className="relative max-w-[540px] w-full">
             {/* Tagline */}
             <div className="inline-flex items-center gap-2 bg-brand-primary/20 border border-brand-primary/30 rounded-full px-3 py-1 text-xs font-bold text-brand-primary uppercase tracking-widest mb-6">
-              ⭐ Beta-Programm — Nur {BETA.spotsLeft} Plätze
+              ⭐ {t("betaPage.benefits.tag", { spots: BETA.spotsLeft })}
             </div>
             <h2 className="text-3xl font-semibold text-white mb-2 leading-snug">
-              Werde einer der ersten
-              <br />
-              {BETA.spotsLeft} Voltify-Partner
+              {t("betaPage.benefits.title", { spots: BETA.spotsLeft })}
             </h2>
             <p className="text-white/60 text-sm mb-8">
-              {BETA.freeMonths} Monate kostenlos testen. Danach{" "}
-              {BETA.discountPercent}% dauerhafter Rabatt. Kein Setup-Aufwand —
-              nur ein Demo-Call mit uns.
+              {t("betaPage.benefits.sub", {
+                freeMonths: BETA.freeMonths,
+                discount: BETA.discountPercent,
+              })}
             </p>
 
             {/* Benefits Cards */}
             <div className="space-y-4">
-              {[
-                {
-                  icon: "🎁",
-                  title: "3 Monate kostenlos",
-                  text: "Vollständiger Zugriff ohne Kreditkarte — null Risiko.",
-                },
-                {
-                  icon: "💰",
-                  title: "-30% Gründerrabatt",
-                  text: "Dauerhaft auf jeden Tarif — auch nach der Beta-Phase.",
-                },
-                {
-                  icon: "🚀",
-                  title: "Persönliches Demo",
-                  text: "30-Min Live-Demo. Wir zeigen dir die volle Power von Voltify.",
-                },
-                {
-                  icon: "⭐",
-                  title: "Direkter Einfluss",
-                  text: "Dein Feedback formt das Produkt. Werde Case-Study.",
-                },
-              ].map((item) => (
+              {benefitItems.map((item) => (
                 <div
                   key={item.title}
                   className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10 flex items-start gap-4"
@@ -367,18 +357,15 @@ export default function BetaSignupPage() {
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-3 mt-6">
-              <div className="bg-white/10 rounded-xl p-3 text-center">
-                <p className="text-2xl font-bold text-white">3 Mo.</p>
-                <p className="text-[10px] text-white/50">Kostenlos testen</p>
-              </div>
-              <div className="bg-white/10 rounded-xl p-3 text-center">
-                <p className="text-2xl font-bold text-brand-primary">-30%</p>
-                <p className="text-[10px] text-white/50">Dauerhafter Rabatt</p>
-              </div>
-              <div className="bg-white/10 rounded-xl p-3 text-center">
-                <p className="text-2xl font-bold text-white">30 min</p>
-                <p className="text-[10px] text-white/50">Demo-Call</p>
-              </div>
+              {benefitStats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="bg-white/10 rounded-xl p-3 text-center"
+                >
+                  <p className="text-2xl font-bold text-white">{stat.value}</p>
+                  <p className="text-[10px] text-white/50">{stat.label}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -391,16 +378,16 @@ export default function BetaSignupPage() {
               <div className="flex items-center justify-between p-6 border-b border-gray-200">
                 <div>
                   <h2 className="text-xl font-bold text-brand-secondary">
-                    Demo-Call buchen
+                    {t("betaPage.calendly.title")}
                   </h2>
                   <p className="text-sm text-gray-500 mt-1">
-                    Wähle einen Termin für dein 30-Min Demo-Gespräch
+                    {t("betaPage.calendly.sub")}
                   </p>
                 </div>
                 <button
                   onClick={() => setShowCalendly(false)}
                   className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
-                  aria-label="Schließen"
+                  aria-label={t("betaPage.calendly.close")}
                 >
                   <X className="w-5 h-5 text-gray-500" />
                 </button>
@@ -418,11 +405,10 @@ export default function BetaSignupPage() {
               {/* Footer Info */}
               <div className="border-t border-gray-200 bg-gradient-to-r from-brand-primary/5 to-brand-secondary/5 p-4 text-center">
                 <p className="text-xs text-gray-600 font-medium">
-                  ✓ Nach Terminbuchung: Bestätigung per Email mit Zoom-Link
+                  {t("betaPage.calendly.footer1")}
                 </p>
                 <p className="text-xs text-gray-500 mt-1">
-                  Die {BETA.freeMonths} Monate kostenlos starten sofort nach der
-                  Demo
+                  {t("betaPage.calendly.footer2", { freeMonths: BETA.freeMonths })}
                 </p>
               </div>
             </div>

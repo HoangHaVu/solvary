@@ -54,6 +54,7 @@ import {
   Compass,
   FileDown,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
 import OfferPdfDocument, {
   type CompanySettings,
@@ -184,29 +185,62 @@ const DEFAULT_SETTINGS: OwnerSettings = {
 /* ─── PIPELINE CONFIG ─── */
 
 // Lead-Pipeline Spalten
-const LEAD_COLUMNS: { key: Lead["status"]; label: string; color: string }[] = [
-  { key: "neu", label: "Neu", color: "bg-emerald-500" },
-  { key: "kontaktiert", label: "Kontaktiert", color: "bg-blue-500" },
-  { key: "vorort", label: "Vor Ort", color: "bg-purple-500" },
-  { key: "angebot", label: "Angebot versendet", color: "bg-indigo-500" },
-  { key: "abschluss", label: "Abschluss", color: "bg-amber-500" },
-];
+const LEAD_COLUMNS: { key: Lead["status"]; labelKey: string; color: string }[] =
+  [
+    {
+      key: "neu",
+      labelKey: "adminDashboard.pipeline.status.new",
+      color: "bg-emerald-500",
+    },
+    {
+      key: "kontaktiert",
+      labelKey: "adminDashboard.pipeline.status.contacted",
+      color: "bg-blue-500",
+    },
+    {
+      key: "vorort",
+      labelKey: "adminDashboard.pipeline.status.onSite",
+      color: "bg-purple-500",
+    },
+    {
+      key: "angebot",
+      labelKey: "adminDashboard.pipeline.status.offerSent",
+      color: "bg-indigo-500",
+    },
+    {
+      key: "abschluss",
+      labelKey: "adminDashboard.pipeline.status.closing",
+      color: "bg-amber-500",
+    },
+  ];
 
 const ACTIVE_LEAD_STATUSES = new Set(LEAD_COLUMNS.map((c) => c.key));
 
 // Projekt-Pipeline Spalten
 const PROJECT_COLUMNS: {
   key: "planung" | "genehmigung" | "installation" | "inbetrieb";
-  label: string;
+  labelKey: string;
   color: string;
   done?: boolean;
 }[] = [
-  { key: "planung", label: "In Planung", color: "bg-indigo-500" },
-  { key: "genehmigung", label: "Genehmigung", color: "bg-amber-500" },
-  { key: "installation", label: "In Installation", color: "bg-purple-500" },
+  {
+    key: "planung",
+    labelKey: "adminDashboard.projects.status.planning",
+    color: "bg-indigo-500",
+  },
+  {
+    key: "genehmigung",
+    labelKey: "adminDashboard.projects.status.approval",
+    color: "bg-amber-500",
+  },
+  {
+    key: "installation",
+    labelKey: "adminDashboard.projects.status.installation",
+    color: "bg-purple-500",
+  },
   {
     key: "inbetrieb",
-    label: "Abgeschlossen",
+    labelKey: "adminDashboard.projects.status.completed",
     color: "bg-green-500",
     done: true,
   },
@@ -226,6 +260,7 @@ function LeadPipelineView({
   markLost: (id: string) => Promise<void>;
   onLeadClick: (lead: Lead) => void;
 }) {
+  const { t } = useTranslation();
   const [filterZip, setFilterZip] = useState("");
   const [filterMinKwp, setFilterMinKwp] = useState("");
   const [filterDate, setFilterDate] = useState("");
@@ -266,10 +301,13 @@ function LeadPipelineView({
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold text-white">Lead-Pipeline</h1>
+          <h1 className="text-2xl font-semibold text-white">
+            {t("adminDashboard.pipeline.title")}
+          </h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            {activeLeads.length} aktive Lead
-            {activeLeads.length !== 1 ? "s" : ""} im Trichter
+            {t("adminDashboard.pipeline.activeLeads", {
+              count: activeLeads.length,
+            })}
           </p>
         </div>
         <div className="flex items-center gap-3 shrink-0">
@@ -277,7 +315,7 @@ function LeadPipelineView({
             <div className="flex items-center gap-2 bg-green-500/10 border border-green-500/20 rounded-xl px-4 py-2">
               <Trophy className="w-4 h-4 text-green-400" />
               <span className="text-sm font-bold text-green-400">
-                {wonCount} gewonnen
+                {t("adminDashboard.pipeline.wonCount", { count: wonCount })}
               </span>
             </div>
           )}
@@ -285,7 +323,7 @@ function LeadPipelineView({
             <div className="flex items-center gap-2 bg-[#252525] border border-white/5 rounded-xl px-4 py-2">
               <X className="w-4 h-4 text-gray-500" />
               <span className="text-sm font-bold text-gray-500">
-                {lostCount} verloren
+                {t("adminDashboard.pipeline.lostCount", { count: lostCount })}
               </span>
             </div>
           )}
@@ -299,14 +337,14 @@ function LeadPipelineView({
             className="text-xs font-bold text-gray-500"
             htmlFor="filter-plz"
           >
-            Postleitzahl
+            {t("adminDashboard.pipeline.filter.zip")}
           </label>
           <div className="relative">
             <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 w-4 h-4" />
             <input
               className="w-full bg-[#0F0F0F] border border-white/10 text-white rounded-lg pl-10 pr-3 py-2.5 text-sm focus:ring-1 focus:ring-brand-primary outline-none placeholder:text-gray-600"
               id="filter-plz"
-              placeholder="z.B. 20457"
+              placeholder={t("adminDashboard.pipeline.filter.zipPlaceholder")}
               type="text"
               value={filterZip}
               onChange={(e) => setFilterZip(e.target.value)}
@@ -318,7 +356,7 @@ function LeadPipelineView({
             className="text-xs font-bold text-gray-500"
             htmlFor="filter-size"
           >
-            Min. Anlagengröße
+            {t("adminDashboard.pipeline.filter.minSize")}
           </label>
           <div className="relative">
             <Sun className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 w-4 h-4" />
@@ -328,10 +366,18 @@ function LeadPipelineView({
               value={filterMinKwp}
               onChange={(e) => setFilterMinKwp(e.target.value)}
             >
-              <option value="">Alle Größen</option>
-              <option value="5">Ab 5 kWp</option>
-              <option value="10">Ab 10 kWp</option>
-              <option value="15">Ab 15 kWp</option>
+              <option value="">
+                {t("adminDashboard.pipeline.filter.allSizes")}
+              </option>
+              <option value="5">
+                {t("adminDashboard.pipeline.filter.fromKwp", { value: 5 })}
+              </option>
+              <option value="10">
+                {t("adminDashboard.pipeline.filter.fromKwp", { value: 10 })}
+              </option>
+              <option value="15">
+                {t("adminDashboard.pipeline.filter.fromKwp", { value: 15 })}
+              </option>
             </select>
           </div>
         </div>
@@ -340,7 +386,7 @@ function LeadPipelineView({
             className="text-xs font-bold text-gray-500"
             htmlFor="filter-date"
           >
-            Eingangsdatum ab
+            {t("adminDashboard.pipeline.filter.fromDate")}
           </label>
           <div className="relative">
             <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 w-4 h-4" />
@@ -358,7 +404,7 @@ function LeadPipelineView({
             className="text-xs font-bold text-gray-500"
             htmlFor="filter-source"
           >
-            Quelle
+            {t("adminDashboard.pipeline.filter.source")}
           </label>
           <div className="relative">
             <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 w-4 h-4" />
@@ -368,20 +414,37 @@ function LeadPipelineView({
               value={filterSource}
               onChange={(e) => setFilterSource(e.target.value)}
             >
-              <option value="">Alle Quellen</option>
-              <option value="landingpage">Landingpage</option>
-              <option value="direct">Direkt</option>
-              <option value="referral">Empfehlung</option>
-              <option value="social">Social Media</option>
-              <option value="google">Google Ads/SEO</option>
-              <option value="other">Sonstiges</option>
+              <option value="">
+                {t("adminDashboard.pipeline.filter.allSources")}
+              </option>
+              <option value="landingpage">
+                {t("adminDashboard.common.source.landingpage")}
+              </option>
+              <option value="direct">
+                {t("adminDashboard.common.source.direct")}
+              </option>
+              <option value="referral">
+                {t("adminDashboard.common.source.referral")}
+              </option>
+              <option value="social">
+                {t("adminDashboard.common.source.social")}
+              </option>
+              <option value="google">
+                {t("adminDashboard.common.source.google")}
+              </option>
+              <option value="other">
+                {t("adminDashboard.common.source.other")}
+              </option>
             </select>
           </div>
         </div>
         <div className="w-full sm:w-auto sm:ml-auto flex items-center gap-3">
           {hasActiveFilter && (
             <span className="text-xs font-bold text-brand-primary">
-              {activeLeads.length} von {allActiveLeads.length} Leads
+              {t("adminDashboard.pipeline.filter.results", {
+                count: activeLeads.length,
+                total: allActiveLeads.length,
+              })}
             </span>
           )}
           <button
@@ -390,7 +453,7 @@ function LeadPipelineView({
             className="w-full sm:w-auto bg-[#0F0F0F] border border-white/10 hover:bg-white/5 text-white font-bold py-2 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <FilterX className="w-4 h-4" />
-            Filter zurücksetzen
+            {t("adminDashboard.pipeline.filter.reset")}
           </button>
         </div>
       </div>
@@ -409,7 +472,7 @@ function LeadPipelineView({
                 onCardDrop={(id, status) =>
                   moveCard(id, status as Lead["status"])
                 }
-                title={col.label}
+                title={t(col.labelKey)}
                 count={colLeads.length}
                 color={col.color}
               >
@@ -418,10 +481,10 @@ function LeadPipelineView({
                     {isAbschluss ? (
                       <>
                         <Trophy className="w-5 h-5 text-amber-500/30" />
-                        <span>Leads hierher ziehen</span>
+                        <span>{t("adminDashboard.pipeline.dropClosing")}</span>
                       </>
                     ) : (
-                      <span>Hierher ziehen</span>
+                      <span>{t("adminDashboard.pipeline.dropHere")}</span>
                     )}
                   </div>
                 ) : (
@@ -456,6 +519,7 @@ function ProjectPipelineView({
     status: import("../services/data").Project["status"],
   ) => Promise<void>;
 }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const boardProjects = projects.filter((p) => p.status !== "angebot");
   const activeCount = boardProjects.filter(
@@ -470,9 +534,14 @@ function ProjectPipelineView({
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold text-white">Projekte</h1>
+          <h1 className="text-2xl font-semibold text-white">
+            {t("adminDashboard.projects.title")}
+          </h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            {activeCount} laufend · {doneCount} abgeschlossen
+            {t("adminDashboard.projects.subtitle", {
+              active: activeCount,
+              done: doneCount,
+            })}
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -481,18 +550,18 @@ function ProjectPipelineView({
             className="flex items-center gap-2 bg-brand-secondary-hover border border-white/10 hover:border-brand-primary/30 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-all"
           >
             <CheckCircle2 className="w-4 h-4 text-green-400" />
-            Alle abgeschlossenen Aufträge
+            {t("adminDashboard.projects.completedOrders")}
           </button>
           <div className="bg-brand-secondary-hover rounded-xl border border-white/5 px-5 py-3 text-center shadow-sm min-w-[80px]">
             <p className="text-2xl font-black text-white">{activeCount}</p>
             <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
-              Laufend
+              {t("adminDashboard.projects.active")}
             </p>
           </div>
           <div className="bg-brand-secondary-hover rounded-xl border border-white/5 px-5 py-3 text-center shadow-sm min-w-[80px]">
             <p className="text-2xl font-black text-green-400">{doneCount}</p>
             <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
-              Fertig
+              {t("adminDashboard.projects.done")}
             </p>
           </div>
         </div>
@@ -504,10 +573,10 @@ function ProjectPipelineView({
           <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-16 text-center max-w-[600px] mx-auto mt-8">
             <FolderOpen className="w-12 h-12 text-gray-700 mx-auto mb-4" />
             <p className="font-bold text-gray-500">
-              Noch keine Projekte vorhanden.
+              {t("adminDashboard.projects.emptyTitle")}
             </p>
             <p className="text-sm text-gray-600 mt-1">
-              Neue Projekte entstehen wenn du einen Lead als gewonnen markierst.
+              {t("adminDashboard.projects.emptySubtitle")}
             </p>
           </div>
         ) : (
@@ -517,7 +586,7 @@ function ProjectPipelineView({
               return (
                 <KanbanColumn
                   key={col.key}
-                  title={col.label}
+                  title={t(col.labelKey)}
                   count={cards.length}
                   color={col.color}
                   columnKey={col.key}
@@ -541,8 +610,8 @@ function ProjectPipelineView({
                       }`}
                     >
                       {col.done
-                        ? "Noch keine abgeschlossenen Projekte"
-                        : "Keine Projekte"}
+                        ? t("adminDashboard.projects.noCompleted")
+                        : t("adminDashboard.projects.none")}
                     </div>
                   ) : (
                     cards.map((project) => (
@@ -564,6 +633,7 @@ function ProjectPipelineView({
 }
 
 export default function AdminDashboard() {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const { leads, moveCard, markWon, markLost } = useLeads();
@@ -812,65 +882,73 @@ export default function AdminDashboard() {
   }
 
   // ── Angebots-Status Config ──
-  const OFFER_CONFIG: Record<
-    Lead["offer_status"],
-    {
-      label: string;
-      icon: React.ElementType;
-      color: string;
-      bg: string;
-      border: string;
-    }
-  > = {
-    created: {
-      label: "Noch nicht versendet",
-      icon: FileTextIcon,
-      color: "text-gray-400",
-      bg: "bg-gray-500/10",
-      border: "border-gray-500/20",
-    },
-    sent: {
-      label: "Angebot versendet",
-      icon: Send,
-      color: "text-blue-400",
-      bg: "bg-blue-500/10",
-      border: "border-blue-500/20",
-    },
-    viewed: {
-      label: "Angebot angesehen",
-      icon: Eye,
-      color: "text-purple-400",
-      bg: "bg-purple-500/10",
-      border: "border-purple-500/20",
-    },
-    accepted: {
-      label: "Angebot angenommen",
-      icon: CheckCircle2,
-      color: "text-green-400",
-      bg: "bg-green-500/10",
-      border: "border-green-500/20",
-    },
-    rejected: {
-      label: "Angebot abgelehnt",
-      icon: X,
-      color: "text-red-400",
-      bg: "bg-red-500/10",
-      border: "border-red-500/20",
-    },
-  };
+  const OFFER_CONFIG = useMemo<
+    Record<
+      Lead["offer_status"],
+      {
+        label: string;
+        icon: React.ElementType;
+        color: string;
+        bg: string;
+        border: string;
+      }
+    >
+  >(
+    () => ({
+      created: {
+        label: t("adminDashboard.offer.status.created"),
+        icon: FileTextIcon,
+        color: "text-gray-400",
+        bg: "bg-gray-500/10",
+        border: "border-gray-500/20",
+      },
+      sent: {
+        label: t("adminDashboard.offer.status.sent"),
+        icon: Send,
+        color: "text-blue-400",
+        bg: "bg-blue-500/10",
+        border: "border-blue-500/20",
+      },
+      viewed: {
+        label: t("adminDashboard.offer.status.viewed"),
+        icon: Eye,
+        color: "text-purple-400",
+        bg: "bg-purple-500/10",
+        border: "border-purple-500/20",
+      },
+      accepted: {
+        label: t("adminDashboard.offer.status.accepted"),
+        icon: CheckCircle2,
+        color: "text-green-400",
+        bg: "bg-green-500/10",
+        border: "border-green-500/20",
+      },
+      rejected: {
+        label: t("adminDashboard.offer.status.rejected"),
+        icon: X,
+        color: "text-red-400",
+        bg: "bg-red-500/10",
+        border: "border-red-500/20",
+      },
+    }),
+    [t],
+  );
 
-  const STATUS_LABELS: Record<Lead["status"], string> = {
-    neu: "Neu",
-    kontaktiert: "Kontaktiert",
-    vorort: "Vor Ort",
-    angebot: "Angebot versendet",
-    abschluss: "Abschluss",
-    gewonnen: "Gewonnen",
-    verloren: "Verloren",
-    planung: "In Planung",
-    installation: "In Installation",
-    abgeschlossen: "Abgeschlossen",
-  };
+  const STATUS_LABELS = useMemo<Record<Lead["status"], string>>(
+    () => ({
+      neu: t("adminDashboard.common.status.new"),
+      kontaktiert: t("adminDashboard.common.status.contacted"),
+      vorort: t("adminDashboard.common.status.onSite"),
+      angebot: t("adminDashboard.common.status.offerSent"),
+      abschluss: t("adminDashboard.common.status.closing"),
+      gewonnen: t("adminDashboard.common.status.won"),
+      verloren: t("adminDashboard.common.status.lost"),
+      planung: t("adminDashboard.common.status.planning"),
+      installation: t("adminDashboard.common.status.installation"),
+      abgeschlossen: t("adminDashboard.common.status.completed"),
+    }),
+    [t],
+  );
 
   // ── Rabatt-Codes State ──
   const [ownerCodes, setOwnerCodes] = useState<DiscountCode[]>([]);
@@ -1220,12 +1298,12 @@ export default function AdminDashboard() {
 
     // Lead-Quellen Verteilung
     const sourceLabels: Record<string, string> = {
-      landingpage: "Landingpage",
-      direct: "Direkt",
-      referral: "Empfehlung",
-      social: "Social Media",
-      google: "Google Ads/SEO",
-      other: "Sonstiges",
+      landingpage: t("adminDashboard.common.source.landingpage"),
+      direct: t("adminDashboard.common.source.direct"),
+      referral: t("adminDashboard.common.source.referral"),
+      social: t("adminDashboard.common.source.social"),
+      google: t("adminDashboard.common.source.google"),
+      other: t("adminDashboard.common.source.other"),
     };
     const sourceDistribution = Array.from(
       leads.reduce((map, lead) => {
@@ -1285,7 +1363,7 @@ export default function AdminDashboard() {
       teamPerformance,
       sourceDistribution,
     };
-  }, [leads]);
+  }, [leads, t]);
 
   return (
     <div className="min-h-screen flex bg-[#0F0F0F] text-white">
@@ -1300,30 +1378,39 @@ export default function AdminDashboard() {
               <div className="grid grid-cols-4 gap-4">
                 {[
                   {
-                    label: "Gesamt-Leads",
+                    label: t("adminDashboard.dashboard.stats.totalLeads"),
                     value: reportStats.totalLeads.toString(),
                     change: `+${reportStats.monthly[5]?.count || 0}`,
                     icon: Users,
                     color: "bg-brand-primary/10 text-brand-primary",
                   },
                   {
-                    label: "Aktive Deals",
+                    label: t("adminDashboard.dashboard.stats.activeDeals"),
                     value: reportStats.openLeads.toString(),
-                    change: `${reportStats.wonLeads} gewonnen`,
+                    change: t("adminDashboard.dashboard.stats.wonCount", {
+                      count: reportStats.wonLeads,
+                    }),
                     icon: CheckCircle2,
                     color: "bg-green-500/10 text-green-400",
                   },
                   {
-                    label: "Pipeline-Wert",
+                    label: t("adminDashboard.dashboard.stats.pipelineValue"),
                     value: `€ ${(reportStats.revenue / 1000).toFixed(1)}k`,
-                    change: `${reportStats.conversionRate.toFixed(1)}% Conv.`,
+                    change: t(
+                      "adminDashboard.dashboard.stats.conversionShort",
+                      {
+                        value: reportStats.conversionRate.toFixed(1),
+                      },
+                    ),
                     icon: DollarSign,
                     color: "bg-blue-500/10 text-blue-400",
                   },
                   {
-                    label: "Conversion-Rate",
+                    label: t("adminDashboard.dashboard.stats.conversionRate"),
                     value: `${reportStats.conversionRate.toFixed(1)}%`,
-                    change: `${reportStats.winLossRatio.toFixed(1)}:1 Win/Loss`,
+                    change: t("adminDashboard.dashboard.stats.winLoss", {
+                      value: reportStats.winLossRatio.toFixed(1),
+                    }),
                     icon: TrendingUp,
                     color: "bg-purple-500/10 text-purple-400",
                   },
@@ -1360,14 +1447,14 @@ export default function AdminDashboard() {
               {/* Aktionen */}
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-semibold text-white">
-                  Pipeline-Übersicht
+                  {t("adminDashboard.dashboard.pipelineOverview")}
                 </h3>
                 <button
                   onClick={() => setShowAddLeadModal(true)}
                   className="flex items-center gap-2 bg-brand-primary hover:bg-brand-primary-hover text-brand-secondary font-bold text-sm px-4 py-2 rounded-xl transition-colors"
                 >
                   <Plus className="w-4 h-4" />
-                  Neuer Lead
+                  {t("adminDashboard.dashboard.newLead")}
                 </button>
               </div>
 
@@ -1376,33 +1463,33 @@ export default function AdminDashboard() {
                 {/* Funnel / Pipeline Flow */}
                 <div className="col-span-7 bg-brand-secondary-hover rounded-2xl p-5 border border-white/5">
                   <h3 className="text-sm font-semibold text-white mb-4">
-                    Pipeline Flow
+                    {t("adminDashboard.dashboard.pipelineFlow")}
                   </h3>
                   <div className="flex flex-col gap-3">
                     {(() => {
                       const stages = [
                         {
-                          stage: "Neue Leads",
+                          stage: t("adminDashboard.dashboard.stage.newLeads"),
                           count: reportStats.pipeline.neu,
                           color: "#3B82F6",
                         },
                         {
-                          stage: "Kontaktiert",
+                          stage: t("adminDashboard.common.status.contacted"),
                           count: reportStats.pipeline.kontaktiert,
                           color: "#60A5FA",
                         },
                         {
-                          stage: "Angebot",
+                          stage: t("adminDashboard.common.status.offerSent"),
                           count: reportStats.pipeline.angebot,
                           color: "#93C5FD",
                         },
                         {
-                          stage: "Abschluss",
+                          stage: t("adminDashboard.common.status.closing"),
                           count: reportStats.pipeline.abschluss,
                           color: "#BFDBFE",
                         },
                         {
-                          stage: "Gewonnen",
+                          stage: t("adminDashboard.common.status.won"),
                           count: reportStats.pipeline.gewonnen,
                           color: COLORS.primary,
                         },
@@ -1443,7 +1530,7 @@ export default function AdminDashboard() {
                 {/* Recent Activity */}
                 <div className="col-span-5 bg-brand-secondary-hover rounded-2xl p-5 border border-white/5">
                   <h3 className="text-sm font-semibold text-white mb-4">
-                    Recent Activity
+                    {t("adminDashboard.dashboard.recentActivity")}
                   </h3>
                   <div className="flex flex-col gap-4">
                     {[
@@ -1506,21 +1593,31 @@ export default function AdminDashboard() {
               <div className="bg-brand-secondary-hover rounded-2xl p-5 border border-white/5">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-sm font-semibold text-white">
-                    Recent Deals
+                    {t("adminDashboard.dashboard.recentDeals")}
                   </h3>
                   <button className="text-xs text-brand-primary hover:underline">
-                    View All
+                    {t("adminDashboard.dashboard.viewAll")}
                   </button>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
                       <tr className="text-[10px] text-gray-500 uppercase tracking-wider border-b border-white/5">
-                        <th className="text-left pb-3 font-medium">Company</th>
-                        <th className="text-left pb-3 font-medium">Contact</th>
-                        <th className="text-left pb-3 font-medium">Value</th>
-                        <th className="text-left pb-3 font-medium">Stage</th>
-                        <th className="text-left pb-3 font-medium">Assigned</th>
+                        <th className="text-left pb-3 font-medium">
+                          {t("adminDashboard.dashboard.table.company")}
+                        </th>
+                        <th className="text-left pb-3 font-medium">
+                          {t("adminDashboard.dashboard.table.contact")}
+                        </th>
+                        <th className="text-left pb-3 font-medium">
+                          {t("adminDashboard.dashboard.table.value")}
+                        </th>
+                        <th className="text-left pb-3 font-medium">
+                          {t("adminDashboard.dashboard.table.stage")}
+                        </th>
+                        <th className="text-left pb-3 font-medium">
+                          {t("adminDashboard.dashboard.table.assigned")}
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1563,7 +1660,7 @@ export default function AdminDashboard() {
                                         : "bg-gray-500/10 text-gray-400 border-gray-500/20"
                               }`}
                             >
-                              {lead.status}
+                              {STATUS_LABELS[lead.status] || lead.status}
                             </span>
                           </td>
                           <td className="py-3 text-xs text-gray-400">
@@ -2400,7 +2497,7 @@ export default function AdminDashboard() {
                                   <span
                                     className={`text-[11px] font-semibold px-2.5 py-1 rounded-lg capitalize ${statusColors[lead.status] || "bg-gray-500/10 text-gray-400"}`}
                                   >
-                                    {lead.status}
+                                    {STATUS_LABELS[lead.status] || lead.status}
                                   </span>
                                 </td>
                                 <td className="px-6 py-4 text-sm text-gray-500">

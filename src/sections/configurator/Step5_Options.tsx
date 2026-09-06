@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Car, Flame, Power, Zap, Check } from 'lucide-react';
 import type { WizardData } from '../../pages/Configurator';
 
@@ -6,57 +7,37 @@ interface Props {
   updateData: (p: Partial<WizardData>) => void;
 }
 
-const futureNeeds = [
-  {
-    id: 'futureCar',
-    key: 'futureCar' as const,
-    label: 'E-Auto',
-    impact: '+ ca. 2.500 kWh/Jahr',
-    desc: 'Planen Sie den Kauf eines E-Autos? Wir berücksichtigen den höheren Stromverbrauch in der Berechnung.',
-    icon: Car,
-  },
-  {
-    id: 'heatPump',
-    key: 'heatPump' as const,
-    label: 'Wärmepumpe',
-    impact: '+ ca. 3.000 kWh/Jahr',
-    desc: 'Planen Sie den Einbau einer Wärmepumpe? Wir berücksichtigen den höheren Stromverbrauch in der Berechnung.',
-    icon: Flame,
-  },
+const futureNeedsSkeleton = [
+  { id: 'futureCar', key: 'futureCar' as const, icon: Car },
+  { id: 'heatPump', key: 'heatPump' as const, icon: Flame },
 ];
 
-const hardwareOptions = [
-  {
-    id: 'wallbox',
-    key: 'wallbox' as const,
-    label: 'E-Mobility Wallbox',
-    price: '+ 1.200 €',
-    desc: 'Laden Sie Ihr E-Auto bequem mit Solarstrom zu Hause. Inkl. Installation.',
-    icon: Car,
-  },
-  {
-    id: 'backup',
-    key: 'backupPower' as const,
-    label: 'Notstromfunktion',
-    price: '+ 800 €',
-    desc: 'Bleiben Sie auch beim Stromausfall versorgt. Automatische Umschaltung.',
-    icon: Power,
-  },
+const hardwareOptionsSkeleton = [
+  { id: 'wallbox', key: 'wallbox' as const, icon: Car },
+  { id: 'backup', key: 'backupPower' as const, icon: Power },
 ];
 
 export default function Step5_Options({ data, updateData }: Props) {
+  const { t } = useTranslation();
+
+  const futureNeedsText = t('configurator.step5.futureNeeds', { returnObjects: true }) as Array<{ label: string; impact: string; desc: string }>;
+  const futureNeeds = futureNeedsSkeleton.map((opt, i) => ({ ...opt, ...futureNeedsText[i] }));
+
+  const hardwareText = t('configurator.step5.hardwareOptions', { returnObjects: true }) as Array<{ label: string; price: string; desc: string }>;
+  const hardwareOptions = hardwareOptionsSkeleton.map((opt, i) => ({ ...opt, ...hardwareText[i] }));
+
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">Ausstattung & Pläne</h2>
-        <p className="text-gray-500 text-sm">Planen Sie ein E-Auto oder eine Wärmepumpe — und ergänzen Sie Ihre Anlage mit praktischen Extras.</p>
+        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">{t('configurator.step5.title')}</h2>
+        <p className="text-gray-500 text-sm">{t('configurator.step5.subtitle')}</p>
       </div>
 
       {/* Future Needs */}
       <div>
         <label className="text-sm font-medium text-brand-secondary mb-3 flex items-center gap-2">
           <Zap className="w-4 h-4 text-brand-primary" />
-          Planen Sie Veränderungen?
+          {t('configurator.step5.futureNeedsLabel')}
         </label>
         <div className="flex flex-col gap-3">
           {futureNeeds.map((opt) => {
@@ -106,7 +87,7 @@ export default function Step5_Options({ data, updateData }: Props) {
 
       <div className="flex items-center gap-4">
         <div className="flex-1 h-px bg-gray-200" />
-        <span className="text-xs text-gray-400">Zusatzoptionen</span>
+        <span className="text-xs text-gray-400">{t('configurator.step5.extraOptions')}</span>
         <div className="flex-1 h-px bg-gray-200" />
       </div>
 

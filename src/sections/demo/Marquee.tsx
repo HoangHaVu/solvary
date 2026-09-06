@@ -1,7 +1,10 @@
-const row1Items = ['Zukunft mit der Sonne', 'Kraft der Solar-Innovation', 'Erneuerbare Energie', 'Kraft der Solar-Innovation'];
-const row2Items = ['Erneuerbare Revolution', 'Saubere Energie', 'Solar-Lösungen', 'Sonnenenergie', 'Strahlende Zukunft'];
+import { useTranslation } from 'react-i18next';
 
 export default function Marquee() {
+  const { t } = useTranslation();
+  const row1Items = t('demoPage.marquee.row1', { returnObjects: true }) as string[];
+  const row2Items = t('demoPage.marquee.row2', { returnObjects: true }) as string[];
+
   return (
     <section className="overflow-hidden">
       {/* Row 1 - scrolls left, light gray bg */}

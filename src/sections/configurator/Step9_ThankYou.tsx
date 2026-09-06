@@ -1,6 +1,7 @@
+import { useTranslation } from 'react-i18next';
 import { CheckCircle, Mail, FileText, Phone, ArrowRight, RotateCcw, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { BETA, BETA_COPY } from '../../lib/betaConfig';
+import { BETA } from '../../lib/betaConfig';
 
 interface Props {
   /** Demo-Modus: Konfigurator wird von einem Installateur getestet (pre-launch).
@@ -8,29 +9,13 @@ interface Props {
   demoMode?: boolean;
 }
 
-const nextSteps = [
-  {
-    icon: FileText,
-    title: 'Prüfung der Daten',
-    desc: 'Die Konfiguration wird innerhalb von 24 Stunden analysiert.',
-    time: '24h',
-  },
-  {
-    icon: Mail,
-    title: 'Persönliches Angebot',
-    desc: 'Ein maßgeschneidertes Angebot landet per E-Mail beim Kunden.',
-    time: '48h',
-  },
-  {
-    icon: Phone,
-    title: 'Kostenlose Beratung',
-    desc: 'Bei Fragen folgt ein telefonischer Rückruf — unverbindlich.',
-    time: '72h',
-  },
-];
+const nextStepIcons = [FileText, Mail, Phone];
 
 export default function Step9_ThankYou({ demoMode = true }: Props) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
+  const nextSteps = (t('configurator.step9.nextSteps', { returnObjects: true }) as Array<{ title: string; desc: string; time: string }>)
+    .map((step, i) => ({ ...step, icon: nextStepIcons[i] }));
 
   // ─── DEMO-MODUS: Installateur am Wow-Punkt → Beta-Pivot ───
   if (demoMode) {
@@ -43,14 +28,15 @@ export default function Step9_ThankYou({ demoMode = true }: Props) {
 
         {/* Heading — pivot zur Installateur-Perspektive */}
         <span className="inline-flex items-center gap-1.5 bg-brand-primary/10 text-brand-primary text-xs font-bold px-3 py-1 rounded-full mb-3">
-          <Zap className="w-3.5 h-3.5" fill="currentColor" /> {BETA_COPY.spotsBadge}
+          <Zap className="w-3.5 h-3.5" fill="currentColor" /> {t('configurator.step9.spotsBadge', { count: BETA.spotsLeft })}
         </span>
         <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">
-          Stark, oder? Das war die Kundensicht.
+          {t('configurator.step9.demoTitle')}
         </h2>
         <p className="text-gray-500 text-sm max-w-[440px] mb-8">
-          Genau so konfigurieren deine Kunden ihre Anlage — und du bekommst den Lead
-          mit allen Daten frei Haus. Willst du das auf <span className="font-semibold text-brand-secondary">deiner</span> Webseite?
+          {t('configurator.step9.demoSubtitleStart')}
+          <span className="font-semibold text-brand-secondary">{t('configurator.step9.demoSubtitleYour')}</span>
+          {t('configurator.step9.demoSubtitleEnd')}
         </p>
 
         {/* Beta Value Card */}
@@ -58,29 +44,29 @@ export default function Step9_ThankYou({ demoMode = true }: Props) {
           <div className="grid grid-cols-3 gap-3 mb-5">
             <div className="text-center">
               <p className="text-xl font-bold text-white">{BETA.freeMonths} Mo.</p>
-              <p className="text-[10px] text-white/50">Kostenlos</p>
+              <p className="text-[10px] text-white/50">{t('configurator.step9.free')}</p>
             </div>
             <div className="text-center">
               <p className="text-xl font-bold text-brand-primary">-{BETA.discountPercent}%</p>
-              <p className="text-[10px] text-white/50">Dauerhaft</p>
+              <p className="text-[10px] text-white/50">{t('configurator.step9.permanent')}</p>
             </div>
             <div className="text-center">
               <p className="text-xl font-bold text-white">{BETA.callMinutes} min</p>
-              <p className="text-[10px] text-white/50">Demo-Call</p>
+              <p className="text-[10px] text-white/50">{t('configurator.step9.demoCall')}</p>
             </div>
           </div>
           <button
             onClick={() => navigate('/beta')}
             className="w-full flex items-center justify-center gap-2 bg-brand-primary text-brand-secondary font-bold py-3.5 rounded-xl hover:bg-brand-primary-hover transition-colors"
           >
-            Beta-Partner werden <ArrowRight className="w-4 h-4" />
+            {t('configurator.step9.betaCta')} <ArrowRight className="w-4 h-4" />
           </button>
         </div>
 
         {/* Endkunden-Automatik als Beweis */}
         <div className="w-full max-w-[440px] mb-8">
           <p className="text-xs text-gray-400 uppercase tracking-widest mb-3">
-            Was danach automatisch für deinen Kunden passiert
+            {t('configurator.step9.demoNextStepsTitle')}
           </p>
           <div className="flex flex-col gap-2">
             {nextSteps.map((step, i) => {
@@ -110,7 +96,7 @@ export default function Step9_ThankYou({ demoMode = true }: Props) {
           className="flex items-center gap-2 text-sm text-gray-400 hover:text-brand-secondary transition-colors"
         >
           <RotateCcw className="w-4 h-4" />
-          Demo nochmal durchklicken
+          {t('configurator.step9.replayDemo')}
         </button>
       </div>
     );
@@ -122,12 +108,12 @@ export default function Step9_ThankYou({ demoMode = true }: Props) {
       <div className="w-20 h-20 rounded-full bg-brand-primary/10 flex items-center justify-center mb-6">
         <CheckCircle className="w-10 h-10 text-brand-primary" />
       </div>
-      <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">Vielen Dank!</h2>
+      <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">{t('configurator.step9.thankYouTitle')}</h2>
       <p className="text-gray-500 text-sm max-w-[400px] mb-8">
-        Ihre Anfrage wurde erfolgreich übermittelt. Wir erstellen jetzt Ihr individuelles Solarangebot.
+        {t('configurator.step9.thankYouSubtitle')}
       </p>
       <div className="w-full max-w-[500px] flex flex-col gap-4 mb-10">
-        <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">Was passiert als Nächstes?</p>
+        <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">{t('configurator.step9.nextStepsTitle')}</p>
         {nextSteps.map((step, i) => {
           const Icon = step.icon;
           return (
@@ -153,7 +139,7 @@ export default function Step9_ThankYou({ demoMode = true }: Props) {
         onClick={() => navigate('/')}
         className="text-sm text-gray-400 hover:text-brand-secondary transition-colors"
       >
-        Zurück zur Startseite
+        {t('configurator.step9.backHome')}
       </button>
     </div>
   );

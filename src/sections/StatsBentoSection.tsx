@@ -1,5 +1,6 @@
 // PROJECT: Voltify | PURPOSE: Bento-Grid mit Beta-Kennzahlen und zentralem Solvary-Logo
 import { Clock, Zap, TrendingUp, type LucideIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { BETA } from "../lib/betaConfig";
 import { SectionTag } from "../components/ui/SectionTag";
 
@@ -8,29 +9,6 @@ interface Stat {
   label: string;
   icon: LucideIcon;
 }
-
-const stats: Stat[] = [
-  {
-    value: `${BETA.freeMonths} Monate`,
-    label: "Kostenlos testen",
-    icon: Clock,
-  },
-  {
-    value: "50%+",
-    label: "Weniger Admin-Aufwand",
-    icon: TrendingUp,
-  },
-  {
-    value: `${BETA.discountPercent}%`,
-    label: "Gründerrabatt für Beta-Partner",
-    icon: Zap,
-  },
-  {
-    value: "Sofort",
-    label: "Startklar nach Demo-Call",
-    icon: Zap,
-  },
-];
 
 function StatCard({
   stat,
@@ -69,6 +47,31 @@ function StatCard({
 }
 
 export default function StatsBentoSection() {
+  const { t } = useTranslation();
+
+  const stats: Stat[] = [
+    {
+      value: `${BETA.freeMonths} Monate`,
+      label: t("sections.stats.freeMonthsLabel"),
+      icon: Clock,
+    },
+    {
+      value: "50%+",
+      label: t("sections.stats.adminEffortLabel"),
+      icon: TrendingUp,
+    },
+    {
+      value: `${BETA.discountPercent}%`,
+      label: t("sections.stats.discountLabel"),
+      icon: Zap,
+    },
+    {
+      value: "Sofort",
+      label: t("sections.stats.readyLabel"),
+      icon: Zap,
+    },
+  ];
+
   return (
     <section className="relative overflow-hidden bg-white py-20 md:py-28">
       {/* Weicher Marken-Schein hinter dem Grid */}
@@ -80,10 +83,10 @@ export default function StatsBentoSection() {
       <div className="relative max-w-[1180px] mx-auto px-6">
         <div className="text-center mb-12 md:mb-16">
           <div className="reveal flex justify-center">
-            <SectionTag>Warum Solvary</SectionTag>
+            <SectionTag>{t("sections.stats.tag")}</SectionTag>
           </div>
           <h2 className="reveal text-3xl md:text-4xl font-semibold text-brand-secondary mt-4 tracking-tight">
-            Weniger Admin, mehr Abschlüsse
+            {t("sections.stats.heading")}
           </h2>
         </div>
 
@@ -110,7 +113,7 @@ export default function StatsBentoSection() {
               />
             </div>
             <p className="relative mt-8 text-center text-sm text-gray-500">
-              Ein System für Leads, Angebote und Projekte
+              {t("sections.stats.center")}
             </p>
           </div>
 

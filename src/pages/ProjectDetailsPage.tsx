@@ -1,6 +1,7 @@
 import { COLORS } from '../lib/theme';
 import { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Sun, CheckCircle, UploadCloud, FileText,
   ChevronDown, ArrowLeft, Download, ArrowRight, Receipt,
@@ -10,14 +11,6 @@ import { AdminSidebar } from '../components/layout/AdminSidebar';
 import { useInstallerProject } from '../hooks/useInstallerProject';
 import SolarPlanningSection from '../components/solar-planner/SolarPlanningSection';
 import type { Project } from '../services/data';
-
-const STATUS_LABELS: Record<Project['status'], string> = {
-  angebot: 'Angebot erstellt',
-  planung: 'In Planung',
-  genehmigung: 'Genehmigung läuft',
-  installation: 'In Installation',
-  inbetrieb: 'In Betrieb ✓',
-};
 
 const STATUS_COLORS: Record<Project['status'], string> = {
   angebot: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
@@ -63,10 +56,19 @@ function StatCard({ label, value, sub, icon, accent }: StatCardProps) {
 export default function ProjectDetailsPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { project, isLoading, isSaving, advancePhase, changeStatus, saveNotes, isLastPhase } = useInstallerProject(id);
 
   const [notes, setNotes] = useState('');
   const [paymentPaid, setPaymentPaid] = useState([false, false, false]);
+
+  const STATUS_LABELS: Record<Project['status'], string> = {
+    angebot: t('leads.projectStatus.offerCreated'),
+    planung: t('leads.projectStatus.planning'),
+    genehmigung: t('leads.projectStatus.approval'),
+    installation: t('leads.projectStatus.installation'),
+    inbetrieb: t('leads.projectStatus.operational'),
+  };
 
   useEffect(() => {
     if (project?.notes != null) setNotes(project.notes);
@@ -76,6 +78,15 @@ export default function ProjectDetailsPage() {
     ? { full_name: `${project.lead.first_name} ${project.lead.last_name}`, phone: project.lead.phone, zip: project.lead.zip }
     : null;
   const customer = project?.customer ?? leadAsCustomer;
+
+  const invoiceLabels = t('leads.paymentPlan.labels', { returnObjects: true }) as [string, string, string];
+  const statusOptions: { value: Project['status']; label: string }[] = [
+    { value: 'angebot', label: t('leads.projectStatus.offerCreated') },
+    { value: 'planung', label: t('leads.projectStatus.planning') },
+    { value: 'genehmigung', label: t('leads.projectStatus.approval') },
+    { value: 'installation', label: t('leads.projectStatus.installation') },
+    { value: 'inbetrieb', label: t('leads.projectStatus.operational') },
+  ];
 
   return (
     <div className="min-h-screen flex bg-[#0F0F0F] text-white">
@@ -91,7 +102,7 @@ export default function ProjectDetailsPage() {
 
           {!isLoading && !project && (
             <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-12 text-center text-gray-500">
-              <p className="font-semibold">Noch kein Projekt vorhanden.</p>
+              <p className="font-semibold">{t('leads.noProjectYet')}</p>
             </div>
           )}
 
@@ -102,7 +113,7 @@ export default function ProjectDetailsPage() {
                 className="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-white transition-colors mb-6 group"
               >
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-                Zurück zu Projekten
+                {t('leads.backToProjects')}
               </button>
 
               <header className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
@@ -116,25 +127,25 @@ export default function ProjectDetailsPage() {
                     </span>
                   </div>
                   <h1 className="text-3xl font-black text-white">
-                    {customer?.full_name ?? 'PV Anlage'}
+                    {customer?.full_name ?? t('leads.pvSystem')}
                   </h1>
                 </div>
 
                 <div className="flex items-center gap-3 flex-wrap">
                   <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full border bg-green-500/10 text-green-400 border-green-500/20">
                     <CheckCircle className="w-3.5 h-3.5" />
-                    Angebot angenommen
+                    {t('leads.offerAccepted')}
                   </span>
 
                   <button className="border border-white/10 text-white font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-white/5 transition-colors flex items-center gap-2">
                     <Download className="w-4 h-4" />
-                    Angebot als PDF
+                    {t('leads.downloadOfferPdf')}
                   </button>
 
                   {isLastPhase ? (
                     <div className="flex items-center gap-2 bg-green-500/10 text-green-400 font-bold text-sm px-5 py-2.5 rounded-xl border border-green-500/20">
                       <CheckCircle className="w-4 h-4" />
-                      Anlage in Betrieb
+                      {t('leads.systemOperational')}
                     </div>
                   ) : (
                     <button
@@ -143,7 +154,7 @@ export default function ProjectDetailsPage() {
                       className="bg-brand-primary text-brand-secondary font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-brand-primary-hover transition-colors flex items-center gap-2 shadow-sm disabled:opacity-60"
                     >
                       {isSaving ? <Sun className="w-4 h-4 animate-spin" /> : <ArrowRight className="w-4 h-4" />}
-                      Phase abschließen
+                      {t('leads.completePhase')}
                     </button>
                   )}
                 </div>
@@ -155,24 +166,24 @@ export default function ProjectDetailsPage() {
                   {/* Kundendaten */}
                   {customer && (
                     <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
-                      <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Kundendaten</h2>
+                      <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">{t('leads.section.customerData')}</h2>
                       <div className="space-y-3">
                         <InfoRow
                           icon={<span className="text-white font-bold text-sm">{customer.full_name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}</span>}
-                          label="Name"
+                          label={t('leads.label.name')}
                           value={customer.full_name}
                         />
                         {customer.phone && (
                           <InfoRow
                             icon={<Phone className="w-4 h-4 text-gray-400" />}
-                            label="Telefon"
+                            label={t('leads.label.phone')}
                             value={<a href={`tel:${customer.phone}`} className="hover:text-brand-primary transition-colors">{customer.phone}</a>}
                           />
                         )}
                         {customer.zip && (
                           <InfoRow
                             icon={<MapPin className="w-4 h-4 text-gray-400" />}
-                            label="Postleitzahl"
+                            label={t('leads.label.zip')}
                             value={customer.zip}
                           />
                         )}
@@ -182,14 +193,14 @@ export default function ProjectDetailsPage() {
 
                   {/* Konfiguration */}
                   <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
-                    <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Anlagenkonfiguration</h2>
+                    <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">{t('leads.section.system')}</h2>
                     <div className="grid grid-cols-2 gap-3">
-                      <StatCard label="Anlagengröße" value={project.kwp != null ? `${project.kwp} kWp` : '—'} icon={<Zap className="w-3.5 h-3.5" />} accent="text-yellow-400" />
-                      <StatCard label="Investition" value={project.investment != null ? `${project.investment.toLocaleString('de-DE')} €` : '—'} icon={<Euro className="w-3.5 h-3.5" />} accent="text-gray-400" />
-                      <StatCard label="Ersparnis/Jahr" value={project.annual_savings != null ? `${project.annual_savings.toLocaleString('de-DE')} €` : '—'} icon={<TrendingUp className="w-3.5 h-3.5" />} accent="text-green-400" />
-                      <StatCard label="Amortisation" value={project.amortization != null ? `${project.amortization} Jahre` : '—'} icon={<Calendar className="w-3.5 h-3.5" />} accent="text-indigo-400" />
-                      <StatCard label="Autarkie" value={project.autarky != null ? `${project.autarky} %` : '—'} sub="Eigenverbrauchsanteil" icon={<BatteryCharging className="w-3.5 h-3.5" />} accent="text-teal-400" />
-                      <StatCard label="Jährlicher Ertrag" value={project.annual_savings != null ? `${(project.annual_savings * 1.5).toFixed(0)} €` : '—'} icon={<BarChart2 className="w-3.5 h-3.5" />} accent="text-emerald-400" />
+                      <StatCard label={t('leads.label.systemSize')} value={project.kwp != null ? `${project.kwp} kWp` : '—'} icon={<Zap className="w-3.5 h-3.5" />} accent="text-yellow-400" />
+                      <StatCard label={t('leads.label.investment')} value={project.investment != null ? `${project.investment.toLocaleString('de-DE')} €` : '—'} icon={<Euro className="w-3.5 h-3.5" />} accent="text-gray-400" />
+                      <StatCard label={t('leads.label.savingsPerYear')} value={project.annual_savings != null ? `${project.annual_savings.toLocaleString('de-DE')} €` : '—'} icon={<TrendingUp className="w-3.5 h-3.5" />} accent="text-green-400" />
+                      <StatCard label={t('leads.label.amortization')} value={project.amortization != null ? `${project.amortization} ${t('leads.years')}` : '—'} icon={<Calendar className="w-3.5 h-3.5" />} accent="text-indigo-400" />
+                      <StatCard label={t('leads.label.autarky')} value={project.autarky != null ? `${project.autarky} %` : '—'} sub={t('leads.label.selfConsumption')} icon={<BatteryCharging className="w-3.5 h-3.5" />} accent="text-teal-400" />
+                      <StatCard label={t('leads.label.yearlyYield')} value={project.annual_savings != null ? `${(project.annual_savings * 1.5).toFixed(0)} €` : '—'} icon={<BarChart2 className="w-3.5 h-3.5" />} accent="text-emerald-400" />
                     </div>
                   </section>
                 </div>
@@ -198,10 +209,10 @@ export default function ProjectDetailsPage() {
                 <div className="lg:col-span-7 flex flex-col gap-8">
                   {/* Status */}
                   <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
-                    <h2 className="text-lg font-bold text-white mb-4">Projektstatus</h2>
+                    <h2 className="text-lg font-bold text-white mb-4">{t('leads.section.projectStatus')}</h2>
                     <div className="relative">
                       <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">
-                        Status manuell setzen
+                        {t('leads.setStatusManually')}
                       </label>
                       <div className="relative">
                         <select
@@ -209,16 +220,14 @@ export default function ProjectDetailsPage() {
                           onChange={(e) => changeStatus(e.target.value as Project['status'])}
                           className="w-full appearance-none bg-[#0F0F0F] border border-white/10 text-white font-bold text-sm rounded-xl pl-4 pr-10 py-3 focus:outline-none focus:ring-2 focus:ring-brand-primary/30"
                         >
-                          <option value="angebot">Angebot erstellt</option>
-                          <option value="planung">In Planung</option>
-                          <option value="genehmigung">Genehmigung läuft</option>
-                          <option value="installation">In Installation</option>
-                          <option value="inbetrieb">In Betrieb</option>
+                          {statusOptions.map(o => (
+                            <option key={o.value} value={o.value}>{o.label}</option>
+                          ))}
                         </select>
                         <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
                       </div>
                       <p className="text-xs text-gray-500 mt-2">
-                        Oder nutze "Phase abschließen" oben für den nächsten Schritt.
+                        {t('leads.completePhaseHint')}
                       </p>
                     </div>
                   </section>
@@ -229,7 +238,7 @@ export default function ProjectDetailsPage() {
                       leadId={project.lead_id}
                       leadName={project.lead.first_name && project.lead.last_name
                         ? `${project.lead.first_name} ${project.lead.last_name}`
-                        : project.customer?.full_name ?? 'Kunde'}
+                        : project.customer?.full_name ?? t('leads.customer')}
                       kwp={project.kwp}
                       roofAreaM2={null}
                       orientation={null}
@@ -243,10 +252,10 @@ export default function ProjectDetailsPage() {
                     <div className="w-12 h-12 rounded-full bg-[#252525] flex items-center justify-center text-brand-primary mb-4">
                       <UploadCloud className="w-6 h-6" />
                     </div>
-                    <h3 className="text-sm font-bold text-white mb-1">Dokumente hochladen</h3>
-                    <p className="text-xs text-gray-500 mb-4">Zählerfoto, Dachpläne, etc.</p>
+                    <h3 className="text-sm font-bold text-white mb-1">{t('leads.uploadDocuments')}</h3>
+                    <p className="text-xs text-gray-500 mb-4">{t('leads.documentHint')}</p>
                     <button className="bg-[#252525] text-white font-bold text-xs px-4 py-2 rounded-lg hover:bg-[#333] transition-colors">
-                      Datei auswählen
+                      {t('leads.chooseFile')}
                     </button>
                   </section>
 
@@ -254,13 +263,13 @@ export default function ProjectDetailsPage() {
                   <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                     <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2 border-b border-white/5 pb-4">
                       <FileText className="w-5 h-5 text-gray-500" />
-                      Interne Notizen
+                      {t('leads.internalNotes')}
                     </h2>
                     <textarea
                       className="w-full h-32 bg-[#0F0F0F] border border-white/10 rounded-xl p-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-primary/30 resize-none placeholder:text-gray-600"
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
-                      placeholder="Notizen zur Dachbeschaffenheit, Kundenwünschen oder Besonderheiten..."
+                      placeholder={t('leads.notesPlaceholder')}
                     />
                     <div className="flex justify-end mt-3">
                       <button
@@ -269,7 +278,7 @@ export default function ProjectDetailsPage() {
                         className="bg-brand-primary text-brand-secondary font-bold text-sm px-6 py-2 rounded-xl hover:bg-brand-primary-hover transition-colors disabled:opacity-40 flex items-center gap-2"
                       >
                         {isSaving && <Sun className="w-4 h-4 animate-spin" />}
-                        Notizen speichern
+                        {t('leads.saveNotes')}
                       </button>
                     </div>
                   </section>
@@ -279,11 +288,11 @@ export default function ProjectDetailsPage() {
                     <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                       <h2 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
                         <CheckCircle className="w-5 h-5 text-green-400" />
-                        Zahlungsstatus
+                        {t('leads.paymentStatus')}
                       </h2>
-                      <p className="text-xs text-gray-500 mb-4">3-Raten-Zahlungsplan — als bezahlt markieren</p>
+                      <p className="text-xs text-gray-500 mb-4">{t('leads.paymentPlan.hint')}</p>
                       <div className="space-y-2">
-                        {(['Abschlags-Rechnung 1 — 30 % Anzahlung', 'Abschlags-Rechnung 2 — 60 % Montage', 'Schluss-Rechnung — 10 % Abnahme'] as const).map((label, i) => {
+                        {invoiceLabels.map((label, i) => {
                           const amounts = [
                             Math.round((project.investment ?? 0) * 0.30),
                             Math.round((project.investment ?? 0) * 0.60),
@@ -314,16 +323,16 @@ export default function ProjectDetailsPage() {
                         })}
                       </div>
                       <div className="mt-3 flex items-center justify-between text-xs text-gray-500">
-                        <span>{paymentPaid.filter(Boolean).length} / 3 Raten bezahlt</span>
+                        <span>{t('leads.paymentPlan.paidCount', { count: paymentPaid.filter(Boolean).length })}</span>
                         <span className="font-bold text-white">
-                          {paymentPaid.reduce((sum, paid, i) => {
+                          {t('leads.paymentPlan.received', { amount: paymentPaid.reduce((sum, paid, i) => {
                             const amounts = [
                               Math.round((project.investment ?? 0) * 0.30),
                               Math.round((project.investment ?? 0) * 0.60),
                               (project.investment ?? 0) - Math.round((project.investment ?? 0) * 0.30) - Math.round((project.investment ?? 0) * 0.60),
                             ];
                             return sum + (paid ? amounts[i] : 0);
-                          }, 0).toLocaleString('de-DE')} € erhalten
+                          }, 0).toLocaleString('de-DE') })}
                         </span>
                       </div>
                     </section>
@@ -333,12 +342,11 @@ export default function ProjectDetailsPage() {
                   <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                     <h2 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
                       <Receipt className="w-5 h-5 text-brand-primary" />
-                      Rechnungen generieren
+                      {t('leads.generateInvoices')}
                     </h2>
-                    <p className="text-xs text-gray-500 mb-4">3-Raten-Zahlungsplan · 0 % MwSt. gem. § 12 Abs. 3 UStG</p>
+                    <p className="text-xs text-gray-500 mb-4">{t('leads.invoiceVatHint')}</p>
                     <div className="space-y-2">
                       {([1, 2, 3] as const).map((type) => {
-                        const labels = ['Abschlags-Rechnung 1 — 30 % Anzahlung', 'Abschlags-Rechnung 2 — 60 % Montage', 'Schluss-Rechnung — 10 % Abnahme'];
                         const amounts = [
                           Math.round((project.investment ?? 0) * 0.30),
                           Math.round((project.investment ?? 0) * 0.60),
@@ -351,12 +359,12 @@ export default function ProjectDetailsPage() {
                           >
                             <span className="flex items-center gap-2">
                               <FileText className="w-4 h-4 text-brand-primary" />
-                              {labels[type - 1]}
+                              {invoiceLabels[type - 1]}
                             </span>
                             <span className="flex items-center gap-2 text-gray-500 group-hover:text-brand-primary transition-colors">
                               <span className="font-bold text-white">{amounts[type - 1].toLocaleString('de-DE')} €</span>
                               <Download className="w-3.5 h-3.5" />
-                              PDF
+                              {t('leads.pdf')}
                             </span>
                           </button>
                         );

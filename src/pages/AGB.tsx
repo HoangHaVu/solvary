@@ -162,9 +162,9 @@ export default function AGB() {
             <p>
               <strong className="font-bold">Solvary</strong>
             </p>
-            <p>Van Anh Kasem</p>
-            <p>Auf dem Gleichen 18</p>
-            <p>65934 Frankfurt am Main</p>
+            <p>Hoang Ha Vu</p>
+            <p>Dotzheimer Straße 108</p>
+            <p>65197 Wiesbaden</p>
             <p className="pt-1">
               E-Mail:{" "}
               <a

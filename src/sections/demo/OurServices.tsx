@@ -1,17 +1,20 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslation } from 'react-i18next';
 import { Zap, ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const cards = [
-  { img: '/images/service-rooftop.jpg', title: 'Solaranlage auf dem Dach', icon: '/icons/rooftop.svg' },
-  { img: '/images/service-maintenance.jpg', title: 'Wartung von Solaranlagen', icon: '/icons/maint.svg' },
-  { img: '/images/service-offgrid.jpg', title: 'Off-Grid-Solarinstallation', icon: '/icons/offgrid.svg' },
+const cardData = [
+  { img: '/images/service-rooftop.jpg', icon: '/icons/rooftop.svg' },
+  { img: '/images/service-maintenance.jpg', icon: '/icons/maint.svg' },
+  { img: '/images/service-offgrid.jpg', icon: '/icons/offgrid.svg' },
 ];
 
 export default function OurServices() {
+  const { t } = useTranslation();
+  const cards = t('demoPage.ourServices.cards', { returnObjects: true }) as { title: string }[];
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -35,13 +38,13 @@ export default function OurServices() {
         <div className="os-text mb-12 opacity-0">
           <div className="flex items-center gap-2 mb-4">
             <Zap className="w-4 h-4 text-black" />
-            <span className="text-xs font-semibold uppercase tracking-widest text-black">Unsere Services</span>
+            <span className="text-xs font-semibold uppercase tracking-widest text-black">{t('demoPage.ourServices.label')}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-medium text-black leading-tight tracking-tight max-w-[600px] mb-4">
-            Maßgeschneiderte Solaranlagen, die zu Ihnen passen
+            {t('demoPage.ourServices.heading')}
           </h2>
           <p className="text-gray-600 text-base max-w-[600px]">
-            Unser Team entwirft und installiert maßgeschneiderte Solaranlagen basierend auf Ihrem individuellen Energieverbrauch, Grundstückslayout und Budget – für maximale Effizienz, langfristige Einsparungen und Unabhängigkeit von Energieversorgern.
+            {t('demoPage.ourServices.sub')}
           </p>
         </div>
 
@@ -55,7 +58,7 @@ export default function OurServices() {
               >
                 <div className="aspect-[3/4] relative overflow-hidden">
                   <img
-                    src={card.img}
+                    src={cardData[i].img}
                     alt={card.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />

@@ -6,12 +6,7 @@ import {
 } from 'lucide-react';
 import { AdminSidebar } from '../components/layout/AdminSidebar';
 import { useLeads } from '../hooks/useLeads';
-
-const STATUS_LABELS: Record<string, string> = {
-  gewonnen: 'Gewonnen',
-  verloren: 'Verloren',
-  abgeschlossen: 'Abgeschlossen',
-};
+import { useTranslation } from 'react-i18next';
 
 const STATUS_COLORS: Record<string, string> = {
   gewonnen: 'bg-green-500/10 text-green-400 border-green-500/20',
@@ -21,6 +16,7 @@ const STATUS_COLORS: Record<string, string> = {
 
 export default function CompletedOrdersPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { leads, isLoading } = useLeads();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLeads, setSelectedLeads] = useState<string[]>([]);
@@ -66,12 +62,12 @@ export default function CompletedOrdersPage() {
                 className="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-white transition-colors group"
               >
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-                Zurück
+                {t('installerDashboard.completedOrders.back')}
               </button>
               <div>
-                <h1 className="text-2xl font-semibold text-white">Abgeschlossene Aufträge</h1>
+                <h1 className="text-2xl font-semibold text-white">{t('installerDashboard.completedOrders.title')}</h1>
                 <p className="text-sm text-gray-500 mt-0.5">
-                  {filteredLeads.length} abgeschlossene Lead{filteredLeads.length !== 1 ? 's' : ''}
+                  {t('installerDashboard.completedOrders.subtitle', { count: filteredLeads.length })}
                 </p>
               </div>
             </div>
@@ -82,7 +78,7 @@ export default function CompletedOrdersPage() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Suchen..."
+                  placeholder={t('installerDashboard.completedOrders.searchPlaceholder')}
                   className="bg-transparent text-sm text-white placeholder:text-gray-500 focus:outline-none w-48"
                 />
               </div>
@@ -99,9 +95,9 @@ export default function CompletedOrdersPage() {
           ) : filteredLeads.length === 0 ? (
             <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-16 text-center max-w-[600px] mx-auto">
               <CheckCircle2 className="w-12 h-12 text-gray-700 mx-auto mb-4" />
-              <p className="font-bold text-gray-500">Noch keine abgeschlossenen Aufträge.</p>
+              <p className="font-bold text-gray-500">{t('installerDashboard.completedOrders.emptyTitle')}</p>
               <p className="text-sm text-gray-600 mt-1">
-                Abgeschlossene Leads erscheinen hier, wenn sie als gewonnen oder verloren markiert werden.
+                {t('installerDashboard.completedOrders.emptyDescription')}
               </p>
             </div>
           ) : (
@@ -120,13 +116,13 @@ export default function CompletedOrdersPage() {
                             className="w-4 h-4 rounded border-gray-600 bg-transparent accent-brand-primary"
                           />
                         </th>
-                        <th className="text-left py-4 px-2 font-medium">Kunde</th>
-                        <th className="text-left py-4 px-2 font-medium">E-Mail</th>
-                        <th className="text-left py-4 px-2 font-medium">Status</th>
-                        <th className="text-left py-4 px-2 font-medium">PLZ</th>
-                        <th className="text-left py-4 px-2 font-medium">Eingegangen</th>
-                        <th className="text-left py-4 px-2 font-medium">Anlage</th>
-                        <th className="text-left py-4 px-5 font-medium">Aktion</th>
+                        <th className="text-left py-4 px-2 font-medium">{t('installerDashboard.completedOrders.columns.customer')}</th>
+                        <th className="text-left py-4 px-2 font-medium">{t('installerDashboard.completedOrders.columns.email')}</th>
+                        <th className="text-left py-4 px-2 font-medium">{t('installerDashboard.completedOrders.columns.status')}</th>
+                        <th className="text-left py-4 px-2 font-medium">{t('installerDashboard.completedOrders.columns.zip')}</th>
+                        <th className="text-left py-4 px-2 font-medium">{t('installerDashboard.completedOrders.columns.received')}</th>
+                        <th className="text-left py-4 px-2 font-medium">{t('installerDashboard.completedOrders.columns.system')}</th>
+                        <th className="text-left py-4 px-5 font-medium">{t('installerDashboard.completedOrders.columns.action')}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -155,7 +151,7 @@ export default function CompletedOrdersPage() {
                           <td className="py-4 px-2 text-sm text-gray-400">{lead.email}</td>
                           <td className="py-4 px-2">
                             <span className={`text-[10px] px-2.5 py-1 rounded-full border capitalize ${STATUS_COLORS[lead.status] ?? 'bg-gray-500/10 text-gray-400 border-gray-500/20'}`}>
-                              {STATUS_LABELS[lead.status] ?? lead.status}
+                              {t(`installerDashboard.statusLabels.${lead.status}`) ?? lead.status}
                             </span>
                           </td>
                           <td className="py-4 px-2 text-sm text-gray-400">{lead.zip || '-'}</td>
@@ -183,16 +179,16 @@ export default function CompletedOrdersPage() {
               {/* Selection Toolbar */}
               {selectedLeads.length > 0 && (
                 <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-brand-secondary-hover border border-white/10 rounded-2xl px-5 py-3 flex items-center gap-4 shadow-2xl z-50">
-                  <span className="text-sm text-white font-medium">{selectedLeads.length} ausgewählt</span>
+                  <span className="text-sm text-white font-medium">{t('installerDashboard.completedOrders.selectedCount', { count: selectedLeads.length })}</span>
                   <div className="w-px h-5 bg-white/10" />
                   <button className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors">
-                    <Mail className="w-3.5 h-3.5" /> E-Mail
+                    <Mail className="w-3.5 h-3.5" /> {t('installerDashboard.completedOrders.bulk.email')}
                   </button>
                   <button className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors">
-                    <Tag className="w-3.5 h-3.5" /> Tag
+                    <Tag className="w-3.5 h-3.5" /> {t('installerDashboard.completedOrders.bulk.tag')}
                   </button>
                   <button className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors">
-                    <Users className="w-3.5 h-3.5" /> Zuweisen
+                    <Users className="w-3.5 h-3.5" /> {t('installerDashboard.completedOrders.bulk.assign')}
                   </button>
                 </div>
               )}

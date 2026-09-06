@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Handshake, CheckCircle, XCircle, Send, Mail, Phone, MapPin, Zap } from 'lucide-react';
 import { fetchPartnerByToken, fetchPartnerAssignmentsByToken, partnerUpdateAssignmentByToken, type Partner, type LeadAssignment } from '../../services/agency';
 
 export default function PartnerPortalPage() {
+  const { t } = useTranslation();
   const { token } = useParams<{ token: string }>();
   const [partner, setPartner] = useState<Partner | null>(null);
   const [assignments, setAssignments] = useState<LeadAssignment[]>([]);
@@ -20,7 +22,7 @@ export default function PartnerPortalPage() {
     try {
       const p = await fetchPartnerByToken(token!);
       if (!p) {
-        setError('Ungültiger Zugriff. Bitte überprüfen Sie Ihren Link.');
+        setError(t('agency.partnerPortal.invalidAccess'));
         setLoading(false);
         return;
       }
@@ -28,7 +30,7 @@ export default function PartnerPortalPage() {
       const a = await fetchPartnerAssignmentsByToken(token!);
       setAssignments(a);
     } catch (e) {
-      setError('Fehler beim Laden der Daten.');
+      setError(t('agency.partnerPortal.loadError'));
     } finally {
       setLoading(false);
     }
@@ -39,7 +41,7 @@ export default function PartnerPortalPage() {
       await partnerUpdateAssignmentByToken(token!, assignmentId, status);
       loadData();
     } catch (e) {
-      alert('Fehler: ' + (e as Error).message);
+      alert(t('agency.common.errorPrefix') + (e as Error).message);
     }
   }
 
@@ -48,14 +50,14 @@ export default function PartnerPortalPage() {
       await partnerUpdateAssignmentByToken(token!, assignmentId, 'converted');
       loadData();
     } catch (e) {
-      alert('Fehler: ' + (e as Error).message);
+      alert(t('agency.common.errorPrefix') + (e as Error).message);
     }
   }
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0F0F0F]">
-        <p className="text-gray-500">Laden...</p>
+        <p className="text-gray-500">{t('agency.common.loading')}</p>
       </div>
     );
   }
@@ -64,8 +66,8 @@ export default function PartnerPortalPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0F0F0F] text-white">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-2">Zugriff verweigert</h1>
-          <p className="text-gray-500">{error || 'Ungültiger Link'}</p>
+          <h1 className="text-2xl font-bold mb-2">{t('agency.partnerPortal.accessDenied')}</h1>
+          <p className="text-gray-500">{error || t('agency.partnerPortal.invalidLink')}</p>
         </div>
       </div>
     );
@@ -85,11 +87,11 @@ export default function PartnerPortalPage() {
             </div>
             <div>
               <h1 className="font-semibold text-white">{partner.company_name}</h1>
-              <p className="text-xs text-gray-500">Partner-Portal</p>
+              <p className="text-xs text-gray-500">{t('agency.partnerPortal.title')}</p>
             </div>
           </div>
           <div className="text-right">
-            <p className="text-xs text-gray-500">Provision</p>
+            <p className="text-xs text-gray-500">{t('agency.partnerPortal.commission')}</p>
             <p className="text-sm font-medium text-brand-primary">
               {partner.commission_value}{partner.commission_type === 'fixed' ? ' €' : ' %'}
             </p>
@@ -100,10 +102,10 @@ export default function PartnerPortalPage() {
       <main className="max-w-4xl mx-auto p-6">
         {/* Neue Zuweisungen */}
         <section className="mb-8">
-          <h2 className="text-lg font-semibold text-white mb-4">Neue Leads ({pending.length})</h2>
+          <h2 className="text-lg font-semibold text-white mb-4">{t('agency.partnerPortal.newLeads', { count: pending.length })}</h2>
           {pending.length === 0 ? (
             <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-8 text-center text-gray-500">
-              Keine neuen Leads
+              {t('agency.partnerPortal.noNewLeads')}
             </div>
           ) : (
             <div className="space-y-3">
@@ -116,10 +118,10 @@ export default function PartnerPortalPage() {
 
         {/* Aktive Zuweisungen */}
         <section>
-          <h2 className="text-lg font-semibold text-white mb-4">Meine Leads ({active.length})</h2>
+          <h2 className="text-lg font-semibold text-white mb-4">{t('agency.partnerPortal.myLeads', { count: active.length })}</h2>
           {active.length === 0 ? (
             <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-8 text-center text-gray-500">
-              Keine aktiven Leads
+              {t('agency.partnerPortal.noActiveLeads')}
             </div>
           ) : (
             <div className="space-y-3">
@@ -133,13 +135,13 @@ export default function PartnerPortalPage() {
                         className="flex items-center gap-1 text-xs bg-green-500/10 text-green-400 hover:bg-green-500/20 px-3 py-1.5 rounded-lg transition-colors"
                       >
                         <CheckCircle className="w-3 h-3" />
-                        Auftrag erteilt
+                        {t('agency.partnerPortal.orderPlaced')}
                       </button>
                     )}
                     {a.status === 'converted' && (
                       <span className="text-xs text-green-400 flex items-center gap-1">
                         <CheckCircle className="w-3 h-3" />
-                        Konvertiert
+                        {t('agency.partnerPortal.converted')}
                       </span>
                     )}
                   </div>
@@ -159,6 +161,7 @@ function LeadCard({ assignment, onAccept, onReject }: {
   onAccept: () => void;
   onReject: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-4">
       <h3 className="font-medium text-white mb-2">{assignment.lead?.first_name} {assignment.lead?.last_name}</h3>
@@ -169,14 +172,14 @@ function LeadCard({ assignment, onAccept, onReject }: {
           className="flex items-center gap-1 bg-green-500/10 text-green-400 hover:bg-green-500/20 text-sm font-medium px-4 py-2 rounded-lg transition-colors"
         >
           <CheckCircle className="w-4 h-4" />
-          Annehmen
+          {t('agency.partnerPortal.accept')}
         </button>
         <button
           onClick={onReject}
           className="flex items-center gap-1 bg-red-500/10 text-red-400 hover:bg-red-500/20 text-sm font-medium px-4 py-2 rounded-lg transition-colors"
         >
           <XCircle className="w-4 h-4" />
-          Ablehnen
+          {t('agency.partnerPortal.reject')}
         </button>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Zap, ArrowRight, ArrowLeft, Check } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { LOGO_PATH, LOGO_WHITE_PATH } from '../lib/branding';
 import SEO from '../components/seo/SEO';
 import DemoBanner from '../components/layout/DemoBanner';
@@ -76,19 +77,11 @@ const initialData: WizardData = {
   privacyConsent: false,
 };
 
-const steps = [
-  { id: 1, label: 'Gebäude & Eigentum', icon: '🏠' },
-  { id: 2, label: 'Dach konfigurieren', icon: '🏗️' },
-  { id: 3, label: 'Stromverbrauch', icon: '⚡' },
-  { id: 4, label: 'Ausstattung & Pläne', icon: '🔧' },
-  { id: 5, label: 'Speicher wählen', icon: '🔋' },
-  { id: 6, label: 'Förderungen', icon: '💰' },
-  { id: 7, label: 'Wirtschaftlichkeit', icon: '📊' },
-  { id: 8, label: 'Kontaktdaten', icon: '📝' },
-  { id: 9, label: 'Fertig', icon: '✅' },
-];
-
 export default function Configurator() {
+  const { t } = useTranslation();
+  const stepItems = t('configurator.steps', { returnObjects: true }) as Array<{ label: string; icon: string }>;
+  const steps = stepItems.map((step, i) => ({ id: i + 1, ...step }));
+
   const [searchParams] = useSearchParams();
   const isDemo = searchParams.get('demo') === '1';
   const branding = useTenantBranding();
@@ -216,7 +209,7 @@ export default function Configurator() {
 
       setCurrentStep(9);
     } catch (err) {
-      setSubmitError(err instanceof Error ? err.message : 'Übermittlung fehlgeschlagen.');
+      setSubmitError(err instanceof Error ? err.message : t('configurator.submitError'));
     } finally {
       setIsSubmitting(false);
     }
@@ -260,14 +253,14 @@ export default function Configurator() {
   return (
     <>
       <SEO
-        title="Solar-Konfigurator"
-        description="Konfigurieren Sie Ihre Photovoltaik-Anlage in 9 Schritten. Inkl. ROI-Berechnung, Förderungen und persönlichem Angebot."
+        title={t('configurator.seo.title')}
+        description={t('configurator.seo.description')}
         canonical="/konfigurator"
         noindex
       />
       <div className={`${isEmbedded ? '' : 'min-h-screen'} flex flex-col`}>
       {/* Demo-Modus-Banner — nur bei ?demo=1 (Installateur-Preview) */}
-      {isDemo && <DemoBanner label="Demo-Modus — so konfigurieren deine Kunden ihre Solaranlage" />}
+      {isDemo && <DemoBanner label={t('configurator.demoBanner')} />}
       <div className="flex flex-1 min-h-0">
       {/* LEFT - Sidebar */}
       <div
@@ -291,7 +284,7 @@ export default function Configurator() {
 
           {/* Steps Timeline */}
           <div className="flex-1">
-            <p className="text-xs text-white/50 uppercase tracking-widest mb-6">Konfigurator</p>
+            <p className="text-xs text-white/50 uppercase tracking-widest mb-6">{t('configurator.sidebar.title')}</p>
             <div className="flex flex-col gap-1">
               {steps.map((step) => {
                 const isActive = step.id === currentStep;
@@ -339,7 +332,7 @@ export default function Configurator() {
           {/* Progress bar */}
           <div className="mt-auto pt-6">
             <div className="flex items-center justify-between text-xs text-white/50 mb-2">
-              <span>Fortschritt</span>
+              <span>{t('configurator.sidebar.progress')}</span>
               <span>{Math.round((currentStep / 9) * 100)}%</span>
             </div>
             <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
@@ -349,7 +342,7 @@ export default function Configurator() {
               />
             </div>
             {branding.isTenant && branding.poweredByVoltify && (
-              <p className="text-[10px] text-white/20 mt-4 text-center">Powered by Solvary</p>
+              <p className="text-[10px] text-white/20 mt-4 text-center">{t('configurator.sidebar.poweredBy')}</p>
             )}
           </div>
         </div>
@@ -381,7 +374,7 @@ export default function Configurator() {
               )}
             </button>
             <span className="text-xs text-gray-500">
-              Schritt {currentStep} / 9
+              {t('configurator.mobileStep', { current: currentStep, total: 9 })}
             </span>
           </div>
 
@@ -414,7 +407,7 @@ export default function Configurator() {
                   }`}
                 >
                   <ArrowLeft className="w-4 h-4" />
-                  Zurück
+                  {t('configurator.nav.back')}
                 </button>
 
                 {currentStep === 6 ? (
@@ -422,7 +415,7 @@ export default function Configurator() {
                     onClick={() => setCurrentStep(7)}
                     className="flex items-center gap-2 bg-brand-primary text-brand-secondary px-6 py-3 rounded-xl text-sm font-semibold hover:bg-brand-primary-hover transition-all"
                   >
-                    Individuelles Angebot anfordern
+                    {t('configurator.nav.requestOffer')}
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 ) : currentStep < 6 && maxVisitedStep >= 6 ? (
@@ -431,7 +424,7 @@ export default function Configurator() {
                       onClick={goNext}
                       className="flex items-center gap-2 bg-brand-secondary text-white px-6 py-3 rounded-xl text-sm font-medium hover:bg-brand-secondary-hover transition-all"
                     >
-                      Weiter
+                      {t('configurator.nav.next')}
                       <ArrowRight className="w-4 h-4" />
                     </button>
                     <button
@@ -439,7 +432,7 @@ export default function Configurator() {
                       className="flex items-center gap-2 bg-brand-primary/10 border border-brand-primary/30 text-brand-primary px-4 py-3 rounded-xl text-sm font-medium hover:bg-brand-primary/20 transition-all"
                     >
                       <Zap className="w-4 h-4" />
-                      Zur Analyse
+                      {t('configurator.nav.toAnalysis')}
                     </button>
                   </div>
                 ) : (
@@ -447,7 +440,7 @@ export default function Configurator() {
                     onClick={goNext}
                     className="flex items-center gap-2 bg-brand-secondary text-white px-6 py-3 rounded-xl text-sm font-medium hover:bg-brand-secondary-hover transition-all"
                   >
-                    Weiter
+                    {t('configurator.nav.next')}
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 )}

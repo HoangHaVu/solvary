@@ -1,22 +1,17 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslation } from 'react-i18next';
 import { TrendingUp, Plug, Zap } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const stats = [
-  { icon: TrendingUp, label: 'Einsparungen', sub: 'Einfach gemacht, echte Ergebnisse', value: '45%' },
-  { icon: Plug, label: 'Smartes Monitoring', sub: 'Einfach gemacht, echte Ergebnisse', value: '24/7' },
-];
-
-const cards = [
-  { title: 'Unsere Mission', desc: 'Saubere Energie fuer alle zugaenglich, erschwinglich und muhelos machen. Wir entwickeln Software, die Solar-Betriebe bei jedem Schritt unterstuetzt.' },
-  { title: 'Unsere Vision', desc: 'Eine Welt, die vollstaendig von intelligenten, erneuerbaren Energiesystemen angetrieben wird — durch digitale Tools, die den Weg dorthin ebnen.' },
-  { title: 'Unsere Werte', desc: 'Innovation, Nachhaltigkeit, Integritaet und Kundenorientierung. Wir setzen auf Partnerschaft und echte Ergebnisse fuer unsere Kunden.' },
-];
+const statIcons = [TrendingUp, Plug];
 
 export default function About() {
+  const { t } = useTranslation();
+  const stats = t('demoPage.about.stats', { returnObjects: true }) as { label: string; sub: string; value: string }[];
+  const cards = t('demoPage.about.cards', { returnObjects: true }) as { title: string; desc: string }[];
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -56,13 +51,13 @@ export default function About() {
         <div className="text-center mb-16">
           <div className="au-badge flex items-center justify-center gap-2 mb-4 opacity-0">
             <Zap className="w-4 h-4 text-black" />
-            <span className="text-xs font-semibold uppercase tracking-widest text-black">Ueber Uns</span>
+            <span className="text-xs font-semibold uppercase tracking-widest text-black">{t('demoPage.about.badge')}</span>
           </div>
           <h2 className="au-heading text-4xl md:text-5xl font-medium text-black leading-tight tracking-tight opacity-0">
-            Intelligente Solarloesungen<br />fuer eine nachhaltige Zukunft
+            {t('demoPage.about.heading')}
           </h2>
           <p className="au-sub text-gray-500 text-base max-w-[560px] mx-auto mt-4 leading-relaxed opacity-0">
-            Unser Ansatz geht weit ueber die Standard-Montage hinaus. Wir entwickeln Systeme, die nahtlos smartes Monitoring mit durchdachtem Design verbinden.
+            {t('demoPage.about.sub')}
           </p>
         </div>
 
@@ -71,18 +66,18 @@ export default function About() {
           {/* Left */}
           <div className="au-left bg-[#F5F5F5] rounded-l-2xl p-10 md:p-14 flex flex-col justify-center opacity-0">
             <h3 className="text-4xl md:text-5xl font-medium text-black leading-tight tracking-tight mb-8">
-              Smarter Solar.<br />Hellere Zukunft
+              {t('demoPage.about.leftHeading')}
             </h3>
             <div className="w-24 h-px bg-gray-300 mb-8" />
             <p className="text-gray-600 text-base leading-relaxed max-w-[400px]">
-              Solvary ist ein Software-Unternehmen der neuen Generation, das sich darauf spezialisiert hat, intelligente Solarsysteme zu entwickeln, die Nachhaltigkeit mit smarten Technologien verbinden.
+              {t('demoPage.about.leftBody')}
             </p>
           </div>
 
           {/* Right */}
           <div className="au-right bg-black rounded-r-2xl p-10 md:p-14 flex flex-col justify-center gap-4 opacity-0">
             {stats.map((s, i) => {
-              const Icon = s.icon;
+              const Icon = statIcons[i];
               return (
                 <div key={i} className="bg-white rounded-xl p-5 flex items-center gap-4">
                   <div className="w-12 h-12 rounded-lg bg-gray-50 flex items-center justify-center flex-shrink-0">

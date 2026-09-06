@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Handshake, Plus, Pencil, Trash2, X, MapPin, Mail, Phone, Percent, Euro, Globe,
   Crown, AlertCircle,
@@ -12,6 +13,7 @@ import {
 } from '../../services/agency';
 
 export default function PartnersPage() {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
@@ -112,17 +114,17 @@ export default function PartnersPage() {
       setShowModal(false);
       loadPartners();
     } catch (e) {
-      alert('Fehler: ' + (e as Error).message);
+      alert(t('agency.common.errorPrefix') + (e as Error).message);
     }
   }
 
   async function handleDelete(partnerId: string) {
-    if (!confirm('Partner wirklich löschen?')) return;
+    if (!confirm(t('agency.partnersPage.confirmDelete'))) return;
     try {
       await deletePartner(partnerId);
       loadPartners();
     } catch (e) {
-      alert('Fehler: ' + (e as Error).message);
+      alert(t('agency.common.errorPrefix') + (e as Error).message);
     }
   }
 
@@ -132,8 +134,8 @@ export default function PartnersPage() {
       <main className="flex-1 overflow-y-auto p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-semibold text-white">Partner-Installateure</h1>
-            <p className="text-sm text-gray-500 mt-1">Verwalten Sie Ihre Installateur-Partner</p>
+            <h1 className="text-2xl font-semibold text-white">{t('agency.partnersPage.title')}</h1>
+            <p className="text-sm text-gray-500 mt-1">{t('agency.partnersPage.subtitle')}</p>
           </div>
           {limitReached ? (
             <Link
@@ -141,7 +143,7 @@ export default function PartnersPage() {
               className="flex items-center gap-2 bg-white/10 border border-brand-primary/30 text-brand-primary font-bold text-sm px-4 py-2.5 rounded-xl hover:bg-white/15 transition-colors"
             >
               <Crown className="w-4 h-4" />
-              Upgrade erforderlich
+              {t('agency.common.upgradeRequired')}
             </Link>
           ) : (
             <button
@@ -149,7 +151,7 @@ export default function PartnersPage() {
               className="flex items-center gap-2 bg-brand-primary text-brand-secondary font-bold text-sm px-4 py-2.5 rounded-xl hover:bg-brand-primary-hover transition-colors"
             >
               <Plus className="w-4 h-4" />
-              Partner hinzufügen
+              {t('agency.partnersPage.addPartner')}
             </button>
           )}
         </div>
@@ -159,28 +161,28 @@ export default function PartnersPage() {
             <AlertCircle className="w-5 h-5 text-brand-primary flex-shrink-0 mt-0.5" />
             <div className="flex-1">
               <p className="text-sm font-semibold text-white">
-                Partner-Limit erreicht ({activeCount}/{partnerLimit})
+                {t('agency.partnersPage.limitReachedTitle', { active: activeCount, limit: partnerLimit })}
               </p>
               <p className="text-xs text-gray-400 mt-0.5">
-                Du hast das Limit deines aktuellen Agency-Tarifs erreicht. Upgrade auf Pro oder Scale, um unbegrenzt Partner zu verwalten.
+                {t('agency.partnersPage.limitReachedDescription')}
               </p>
             </div>
             <Link
               to="/pricing"
               className="text-xs font-bold text-brand-secondary bg-brand-primary px-3 py-2 rounded-lg hover:bg-brand-primary-hover transition-colors flex-shrink-0"
             >
-              Tarife ansehen
+              {t('agency.common.viewPlans')}
             </Link>
           </div>
         )}
 
         {loading ? (
-          <div className="text-center py-20 text-gray-500">Laden...</div>
+          <div className="text-center py-20 text-gray-500">{t('agency.common.loading')}</div>
         ) : partners.length === 0 ? (
           <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-12 text-center">
             <Handshake className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-            <p className="text-gray-400">Noch keine Partner</p>
-            <p className="text-sm text-gray-600 mt-1">Fügen Sie Ihre ersten Installateur-Partner hinzu</p>
+            <p className="text-gray-400">{t('agency.partnersPage.emptyTitle')}</p>
+            <p className="text-sm text-gray-600 mt-1">{t('agency.partnersPage.emptySubtitle')}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -223,7 +225,7 @@ export default function PartnersPage() {
                   {partner.zip_regions?.length > 0 && (
                     <div className="flex items-center gap-2 text-gray-400">
                       <MapPin className="w-4 h-4 text-brand-primary" />
-                      PLZ: {partner.zip_regions.join(', ')}
+                      {t('agency.partnersPage.zipLabel')}: {partner.zip_regions.join(', ')}
                     </div>
                   )}
                   {partner.website && (
@@ -245,7 +247,7 @@ export default function PartnersPage() {
                     ) : (
                       <Percent className="w-4 h-4 text-brand-primary" />
                     )}
-                    Provision: {partner.commission_value} {partner.commission_type === 'fixed' ? '€' : '%'}
+                    {t('agency.partnersPage.commissionLabel')}: {partner.commission_value} {partner.commission_type === 'fixed' ? '€' : '%'}
                   </div>
                 </div>
 
@@ -255,7 +257,7 @@ export default function PartnersPage() {
 
                 <div className="mt-4 pt-3 border-t border-white/5">
                   <p className="text-[10px] text-gray-600">
-                    Portal-Link: <code className="text-brand-primary">/partner/{partner.access_token.slice(0, 8)}...</code>
+                    {t('agency.partnersPage.portalLink')}: <code className="text-brand-primary">/partner/{partner.access_token.slice(0, 8)}...</code>
                   </p>
                 </div>
               </div>
@@ -269,7 +271,7 @@ export default function PartnersPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={() => setShowModal(false)}>
           <div className="bg-brand-secondary-hover rounded-2xl border border-white/10 p-6 w-full max-w-md mx-4" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-white">{editing ? 'Partner bearbeiten' : 'Neuer Partner'}</h2>
+              <h2 className="text-lg font-semibold text-white">{editing ? t('agency.partnersPage.editPartner') : t('agency.partnersPage.newPartner')}</h2>
               <button onClick={() => setShowModal(false)} className="text-gray-500 hover:text-white">
                 <X className="w-5 h-5" />
               </button>
@@ -277,7 +279,7 @@ export default function PartnersPage() {
             <form onSubmit={handleSubmit} className="space-y-3">
               <input
                 type="text"
-                placeholder="Firmenname *"
+                placeholder={t('agency.partnersPage.companyNamePlaceholder')}
                 value={form.company_name}
                 onChange={(e) => setForm({ ...form, company_name: e.target.value })}
                 className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
@@ -285,14 +287,14 @@ export default function PartnersPage() {
               />
               <input
                 type="text"
-                placeholder="Ansprechpartner"
+                placeholder={t('agency.partnersPage.contactNamePlaceholder')}
                 value={form.contact_name}
                 onChange={(e) => setForm({ ...form, contact_name: e.target.value })}
                 className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
               />
               <input
                 type="email"
-                placeholder="E-Mail *"
+                placeholder={t('agency.partnersPage.emailPlaceholder')}
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
@@ -300,14 +302,14 @@ export default function PartnersPage() {
               />
               <input
                 type="tel"
-                placeholder="Telefon"
+                placeholder={t('agency.partnersPage.phonePlaceholder')}
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
               />
               <input
                 type="text"
-                placeholder="PLZ-Gebiete (z.B. 80, 81, 82)"
+                placeholder={t('agency.partnersPage.zipRegionsPlaceholder')}
                 value={form.zip_regions}
                 onChange={(e) => setForm({ ...form, zip_regions: e.target.value })}
                 className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
@@ -318,12 +320,12 @@ export default function PartnersPage() {
                   onChange={(e) => setForm({ ...form, commission_type: e.target.value as 'fixed' | 'percentage' })}
                   className="bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
                 >
-                  <option value="fixed">Fester Betrag (€)</option>
-                  <option value="percentage">Prozentual (%)</option>
+                  <option value="fixed">{t('agency.partnersPage.commissionFixed')}</option>
+                  <option value="percentage">{t('agency.partnersPage.commissionPercentage')}</option>
                 </select>
                 <input
                   type="number"
-                  placeholder="Wert"
+                  placeholder={t('agency.partnersPage.commissionValuePlaceholder')}
                   value={form.commission_value}
                   onChange={(e) => setForm({ ...form, commission_value: Number(e.target.value) })}
                   className="flex-1 bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
@@ -331,20 +333,20 @@ export default function PartnersPage() {
               </div>
               <input
                 type="number"
-                placeholder="kWh-Preis (optional)"
+                placeholder={t('agency.partnersPage.kwhPricePlaceholder')}
                 value={form.kwh_price}
                 onChange={(e) => setForm({ ...form, kwh_price: e.target.value })}
                 className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
               />
               <input
                 type="url"
-                placeholder="Webseite (z.B. https://muster-solar.de)"
+                placeholder={t('agency.partnersPage.websitePlaceholder')}
                 value={form.website}
                 onChange={(e) => setForm({ ...form, website: e.target.value })}
                 className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none"
               />
               <textarea
-                placeholder="Notizen"
+                placeholder={t('agency.partnersPage.notesPlaceholder')}
                 value={form.notes}
                 onChange={(e) => setForm({ ...form, notes: e.target.value })}
                 className="w-full bg-[#252525] border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:ring-1 focus:ring-brand-primary outline-none h-20 resize-none"
@@ -353,7 +355,7 @@ export default function PartnersPage() {
                 type="submit"
                 className="w-full bg-brand-primary text-brand-secondary font-bold text-sm py-2.5 rounded-xl hover:bg-brand-primary-hover transition-colors"
               >
-                {editing ? 'Speichern' : 'Hinzufügen'}
+                {editing ? t('agency.common.save') : t('agency.common.add')}
               </button>
             </form>
           </div>

@@ -2,20 +2,14 @@ import { COLORS } from '../../lib/theme';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslation } from 'react-i18next';
 import { CheckCircle, ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const checklist = [
-  'Wechselrichter-Installation',
-  'Batteriespeicher-Lösungen',
-  'Solarfinanzierung',
-  'Bewährte Erfolgsbilanz',
-  'Kundenorientierter Ansatz',
-  '24/7 Telefon- & Chat-Support',
-];
-
 export default function About() {
+  const { t } = useTranslation();
+  const checklist = t('demoPage.usp.checklist', { returnObjects: true }) as string[];
   const sectionRef = useRef<HTMLElement>(null);
   const numberRef = useRef<HTMLDivElement>(null);
 
@@ -25,7 +19,7 @@ export default function About() {
       const numEl = numberRef.current;
       if (numEl) {
         gsap.fromTo(numEl, { innerText: '0' }, {
-          innerText: '13',
+          innerText: t('demoPage.usp.number'),
           duration: 1.5,
           ease: 'power2.out',
           snap: { innerText: 1 },
@@ -58,10 +52,10 @@ export default function About() {
           {/* Left - Big Number */}
           <div className="lg:col-span-3 flex flex-col justify-center">
             <div ref={numberRef} className="text-[120px] md:text-[160px] font-semibold text-black leading-none tracking-tighter">
-              13
+              {t('demoPage.usp.number')}
             </div>
             <p className="text-black text-base mt-2">
-              Wir haben Unternehmen bei der<br />Einwerbung von über 15 Mio. $ Finanzierung unterstützt
+              {t('demoPage.usp.numberSub')}
             </p>
           </div>
 
@@ -70,7 +64,7 @@ export default function About() {
             <div className="about-img rounded-2xl overflow-hidden opacity-0">
               <img
                 src="/images/about-image.jpg"
-                alt="Installation von Solarpanelen"
+                alt={t('demoPage.usp.imageAlt')}
                 className="w-full aspect-[4/5] object-cover"
               />
             </div>
@@ -84,7 +78,7 @@ export default function About() {
                   <circle cx="50" cy="50" r="48" fill={COLORS.secondary} />
                   <text className="text-[9px] font-semibold uppercase fill-white tracking-widest">
                     <textPath href="#circlePath">
-                      Über uns ★ Über uns ★ Über uns ★
+                      {t('demoPage.usp.badgeText')}
                     </textPath>
                   </text>
                 </svg>
@@ -95,7 +89,7 @@ export default function About() {
           {/* Right - Checklist */}
           <div className="lg:col-span-5 flex flex-col justify-center">
             <h3 className="text-2xl font-medium text-black mb-6">
-              Umfassende Solarlösungen
+              {t('demoPage.usp.heading')}
             </h3>
             <div className="flex flex-col gap-4 mb-8">
               {checklist.map((item, i) => (
@@ -109,7 +103,7 @@ export default function About() {
               href="#about"
               className="inline-flex items-center gap-2 bg-brand-primary text-brand-secondary text-sm font-medium px-6 py-3.5 rounded-full hover:bg-brand-primary-hover transition-all duration-250 hover:scale-[1.02] group w-fit"
             >
-              Über uns
+              {t('demoPage.usp.cta')}
               <span className="w-7 h-7 bg-brand-secondary rounded-full flex items-center justify-center group-hover:bg-brand-secondary-hover transition-colors">
                 <ArrowRight className="w-3.5 h-3.5 text-white" />
               </span>

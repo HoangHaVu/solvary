@@ -1,0 +1,2941 @@
+{
+  "nav": {
+    "products": "Products",
+    "solutionCheck": "What do I need?",
+    "pricing": "Pricing",
+    "cta": "Try for free"
+  },
+  "language": {
+    "de": "Deutsch",
+    "en": "English",
+    "switch": "Change language"
+  },
+  "landing": {
+    "hero": {
+      "headline1": "Solar quotes",
+      "headline2": "in 20 minutes",
+      "headline3": "instead of 2 days.",
+      "cta": "Which solution fits me?",
+      "sub": "60-second check · No signup · Instant evaluation + matching demo",
+      "description": "The all-in-one software for solo solar installers: Your customers configure themselves, you click \"Send\". Professional quote PDFs with ROI, subsidies and payment schedule — automatically."
+    },
+    "process": {
+      "tag": "And then what?",
+      "heading1": "Within a few days",
+      "heading2": "on your website",
+      "steps": [
+        {
+          "subtitle": "Contact",
+          "title": "You reach out",
+          "description": "Start the 60-second solution check or book a demo call directly. No contract, no credit card, no obligation.",
+          "details": [
+            "60-second check without signup",
+            "Or 30-min demo call at your preferred time",
+            "Response the same day"
+          ]
+        },
+        {
+          "subtitle": "Demo & Consultation",
+          "title": "We look at your business",
+          "description": "Together we review how you currently create quotes and where time is lost. You see Voltify live with real numbers.",
+          "details": [
+            "Assessment of your current quoting process",
+            "Live demo with the real configurator",
+            "Honest evaluation of whether Voltify fits"
+          ]
+        },
+        {
+          "subtitle": "Selection",
+          "title": "You choose your modules",
+          "description": "Configurator, quote PDFs, CRM pipeline, installation planning, invoices — you decide which building blocks you need. You only pay for what you use.",
+          "details": [
+            "Modules individually selectable",
+            "Your branding, your prices, your T&Cs",
+            "Fixed price from €149/month"
+          ]
+        },
+        {
+          "subtitle": "Integration",
+          "title": "We embed it into your website",
+          "description": "The configurator is embedded into your existing website — as a button, embed or dedicated subpage. We handle all the technical work.",
+          "details": [
+            "Works with WordPress, Wix, Jimdo or custom builds",
+            "Your domain and design remain unchanged",
+            "No technical know-how required"
+          ]
+        },
+        {
+          "subtitle": "Live",
+          "title": "Your visitors configure themselves",
+          "description": "Ready to go within a few days. From now on your website visitors fill out the configurator — the completed lead lands directly in your dashboard.",
+          "details": [
+            "Ready in a few days",
+            "Leads arrive fully prepared",
+            "Support remains personally reachable"
+          ]
+        }
+      ]
+    }
+  },
+  "sections": {
+    "features": {
+      "tag": "Features",
+      "heading": "Everything you need every day",
+      "items": [
+        {
+          "title": "Quote PDFs",
+          "desc": "Professional calculations with your branding, subsidies and payment schedules — send by email."
+        },
+        {
+          "title": "Revenue Reports",
+          "desc": "Track conversion rate, average deal value and team performance in real time."
+        },
+        {
+          "title": "GDPR & Legal Compliance",
+          "desc": "Terms generator, privacy pages and secure data processing — all included."
+        },
+        {
+          "title": "Installation Planning",
+          "desc": "Plan appointments in the calendar, assign installers and update project status."
+        },
+        {
+          "title": "Team Communication",
+          "desc": "Leave notes on leads and projects — all info centralized, nothing lost in emails."
+        },
+        {
+          "title": "Invoice PDFs",
+          "desc": "Down payment and final invoices with automatic due date calculation and payment status."
+        }
+      ]
+    },
+    "stats": {
+      "tag": "Why Solvary",
+      "heading": "Less admin, more closings",
+      "freeMonthsLabel": "Free trial",
+      "adminEffortLabel": "Less admin work",
+      "discountLabel": "Founder discount for beta partners",
+      "readyLabel": "Ready after demo call",
+      "center": "One system for leads, quotes and projects"
+    },
+    "pricing": {
+      "tag": "Pricing",
+      "heading": "Plans that grow with your business",
+      "sub": "All plans include the solar configurator, cancel monthly. As a beta partner you lock in {{discount}}% discount on every plan.",
+      "compareLink": "Full plan comparison & agency pricing"
+    },
+    "pricingTiers": {
+      "popular": "Popular",
+      "perMonth": "/ month",
+      "betaPrice": "≈ €{{price}} / month",
+      "betaLabel": "as beta partner (−{{discount}}%)"
+    },
+    "faq": {
+      "tag": "FAQ",
+      "heading": "Common questions, clearly answered",
+      "items": [
+        {
+          "q": "What does Solvary cost?",
+          "a": "€149/month, no setup fee. The first {{freeMonths}} months are free, and as a beta partner you lock in {{discount}}% founder discount on every plan."
+        },
+        {
+          "q": "Do I need to switch my website?",
+          "a": "No. The configurator is embedded into your existing website — whether WordPress, Wix, Jimdo or custom. Your domain and design remain unchanged."
+        },
+        {
+          "q": "How long does setup take?",
+          "a": "Usually a few days. We handle the technical integration completely — you just provide logo, colors and your prices."
+        },
+        {
+          "q": "Do I need technical know-how?",
+          "a": "No. Solvary is built for solo solar installers, not IT departments. If you can write an email, you can use Solvary."
+        },
+        {
+          "q": "Who owns my leads and data?",
+          "a": "You do. All data is stored GDPR-compliant on EU servers, export is possible anytime. We do not sell or share lead data."
+        },
+        {
+          "q": "Can I test Solvary first?",
+          "a": "Yes. Start the 60-second solution check or book a 30-min demo call. You see the software with real numbers before deciding."
+        },
+        {
+          "q": "Is there a minimum contract?",
+          "a": "No. Solvary is cancellable monthly — no minimum term, no hidden costs."
+        },
+        {
+          "q": "Who is Solvary for?",
+          "a": "For 1–5 person solar businesses in the DACH region that want to create professional quotes and win leads via their own website without a big CRM budget."
+        }
+      ]
+    },
+    "ctaFooter": {
+      "tag": "{{spots}} spots — Permanent founder discount",
+      "heading1": "Ready to scale",
+      "heading2": "your solar business?",
+      "sub": "Try {{freeMonths}} months for free. No credit card. Personal demo call. As a beta partner you lock in {{discount}}% discount on every plan.",
+      "cta": "Become a beta partner now",
+      "description": "All-in-one software for the solo solar installer: configurator on your website, leads, quotes and invoices in one place.",
+      "productTitle": "Product",
+      "companyTitle": "Company",
+      "legalTitle": "Legal",
+      "links": {
+        "products": "Products",
+        "solutionCheck": "What do I need?",
+        "pricing": "Pricing",
+        "faq": "FAQ",
+        "beta": "Beta Program",
+        "liveDemo": "Live Demo",
+        "login": "Log in",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "imprint": "Imprint"
+      },
+      "copyright": "© 2026 Solvary · Designed by"
+    },
+    "productsStack": {
+      "tag": "Our Products",
+      "heading1": "From lead to quote",
+      "heading2": "in one system",
+      "sub": "The customer configures on your website. You receive the lead and generate a professional PDF calculation with one click.",
+      "products": [
+        {
+          "title": "Solar Configurator",
+          "desc": "Your customers configure their system themselves — roof, consumption, battery, subsidies. You receive the lead with all data.",
+          "features": [
+            "9-step wizard",
+            "ROI calculation",
+            "BAFA / KfW subsidies",
+            "Lead capture",
+            "GDPR-compliant"
+          ],
+          "linkLabel": "Try live now"
+        },
+        {
+          "title": "Quote Configurator",
+          "desc": "From lead to quote: define positions freely, adjust prices and discounts, use templates — PDF and email with one click.",
+          "features": [
+            "Freely define positions",
+            "Discounts & prices",
+            "Templates & text blocks",
+            "PDF & email sending",
+            "ROI impact panel"
+          ],
+          "linkLabel": "Try live now"
+        },
+        {
+          "title": "CRM & Dashboard",
+          "desc": "All leads, projects and appointments in one place. Kanban pipeline, calendar and team management — specifically for solar businesses.",
+          "features": [
+            "Lead pipeline",
+            "Project tracking",
+            "Calendar & appointments",
+            "Team & roles",
+            "Notes"
+          ],
+          "linkLabel": "Try demo account"
+        },
+        {
+          "title": "Digital Presence",
+          "desc": "Your own website with integrated configurator — under your domain, with your logo, your colors and contact details.",
+          "features": [
+            "Own domain",
+            "Your logo & branding",
+            "Configurator embed",
+            "Lead forwarding",
+            "GDPR-compliant"
+          ],
+          "linkLabel": "View demo website"
+        }
+      ]
+    }
+  },
+  "pricingPage": {
+    "hero": {
+      "tag": "Pricing",
+      "heading1": "Choose the right plan",
+      "heading2": "for your team",
+      "sub": "Start for free, scale with your business. All plans include the solar configurator, cancel monthly. As a beta partner you lock in {{discount}}% discount."
+    },
+    "comparison": {
+      "heading": "Feature Comparison",
+      "feature": "Feature",
+      "starter": "Starter",
+      "professional": "Professional",
+      "enterprise": "Enterprise",
+      "rows": [
+        {
+          "label": "Users",
+          "starter": "1",
+          "pro": "5",
+          "enterprise": "Unlimited"
+        },
+        {
+          "label": "Solar configurator",
+          "starter": "✓",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Lead management",
+          "starter": "✓",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Calendar & appointments",
+          "starter": "✓",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Pipeline view",
+          "starter": "—",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Team management",
+          "starter": "—",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Quote PDF",
+          "starter": "—",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Invoice PDF",
+          "starter": "—",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Advanced reports",
+          "starter": "—",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Discount system",
+          "starter": "—",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "API & webhooks",
+          "starter": "—",
+          "pro": "—",
+          "enterprise": "✓"
+        },
+        {
+          "label": "White-label",
+          "starter": "—",
+          "pro": "—",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Dedicated support",
+          "starter": "—",
+          "pro": "—",
+          "enterprise": "✓"
+        }
+      ]
+    },
+    "agency": {
+      "tag": "For sales agencies",
+      "heading": "Partner program for solar sales",
+      "sub": "Manage installer partners, route leads intelligently and scale your sales network."
+    }
+  },
+  "productsPage": {
+    "hero": {
+      "tag": "Products",
+      "heading1": "One system for lead,",
+      "heading2": "quote and project",
+      "sub": "Configurator on your website, CRM for your pipeline, quote and invoice PDFs at the push of a button — modularly combinable."
+    }
+  },
+  "pricingData": {
+    "saas": [
+      {
+        "name": "Starter",
+        "seat": "1 user",
+        "description": "For solo founders managing their first leads digitally.",
+        "features": [
+          "Solar configurator",
+          "Lead management (unlimited)",
+          "Calendar & scheduling",
+          "Basic reports",
+          "Community support"
+        ],
+        "cta": "Try for free"
+      },
+      {
+        "name": "Professional",
+        "seat": "5 users",
+        "description": "For growing teams with professional processes and teamwork.",
+        "features": [
+          "Everything in Starter",
+          "Team management (5 users)",
+          "Quote & invoice PDFs",
+          "Pipeline view & KPIs",
+          "Email sending & discount codes",
+          "Priority support"
+        ],
+        "cta": "Try 14 days free"
+      },
+      {
+        "name": "Enterprise",
+        "seat": "Unlimited users",
+        "description": "For established businesses with white-labeling and complex workflows.",
+        "features": [
+          "Everything in Professional",
+          "API & webhooks",
+          "White-label branding",
+          "Custom workflows",
+          "Dedicated account manager",
+          "SLA guarantee & onboarding"
+        ],
+        "cta": "Enterprise request"
+      }
+    ],
+    "agency": [
+      {
+        "name": "Start",
+        "seat": "5 partners",
+        "description": "For young sales agencies connecting their first installer partners.",
+        "features": [
+          "Up to 5 installer partners",
+          "Manual lead routing",
+          "Partner portal",
+          "Basic commissions",
+          "Email notifications"
+        ],
+        "cta": "Try for free"
+      },
+      {
+        "name": "Pro",
+        "seat": "20 partners",
+        "description": "For growing agencies with more partners and professional routing.",
+        "features": [
+          "Up to 20 installer partners",
+          "ZIP-based partner suggestions",
+          "Advanced commissions & tiers",
+          "Agency dashboard & KPIs",
+          "White-label partner portal",
+          "Priority support"
+        ],
+        "cta": "Try 14 days free"
+      },
+      {
+        "name": "Scale",
+        "seat": "Unlimited partners",
+        "description": "For established sales agencies scaling leads fully automatically.",
+        "features": [
+          "Unlimited installer partners",
+          "Fully automatic ZIP routing",
+          "Round-robin & load balancing",
+          "API & webhooks",
+          "Advanced agency analytics",
+          "Dedicated account manager"
+        ],
+        "cta": "Scale request"
+      }
+    ]
+  },
+  "betaPage": {
+    "seo": {
+      "title": "Beta Program",
+      "description": "Become one of the first Voltify beta partners. Free access, personal onboarding."
+    },
+    "form": {
+      "successTitle": "Thank you for your request!",
+      "successText": "We will get back to you by phone shortly.",
+      "successCta": "Back to homepage",
+      "tag": "Beta Program — Only {{spots}} spots",
+      "title": "Become a beta partner now",
+      "sub": "Leave your contact details — we'll reach out personally. As a beta partner you get the next {{freeMonths}} months free and then permanently {{discount}}% founder discount.",
+      "company": "Company *",
+      "name": "Name *",
+      "phone": "Mobile number",
+      "phoneHint": "— for callback (recommended)",
+      "email": "Email *",
+      "zip": "ZIP",
+      "message": "Short message",
+      "messageHint": "(optional)",
+      "errorFallback": "Something went wrong. Please try again.",
+      "placeholder": {
+        "company": "Sample GmbH",
+        "name": "Max Mustermann",
+        "phone": "+49 171 1234567",
+        "email": "max@company.de",
+        "zip": "12345",
+        "message": "e.g. How many leads do you have per month?"
+      },
+      "submit": "Request",
+      "disclaimer": "No subscription · No credit card · Cancel anytime",
+      "login": "Already registered?",
+      "loginCta": "Log in now."
+    },
+    "benefits": {
+      "tag": "Beta Program — Only {{spots}} spots",
+      "title": "Become one of the first {{spots}} Voltify partners",
+      "sub": "{{freeMonths}} months free. Then {{discount}}% permanent discount. No setup effort — just a demo call with us.",
+      "items": [
+        {
+          "icon": "🎁",
+          "title": "3 months free",
+          "text": "Full access without credit card — zero risk."
+        },
+        {
+          "icon": "💰",
+          "title": "-30% founder discount",
+          "text": "Permanent on every plan — even after beta."
+        },
+        {
+          "icon": "🚀",
+          "title": "Personal demo",
+          "text": "30-min live demo. We show you the full power of Voltify."
+        },
+        {
+          "icon": "⭐",
+          "title": "Direct influence",
+          "text": "Your feedback shapes the product. Become a case study."
+        }
+      ],
+      "stats": [
+        {
+          "value": "3 mo.",
+          "label": "Free trial"
+        },
+        {
+          "value": "-30%",
+          "label": "Permanent discount"
+        },
+        {
+          "value": "30 min",
+          "label": "Demo call"
+        }
+      ]
+    },
+    "calendly": {
+      "title": "Book demo call",
+      "sub": "Pick a slot for your 30-min demo conversation",
+      "close": "Close",
+      "footer1": "✓ After booking: confirmation email with Zoom link",
+      "footer2": "The {{freeMonths}} free months start right after the demo"
+    }
+  },
+  "check": {
+    "seo": {
+      "title": "Solution check for solar installers",
+      "description": "Find out in 60 seconds which part of Voltify helps your solar business most — including a matching demo."
+    },
+    "headerDemoLink": "I already know what I want → Demo",
+    "back": "Back",
+    "skip": "Skip",
+    "contact": {
+      "badge": "Almost done",
+      "title": "Where should we send your evaluation?",
+      "sub": "You see your result instantly — and also get it by email.",
+      "name": "Your name (optional)",
+      "email": "Email address *",
+      "placeholderName": "Max Mustermann",
+      "placeholderEmail": "max@solar-business.de",
+      "emailError": "Please enter a valid email address.",
+      "cta": "Show evaluation",
+      "privacy": "No ads. Just your evaluation + an optional conversation offer."
+    },
+    "result": {
+      "badge": "Your evaluation",
+      "title": "{{greeting}}your biggest lever is {{hero}}",
+      "why": "Why exactly this",
+      "together": "It all connects:",
+      "togetherSub": "More than one building block applies to you. Voltify is a platform — you start with the biggest lever, the rest grows with you.",
+      "nonInstaller": {
+        "title": "Thanks{{name}}!",
+        "sub": "The guided check is currently tailored to installers — but we have a separate solution for sales agencies. Let's talk directly."
+      },
+      "booking": {
+        "free": "Free",
+        "permanent": "Permanent",
+        "demoCall": "Demo call",
+        "sub": "{{spots}} spots — let's go through your situation in a short call.",
+        "cta": "Book free demo call"
+      }
+    }
+  },
+  "solutionCheckData": {
+    "identity": {
+      "question": "What describes you best?",
+      "subline": "So the check fits your business.",
+      "options": [
+        {
+          "value": "installer",
+          "label": "Installer / Solar technician — I install myself"
+        },
+        {
+          "value": "agency",
+          "label": "Sales agency — I generate leads & pass them to partners"
+        },
+        {
+          "value": "other",
+          "label": "Something else"
+        }
+      ]
+    },
+    "installer": [
+      {
+        "id": "leads",
+        "question": "How do you get new inquiries today?",
+        "subline": "Your most important growth lever.",
+        "options": [
+          {
+            "value": "referral",
+            "label": "Mainly through referrals / word of mouth"
+          },
+          {
+            "value": "website",
+            "label": "Through my own website"
+          },
+          {
+            "value": "bought",
+            "label": "I buy leads through portals"
+          },
+          {
+            "value": "too-few",
+            "label": "Honestly: too few or unreliable"
+          }
+        ]
+      },
+      {
+        "id": "offers",
+        "question": "How do you create quotes today?",
+        "options": [
+          {
+            "value": "manual",
+            "label": "By hand, Word or Excel"
+          },
+          {
+            "value": "software",
+            "label": "With another software"
+          },
+          {
+            "value": "supplier",
+            "label": "My wholesaler does it for me"
+          },
+          {
+            "value": "too-slow",
+            "label": "Takes too long / looks unprofessional"
+          }
+        ]
+      },
+      {
+        "id": "manage",
+        "question": "Where do you manage inquiries & customers?",
+        "options": [
+          {
+            "value": "head",
+            "label": "In my head, on notes or in WhatsApp"
+          },
+          {
+            "value": "excel",
+            "label": "In an Excel spreadsheet"
+          },
+          {
+            "value": "crm",
+            "label": "In a proper CRM software"
+          },
+          {
+            "value": "lost",
+            "label": "Inquiries get lost / I forget follow-ups"
+          }
+        ]
+      }
+    ],
+    "priority": {
+      "question": "If you could solve ONE problem instantly — which one?",
+      "subline": "This determines where your biggest lever is.",
+      "options": [
+        {
+          "value": "lead-funnel",
+          "label": "Get more & better inquiries"
+        },
+        {
+          "value": "offer",
+          "label": "Quote faster & more professionally"
+        },
+        {
+          "value": "crm",
+          "label": "Keep track of my customers"
+        }
+      ]
+    },
+    "volume": {
+      "question": "How many quotes do you write roughly per month?",
+      "subline": "Optional — helps us estimate your time savings concretely.",
+      "optional": true,
+      "options": [
+        {
+          "value": "0-5",
+          "label": "Up to 5"
+        },
+        {
+          "value": "6-15",
+          "label": "6 to 15"
+        },
+        {
+          "value": "16-30",
+          "label": "16 to 30"
+        },
+        {
+          "value": "30+",
+          "label": "More than 30"
+        }
+      ]
+    },
+    "modules": {
+      "lead-funnel": {
+        "name": "Solar Configurator (Lead Funnel)",
+        "tagline": "Turns website visitors into qualified inquiries — with an economic analysis that sells.",
+        "demoLabel": "Try lead funnel live"
+      },
+      "offer": {
+        "name": "Quote Configurator",
+        "tagline": "Professional quotes in minutes instead of hours — as PDF, directly by email, with your branding.",
+        "demoLabel": "View quote configurator"
+      },
+      "crm": {
+        "name": "Solar CRM",
+        "tagline": "Every inquiry, every customer, every follow-up in one place — no lead gets lost anymore.",
+        "demoLabel": "View CRM demo"
+      }
+    },
+    "reasons": {
+      "leads": {
+        "too-few": "You're currently getting too few reliable inquiries.",
+        "referral": "You rely heavily on referrals — predictable growth is missing."
+      },
+      "offers": {
+        "manual": "Your quotes are created by hand — that costs time and looks less professional.",
+        "too-slow": "Writing quotes takes too long or doesn't look professional enough."
+      },
+      "manage": {
+        "head": "Inquiries run via notes/WhatsApp — things easily get lost.",
+        "excel": "You manage customers in Excel — error-prone and without reminders.",
+        "lost": "Inquiries get lost and follow-ups are forgotten — money left on the table."
+      }
+    },
+    "volumeHours": {
+      "0-5": "a few hours per month",
+      "6-15": "approx. 3–5 hours per week",
+      "16-30": "approx. 6–8 hours per week",
+      "30+": "10+ hours per week"
+    },
+    "timeSavedHint": "At your volume you save roughly {{hours}} — time you can invest in closings."
+  },
+  "demoBanner": {
+    "text": "Demo mode: No real sending, no obligation — just try it out.",
+    "cta": "Get it for my business"
+  },
+  "demoPage": {
+    "seo": {
+      "title": "Solar Configurator",
+      "description": "Calculate the profitability of your photovoltaic system in just a few minutes. Including subsidies, ROI analysis and a personal offer."
+    },
+    "header": {
+      "navLinks": [
+        {
+          "label": "Services",
+          "href": "#services"
+        },
+        {
+          "label": "About us",
+          "href": "#about"
+        },
+        {
+          "label": "News",
+          "href": "#news"
+        },
+        {
+          "label": "Contact",
+          "href": "#contact"
+        }
+      ],
+      "leaveDemo": "Leave demo",
+      "discoverNow": "Discover now",
+      "logoAlt": "Solvary"
+    },
+    "hero": {
+      "headline": ["Solar energy", "that moves the", "world forward"],
+      "description": "At Solvary, we plan and install solar systems that maximize efficiency and long-term value. Join the energy transition and take control of your energy — today and for the future.",
+      "reviewsCard": {
+        "discoverNow": "Discover now",
+        "ratingsText": "100+ reviews",
+        "rating": "4.96 out of 5"
+      },
+      "marqueeWords": ["SOLAR", "GREEN", "ENERGY", "FUTURE", "CLEAN", "POWER"]
+    },
+    "partners": {
+      "heading": "Backed by the world's leading venture capital investors"
+    },
+    "excellentServices": {
+      "label": "Excellent services",
+      "heading": "Innovations in green technology and environmental solutions",
+      "cta": "Get started now",
+      "services": [
+        {
+          "title": "Five-year warranty",
+          "desc": "Benefit from maximum security with our comprehensive five-year warranty covering performance, longevity and system reliability – for long-term protection of your investment."
+        },
+        {
+          "title": "Spare parts & maintenance",
+          "desc": "We provide continuous maintenance and high-quality spare parts so your energy system works efficiently, safely and at peak performance year after year."
+        },
+        {
+          "title": "Sustainable energy",
+          "desc": "Our solutions are based on clean, renewable energy technologies that help reduce the CO₂ footprint while offering long-term savings and energy independence."
+        }
+      ]
+    },
+    "ourServices": {
+      "label": "Our services",
+      "heading": "Custom solar systems that fit you",
+      "sub": "Our team designs and installs custom solar systems based on your individual energy consumption, property layout and budget – for maximum efficiency, long-term savings and independence from energy suppliers.",
+      "cards": [
+        {
+          "img": "/images/service-rooftop.jpg",
+          "title": "Rooftop solar system",
+          "icon": "/icons/rooftop.svg"
+        },
+        {
+          "img": "/images/service-maintenance.jpg",
+          "title": "Solar system maintenance",
+          "icon": "/icons/maint.svg"
+        },
+        {
+          "img": "/images/service-offgrid.jpg",
+          "title": "Off-grid solar installation",
+          "icon": "/icons/offgrid.svg"
+        }
+      ]
+    },
+    "usp": {
+      "number": "13",
+      "numberSub": "We have supported companies in raising over $15M in funding",
+      "imageAlt": "Installation of solar panels",
+      "badgeText": "About us ★ About us ★ About us ★",
+      "heading": "Comprehensive solar solutions",
+      "checklist": [
+        "Inverter installation",
+        "Battery storage solutions",
+        "Solar financing",
+        "Proven track record",
+        "Customer-oriented approach",
+        "24/7 phone & chat support"
+      ],
+      "cta": "About us"
+    },
+    "furtherServices": {
+      "label": "Further Services",
+      "heading": "Over 10 years of experience in the solar industry",
+      "cards": [
+        {
+          "title": "Solar maintenance services",
+          "desc": "Ongoing maintenance for long-term efficiency, safety and system reliability."
+        },
+        {
+          "title": "Wind turbine repair services",
+          "desc": "Professional diagnosis and repairs to keep your wind energy systems running smoothly."
+        },
+        {
+          "title": "Roof solar installation",
+          "desc": "Tailored roof solar solutions that maximize your savings and optimize energy yield."
+        }
+      ]
+    },
+    "team": {
+      "infoHeading": "Our award-winning speakers & mentors",
+      "cta": "Show all members",
+      "members": [
+        {
+          "name": "James Carter",
+          "role": "Managing Director",
+          "img": "/images/team-james.jpg"
+        },
+        {
+          "name": "Emily Johnson",
+          "role": "Technical Lead",
+          "img": "/images/team-emily.jpg"
+        },
+        {
+          "name": "Michael Brown",
+          "role": "Product Director",
+          "img": "/images/team-michael.jpg"
+        },
+        {
+          "name": "Sarah Davis",
+          "role": "Marketing Lead",
+          "img": "/images/team-sarah.jpg"
+        }
+      ]
+    },
+    "exploreSection": {
+      "badge": "Solar configurator",
+      "heading": "Your path to your own solar system",
+      "sub": "Use our solar checker to find out how much you can save with a solar system. Within 2 minutes you will get a first assessment – completely non-binding.",
+      "zipLabel": "ZIP code",
+      "zipPlaceholder": "e.g. 10115",
+      "cta": "Calculate now",
+      "privacyNote": "100% data protection according to GDPR – your data is safe with us.",
+      "savingsBadge": {
+        "value": "Up to 80%",
+        "label": "Save on electricity costs"
+      },
+      "imageAlt": "House with solar system"
+    },
+    "marquee": {
+      "row1": [
+        "Future with the sun",
+        "Power of solar innovation",
+        "Renewable energy",
+        "Power of solar innovation"
+      ],
+      "row2": [
+        "Renewable revolution",
+        "Clean energy",
+        "Solar solutions",
+        "Solar power",
+        "Bright future"
+      ]
+    },
+    "about": {
+      "badge": "About Us",
+      "heading": "Smart solar solutions for a sustainable future",
+      "sub": "Our approach goes far beyond standard installation. We develop systems that seamlessly combine smart monitoring with thoughtful design.",
+      "leftHeading": "Smarter solar. Brighter future",
+      "leftBody": "Solvary is a new-generation software company specializing in developing intelligent solar systems that combine sustainability with smart technologies.",
+      "stats": [
+        {
+          "label": "Savings",
+          "sub": "Made simple, real results",
+          "value": "45%"
+        },
+        {
+          "label": "Smart monitoring",
+          "sub": "Made simple, real results",
+          "value": "24/7"
+        }
+      ],
+      "cards": [
+        {
+          "title": "Our mission",
+          "desc": "Make clean energy accessible, affordable and effortless for everyone. We develop software that supports solar businesses every step of the way."
+        },
+        {
+          "title": "Our vision",
+          "desc": "A world powered entirely by intelligent, renewable energy systems — paved by digital tools that lead the way."
+        },
+        {
+          "title": "Our values",
+          "desc": "Innovation, sustainability, integrity and customer focus. We rely on partnership and real results for our customers."
+        }
+      ]
+    },
+    "partnersGrid": {
+      "badge": "Our partners",
+      "heading": "Seamlessly connected with trusted industry partners",
+      "cta": "Become a partner"
+    },
+    "news": {
+      "badge": "Blog",
+      "heading": "Latest from the solar industry",
+      "sub": "Tips, trends and insights on solar energy, digitalization and sustainable business growth.",
+      "posts": [
+        {
+          "img": "/images/blog-1.jpg",
+          "author": "Solvary",
+          "readTime": "4 min read",
+          "title": "How a compelling solar website generates more leads"
+        },
+        {
+          "img": "/images/blog-2.jpg",
+          "author": "Solvary",
+          "readTime": "3 min read",
+          "title": "Solar website design trends to watch in 2025"
+        },
+        {
+          "img": "/images/blog-3.jpg",
+          "author": "Solvary",
+          "readTime": "2 min read",
+          "title": "Create an impressive online presence for solar solutions"
+        }
+      ],
+      "readMore": "Read more",
+      "moreNews": "More news"
+    },
+    "faq": {
+      "badge": "Have questions?",
+      "heading": "Have questions? Here are some answers for you",
+      "experienceBadge": {
+        "value": "10+",
+        "label": "Years of experience and expertise"
+      },
+      "imageAlt": "Solar modules",
+      "items": [
+        {
+          "q": "How long does a solar installation usually take?",
+          "a": "Most residential solar installations are completed within 1–3 days, depending on system size."
+        },
+        {
+          "q": "Do solar panels work on cloudy days?",
+          "a": "Yes, solar panels generate electricity on cloudy days too, albeit at reduced efficiency. They can capture diffuse sunlight and continue producing energy even when the sun isn't shining directly."
+        },
+        {
+          "q": "What maintenance do solar systems need?",
+          "a": "Solar systems require minimal maintenance. Usually it is enough to clean the modules 2–4 times a year and have a professional annual inspection carried out to operate the system optimally."
+        },
+        {
+          "q": "What is a grid-tied solar solution?",
+          "a": "A grid-tied solar system is connected to the power grid and allows you to draw electricity when needed and sell excess energy back to the grid through net-metering programs."
+        }
+      ]
+    },
+    "footer": {
+      "usefulLinks": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "Pricing",
+          "href": "/preise"
+        },
+        {
+          "label": "Solar configurator",
+          "href": "/konfigurator"
+        },
+        {
+          "label": "Privacy",
+          "href": "/datenschutz"
+        },
+        {
+          "label": "Imprint",
+          "href": "/impressum"
+        },
+        {
+          "label": "Terms",
+          "href": "/agb"
+        }
+      ],
+      "phoneLabel": "Phone number",
+      "emailLabel": "Email",
+      "addressLabel": "Our address",
+      "aboutTitle": "About Solvary",
+      "aboutText": "Solvary is the all-in-one software for solar installers. Manage leads, create quotes and invoices, and scale your business — all in one place.",
+      "linksTitle": "Links",
+      "contactTitle": "Contact",
+      "newsletterTitle": "Newsletter",
+      "newsletterSub": "Subscribe to our newsletter and receive the latest updates.",
+      "emailPlaceholder": "Your email address",
+      "subscribe": "Subscribe",
+      "bottomLinks": [
+        {
+          "label": "Privacy",
+          "href": "/datenschutz"
+        },
+        {
+          "label": "Terms",
+          "href": "/agb"
+        },
+        {
+          "label": "Imprint",
+          "href": "/impressum"
+        }
+      ],
+      "copyright": "© 2026 Solvary. All rights reserved."
+    }
+  },
+  "login": {
+    "seo": {
+      "title": "Login",
+      "description": "Log in to manage your solar projects."
+    },
+    "title": "Welcome back",
+    "subtitle": "Log in with your email and password.",
+    "form": {
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submit": "Log in",
+      "submitting": "Logging in...",
+      "errorFallback": "Login failed"
+    },
+    "quickLogin": "Quick Login",
+    "mode": {
+      "installer": "Installer",
+      "agency": "Agency"
+    },
+    "testAccount": {
+      "installer": "Installer",
+      "owner": "Owner",
+      "agencyOwner": "Agency Owner",
+      "salesperson": "Salesperson"
+    },
+    "bottom": {
+      "text": "Interested?",
+      "link": "Become a beta tester now."
+    },
+    "hero": {
+      "titleLine1": "Efficient management for",
+      "titleLine2": "your solar installations.",
+      "description": "Log in to manage your dashboard and projects."
+    }
+  },
+  "register": {
+    "seo": {
+      "title": "Register",
+      "description": "Create your Voltify account — as a private customer or installer."
+    },
+    "logoAlt": "Solvary",
+    "title": "Create Account",
+    "subtitle": "Fill in your details to get started with Voltify.",
+    "success": {
+      "title": "Account created!",
+      "customerMessage": "Please confirm your email address. Then you can log in.",
+      "installerMessage": "We will get back to you within 24 hours. Your account will be activated after review.",
+      "loginButton": "Go to login"
+    },
+    "errors": {
+      "passwordMismatch": "Passwords do not match.",
+      "passwordLength": "Password must be at least 6 characters.",
+      "termsRequired": "Please accept the Terms and Privacy Policy.",
+      "generic": "Registration failed."
+    },
+    "role": {
+      "label": "I am...",
+      "customer": "Private customer",
+      "installer": "Installer"
+    },
+    "fields": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "companyName": "Company name",
+      "zip": "ZIP",
+      "phone": "Phone",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password"
+    },
+    "placeholders": {
+      "password": "At least 6 characters",
+      "confirmPassword": "Confirm your password"
+    },
+    "terms": {
+      "prefix": "I accept the",
+      "agb": "Terms",
+      "middle": "and the",
+      "privacy": "Privacy Policy"
+    },
+    "submit": {
+      "loading": "Creating account…",
+      "create": "Create Account"
+    },
+    "footer": {
+      "alreadyHaveAccount": "Already have an account?",
+      "login": "Log in now."
+    },
+    "hero": {
+      "titleLine1": "Start your solar journey",
+      "titleLine2": "with confidence.",
+      "subtitle": "Create an account to access all features and manage your solar projects."
+    },
+    "dashboard": {
+      "roiPotential": "ROI Potential",
+      "roiChange": "+5% vs last year",
+      "panelEfficiency": "Panel Efficiency",
+      "panelTier": "Top tier",
+      "paybackTime": "Payback Time",
+      "paybackLabel": "Above average",
+      "savingsProjection": "Savings Projection",
+      "yearly": "Yearly",
+      "monthly": "Monthly",
+      "carbonOffset": "Carbon Offset",
+      "carbonTarget": "Yearly target",
+      "configurations": "Configurations",
+      "saved": "{{count}} Saved",
+      "draft": "{{count}} Draft"
+    }
+  },
+  "offerDemo": {
+    "seo": {
+      "title": "Quote Configurator — Live Demo",
+      "description": "Test the Voltify quote configurator: positions, discounts, text blocks, PDF and email — right in the browser, no signup."
+    },
+    "topCta": "Get it for my business",
+    "teaser": {
+      "tag": "Quote Configurator",
+      "badge": "Demo mode — this is how a lead becomes a finished quote",
+      "headline": "From lead to quote — in minutes",
+      "body": "The same page your employees use in the dashboard: adjust positions and prices, set discounts, insert your text blocks — ready as PDF and email. Try it here directly.",
+      "disclaimer": "Sample lead — no real data, nothing is saved or sent."
+    },
+    "processSteps": [
+      "Lead data",
+      "Positions & prices",
+      "Discount & text blocks",
+      "PDF & email"
+    ],
+    "featureChips": [
+      "Freely define positions",
+      "Discounts & prices",
+      "Templates & text blocks",
+      "PDF & email sending",
+      "ROI impact panel"
+    ],
+    "title": "Create quote",
+    "status": {
+      "draft": "Draft",
+      "sent": "Sent",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
+    },
+    "saveDraft": "Save draft",
+    "saved": "Saved",
+    "sendOffer": "Send quote",
+    "positions": {
+      "title": "Quote positions",
+      "add": "Add position",
+      "empty": {
+        "title": "No positions yet",
+        "addFirst": "Add first position"
+      }
+    },
+    "columns": {
+      "category": "Category",
+      "quantity": "Qty",
+      "unit": "Unit",
+      "unitPrice": "Unit price",
+      "total": "Total"
+    },
+    "item": {
+      "placeholder": "Description (e.g. manufacturer, model, details)…",
+      "deleteTitle": "Delete position"
+    },
+    "notes": {
+      "title": "Internal notes",
+      "placeholder": "Internal notes about the quote..."
+    },
+    "templates": {
+      "title": "Quote texts & text blocks",
+      "subtitle": "From your settings — flow live into the PDF and email.",
+      "placeholdersTitle": "Available placeholders",
+      "placeholders": [
+        {
+          "token": "{{vorname}}",
+          "label": "First name"
+        },
+        {
+          "token": "{{nachname}}",
+          "label": "Last name"
+        },
+        {
+          "token": "{{angebotsnummer}}",
+          "label": "Quote no."
+        },
+        {
+          "token": "{{firmenname}}",
+          "label": "Company name"
+        },
+        {
+          "token": "{{datum}}",
+          "label": "Date"
+        },
+        {
+          "token": "{{gueltig_bis}}",
+          "label": "Valid until"
+        },
+        {
+          "token": "{{zahlungsziel}}",
+          "label": "Payment terms"
+        }
+      ],
+      "anschreibenLabel": "Cover letter (introduction)",
+      "anschreibenHint": "Appears at the top of the PDF after the header.",
+      "zahlungsbedingungenLabel": "Payment terms & notes",
+      "folgekostenLabel": "Show follow-up costs note in PDF",
+      "schlusstextLabel": "Closing text",
+      "schlusstextHint": "Appears above the signature line.",
+      "emailTitle": "Email template",
+      "subjectLabel": "Subject",
+      "messageLabel": "Message"
+    },
+    "categories": {
+      "module": "Modules",
+      "inverter": "Inverter",
+      "storage": "Storage",
+      "mounting": "Mounting",
+      "electrical": "Electrical work",
+      "scaffolding": "Scaffolding",
+      "travel": "Travel",
+      "other": "Other"
+    },
+    "summary": {
+      "title": "Summary",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "vat": "VAT ({{vatRate}}%)",
+      "total": "Total",
+      "impactTitle": "Customer impact",
+      "offerNumberLabel": "Quote no.: {{offerNumber}}",
+      "lastSaved": "Last saved:"
+    },
+    "impact": {
+      "amortization": "Payback",
+      "years": "~{{years}} yrs",
+      "savingsPerYear": "Savings/year",
+      "profit20": "Profit 20 yrs",
+      "autarky": "Self-sufficiency"
+    },
+    "discount": {
+      "codeTitle": "Discount code",
+      "codePlaceholder": "Choose code...",
+      "apply": "Apply",
+      "manualTitle": "Manual discount",
+      "percentPlaceholder": "%",
+      "amountPlaceholder": "€",
+      "ok": "OK",
+      "remove": "Remove discount"
+    },
+    "pdf": {
+      "creating": "Creating PDF…",
+      "download": "Quote as PDF",
+      "fileName": "Quote-{{offerNumber}}.pdf"
+    },
+    "cta": {
+      "title": "Want this for your business?",
+      "sub": "Quote configurator, CRM and configurator for your website — 30% cheaper as a beta partner.",
+      "button": "Become a beta partner now"
+    },
+    "send": {
+      "modalTitle": "Send quote",
+      "successTitle": "Quote sent successfully!",
+      "successDemo": "Demo — no real email was sent to {{email}}.",
+      "body": "The quote will be generated as a PDF and sent to the customer by email.",
+      "demoNote": "(Nothing is actually sent in this demo.)",
+      "emailLabel": "Email address",
+      "subjectLabel": "Subject",
+      "messageLabel": "Message",
+      "cancel": "Cancel",
+      "sending": "Sending…",
+      "submit": "Send now"
+    }
+  },
+  "configurator": {
+    "seo": {
+      "title": "Solar Configurator",
+      "description": "Configure your photovoltaic system in 9 steps. Includes ROI calculation, subsidies and a personal quote."
+    },
+    "demoBanner": "Demo mode — this is how your customers configure their solar system",
+    "submitError": "Submission failed.",
+    "sidebar": {
+      "title": "Configurator",
+      "progress": "Progress",
+      "poweredBy": "Powered by Solvary"
+    },
+    "mobileStep": "Step {{current}} / {{total}}",
+    "nav": {
+      "back": "Back",
+      "next": "Next",
+      "requestOffer": "Request individual quote",
+      "toAnalysis": "To analysis"
+    },
+    "steps": [
+      {
+        "label": "Building & ownership",
+        "icon": "🏠"
+      },
+      {
+        "label": "Configure roof",
+        "icon": "🏗️"
+      },
+      {
+        "label": "Power consumption",
+        "icon": "⚡"
+      },
+      {
+        "label": "Equipment & plans",
+        "icon": "🔧"
+      },
+      {
+        "label": "Choose storage",
+        "icon": "🔋"
+      },
+      {
+        "label": "Subsidies",
+        "icon": "💰"
+      },
+      {
+        "label": "Economic analysis",
+        "icon": "📊"
+      },
+      {
+        "label": "Contact details",
+        "icon": "📝"
+      },
+      {
+        "label": "Done",
+        "icon": "✅"
+      }
+    ],
+    "emailGate": {
+      "emailError": "Please enter a valid email address.",
+      "tag": "Free configurator",
+      "title": "Your personal solar quote in 8 steps",
+      "subtitle": "Result: ROI analysis, subsidies and a print-ready quote — in under 5 minutes.",
+      "firstNameLabel": "First name",
+      "firstNamePlaceholder": "Max",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "max@example.com",
+      "submit": "Start configurator",
+      "privacyPrefix": "No spam · Only your quote ·",
+      "skip": "Continue without providing"
+    },
+    "common": {
+      "optional": "optional"
+    },
+    "step1": {
+      "title": "Building & ownership",
+      "subtitle": "Select your building type and ownership form.",
+      "locationLabel": "Your location",
+      "zipPlaceholder": "e.g. 80331",
+      "locationHint": "For regionalized solar irradiation and local subsidy programs.",
+      "buildingTypeLabel": "Building type",
+      "buildingTypes": [
+        {
+          "label": "Single-family house",
+          "desc": "Detached house"
+        },
+        {
+          "label": "Two-family house",
+          "desc": "Two residential units"
+        },
+        {
+          "label": "Multi-family house",
+          "desc": "3+ residential units"
+        },
+        {
+          "label": "Commercial building",
+          "desc": "Commercial & industrial"
+        },
+        {
+          "label": "Other",
+          "desc": "Other building type"
+        }
+      ],
+      "constructionYearLabel": "Year of construction",
+      "constructionYearOptions": [
+        {
+          "label": "After 2010",
+          "desc": "New build or energetically renovated"
+        },
+        {
+          "label": "Before 1980",
+          "desc": "Old building renovation possible (+ €2,000)"
+        }
+      ],
+      "ownershipLabel": "Ownership",
+      "ownershipTypes": [
+        {
+          "label": "Owner",
+          "desc": "I am the owner"
+        },
+        {
+          "label": "Tenant",
+          "desc": "I am a tenant"
+        }
+      ],
+      "renterHint": "As a tenant, we recommend checking the tenant electricity model. Talk to your landlord about a shared solar system."
+    },
+    "step2": {
+      "title": "Configure roof",
+      "subtitle": "Enter the properties of your roof.",
+      "roofTiltLabel": "Roof pitch",
+      "tiltFlat": "0° (Flat)",
+      "tiltOptimal": "30° (Optimal)",
+      "tiltSteep": "60° (Steep)",
+      "orientationLabel": "Roof orientation",
+      "orientations": [
+        {
+          "label": "North"
+        },
+        {
+          "label": "N-East"
+        },
+        {
+          "label": "East"
+        },
+        {
+          "label": "S-East"
+        },
+        {
+          "label": "South"
+        },
+        {
+          "label": "S-West"
+        },
+        {
+          "label": "West"
+        },
+        {
+          "label": "N-West"
+        }
+      ],
+      "southOptimal": "South = optimal",
+      "roofAreaLabel": "Estimated roof area",
+      "roofAreaPlaceholder": "e.g. 60",
+      "roofAreaHint": "Approximate usable area for solar modules. If unsure: single-family house ≈ 40-60m².",
+      "shadingLabel": "Shading",
+      "shadingOptions": [
+        {
+          "label": "No shading",
+          "desc": "Free sun exposure"
+        },
+        {
+          "label": "Partial",
+          "desc": "Occasional shade"
+        },
+        {
+          "label": "Strong",
+          "desc": "Frequently shaded"
+        }
+      ]
+    },
+    "step3": {
+      "title": "Your power consumption",
+      "subtitle": "How much electricity do you currently use per year?",
+      "uploadTitle": "Upload electricity bill",
+      "uploadHint": "PDF or image (max. 10MB)",
+      "or": "or",
+      "presetMethod": "By household size",
+      "manualMethod": "Enter manually",
+      "presets": [
+        {
+          "label": "1-2 people",
+          "desc": "~2,500 kWh/year"
+        },
+        {
+          "label": "3-4 people",
+          "desc": "~4,000 kWh/year"
+        },
+        {
+          "label": "5+ people",
+          "desc": "~6,000 kWh/year"
+        }
+      ],
+      "consumptionLabel": "Annual electricity consumption",
+      "consumptionPlaceholder": "e.g. 4000",
+      "consumptionMin": "1,000 kWh",
+      "consumptionMax": "15,000 kWh",
+      "electricityPriceLabel": "Current electricity price",
+      "electricityPricePlaceholder": "e.g. 0.32",
+      "electricityPriceHint": "Average in Germany: approx. €0.32/kWh (including base fee converted).",
+      "infoBox": "The higher your electricity consumption, the more solar modules pay off. A typical 4-person household consumes about 4,000 kWh per year."
+    },
+    "step4": {
+      "title": "Choose storage",
+      "subtitle": "Which storage size fits your household?",
+      "storageOptions": [
+        {
+          "label": "5 kWh",
+          "price": "~€4,500",
+          "desc": "For small households",
+          "hours": "approx. 4-5 hrs"
+        },
+        {
+          "label": "10 kWh",
+          "price": "~€7,000",
+          "desc": "Optimal for 3-4 people",
+          "hours": "approx. 8-10 hrs"
+        },
+        {
+          "label": "15 kWh",
+          "price": "~€9,500",
+          "desc": "For large households",
+          "hours": "approx. 12-15 hrs"
+        },
+        {
+          "label": "20 kWh",
+          "price": "~€12,000",
+          "desc": "Maximum independence",
+          "hours": "approx. 16-20 hrs"
+        }
+      ],
+      "recommended": "Recommended",
+      "autarkyLabel": "Self-sufficiency:",
+      "fineTuningLabel": "Fine tuning",
+      "selected": "{{size}} kWh selected"
+    },
+    "step5": {
+      "title": "Equipment & plans",
+      "subtitle": "Plan an electric car or heat pump — and add practical extras to your system.",
+      "futureNeedsLabel": "Planning any changes?",
+      "futureNeeds": [
+        {
+          "label": "E-car",
+          "impact": "+ approx. 2,500 kWh/year",
+          "desc": "Planning to buy an e-car? We factor the higher electricity consumption into the calculation."
+        },
+        {
+          "label": "Heat pump",
+          "impact": "+ approx. 3,000 kWh/year",
+          "desc": "Planning to install a heat pump? We factor the higher electricity consumption into the calculation."
+        }
+      ],
+      "extraOptions": "Extra options",
+      "hardwareOptions": [
+        {
+          "label": "E-mobility wallbox",
+          "price": "+ €1,200",
+          "desc": "Charge your e-car conveniently with solar power at home. Including installation."
+        },
+        {
+          "label": "Backup power",
+          "price": "+ €800",
+          "desc": "Stay supplied even during power outages. Automatic switchover."
+        }
+      ]
+    },
+    "step6": {
+      "title": "Subsidies for your project",
+      "subtitleStart": "We found",
+      "programs": "subsidy programs",
+      "subtitleLocation": "for your location",
+      "subtitleEnd": "These are automatically included in your economic calculation.",
+      "vatTitle": "0 % VAT — effective immediately",
+      "vatSavings": "Save ~19 % on the purchase price of your system.",
+      "vatText": "Since 01.01.2023, VAT has been waived nationwide for PV systems and battery storage on residential buildings — automatically factored into our quote price.",
+      "regionalTitle": "Regional subsidies — {{state}}",
+      "subsidySum": "Direct subsidy total: up to {{amount}} €",
+      "nationalTitle": "National subsidies",
+      "nationalBadge": "National",
+      "regionalBadge": "Regional",
+      "included": "Included in result",
+      "separateProcess": "Separate application process",
+      "consumerTitle": "Independent information from the consumer advice centre",
+      "consumerText": "The consumer advice centre offers a comprehensive guide to planning a solar system — from roof condition to choosing an installer to financing tips. Ideal for anyone who wants to thoroughly inform themselves before buying.",
+      "states": {
+        "0": "Saxony / Thuringia",
+        "1": "Berlin / Brandenburg",
+        "2": "Hamburg / Schleswig-Holstein",
+        "3": "Lower Saxony / Hesse",
+        "4": "North Rhine-Westphalia",
+        "5": "NRW / Rhineland-Palatinate",
+        "6": "Hesse / Rhineland-Palatinate",
+        "7": "Baden-Württemberg",
+        "8": "Bavaria",
+        "9": "Bavaria / Franconia",
+        "default": "Germany"
+      }
+    },
+    "grants": {
+      "national": {
+        "mwst": {
+          "title": "0 % VAT",
+          "description": "Since 01.01.2023, VAT on delivery and installation of PV systems and battery storage on residential buildings has been waived nationwide.",
+          "highlight": "~19 % instant savings"
+        },
+        "eeg": {
+          "title": "EEG feed-in tariff",
+          "description": "For fed-in electricity you receive a state-guaranteed tariff for 20 years of 8.2 ct/kWh (up to 10 kWp) or 7.1 ct/kWh (up to 40 kWp).",
+          "highlight": "20 years guaranteed"
+        },
+        "kfw270": {
+          "title": "KfW 270 – Renewable Energies",
+          "description": "Low-interest loan from KfW bank for construction, expansion and acquisition of PV systems. Financing up to €150 million, term up to 30 years.",
+          "highlight": "Loan from 5.21 % eff. p.a."
+        }
+      },
+      "regional": {
+        "sab": {
+          "title": "SAB Saxony Solar",
+          "description": "The Saxon Development Bank (SAB) promotes photovoltaic systems and battery storage with low-interest loans and grants.",
+          "highlight": "Grant up to €5,000"
+        },
+        "thuefonds": {
+          "title": "ThüringenFonds Solar",
+          "description": "The Thuringian Development Bank (TAB) supports investments in renewable energies with low-interest loans.",
+          "highlight": "Loan from 1.5 % p.a."
+        },
+        "bene": {
+          "title": "BENE Berlin SolarPLUS",
+          "description": "The Berlin Programme for Sustainable Development promotes PV systems with storage with a direct investment grant.",
+          "highlight": "Grant up to €10,000"
+        },
+        "ilb": {
+          "title": "ILB Brandenburg Solar",
+          "description": "The Investitionsbank des Landes Brandenburg offers low-interest loans for photovoltaic and storage systems.",
+          "highlight": "Loan from 2.0 % p.a."
+        },
+        "hamburgenergie": {
+          "title": "IFB Hamburg Solar",
+          "description": "The Hamburg Investment and Promotion Bank supports PV systems on residential and commercial buildings with investment grants.",
+          "highlight": "Grant up to €2,500"
+        },
+        "eksh": {
+          "title": "EKSH Schleswig-Holstein",
+          "description": "The Energy and Climate Protection Agency SH promotes innovative energy projects including PV systems with grants.",
+          "highlight": "Grant up to €3,000"
+        },
+        "nbank": {
+          "title": "NBank Energy Saving",
+          "description": "The Lower Saxony Investment and Promotion Bank promotes photovoltaic systems on private residential buildings with low-interest loans.",
+          "highlight": "Loan from 1.8 % p.a."
+        },
+        "progress-nrw": {
+          "title": "progres.nrw Climate Protection Technology",
+          "description": "The NRW funding programme supports investments in climate-friendly technologies including PV systems and battery storage.",
+          "highlight": "Grant up to €7,500"
+        },
+        "progress-nrw-5": {
+          "title": "progres.nrw Climate Protection Technology",
+          "description": "The NRW funding programme supports investments in climate-friendly technologies including PV systems and battery storage.",
+          "highlight": "Grant up to €7,500"
+        },
+        "kef-rlp": {
+          "title": "KEF Rhineland-Palatinate",
+          "description": "The Climate and Energy Agency Rhineland-Palatinate promotes PV systems and storage with direct grants.",
+          "highlight": "Grant up to €4,000"
+        },
+        "kef-rlp-6": {
+          "title": "KEF Rhineland-Palatinate",
+          "description": "The Climate and Energy Agency RLP promotes PV systems and storage with direct grants.",
+          "highlight": "Grant up to €4,000"
+        },
+        "huk": {
+          "title": "Hessen Environmental Loan",
+          "description": "Via the Hessen Environmental Loan, WIBank Hessen offers low-interest loans for PV systems on residential buildings.",
+          "highlight": "Loan from 1.25 % p.a."
+        },
+        "lbank": {
+          "title": "L-Bank Energiesparen Plus",
+          "description": "The State Bank for Baden-Württemberg promotes PV systems and storage via \"Energiesparen Plus\" with attractive loans.",
+          "highlight": "Loan from 1.0 % p.a."
+        },
+        "bayernfonds": {
+          "title": "BayernFonds Solar Offensive",
+          "description": "The LfA Förderbank Bayern supports the installation of PV systems and storage with low-interest loans.",
+          "highlight": "Loan from 0.95 % p.a."
+        },
+        "bayernfonds-9": {
+          "title": "BayernFonds Solar Offensive",
+          "description": "The LfA Förderbank Bayern supports PV systems and storage with low-interest loans for private individuals.",
+          "highlight": "Loan from 0.95 % p.a."
+        }
+      }
+    },
+    "step7": {
+      "title": "Economic analysis",
+      "subtitle": "Your personal evaluation based on the data entered.",
+      "batteryToggleTitle": "How does the economics change without storage?",
+      "batteryToggleSubtitle": "Compare the figures with and without battery storage",
+      "compareInvestment": "Investment",
+      "compareAutarky": "Self-sufficiency",
+      "compareAmortization": "Payback",
+      "yearsSuffix": "yrs",
+      "profitLabel": "Profit after 20 yrs",
+      "realisticHint": "realistic · incl. follow-up costs",
+      "investmentLabel": "Investment",
+      "afterGrants": "after subsidies (instead of {{original}} €)",
+      "savingsLabel": "Savings/year",
+      "savingsHint": "{{kwp}} kWp · {{yield}} kWh/year yield",
+      "followUpCostsLabel": "Follow-up costs (20 yrs)",
+      "maintenanceInverter": "Maintenance + inverter",
+      "batterySuffix": " + battery",
+      "amortizationLabel": "Payback",
+      "years": "years",
+      "amortizationRealisticHint": "Realistic: not within 20 yrs · Simple: {{simple}} yrs",
+      "amortizationSimpleHint": "Realistic (incl. follow-up costs) · Simple: {{simple}} yrs",
+      "amortizationSimpleHintShort": "Realistic (incl. follow-up costs)",
+      "autarkyLabel": "Self-sufficiency",
+      "selfConsumptionShare": "Self-consumption share",
+      "optimizeTitle": "This system can be further optimized",
+      "optimizeHintNoFuture": "Planning an e-car or a heat pump? That significantly increases your self-consumption — payback time often drops by 3–5 years.",
+      "optimizeHintFuture": "With an adapted system size or storage configuration, the result can often be significantly improved.",
+      "optimizeInstaller": "An installer will show you the optimal combination for your personal situation.",
+      "subsidiesHeading": "Subsidies & benefits — already included",
+      "vatTitle": "0 % VAT",
+      "vatDesc": "Price already without VAT — saves ~19 % on purchase price",
+      "eegTitle": "EEG feed-in tariff",
+      "eegDescWithFeedIn": "approx. {{amount}} €/year · 8.2 ct/kWh · 20 years guaranteed",
+      "eegDescNoFeedIn": "8.2 ct/kWh · 20 years guaranteed",
+      "regionalSubsidyTitle": "Regional grant",
+      "regionalSubsidyDesc": "−{{amount}} € deducted from purchase price",
+      "regionalSubsidyEmptyTitle": "Regional subsidy",
+      "regionalSubsidyEmptyDesc": "Check additional grants in the subsidies step",
+      "chartTitle": "Payback progression (20 years)",
+      "chartBadge": "{{value}} € after 20 years (with follow-up costs)",
+      "chartTooltip": "Year {{year}}: {{value}} €",
+      "year1": "Year 1",
+      "breakEvenNone": "Break-even not reached within 20 years",
+      "breakEvenYear": "Break-even approx. year {{year}}",
+      "year20": "Year 20",
+      "faqTitle": "Common questions before buying",
+      "faqItems": [
+        {
+          "q": "How long does an inverter last?",
+          "a": "Usually 10–15 years. After that, a replacement is due (approx. €1,500–3,000)."
+        },
+        {
+          "q": "What does battery replacement cost?",
+          "a": "After approx. 10,000 charge cycles (10–15 years), the storage should be renewed (approx. €4,000–8,000)."
+        },
+        {
+          "q": "How often does the system need maintenance?",
+          "a": "An inspection every 2–3 years is recommended (approx. €150–300)."
+        },
+        {
+          "q": "Are the payback times realistic?",
+          "a": "This analysis considers current electricity prices and EEG tariff. Follow-up costs typically extend payback by 2–3 years."
+        }
+      ],
+      "faqFooter": "All answers are based on the consumer advice centre guide — independent and neutral.",
+      "co2Title": "CO₂ savings",
+      "co2Text": "Your system saves approx. {{tons}} tonnes of CO₂ per year — equivalent to {{trees}} trees!",
+      "requestOffer": "Request individual quote",
+      "pdfFileNamePrefix": "Solvary-ROI-Analysis",
+      "zipFallback": "ZIP",
+      "pdfLoading": "Creating PDF…",
+      "pdfDownload": "Analysis as PDF"
+    },
+    "step8": {
+      "title": "Contact details",
+      "subtitle": "Enter your details so we can create your personal quote.",
+      "firstName": "First name",
+      "firstNamePlaceholder": "Max",
+      "lastName": "Last name",
+      "lastNamePlaceholder": "Mustermann",
+      "email": "Email address",
+      "emailPlaceholder": "max.mustermann@email.com",
+      "phone": "Phone number",
+      "phonePlaceholder": "+49 170 1234567",
+      "city": "City",
+      "cityPlaceholder": "Berlin",
+      "company": "Company",
+      "companyPlaceholder": "Muster GmbH",
+      "privacyPrefix": "I agree to the",
+      "privacyLink": "Privacy Policy",
+      "privacySuffix": "and allow {{company}} to use my data to create a quote.",
+      "sending": "Sending…",
+      "submit": "Request quote",
+      "ssl": "Your data is transmitted SSL-encrypted."
+    },
+    "step9": {
+      "nextSteps": [
+        {
+          "title": "Data review",
+          "desc": "The configuration is analysed within 24 hours.",
+          "time": "24h"
+        },
+        {
+          "title": "Personal quote",
+          "desc": "A tailored quote lands in the customer's inbox.",
+          "time": "48h"
+        },
+        {
+          "title": "Free consultation",
+          "desc": "If you have questions, a callback follows — no obligation.",
+          "time": "72h"
+        }
+      ],
+      "spotsBadge": "{{count}} spots — permanent founder discount",
+      "demoTitle": "Impressive, right? That was the customer view.",
+      "demoSubtitleStart": "That's exactly how your customers configure their system — and you get the lead with all data delivered free. Want this on ",
+      "demoSubtitleYour": "your",
+      "demoSubtitleEnd": " website?",
+      "free": "Free",
+      "permanent": "Permanent",
+      "demoCall": "Demo call",
+      "betaCta": "Become a beta partner",
+      "demoNextStepsTitle": "What happens automatically for your customer next",
+      "replayDemo": "Click through demo again",
+      "thankYouTitle": "Thank you!",
+      "thankYouSubtitle": "Your request has been submitted successfully. We are now creating your individual solar quote.",
+      "nextStepsTitle": "What happens next?",
+      "backHome": "Back to homepage"
+    }
+  },
+  "installerDashboard": {
+    "seo": {
+      "description": "Manage your solar projects and leads — ROI analysis, document management, and live project tracking."
+    },
+    "header": {
+      "overview": "Overview"
+    },
+    "sidebar": {
+      "overview": "Overview",
+      "analyst": "Analyst",
+      "performance": "Performance",
+      "report": "Reports",
+      "system": "System",
+      "mySite": "My Website",
+      "help": "Help",
+      "settings": "Settings"
+    },
+    "role": {
+      "customer": "Customer"
+    },
+    "statusLabels": {
+      "angebot": "Quote",
+      "planung": "Planning",
+      "genehmigung": "Approval",
+      "installation": "Installation",
+      "inbetrieb": "Operational",
+      "neu": "New",
+      "kontaktiert": "Contacted",
+      "abschluss": "Closing",
+      "gewonnen": "Won",
+      "verloren": "Lost",
+      "abgeschlossen": "Completed"
+    },
+    "emptyState": {
+      "title": "No projects yet",
+      "description": "Start the configurator to create your first solar project.",
+      "cta": "Open Configurator"
+    },
+    "project": {
+      "title": "Project {{id}}"
+    },
+    "monitoring": {
+      "title": "Solar Monitoring",
+      "projectSelect": "Project {{id}}",
+      "status": "Status",
+      "capacity": "Capacity",
+      "investment": "Investment",
+      "amortization": "Amortization",
+      "savingsPerYear": "Savings/Year",
+      "autarky": "Autarky",
+      "profit20Years": "Profit 20 Years",
+      "notes": "Notes",
+      "noNotes": "No notes",
+      "active": "Active"
+    },
+    "monthlyGeneration": {
+      "title": "Monthly Generation",
+      "estimated": "Estimated monthly generation based on local weather conditions.",
+      "systemPerformance": "System Performance",
+      "annualSavings": "Annual Savings",
+      "amortization": "Amortization",
+      "years": "Years",
+      "approx": "~{{value}} kWh/Year",
+      "months": {
+        "sept": "Sept",
+        "oct": "Oct",
+        "nov": "Nov",
+        "dec": "Dec"
+      }
+    },
+    "energyChart": {
+      "title": "Energy Overview",
+      "forecast": "Estimated annual production based on system size and weather data.",
+      "period": "Monthly",
+      "approxYearly": "~{{value}} kWh/Year",
+      "legend": {
+        "produced": "Produced",
+        "consumed": "Consumed"
+      },
+      "months": [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ]
+    },
+    "documents": {
+      "title": "Documents",
+      "empty": {
+        "title": "No documents yet",
+        "description": "Documents like quotes and contracts will appear here."
+      }
+    },
+    "error": {
+      "loadData": "Failed to load data"
+    },
+    "calendar": {
+      "monthNames": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
+      "weekdayNames": [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "types": {
+        "beratung": "Consultation",
+        "installation": "Installation",
+        "abnahme": "Acceptance",
+        "partnermeeting": "Partner Meeting"
+      },
+      "durationMinutes": "{{minutes}} min",
+      "durationHours": "{{hours}} h",
+      "durationHoursMinutes": "{{hours}} h {{minutes}} min",
+      "today": "Today",
+      "newAppointment": "New Appointment",
+      "legend": "Legend:",
+      "reschedule": "Reschedule",
+      "cancel": "Cancel",
+      "rescheduleTitle": "New Appointment Time",
+      "date": "Date *",
+      "from": "From *",
+      "to": "To *",
+      "note": "Note",
+      "notePlaceholder": "e.g. Customer cancelled original appointment",
+      "saving": "Saving…",
+      "back": "Back",
+      "cancelConfirmTitle": "Really cancel this appointment?",
+      "cancelConfirmText": "\"{{title}}\" on {{date}} will be deleted and cannot be restored.",
+      "cancelling": "Cancelling…",
+      "confirmCancel": "Yes, cancel appointment",
+      "timeRange": "{{start}} – {{end}}",
+      "weekdayNamesShort": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    },
+    "messages": {
+      "unknown": "Unknown",
+      "error": {
+        "load": "Failed to load",
+        "send": "Failed to send"
+      },
+      "title": "Messages",
+      "totalNotes_one": "{{count}} note total",
+      "totalNotes_other": "{{count}} notes total",
+      "customerDetails": "Customer Details",
+      "allNotes": "All Notes",
+      "filterByLead": "Filter by lead",
+      "searchPlaceholder": "Search customer…",
+      "noLeadsFound": "No leads found",
+      "emptyTitleLead": "No notes for this lead",
+      "emptyTitleAll": "No notes yet",
+      "emptySubtitleLead": "Write the first note below.",
+      "emptySubtitleAll": "Notes will appear here once created.",
+      "notePlaceholderLead": "Note about {{name}}…",
+      "notePlaceholder": "Write new note…",
+      "received": "Received: {{date}}",
+      "openLead": "Open lead"
+    },
+    "completedOrders": {
+      "back": "Back",
+      "title": "Completed Orders",
+      "subtitle_one": "{{count}} completed lead",
+      "subtitle_other": "{{count}} completed leads",
+      "searchPlaceholder": "Search...",
+      "emptyTitle": "No completed orders yet.",
+      "emptyDescription": "Completed leads appear here once marked as won or lost.",
+      "columns": {
+        "customer": "Customer",
+        "email": "Email",
+        "status": "Status",
+        "zip": "ZIP",
+        "received": "Received",
+        "system": "System",
+        "action": "Action"
+      },
+      "selectedCount": "{{count}} selected",
+      "bulk": {
+        "email": "Email",
+        "tag": "Tag",
+        "assign": "Assign"
+      }
+    }
+  },
+  "adminDashboard": {
+    "sidebar": {
+      "nav": {
+        "dashboard": "Dashboard",
+        "pipeline": "Pipeline",
+        "projects": "Projects",
+        "calendar": "Calendar",
+        "completed": "Completed",
+        "discounts": "Discounts",
+        "reports": "Reports",
+        "team": "Team",
+        "myLeads": "My Leads",
+        "partners": "Partners",
+        "leadRouter": "Lead Router",
+        "commissions": "Commissions",
+        "settings": "Settings",
+        "help": "Help"
+      },
+      "role": {
+        "owner": "Owner",
+        "superEmployee": "Super Employee",
+        "sales": "Sales",
+        "projectManager": "Project Manager",
+        "technician": "Technician",
+        "backoffice": "Backoffice",
+        "installer": "Installer",
+        "customer": "Customer",
+        "agencyOwner": "Agency Owner",
+        "agencyAgent": "Sales Rep"
+      }
+    },
+    "helpModal": {
+      "title": "Help & Support",
+      "intro": "If you have questions or issues, reach us directly:",
+      "hours": "Available Mon–Fri 9am–6pm"
+    },
+    "leadCard": {
+      "offerStatus": {
+        "created": "Quote created",
+        "sent": "Quote sent",
+        "viewed": "Quote viewed",
+        "accepted": "Accepted ✓",
+        "rejected": "Rejected"
+      },
+      "score": {
+        "hot": "Hot",
+        "warm": "Warm",
+        "cold": "Cold"
+      },
+      "sla": {
+        "noResponseHours": "{{hours}}h no response",
+        "noResponseDays": "{{days}}d no response",
+        "overdue": "⚠ {{days}}d — SLA overdue"
+      },
+      "appointment": "Appointment: {{date}}",
+      "onSiteDone": "Site visit done",
+      "won": "Deal won",
+      "lost": "No deal",
+      "date": {
+        "today": "Today, {{time}}",
+        "yesterday": "Yesterday",
+        "daysAgo": "{{days}} days ago"
+      }
+    },
+    "common": {
+      "source": {
+        "landingpage": "Landing Page",
+        "direct": "Direct",
+        "referral": "Referral",
+        "social": "Social Media",
+        "google": "Google",
+        "other": "Other"
+      },
+      "status": {
+        "new": "New",
+        "contacted": "Contacted",
+        "onSite": "On Site",
+        "offerSent": "Offer Sent",
+        "closing": "Closing",
+        "won": "Won",
+        "lost": "Lost",
+        "planning": "Planning",
+        "installation": "Installation",
+        "completed": "Completed"
+      }
+    },
+    "pipeline": {
+      "title": "Pipeline",
+      "activeLeads": "{{count}} active leads",
+      "wonCount": "{{count}} won",
+      "lostCount": "{{count}} lost",
+      "status": {
+        "new": "New",
+        "contacted": "Contacted",
+        "onSite": "On Site",
+        "offerSent": "Offer Sent",
+        "closing": "Closing"
+      },
+      "filter": {
+        "zip": "ZIP Code",
+        "zipPlaceholder": "e.g. 80331",
+        "minSize": "Minimum Size",
+        "allSizes": "All Sizes",
+        "fromKwp": "From {{value}} kWp",
+        "fromDate": "From Date",
+        "source": "Source",
+        "allSources": "All Sources",
+        "results": "{{count}} of {{total}}",
+        "reset": "Reset Filters"
+      },
+      "dropClosing": "Drag won leads here",
+      "dropHere": "Drag leads here"
+    },
+    "projects": {
+      "title": "Projects",
+      "subtitle": "{{active}} active · {{done}} completed",
+      "completedOrders": "Completed Orders",
+      "active": "Active",
+      "done": "Done",
+      "emptyTitle": "No projects yet",
+      "emptySubtitle": "Won leads will appear here as projects.",
+      "noCompleted": "No completed projects yet",
+      "none": "No projects",
+      "status": {
+        "planning": "Planning",
+        "approval": "Approval",
+        "installation": "Installation",
+        "completed": "Operational"
+      },
+      "unknownCustomer": "Unknown Customer",
+      "details": "Details →"
+    },
+    "offer": {
+      "status": {
+        "created": "Created",
+        "sent": "Sent",
+        "viewed": "Viewed",
+        "accepted": "Accepted",
+        "rejected": "Rejected"
+      }
+    },
+    "dashboard": {
+      "stats": {
+        "totalLeads": "Total Leads",
+        "activeDeals": "Active Deals",
+        "wonCount": "{{count}} won",
+        "pipelineValue": "Pipeline Value",
+        "conversionShort": "{{value}}% conversion",
+        "conversionRate": "Conversion Rate",
+        "winLoss": "{{value}} Win/Loss"
+      },
+      "pipelineOverview": "Pipeline Overview",
+      "newLead": "New Lead",
+      "pipelineFlow": "Pipeline Flow",
+      "stage": {
+        "newLeads": "New Leads"
+      },
+      "recentActivity": "Recent Activity",
+      "recentDeals": "Recent Deals",
+      "viewAll": "View All",
+      "table": {
+        "company": "Company",
+        "contact": "Contact",
+        "value": "Value",
+        "stage": "Stage",
+        "assigned": "Assigned"
+      }
+    }
+  },
+  "offers": {
+    "status": {
+      "draft": "Draft",
+      "sent": "Sent",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
+    },
+    "unitPiece": "pc",
+    "leadNotFound": "Lead not found.",
+    "errorUpdatingLineItem": "Error updating line item:",
+    "errorWithMessage": "Error: {{message}}",
+    "confirmDeleteLineItem": "Really delete this line item?",
+    "activity": {
+      "offerDraftSaved": "Quote draft saved (total: {{total}})",
+      "offerSent": "Quote sent to {{email}}",
+      "offerAccepted": "Quote accepted (total: {{total}})",
+      "offerRejected": "Quote rejected"
+    },
+    "email": {
+      "defaultSubject": "Your personal solar quote — {{companyName}}",
+      "defaultBody": "\n        <p>Hello {{firstName}} {{lastName}},</p>\n        <p>thank you for your interest in a solar system. Please find your personal quote attached.</p>\n        {{signatureBlock}}\n        <p>If you have any questions, feel free to reach out.</p>\n        <p>Best regards,<br>{{companyName}}</p>\n      ",
+      "signatureButtonText": "Sign quote digitally",
+      "signatureHint": "You can also conveniently sign the quote digitally. The link above remains valid for 30 days."
+    },
+    "pdfFilename": "Quote-{{offerNumber}}.pdf",
+    "emailSendFailed": "Failed to send email",
+    "sendError": "Failed to send",
+    "confirmAccept": "Mark quote as accepted? The lead will be set to \"Won\".",
+    "confirmReject": "Mark quote as rejected?",
+    "backToPipeline": "Back to pipeline",
+    "backToLead": "Back to lead",
+    "createOffer": "Create quote",
+    "saveDraft": "Save draft",
+    "sendOffer": "Send quote",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "lineItems": "Quote line items",
+    "addLineItem": "Add line item",
+    "columnCategory": "Category",
+    "columnQuantity": "Quantity",
+    "columnUnit": "Unit",
+    "columnUnitPrice": "Unit Price",
+    "columnTotal": "Total",
+    "deleteLineItem": "Delete line item",
+    "descriptionPlaceholder": "Description (e.g. manufacturer, model, details)…",
+    "noLineItems": "No line items yet",
+    "addFirstLineItem": "Add first line item",
+    "internalNotes": "Internal Notes",
+    "internalNotesPlaceholder": "Internal notes about the quote...",
+    "summary": "Summary",
+    "subtotal": "Subtotal",
+    "discount": "Discount",
+    "vat": "VAT ({{rate}}%)",
+    "total": "Total",
+    "customerImpact": "Impact for the Customer",
+    "amortization": "Amortization",
+    "amortizationValue": "~{{years}} yrs",
+    "savingsPerYear": "Savings/Year",
+    "profit20Years": "Profit 20 yrs",
+    "autarky": "Autarky",
+    "systemOutput": "System Output",
+    "discountCode": "Discount Code",
+    "selectCode": "Select code...",
+    "apply": "Apply",
+    "manualDiscount": "Manual Discount",
+    "ok": "OK",
+    "removeDiscount": "Remove discount",
+    "pdfCreating": "Creating PDF…",
+    "downloadPdf": "Quote as PDF",
+    "offerNumber": "Quote No.: {{number}}",
+    "lastSaved": "Last saved: {{date}}",
+    "sentAt": "Sent: {{date}}",
+    "sendModalTitle": "Send Quote",
+    "sendSuccessTitle": "Quote sent successfully!",
+    "sendSuccessMessage": "Email was sent to {{email}}.",
+    "sendModalDescription": "The quote will be generated as a PDF and sent to the customer by email.",
+    "emailAddress": "Email Address",
+    "subject": "Subject",
+    "subjectPlaceholder": "Your personal solar quote",
+    "message": "Message",
+    "cancel": "Cancel",
+    "sending": "Sending…",
+    "sendNow": "Send now",
+    "invalidLink": "Invalid link.",
+    "linkExpired": "This link is invalid or has expired.",
+    "defaultCompanyName": "Your Solar Partner",
+    "saveError": "Failed to save. Please try again.",
+    "errorTitle": "Error",
+    "signedTitle": "Quote signed",
+    "signedMessage": "Thank you, {{firstName}}! Your quote has been signed successfully.",
+    "signedEmailHint": "You will receive a confirmation email shortly.",
+    "signTitle": "Sign quote",
+    "investment": "Investment",
+    "amortizationShort": "Amortization",
+    "yearsShort": "yrs",
+    "legalNotice": "By signing, you confirm that you have read and accepted the quote. The signature is legally binding.",
+    "signatureHeading": "Digital Signature"
+  },
+  "leads": {
+    "status": {
+      "new": "New",
+      "contacted": "Contacted",
+      "onSite": "On Site",
+      "offer": "Offer Sent",
+      "closing": "Closing",
+      "won": "Won",
+      "lost": "Lost",
+      "planning": "Planning",
+      "installation": "Installation",
+      "completed": "Completed"
+    },
+    "errors": {
+      "loadFailed": "Failed to load: {{error}}",
+      "deleteFailed": "Deletion failed",
+      "exportFailed": "Export failed",
+      "loadDraft": "Error loading quote draft:"
+    },
+    "searchPlaceholder": "Search leads...",
+    "foundCount_one": "{{count}} lead found",
+    "foundCount_other": "{{count}} leads found",
+    "offerAction": {
+      "draft": "Draft available",
+      "sent": "Quote sent",
+      "accepted": "Quote accepted",
+      "rejected": "Quote rejected"
+    },
+    "invoiceLabels": ["Invoice 1/30%", "Invoice 2/60%", "Final invoice (10%)"],
+    "offer": "Quote",
+    "total": "Total",
+    "editOffer": "Edit quote",
+    "viewOffer": "View quote",
+    "markViewed": "Mark viewed",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "invoices": "Progress Invoices",
+    "invoiceFileName": "Invoice-{{number}}.pdf",
+    "pdfLoading": "PDF…",
+    "noOfferYet": "No quote created yet",
+    "createOffer": "Create quote",
+    "notFound": "Lead not found.",
+    "backToPipeline": "Back to pipeline",
+    "gdpr": {
+      "exportTitle": "Export all data of this lead as JSON (GDPR Art. 20 — data portability)",
+      "exportButton": "Data Export (Art. 20)",
+      "deleteTitle": "Delete all personal data of this lead (GDPR Art. 17)",
+      "deleteButton": "GDPR Deletion",
+      "deleteHeading": "GDPR Deletion",
+      "deleteIntro": "All personal data of {{name}} will be irrevocably deleted:",
+      "deleteItem1": "Lead, notes, appointments, quotes & signatures",
+      "deleteItem2": "Funnel & webhook history",
+      "deleteItem3": "Commissions will be anonymized (accounting records remain)"
+    },
+    "cancel": "Cancel",
+    "deletePermanently": "Delete permanently",
+    "leadNumber": "Lead #{{number}}",
+    "received": "Received",
+    "changeStatus": "Change Status",
+    "section": {
+      "contact": "Contact Details",
+      "roof": "Roof Configuration",
+      "energy": "Energy Needs & Equipment",
+      "planning": "Planning & Financing",
+      "system": "System Configuration",
+      "score": "Lead Score",
+      "quickActions": "Quick Actions",
+      "siteVisit": "Site Visit",
+      "customerData": "Customer Data",
+      "projectStatus": "Project Status"
+    },
+    "label": {
+      "email": "Email",
+      "phone": "Phone",
+      "zip": "ZIP Code",
+      "wish": "Request",
+      "roofArea": "Roof Area",
+      "orientation": "Orientation",
+      "constructionYear": "Construction Year",
+      "consumption": "Annual Consumption",
+      "electricityPrice": "Electricity Price",
+      "planningHorizon": "Planning Horizon",
+      "financing": "Financing",
+      "systemSize": "System Size",
+      "investment": "Investment",
+      "savingsPerYear": "Savings/Year",
+      "amortization": "Amortization",
+      "autarky": "Autarky",
+      "selfConsumption": "Self-Consumption Share",
+      "profit20Years": "Profit 20 yrs",
+      "afterDeduction": "after investment deduction",
+      "name": "Name",
+      "yearlyYield": "Yearly Yield"
+    },
+    "zoomCallWanted": "Zoom consultation requested",
+    "feature": {
+      "battery": "Battery Storage",
+      "eCar": "Electric Car",
+      "heatPump": "Heat Pump"
+    },
+    "financing": {
+      "kfw": "KfW financing requested",
+      "cash": "Cash / equity"
+    },
+    "years": "years",
+    "realistic": "Realistic: {{years}} yrs",
+    "topFactors": "Top factors",
+    "sendEmail": "Send Email",
+    "call": "Call",
+    "siteVisit": {
+      "done": "Completed",
+      "planned": "Scheduled: {{date}}",
+      "measuredRoofArea": "Measured roof area: {{area}} m²",
+      "previousArea": "{{area}} m² previously",
+      "roofAngle": "Roof pitch: {{angle}}°",
+      "shading": "⚠ Shading detected"
+    },
+    "system": "System",
+    "horizon": {
+      "asap": "As soon as possible",
+      "months3": "In 3 months",
+      "months12": "In 12 months"
+    },
+    "orientation": {
+      "south": "South",
+      "eastWest": "East / West",
+      "north": "North"
+    },
+    "construction": {
+      "pre1980": "Before 1980",
+      "1980-2000": "1980 – 2000",
+      "2000-2010": "2000 – 2010",
+      "after2010": "After 2010"
+    },
+    "projectStatus": {
+      "offerCreated": "Quote created",
+      "planning": "In Planning",
+      "approval": "Approval in progress",
+      "installation": "In Installation",
+      "operational": "Operational"
+    },
+    "noProjectYet": "No project yet.",
+    "backToProjects": "Back to projects",
+    "pvSystem": "PV System",
+    "offerAccepted": "Quote accepted",
+    "downloadOfferPdf": "Quote as PDF",
+    "systemOperational": "System operational",
+    "completePhase": "Complete phase",
+    "setStatusManually": "Set status manually",
+    "completePhaseHint": "Or use \"Complete phase\" above for the next step.",
+    "customer": "Customer",
+    "uploadDocuments": "Upload Documents",
+    "documentHint": "Meter photo, roof plans, etc.",
+    "chooseFile": "Choose file",
+    "internalNotes": "Internal Notes",
+    "notesPlaceholder": "Notes on roof condition, customer preferences, or special circumstances...",
+    "saveNotes": "Save notes",
+    "paymentStatus": "Payment Status",
+    "paymentPlan": {
+      "hint": "3-installment payment plan — mark as paid",
+      "labels": [
+        "Progress Invoice 1 — 30% Deposit",
+        "Progress Invoice 2 — 60% Installation",
+        "Final Invoice — 10% Acceptance"
+      ],
+      "paidCount": "{{count}} / 3 installments paid",
+      "received": "{{amount}} € received"
+    },
+    "generateInvoices": "Generate Invoices",
+    "invoiceVatHint": "3-installment payment plan · 0% VAT per § 12 (3) UStG",
+    "pdf": "PDF"
+  },
+  "agency": {
+    "common": {
+      "errorPrefix": "Error: ",
+      "upgradeRequired": "Upgrade required",
+      "viewPlans": "View plans",
+      "loading": "Loading...",
+      "save": "Save",
+      "add": "Add",
+      "saving": "Saving…",
+      "saved": "Saved!",
+      "creating": "Creating…",
+      "cancel": "Cancel",
+      "unknown": "Unknown",
+      "unknownError": "Unknown error",
+      "refresh": "Refresh",
+      "resetFilter": "Reset filter",
+      "fixedAmount": "Fixed amount (€)",
+      "percentage": "Percentage (%)"
+    },
+    "partnersPage": {
+      "confirmDelete": "Really delete this partner?",
+      "title": "Installer Partners",
+      "subtitle": "Manage your installer partners",
+      "addPartner": "Add Partner",
+      "limitReachedTitle": "Partner limit reached ({{active}}/{{limit}})",
+      "limitReachedDescription": "You've reached the limit of your current agency plan. Upgrade to Pro or Scale to manage unlimited partners.",
+      "emptyTitle": "No partners yet",
+      "emptySubtitle": "Add your first installer partners",
+      "zipLabel": "ZIP",
+      "commissionLabel": "Commission",
+      "portalLink": "Portal Link",
+      "editPartner": "Edit Partner",
+      "newPartner": "New Partner",
+      "companyNamePlaceholder": "Company Name *",
+      "contactNamePlaceholder": "Contact Person",
+      "emailPlaceholder": "Email *",
+      "phonePlaceholder": "Phone",
+      "zipRegionsPlaceholder": "ZIP regions (e.g. 80, 81, 82)",
+      "commissionFixed": "Fixed amount (€)",
+      "commissionPercentage": "Percentage (%)",
+      "commissionValuePlaceholder": "Value",
+      "kwhPricePlaceholder": "kWh price (optional)",
+      "websitePlaceholder": "Website (e.g. https://example-solar.com)",
+      "notesPlaceholder": "Notes"
+    },
+    "agencyTeam": {
+      "loadError": "Failed to load",
+      "confirmRemove": "Really remove this salesperson from the team?",
+      "removeError": "Failed to remove",
+      "invite": {
+        "emailExists": "This email is already registered.",
+        "createFailed": "Account could not be created. Please try again.",
+        "assignmentFailed": "Account created, but assignment failed: ",
+        "title": "Invite Salesperson",
+        "nameLabel": "Name *",
+        "namePlaceholder": "Jane Doe",
+        "emailLabel": "Email *",
+        "emailPlaceholder": "jane@example.com",
+        "roleHint": "Will be created as <strong>Sales Rep</strong> — restricted access",
+        "inviteButton": "Invite"
+      },
+      "title": "My Team",
+      "subtitle": "Invite & manage salespeople",
+      "inviteButton": "Invite Salesperson",
+      "membersTitle": "Salespeople",
+      "memberCount_one": "{{count}} member",
+      "memberCount_other": "{{count}} members",
+      "emptyTitle": "No salespeople in the team yet.",
+      "emptySubtitle": "Invite your first salesperson.",
+      "salesRole": "Sales Rep",
+      "memberSince": "since {{date}}",
+      "infoBox": {
+        "title": "What can salespeople do?",
+        "items": [
+          "View all agency leads",
+          "Use lead router (assign leads)",
+          "Manage their own calendar",
+          "No access to partners, commissions, or team"
+        ]
+      }
+    },
+    "commissionsPage": {
+      "invoiceNumberPrompt": "Invoice number:",
+      "confirmPaid": "Mark as paid?",
+      "title": "Commissions",
+      "subtitle": "Overview of pending and paid commissions",
+      "stats": {
+        "total": "Total",
+        "pending": "Pending",
+        "invoiced": "Invoiced",
+        "paid": "Paid"
+      },
+      "topOrdersTitle": "Most Orders",
+      "topPaidTitle": "Highest Paid Commission",
+      "noPaidCommissions": "No paid commissions yet",
+      "statusFilter": {
+        "all": "All",
+        "pending": "Pending",
+        "invoiced": "Invoiced",
+        "paid": "Paid",
+        "cancelled": "Cancelled"
+      },
+      "allPartners": "All Partners",
+      "allSalespeople": "All Salespeople",
+      "entryCount": "{{count}} entries",
+      "empty": "No commissions found",
+      "columns": {
+        "partner": "Partner",
+        "lead": "Lead",
+        "amount": "Amount",
+        "invoiceNumber": "Invoice No.",
+        "status": "Status",
+        "date": "Date",
+        "action": "Action"
+      },
+      "status": {
+        "pending": "Pending",
+        "invoiced": "Invoiced",
+        "paid": "Paid",
+        "cancelled": "Cancelled"
+      },
+      "actions": {
+        "invoice": "Invoice",
+        "paid": "Paid"
+      }
+    },
+    "agencySettings": {
+      "title": "Settings",
+      "subtitle": "Agency Configuration",
+      "companyProfile": {
+        "title": "Company Profile",
+        "agencyName": "Agency Name",
+        "agencyNamePlaceholder": "Solar Sales GmbH",
+        "phone": "Phone",
+        "phonePlaceholder": "+1 555 123 4567",
+        "zipCity": "ZIP / City",
+        "zipCityPlaceholder": "80333 Munich",
+        "website": "Website",
+        "websitePlaceholder": "https://my-agency.com"
+      },
+      "defaultCommission": {
+        "title": "Default Commission",
+        "description": "Pre-filled values when creating new partners",
+        "type": "Commission Type",
+        "defaultValue": "Default Value ({{unit}})",
+        "hint": "Can be customized individually when creating each partner."
+      },
+      "notifications": {
+        "title": "Notifications",
+        "emailToggle": "Partner Response by Email",
+        "emailToggleDescription": "Get an email when a partner accepts or rejects a lead"
+      },
+      "teamShortcut": {
+        "title": "Manage Team",
+        "description": "Invite salespeople and manage access"
+      }
+    },
+    "partnerPortal": {
+      "invalidAccess": "Invalid access. Please check your link.",
+      "loadError": "Failed to load data.",
+      "accessDenied": "Access Denied",
+      "invalidLink": "Invalid link",
+      "title": "Partner Portal",
+      "commission": "Commission",
+      "newLeads": "New Leads ({{count}})",
+      "noNewLeads": "No new leads",
+      "myLeads": "My Leads ({{count}})",
+      "noActiveLeads": "No active leads",
+      "orderPlaced": "Order placed",
+      "converted": "Converted",
+      "accept": "Accept",
+      "reject": "Reject"
+    }
+  },
+  "adminSettings": {
+    "common": {
+      "yourCompanyName": "Your Company Name",
+      "optional": "(optional)",
+      "saving": "Saving…",
+      "saveSettings": "Save Settings",
+      "saved": "Saved",
+      "saveError": "Failed to save",
+      "copied": "Copied!",
+      "copy": "Copy",
+      "reset": "Reset"
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "CRM Integration & Webhook"
+    },
+    "webhook": {
+      "title": "CRM Webhook",
+      "prioBadge": "PRIORITY",
+      "description": "Every new lead is automatically sent as a JSON payload to your webhook URL — compatible with Zapier, Make, HubSpot, Pipedrive, and any system of your own.",
+      "activeLabel": "Webhook Active",
+      "activeHint": "Leads are forwarded automatically",
+      "urlLabel": "Webhook URL",
+      "urlPlaceholder": "https://hooks.zapier.com/hooks/catch/...",
+      "secretLabel": "Webhook Secret",
+      "secretPlaceholder": "Secret key for HMAC-SHA256 signature",
+      "secretHint": "If set, we sign every request with X-Voltify-Signature: sha256=…",
+      "sending": "Sending…",
+      "sendTest": "Send Test Webhook",
+      "testSuccess": "Test successful",
+      "testFailed": "Test failed",
+      "payloadTitle": "Payload Format (JSON)",
+      "integrationsTitle": "Integrations",
+      "integrationsSubtitle": "Compatible systems — paste the webhook URL into the respective tool",
+      "crmIntegrations": {
+        "zapier": {
+          "description": "Connect with 5,000+ apps — HubSpot, Pipedrive, Salesforce, Gmail, and more.",
+          "hint": "Copy the webhook URL from the Zapier trigger \"Webhooks by Zapier\"."
+        },
+        "hubspot": {
+          "description": "Create the lead directly as a contact + deal in HubSpot.",
+          "hint": "Use the HubSpot Workflow → webhook step, or Zapier as a bridge."
+        },
+        "pipedrive": {
+          "description": "Create the lead as a person + deal with score in Pipedrive.",
+          "hint": "Pipedrive → Automations → activate webhook trigger."
+        },
+        "make": {
+          "description": "More flexible than Zapier, cheaper for multiple leads/month.",
+          "hint": "Make scenario → webhook module → copy URL."
+        }
+      },
+      "retryTitle": "Retry logic:",
+      "retryDescription": "If a webhook call fails, the request is automatically retried 3× (with 1s, 2s, 4s backoff). All attempts are logged in the webhook log."
+    },
+    "invoice": {
+      "serviceDescription": "PV system {{kwp}} kWp incl. installation",
+      "flatRate": "Flat rate",
+      "recipientLabel": "Invoice Recipient",
+      "invoiceNumber": "Invoice No.",
+      "date": "Date",
+      "dueDate": "Due Date",
+      "taxNumber": "Tax No.",
+      "serviceLabel": "Service",
+      "table": {
+        "position": "Item",
+        "description": "Description",
+        "amount": "Amount"
+      },
+      "serviceNote": "Delivery and installation per order confirmation",
+      "netAmount": "Net Amount",
+      "vatNote": "VAT 0% (§ 12 (3) UStG — PV system)",
+      "total": "Total Amount",
+      "paymentNoteLabel": "Payment Instructions",
+      "paymentInstructionPrefix": "Please transfer the amount within",
+      "paymentDays_one": "day",
+      "paymentDays_other": "days",
+      "paymentInstructionSuffix": "to the following account:",
+      "referenceLabel": "Reference:",
+      "ceo": "CEO",
+      "taxNumberShort": "Tax No."
+    },
+    "offer": {
+      "recipientLabel": "Quote for",
+      "itemsLabel": "Quote Line Items",
+      "items": {
+        "solarModules": "Solar Modules",
+        "inverter": "Inverter",
+        "mounting": "Mounting & Substructure",
+        "electrical": "Electrical Installation"
+      },
+      "itemDetails": {
+        "standard": "Standard",
+        "flatRate": "Flat rate",
+        "wiring": "AC/DC Wiring"
+      },
+      "total": "Total Amount",
+      "systemLabel": "Your Solar System",
+      "system": {
+        "size": "System Size",
+        "investment": "Investment",
+        "annualSavings": "Annual Savings",
+        "payback": "Payback",
+        "years": "years",
+        "modulesLabel": "Modules:",
+        "inverterLabel": "Inverter:"
+      },
+      "paymentPlan": {
+        "label": "Payment Plan",
+        "downPayment": "Down Payment (30%)",
+        "installationInvoice": "Installation Invoice (60%)",
+        "finalInvoice": "Final Invoice (10%)",
+        "onOrder": "Upon Order",
+        "afterInstallation": "After Installation",
+        "afterAcceptance": "After Acceptance"
+      },
+      "payment": {
+        "ibanLabel": "IBAN:"
+      },
+      "termsLabel": "Payment Terms",
+      "disclaimer": "Non-binding quote · Valid for 30 days",
+      "ctaAccept": "Accept Quote"
+    },
+    "tabs": {
+      "abo": "Subscription & Limits",
+      "profile": "Profile & Branding",
+      "calculation": "Calculation",
+      "legal": "Legal",
+      "templates": "Templates",
+      "previews": "Previews",
+      "integration": "Integration"
+    },
+    "title": "Owner Configuration",
+    "subtitle": "Branding, calculation parameters & region settings",
+    "subscription": {
+      "title": "Subscription & Limits",
+      "active": "Active",
+      "currentPackage": "Current Plan",
+      "planDetails": "€{{price}}/month · {{users}} users · unlimited leads",
+      "upgrade": "Upgrade",
+      "leadsThisMonth": "Leads this month",
+      "unlimited": "Unlimited",
+      "leadsCreated": "{{count}} leads created",
+      "teamMembers": "Team Members",
+      "seatsLeft": "{{count}} seats left",
+      "features": "Features",
+      "featureList": {
+        "configurator": "Configurator",
+        "leadPipeline": "Lead Pipeline",
+        "projects": "Projects",
+        "offerPdf": "Quote PDF",
+        "invoicePdf": "Invoice PDF",
+        "messages": "Messages",
+        "calendar": "Calendar",
+        "crmWebhook": "CRM Webhook",
+        "leadScoring": "Lead Scoring",
+        "customDomain": "Custom Domain",
+        "apiAccess": "API Access",
+        "multiLocation": "Multi-Location"
+      }
+    },
+    "profile": {
+      "publicProfile": "Public Profile",
+      "profileLink": "Your Profile Link",
+      "companyNamePublic": "Company Name (public)",
+      "website": "Website",
+      "whiteLabelSlug": "White-Label Slug",
+      "whiteLabelBadge": "White-Label",
+      "slugHint": "Share this link with your customers — the configurator appears with your branding.",
+      "bio": "Short Bio",
+      "companyProfile": "Company Profile",
+      "companyLogo": "Company Logo",
+      "uploadLogo": "Upload Logo",
+      "companyName": "Company Name",
+      "slogan": "Slogan",
+      "brandingColors": "Branding & Colors",
+      "primaryColor": "Primary Color",
+      "accentColor": "Accent Color",
+      "offerCreatedBadge": "Quote Created",
+      "colorPreview": "Preview of the color combination"
+    },
+    "calculation": {
+      "configuratorAssumptions": "Configurator Assumptions (ROI)",
+      "configuratorAssumptionsDescription": "These values control the economics analysis your customer sees in the configurator. Leave a field empty to use the Voltify default. Tip: set the guideline price close to your real calculation so the later quote is no surprise.",
+      "guidelinePrice": "Guideline Price (€/kWp)",
+      "defaultPlaceholder": "Default: {{value}}",
+      "electricityPriceDefault": "Electricity Price Default (€/kWh)",
+      "feedInTariff": "Feed-in Tariff (€/kWh)",
+      "maintenanceCosts": "Maintenance Costs (€/year)",
+      "offerConfig": "Quote Configuration",
+      "minPrice": "Minimum Price (€)",
+      "defaultMargin": "Default Margin (%)",
+      "defaultIban": "Default IBAN",
+      "paymentTermDays": "Payment Term (days)",
+      "panelManufacturer": "Panel Manufacturer",
+      "inverterManufacturer": "Inverter Manufacturer",
+      "defaultOfferPrices": "Default Quote Prices",
+      "modules": "Modules (€/kWp)",
+      "inverter": "Inverter (€/kWp)",
+      "storage": "Storage (€/kWh)",
+      "mounting": "Mounting (€ flat)",
+      "electrical": "Electrical (€ flat)",
+      "scaffolding": "Scaffolding (€ flat)",
+      "travel": "Travel (€ flat)",
+      "vatRate": "VAT Rate (%)",
+      "calculationParameters": "Calculation Parameters",
+      "electricityPrice": "Electricity Price (ct/kWh)",
+      "electricityPriceIncrease": "Electricity Price Increase (%/year)",
+      "kfwInterestRate": "KfW Interest Rate (%)",
+      "selfConsumptionRate": "Self-Consumption Rate (%)",
+      "co2Factor": "CO₂ Factor (kg/kWh)",
+      "regionAvailability": "Region & Availability",
+      "servedZipAreas": "Served ZIP Areas",
+      "zipHint": "Comma-separated ZIP codes or prefixes — empty = nationwide",
+      "maxDistance": "Max. Distance (km)"
+    },
+    "legal": {
+      "legalRequirements": "Legal Requirements",
+      "taxNumber": "Tax Number / VAT ID",
+      "invoiceNumberRange": "Invoice Number Range",
+      "street": "Street & Number",
+      "zipCity": "ZIP & City",
+      "managingDirector": "Managing Director"
+    },
+    "templates": {
+      "availablePlaceholders": "Available Placeholders",
+      "placeholders": {
+        "firstName": "Customer First Name",
+        "lastName": "Customer Last Name",
+        "offerNumber": "e.g. QUOTE-20260619-A1B2",
+        "companyName": "Your Company Name",
+        "date": "Today's Date",
+        "validUntil": "Valid Until (30 days)",
+        "paymentTerm": "Payment Term in Days"
+      },
+      "offerTemplateTitle": "Quote Template — PDF Texts",
+      "offerTemplateHint": "These texts appear in the PDF. Placeholders are replaced when rendering.",
+      "salutation": "Cover Letter (Intro)",
+      "salutationHint": "Appears at the top of the PDF after the header. Leave empty = no cover letter.",
+      "terms": "Payment Terms & Notes",
+      "showFollowUpCosts": "Show follow-up costs notice in PDF",
+      "closingText": "Closing Text",
+      "closingTextHint": "Appears above the signature line. Leave empty = no closing text.",
+      "emailTemplate": "Email Template",
+      "emailTemplateHint": "Pre-filled automatically when opening the send dialog.",
+      "subject": "Subject",
+      "message": "Message"
+    },
+    "previews": {
+      "offerPreview": "Quote Preview",
+      "offerPreviewHint": "Sample customer · 9.5 kWp · incl. your template texts",
+      "invoicePreview": "Invoice Preview",
+      "invoicePreviewHint": "Sample invoice with your settings — incl. 0% VAT per § 12 (3) UStG."
+    }
+  }
+}

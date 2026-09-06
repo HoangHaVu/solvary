@@ -1,5 +1,6 @@
 import SEO from '../components/seo/SEO';
 import FloatingBetaCTA from '../components/layout/FloatingBetaCTA';
+import { useTranslation } from 'react-i18next';
 import Header from '../sections/demo/Header';
 import Hero from '../sections/demo/Hero';
 import Partners from '../sections/demo/Partners';
@@ -17,11 +18,12 @@ import FAQ from '../sections/demo/FAQ';
 import Footer from '../sections/demo/Footer';
 
 export default function DemoPage() {
+  const { t } = useTranslation();
   return (
     <>
       <SEO
-        title="Solar-Konfigurator"
-        description="Berechnen Sie die Wirtschaftlichkeit Ihrer Photovoltaik-Anlage in wenigen Minuten. Inkl. Foerderungen, ROI-Analyse und persoenlichem Angebot."
+        title={t('demoPage.seo.title')}
+        description={t('demoPage.seo.description')}
         canonical="/demo"
         og={{ type: 'website' }}
       />

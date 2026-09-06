@@ -1,8 +1,28 @@
 # Voltify — Resume Point
 
-<!-- Zuletzt aktualisiert: 2026-09-02 — Angebotskonfigurator: öffentlicher Demo-Flow /angebot-demo + Teaser, Produkte-Kachel verlinkt -->
+<!-- Zuletzt aktualisiert: 2026-09-04 — Auth & Konfiguratoren vollständig übersetzt -->
 
 ## Status: MVP-INFRASTRUKTUR KOMPLETT ✅
+
+## Session 2026-09-04 — Auth & Konfiguratoren auf EN übersetzt
+
+- **Ziel:** Beim Sprachwechsel über die Navbar sollen Solar-Konfigurator, Angebots-Demo-Konfigurator, Login und Sign-Up ebenfalls auf Englisch wechseln.
+- **Login:** `src/pages/Login.tsx` komplett auf `useTranslation`/`login`-Namespace umgestellt (Hero, Formular, Quick-Login, Test-Accounts).
+- **Register:** `src/pages/Register.tsx` finalisiert und vollständig übersetzt (`register`-Namespace).
+- **Angebots-Demo-Konfigurator:** `src/pages/OfferDemoPage.tsx` komplett auf `useTranslation`/`offerDemo`-Namespace umgestellt (Teaser, Builder, Positionen, Rabatt, Textbausteine, PDF, Sende-Flow, CTA).
+- **Solar-Konfigurator:** `src/pages/Configurator.tsx` und alle Schritt-Komponenten in `src/sections/configurator/*.tsx` auf `useTranslation`/`configurator`-Namespace umgestellt (Steps 0–9, Förderungen, Wirtschaftlichkeitsanalyse, Kontakt, Thank-You).
+- **Übersetzungsdateien:** `src/i18n/locales/de.json` + `en.json` um Namespaces `login`, `register`, `offerDemo` und `configurator` ergänzt (inkl. Grant-Übersetzungen und Array-Daten).
+- **Qualität:** `npm run build` 0 TS-Fehler ✅ · 116/122 Tests grün. Die 6 roten Tests bleiben `tests/contexts/AuthContext.test.tsx` (`emitAuth` Mock-Problem, vorbestehend).
+
+## Session 2026-09-03/04 — Navbar Sprachswitcher DE/EN + komplette Marketing-Übersetzung
+
+- **i18n-Infrastruktur:** `i18next` + `react-i18next` + `i18next-browser-languagedetector` installiert. `src/i18n/index.ts` mit `de`/`en` Ressourcen, Fallback `de`, Speicherung in `localStorage`.
+- **`src/sections/SiteHeader.tsx`:** Nav-Links und CTA über `useTranslation`. Neben dem CTA-Button neuer `LanguageSwitcher` mit `Globe`-Icon — Dropdown `Deutsch` / `English`, sofortiger Sprachwechsel. Auch im Mobile-Menü verfügbar.
+- **Marketing-Seiten komplett übersetzt:** LandingPage, PricingPage, ProductsPage, BetaSignupPage, SolutionCheck, DemoPage (`src/sections/demo/*`), DemoBanner sowie geteilte Sektionen FeaturesSection, StatsBentoSection, MilestonesSection, PricingSection, PricingTiers, FaqSection, CtaFooterSection, ProductsStackSection. Daten-Dateien `src/lib/pricingData.ts` und `src/lib/solutionCheck.ts` in übersetzte Hooks (`useSaasTiers`, `useAgencyTiers`, `useIdentityQuestion`, `useInstallerQuestions`, etc.) überführt.
+- **Auth-Bereich begonnen:** `src/pages/Register.tsx` vollständig auf `useTranslation`/`register`-Namespace umgestellt.
+- **Übersetzungsdateien:** `src/i18n/locales/de.json` + `en.json` mit Namespaces `nav`, `language`, `landing`, `sections.*`, `pricingPage`, `productsPage`, `pricingData`, `betaPage`, `check`, `solutionCheckData`, `demoPage` (Ergänzungen für `register` separat dokumentiert).
+- **Tests:** `tests/setup.ts` setzt Testsprache auf `de` (bestehende deutsche Assertions bleiben stabil). Veralteter FAQ-Test `Was kostet Voltify?` → `Was kostet Solvary?` korrigiert. Neue `tests/sections/SiteHeader.test.tsx` (2 Tests: Rendering DE + Sprachwechsel EN).
+- **Qualität:** `npm run build` 0 TS-Fehler ✅ · 116/122 Tests grün. Die 6 roten Tests sind weiterhin `tests/contexts/AuthContext.test.tsx` (`emitAuth` Mock-Problem, vorbestehend).
 
 ## Session 2026-09-02 (Teil 3 — Angebotskonfigurator Demo-Flow)
 
@@ -63,8 +83,9 @@ Vercel → Deployments → vorheriges Prod-Deployment (`9197864`) → „Promote
 - **Restlicher Rebrand** (Footer/SEO/E-Mail-Templates/`useTenantBranding` etc.) weiterhin offen — Rebrand-Plan Phase 1 in `tasks-VOLTIFY.md`.
 - **`src/sections/CtaFooterSection.tsx`** — CTA-`PillButton` (`Jetzt Beta-Partner werden`) hatte ein `icon={<ArrowRight …>}`-Override → statischer Pfeil ohne Hover-Rotation, anders als der Hero-Button. `icon`-Prop + `ArrowRight`-Import entfernt → nutzt jetzt den Default-`ArrowUpRight` mit `group-hover:rotate-45`, identisches Hover-Verhalten wie Hero (Farb-Sweep + Pfeil-Rotation). Nur der `variant` (primary=gelb vs. Hero white) bleibt bewusst unterschiedlich. Wirkt auch auf `PricingPage` (nutzt dieselbe Sektion).
 
-### Nächster Schritt (2026-09-02)
+### Nächster Schritt
 
+- App-/Auth-Bereiche übersetzen (Login ✅ erledigt, Register ✅ erledigt, Konfigurator-Steps ✅ erledigt, Angebots-Demo ✅ erledigt; offen: Dashboard, Admin/Agentur-Seiten, AGB/Impressum/Datenschutz) — falls EN-Modus dort ebenfalls gewünscht ist.
 - Optional: gemeinsame Präsentations-Komponenten (`OfferPositionsTable`, `OfferSummaryPanel`) aus `OfferBuilderPage` + `OfferDemoPage` extrahieren, um die ~250 Z. duplizierte Tabellen-JSX zu vereinen.
 - Separat offen: gemeldeter Ladehänger auf `/lead/:id/offer` beim echten Inhaber-Account (mit `inhaber@test.de` nicht reproduzierbar → account-/datenspezifisch; Konsolen-`FrameDoesNotExistError` sind Browser-Extension-Rauschen, nicht die App).
 

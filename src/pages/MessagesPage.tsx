@@ -7,6 +7,7 @@ import {
 import { AdminSidebar } from '../components/layout/AdminSidebar';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
+import { useTranslation } from 'react-i18next';
 // Lead type not needed directly — using inline interface
 
 interface Note {
@@ -34,6 +35,7 @@ interface LeadSummary {
 
 export default function MessagesPage() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [notes, setNotes] = useState<Note[]>([]);
   const [leads, setLeads] = useState<LeadSummary[]>([]);
@@ -140,13 +142,13 @@ export default function MessagesPage() {
           .from('profiles')
           .select('id, full_name')
           .in('id', installerIds);
-        installerMap = Object.fromEntries((profs ?? []).map(p => [p.id, p.full_name ?? 'Unbekannt']));
+        installerMap = Object.fromEntries((profs ?? []).map(p => [p.id, p.full_name ?? t('installerDashboard.messages.unknown')]));
       }
 
-      setNotes((notesData ?? []).map(n => ({ ...n, installer_name: installerMap[n.installer_id] ?? 'Unbekannt' })));
+      setNotes((notesData ?? []).map(n => ({ ...n, installer_name: installerMap[n.installer_id] ?? t('installerDashboard.messages.unknown') })));
       setLeads(leadsData ?? []);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Fehler beim Laden');
+      setError(err instanceof Error ? err.message : t('installerDashboard.messages.error.load'));
     } finally {
       setIsLoading(false);
     }
@@ -170,7 +172,7 @@ export default function MessagesPage() {
       setNewNote('');
       await loadData();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Fehler beim Senden');
+      setError(err instanceof Error ? err.message : t('installerDashboard.messages.error.send'));
     } finally {
       setIsSending(false);
     }
@@ -185,8 +187,13 @@ export default function MessagesPage() {
   });
 
   const statusLabel: Record<string, string> = {
-    neu: 'Neu', kontaktiert: 'Kontaktiert', angebot: 'Angebot versendet',
-    abschluss: 'Abschluss', gewonnen: 'Gewonnen', verloren: 'Verloren', abgeschlossen: 'Abgeschlossen',
+    neu: t('installerDashboard.statusLabels.neu'),
+    kontaktiert: t('installerDashboard.statusLabels.kontaktiert'),
+    angebot: t('installerDashboard.statusLabels.angebot'),
+    abschluss: t('installerDashboard.statusLabels.abschluss'),
+    gewonnen: t('installerDashboard.statusLabels.gewonnen'),
+    verloren: t('installerDashboard.statusLabels.verloren'),
+    abgeschlossen: t('installerDashboard.statusLabels.abgeschlossen'),
   };
   const statusColor: Record<string, string> = {
     neu: 'bg-green-500', kontaktiert: 'bg-blue-500', angebot: 'bg-indigo-500',
@@ -213,11 +220,11 @@ export default function MessagesPage() {
               <MessageSquare className="w-5 h-5 text-brand-primary" />
             </div>
             <div>
-              <h1 className="text-xl font-black text-white">Nachrichten</h1>
+              <h1 className="text-xl font-black text-white">{t('installerDashboard.messages.title')}</h1>
               <p className="text-xs text-gray-500">
                 {selectedLead
                   ? `${selectedLead.first_name} ${selectedLead.last_name}`
-                  : `${notes.length} Notiz${notes.length !== 1 ? 'en' : ''} gesamt`}
+                  : t('installerDashboard.messages.totalNotes', { count: notes.length })}
               </p>
             </div>
           </div>
@@ -228,7 +235,7 @@ export default function MessagesPage() {
                 className="flex items-center gap-2 px-4 py-2 bg-brand-secondary-hover border border-white/5 rounded-xl text-sm font-bold text-gray-400 hover:bg-white/5 transition-colors"
               >
                 <User className="w-4 h-4" />
-                Kundendetails
+                {t('installerDashboard.messages.customerDetails')}
               </button>
             )}
             <button onClick={loadData} className="w-10 h-10 flex items-center justify-center rounded-xl bg-brand-secondary-hover border border-white/5 text-gray-500 hover:text-white hover:bg-white/5 transition-colors">
@@ -245,7 +252,7 @@ export default function MessagesPage() {
               className="flex items-center gap-2 px-4 py-2 bg-brand-secondary-hover border border-white/5 rounded-xl text-sm font-bold text-gray-400 hover:bg-white/5 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              Alle Notizen
+              {t('installerDashboard.messages.allNotes')}
             </button>
           ) : null}
 
@@ -254,7 +261,7 @@ export default function MessagesPage() {
               onClick={() => setShowLeadPicker(!showLeadPicker)}
               className="flex items-center gap-2 px-4 py-2 bg-brand-secondary-hover border border-white/5 rounded-xl text-sm font-bold text-gray-400 hover:bg-white/5 transition-colors"
             >
-              {selectedLead ? `${selectedLead.first_name} ${selectedLead.last_name}` : 'Nach Lead filtern'}
+              {selectedLead ? `${selectedLead.first_name} ${selectedLead.last_name}` : t('installerDashboard.messages.filterByLead')}
               <ChevronDown className="w-3.5 h-3.5" />
             </button>
 
@@ -265,7 +272,7 @@ export default function MessagesPage() {
                     type="text"
                     value={leadFilter}
                     onChange={e => setLeadFilter(e.target.value)}
-                    placeholder="Kunde suchen…"
+                    placeholder={t('installerDashboard.messages.searchPlaceholder')}
                     className="w-full bg-[#0F0F0F] border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary"
                     autoFocus
                   />
@@ -275,7 +282,7 @@ export default function MessagesPage() {
                     onClick={() => { setSelectedLeadId(null); setShowLeadPicker(false); }}
                     className={`w-full px-4 py-2.5 text-left text-sm hover:bg-white/5 transition-colors ${selectedLeadId === null ? 'bg-brand-primary/10 text-brand-primary' : 'text-gray-400'}`}
                   >
-                    Alle Notizen
+                    {t('installerDashboard.messages.allNotes')}
                   </button>
                   {filteredLeads.map(l => (
                     <button
@@ -288,7 +295,7 @@ export default function MessagesPage() {
                     </button>
                   ))}
                   {filteredLeads.length === 0 && (
-                    <p className="px-4 py-3 text-xs text-gray-600 text-center">Keine Leads gefunden</p>
+                    <p className="px-4 py-3 text-xs text-gray-600 text-center">{t('installerDashboard.messages.noLeadsFound')}</p>
                   )}
                 </div>
               </div>
@@ -310,10 +317,10 @@ export default function MessagesPage() {
             <div className="text-center py-16">
               <MessageSquare className="w-12 h-12 text-gray-700 mx-auto mb-3" />
               <p className="text-sm font-bold text-gray-500 mb-1">
-                {selectedLead ? 'Keine Notizen für diesen Lead' : 'Noch keine Notizen'}
+                {selectedLead ? t('installerDashboard.messages.emptyTitleLead') : t('installerDashboard.messages.emptyTitleAll')}
               </p>
               <p className="text-xs text-gray-600">
-                {selectedLead ? 'Schreibe die erste Notiz unten.' : 'Notizen erscheinen hier, sobald sie erstellt werden.'}
+                {selectedLead ? t('installerDashboard.messages.emptySubtitleLead') : t('installerDashboard.messages.emptySubtitleAll')}
               </p>
             </div>
           ) : (
@@ -324,7 +331,7 @@ export default function MessagesPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline gap-2 mb-1">
-                    <span className="text-xs font-bold text-white">{note.installer_name ?? 'Unbekannt'}</span>
+                    <span className="text-xs font-bold text-white">{note.installer_name ?? t('installerDashboard.messages.unknown')}</span>
                     <span className="text-[10px] text-gray-600">
                       {formatDate(note.created_at)} · {formatTime(note.created_at)}
                     </span>
@@ -346,7 +353,7 @@ export default function MessagesPage() {
               type="text"
               value={newNote}
               onChange={e => setNewNote(e.target.value)}
-              placeholder={selectedLead ? `Notiz zu ${selectedLead.first_name} ${selectedLead.last_name}…` : 'Neue Notiz schreiben…'}
+              placeholder={selectedLead ? t('installerDashboard.messages.notePlaceholderLead', { name: `${selectedLead.first_name} ${selectedLead.last_name}` }) : t('installerDashboard.messages.notePlaceholder')}
               className="flex-1 bg-brand-secondary-hover border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 focus:border-brand-primary"
             />
             <button
@@ -407,7 +414,7 @@ export default function MessagesPage() {
               )}
               <div className="flex items-center gap-3">
                 <Calendar className="w-4 h-4 text-gray-500 shrink-0" />
-                <span className="text-sm text-gray-500">Eingegangen: {formatDate(selectedLead.created_at)}</span>
+                <span className="text-sm text-gray-500">{t('installerDashboard.messages.received', { date: formatDate(selectedLead.created_at) })}</span>
               </div>
             </div>
             <div className="px-6 pb-5">
@@ -416,7 +423,7 @@ export default function MessagesPage() {
                 className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-brand-primary text-brand-secondary text-sm font-bold hover:bg-brand-primary-hover transition-colors"
               >
                 <Building2 className="w-4 h-4" />
-                Lead öffnen
+                {t('installerDashboard.messages.openLead')}
               </button>
             </div>
           </div>

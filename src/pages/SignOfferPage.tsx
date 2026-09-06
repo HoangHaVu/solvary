@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { CheckCircle, FileText, AlertCircle, Loader2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
 import SignaturePad from '../components/signature/SignaturePad';
 import SEO from '../components/seo/SEO';
@@ -12,10 +13,11 @@ export default function SignOfferPage() {
   const [error, setError] = useState('');
   const [signed, setSigned] = useState(false);
   const [saving, setSaving] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!token) {
-      setError('Ungültiger Link.');
+      setError(t('offers.invalidLink'));
       setLoading(false);
       return;
     }
@@ -28,7 +30,7 @@ export default function SignOfferPage() {
         .single();
 
       if (error || !data) {
-        setError('Dieser Link ist ungültig oder abgelaufen.');
+        setError(t('offers.linkExpired'));
       } else {
         setLead(data);
         if (data.offer_status === 'accepted') {
@@ -68,7 +70,7 @@ export default function SignOfferPage() {
       // E-Mail-Benachrichtigung an Installateur + Kunde
       try {
         const installerEmail = lead.installer?.email;
-        const companyName = lead.installer?.company_name || 'Ihr Solar-Partner';
+        const companyName = lead.installer?.company_name || t('offers.defaultCompanyName');
         const offerNumber = `AN-${String(lead.id).slice(0, 8).toUpperCase()}`;
 
         if (installerEmail) {
@@ -98,7 +100,7 @@ export default function SignOfferPage() {
 
       setSigned(true);
     } catch (err) {
-      setError('Fehler beim Speichern. Bitte versuchen Sie es erneut.');
+      setError(t('offers.saveError'));
     } finally {
       setSaving(false);
     }
@@ -117,7 +119,7 @@ export default function SignOfferPage() {
       <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] p-4">
         <div className="bg-white rounded-2xl border border-red-200 p-8 max-w-md w-full text-center">
           <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-          <h1 className="text-xl font-bold text-brand-secondary mb-2">Fehler</h1>
+          <h1 className="text-xl font-bold text-brand-secondary mb-2">{t('offers.errorTitle')}</h1>
           <p className="text-gray-500">{error}</p>
         </div>
       </div>
@@ -127,15 +129,15 @@ export default function SignOfferPage() {
   if (signed) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] p-4">
-        <SEO title="Angebot unterzeichnet" />
+        <SEO title={t('offers.signedTitle')} />
         <div className="bg-white rounded-2xl border border-green-200 p-8 max-w-md w-full text-center">
           <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
-          <h1 className="text-xl font-bold text-brand-secondary mb-2">Angebot unterzeichnet</h1>
+          <h1 className="text-xl font-bold text-brand-secondary mb-2">{t('offers.signedTitle')}</h1>
           <p className="text-gray-500 mb-4">
-            Vielen Dank, {lead.first_name}! Ihr Angebot wurde erfolgreich unterzeichnet.
+            {t('offers.signedMessage', { firstName: lead.first_name })}
           </p>
           <p className="text-xs text-gray-400">
-            Sie erhalten in Kürze eine Bestätigung per E-Mail.
+            {t('offers.signedEmailHint')}
           </p>
         </div>
       </div>
@@ -144,7 +146,7 @@ export default function SignOfferPage() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-8 px-4">
-      <SEO title="Angebot unterzeichnen" />
+      <SEO title={t('offers.signTitle')} />
       <div className="max-w-lg mx-auto">
         {/* Header */}
         <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-4">
@@ -153,7 +155,7 @@ export default function SignOfferPage() {
               <FileText className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-brand-secondary">Angebot unterzeichnen</h1>
+              <h1 className="text-lg font-bold text-brand-secondary">{t('offers.signTitle')}</h1>
               <p className="text-xs text-gray-500">{lead.first_name} {lead.last_name}</p>
             </div>
           </div>
@@ -164,24 +166,23 @@ export default function SignOfferPage() {
               <p className="text-sm font-bold text-brand-secondary">{lead.kwp}</p>
             </div>
             <div className="bg-gray-50 rounded-lg p-3 text-center">
-              <p className="text-xs text-gray-400">Investition</p>
+              <p className="text-xs text-gray-400">{t('offers.investment')}</p>
               <p className="text-sm font-bold text-brand-secondary">{lead.investment?.toLocaleString()} €</p>
             </div>
             <div className="bg-gray-50 rounded-lg p-3 text-center">
-              <p className="text-xs text-gray-400">Amortisation</p>
-              <p className="text-sm font-bold text-brand-secondary">{lead.amortization} J.</p>
+              <p className="text-xs text-gray-400">{t('offers.amortizationShort')}</p>
+              <p className="text-sm font-bold text-brand-secondary">{lead.amortization} {t('offers.yearsShort')}</p>
             </div>
           </div>
 
           <p className="text-xs text-gray-500 leading-relaxed">
-            Mit Ihrer Unterschrift bestätigen Sie, dass Sie das Angebot gelesen und akzeptiert haben.
-            Die Unterschrift ist rechtsverbindlich.
+            {t('offers.legalNotice')}
           </p>
         </div>
 
         {/* Signature Pad */}
         <div className="bg-white rounded-2xl border border-gray-200 p-6">
-          <h2 className="text-sm font-bold text-brand-secondary mb-4">Digitale Unterschrift</h2>
+          <h2 className="text-sm font-bold text-brand-secondary mb-4">{t('offers.signatureHeading')}</h2>
           {saving ? (
             <div className="flex items-center justify-center py-12">
               <Loader2 className="w-8 h-8 text-brand-secondary animate-spin" />

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { LOGO_PATH } from "../lib/branding";
@@ -7,6 +8,7 @@ import { COLORS } from "../lib/theme";
 import SEO from "../components/seo/SEO";
 
 export default function Login() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { login, user } = useAuth();
   const [email, setEmail] = useState("");
@@ -35,7 +37,7 @@ export default function Login() {
       await login(email, password);
       // login() kehrt nach signIn() zurück — Spinner bleibt bis useEffect navigiert.
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Anmeldung fehlgeschlagen");
+      setError(err instanceof Error ? err.message : t("login.form.errorFallback"));
       setIsLoading(false);
     }
     // Kein finally-setIsLoading(false): Spinner läuft bis Navigation abgeschlossen.
@@ -44,8 +46,8 @@ export default function Login() {
   return (
     <>
       <SEO
-        title="Login"
-        description="Melden Sie sich an, um Ihre Solar-Projekte zu verwalten."
+        title={t("login.seo.title")}
+        description={t("login.seo.description")}
         canonical="/login"
         noindex
       />
@@ -60,10 +62,10 @@ export default function Login() {
           {/* Form */}
           <div className="flex-1 flex flex-col justify-center max-w-[420px] mx-auto w-full">
             <h1 className="text-3xl md:text-4xl font-semibold text-brand-secondary mb-3">
-              Willkommen zurück
+              {t("login.title")}
             </h1>
             <p className="text-gray-500 text-sm mb-8">
-              Melde dich mit deiner E-Mail und Passwort an.
+              {t("login.subtitle")}
             </p>
 
             <form className="flex flex-col gap-5" onSubmit={handleLogin}>
@@ -75,7 +77,7 @@ export default function Login() {
               {/* Email */}
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-medium text-gray-700">
-                  E-Mail
+                  {t("login.form.emailLabel")}
                 </label>
                 <input
                   type="email"
@@ -89,7 +91,7 @@ export default function Login() {
               {/* Password */}
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-medium text-gray-700">
-                  Passwort
+                  {t("login.form.passwordLabel")}
                 </label>
                 <div className="relative">
                   <input
@@ -119,13 +121,13 @@ export default function Login() {
                 disabled={isLoading}
                 className="w-full bg-brand-secondary text-white font-medium py-3 rounded-xl hover:bg-brand-secondary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isLoading ? "Anmeldung..." : "Anmelden"}
+                {isLoading ? t("login.form.submitting") : t("login.form.submit")}
               </button>
 
               {/* Divider */}
               <div className="flex items-center gap-4 my-1">
                 <div className="flex-1 h-px bg-gray-200" />
-                <span className="text-xs text-gray-400">Schnell-Login</span>
+                <span className="text-xs text-gray-400">{t("login.quickLogin")}</span>
                 <div className="flex-1 h-px bg-gray-200" />
               </div>
 
@@ -140,7 +142,7 @@ export default function Login() {
                       : "text-gray-400 hover:text-gray-600"
                   }`}
                 >
-                  Installateur
+                  {t("login.mode.installer")}
                 </button>
                 <button
                   type="button"
@@ -151,7 +153,7 @@ export default function Login() {
                       : "text-gray-400 hover:text-gray-600"
                   }`}
                 >
-                  Agentur
+                  {t("login.mode.agency")}
                 </button>
               </div>
 
@@ -167,7 +169,7 @@ export default function Login() {
                     className="flex flex-col items-center justify-center gap-1 border border-gray-200 rounded-xl py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:border-brand-primary/50 transition-colors"
                   >
                     <span className="font-medium text-brand-secondary">
-                      Installateur
+                      {t("login.testAccount.installer")}
                     </span>
                     <span className="text-[10px] text-gray-400">
                       installateur@test.de
@@ -182,7 +184,7 @@ export default function Login() {
                     className="flex flex-col items-center justify-center gap-1 border border-gray-200 rounded-xl py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:border-brand-primary/50 transition-colors"
                   >
                     <span className="font-medium text-brand-secondary">
-                      Inhaber
+                      {t("login.testAccount.owner")}
                     </span>
                     <span className="text-[10px] text-gray-400">
                       inhaber@test.de
@@ -200,7 +202,7 @@ export default function Login() {
                     className="flex flex-col items-center justify-center gap-1 border border-gray-200 rounded-xl py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:border-brand-primary/50 transition-colors"
                   >
                     <span className="font-medium text-brand-secondary">
-                      Agentur-Inhaber
+                      {t("login.testAccount.agencyOwner")}
                     </span>
                     <span className="text-[10px] text-gray-400">
                       agentur@test.de
@@ -215,7 +217,7 @@ export default function Login() {
                     className="flex flex-col items-center justify-center gap-1 border border-gray-200 rounded-xl py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:border-brand-primary/50 transition-colors"
                   >
                     <span className="font-medium text-brand-secondary">
-                      Vertriebler
+                      {t("login.testAccount.salesperson")}
                     </span>
                     <span className="text-[10px] text-gray-400">
                       vertriebler@test.de
@@ -228,12 +230,12 @@ export default function Login() {
 
           {/* Bottom */}
           <p className="text-center text-sm text-gray-500 mt-8">
-            Sind Sie interessiert?{" "}
+            {t("login.bottom.text")}{" "}
             <Link
               to="/beta"
               className="text-brand-secondary font-medium hover:underline"
             >
-              Jetzt Beta Tester werden.
+              {t("login.bottom.link")}
             </Link>
           </p>
         </div>
@@ -247,12 +249,12 @@ export default function Login() {
           <div className="relative max-w-[540px] w-full">
             {/* Tagline */}
             <h2 className="text-3xl font-semibold text-white mb-2 leading-snug">
-              Effizientes Management für
+              {t("login.hero.titleLine1")}
               <br />
-              Ihre Solar-Installationen.
+              {t("login.hero.titleLine2")}
             </h2>
             <p className="text-white/60 text-sm mb-8">
-              Melden Sie sich an, um Ihr Dashboard und Projekte zu verwalten.
+              {t("login.hero.description")}
             </p>
 
             {/* Dashboard Mockup */}

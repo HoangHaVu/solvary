@@ -1,5 +1,6 @@
 import { Sun, CheckCircle } from 'lucide-react';
 import type { OfferTextTemplate } from '../../services/offers';
+import { useTranslation } from 'react-i18next';
 
 interface OfferPreviewProps {
   firmenname: string;
@@ -47,6 +48,8 @@ export const OfferPreviewCard: React.FC<OfferPreviewProps> = ({
   eigenverbrauch,
   offerTextTemplate,
 }) => {
+  const { t } = useTranslation();
+
   // ── Dynamische ROI-Berechnung aus Kalkulations-Einstellungen ──
   const modPrice  = Number(modulePricePerKwp)   || 1200;
   const invPrice  = Number(inverterPricePerKwp)  || 250;
@@ -97,7 +100,7 @@ export const OfferPreviewCard: React.FC<OfferPreviewProps> = ({
             : <Sun className="w-6 h-6 text-white/70" />}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-white font-black text-base truncate">{firmenname || 'Ihr Firmenname'}</p>
+          <p className="text-white font-black text-base truncate">{firmenname || t('adminSettings.common.yourCompanyName')}</p>
           {slogan && <p className="text-white/60 text-xs truncate">{slogan}</p>}
         </div>
         <span
@@ -119,20 +122,20 @@ export const OfferPreviewCard: React.FC<OfferPreviewProps> = ({
 
       {/* Empfänger */}
       <div className="px-6 pt-5 pb-3 border-b border-white/5">
-        <p className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-1">Angebot für</p>
+        <p className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-1">{t('adminSettings.offer.recipientLabel')}</p>
         <p className="font-bold text-white">Max Mustermann</p>
         <p className="text-gray-400 text-xs">80331 München</p>
       </div>
 
-      {/* Angebotspositionen (Muster) */}
+      {/* {t('adminSettings.offer.itemsLabel')} (Muster) */}
       <div className="px-6 py-4 border-b border-white/5">
-        <p className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-3">Angebotspositionen</p>
+        <p className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-3">{t('adminSettings.offer.itemsLabel')}</p>
         <div className="space-y-1.5">
           {[
-            { pos: 'Solarmodule', detail: `${MOCK_KWP} kWp · ${panelHersteller?.split(',')[0]?.trim() || 'Standard'}`, price: Math.round((Number(modulePricePerKwp) || 1200) * MOCK_KWP) },
-            { pos: 'Wechselrichter', detail: wechselrichterHersteller?.split(',')[0]?.trim() || 'Standard', price: Math.round((Number(inverterPricePerKwp) || 250) * MOCK_KWP) },
-            { pos: 'Montage & Unterkonstruktion', detail: 'Pauschal', price: Number(mountingFixed) || 2500 },
-            { pos: 'Elektroinstallation', detail: 'AC/DC-Verkabelung', price: Number(electricalFixed) || 1800 },
+            { pos: t('adminSettings.offer.items.solarModules'), detail: `${MOCK_KWP} kWp · ${panelHersteller?.split(',')[0]?.trim() || t('adminSettings.offer.itemDetails.standard')}`, price: Math.round((Number(modulePricePerKwp) || 1200) * MOCK_KWP) },
+            { pos: t('adminSettings.offer.items.inverter'), detail: wechselrichterHersteller?.split(',')[0]?.trim() || t('adminSettings.offer.itemDetails.standard'), price: Math.round((Number(inverterPricePerKwp) || 250) * MOCK_KWP) },
+            { pos: t('adminSettings.offer.items.mounting'), detail: t('adminSettings.offer.itemDetails.flatRate'), price: Number(mountingFixed) || 2500 },
+            { pos: t('adminSettings.offer.items.electrical'), detail: t('adminSettings.offer.itemDetails.wiring'), price: Number(electricalFixed) || 1800 },
           ].map(({ pos, detail, price }, i) => (
             <div key={i} className="flex items-center justify-between py-1.5 border-b border-white/5 last:border-0">
               <div>
@@ -144,20 +147,20 @@ export const OfferPreviewCard: React.FC<OfferPreviewProps> = ({
           ))}
         </div>
         <div className="mt-2 pt-2 border-t border-white/10 flex justify-between items-center">
-          <p className="text-xs font-semibold text-gray-400">Gesamtbetrag</p>
+          <p className="text-xs font-semibold text-gray-400">{t('adminSettings.offer.total')}</p>
           <p className="text-sm font-black" style={{ color: accentColor }}>{fmt(investment)} €</p>
         </div>
       </div>
 
       {/* System-Übersicht — dynamisch */}
       <div className="px-6 py-4 border-b border-white/5">
-        <p className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-3">Ihre Photovoltaikanlage</p>
+        <p className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-3">{t('adminSettings.offer.systemLabel')}</p>
         <div className="grid grid-cols-2 gap-2">
           {[
-            { label: 'Systemgröße',   value: `${MOCK_KWP} kWp` },
-            { label: 'Investition',   value: `${fmt(investment)} €` },
-            { label: 'Jahresersparnis', value: `${fmt(savings)} €/Jahr` },
-            { label: 'Amortisation',  value: `~${amortization} Jahre` },
+            { label: t('adminSettings.offer.system.size'), value: `${MOCK_KWP} kWp` },
+            { label: t('adminSettings.offer.system.investment'), value: `${fmt(investment)} €` },
+            { label: t('adminSettings.offer.system.annualSavings'), value: `${fmt(savings)} €/Jahr` },
+            { label: t('adminSettings.offer.system.payback'), value: `~${amortization} ${t('adminSettings.offer.system.years')}` },
           ].map(({ label, value }) => (
             <div key={label} className="bg-[#252525] rounded-lg px-3 py-2">
               <p className="text-[10px] text-gray-500 font-semibold uppercase">{label}</p>
@@ -170,26 +173,26 @@ export const OfferPreviewCard: React.FC<OfferPreviewProps> = ({
           <div className="mt-3 space-y-1">
             {panelHersteller && (
               <p className="text-xs text-gray-400">
-                <span className="font-semibold text-gray-300">Module:</span> {panelHersteller.split(',')[0].trim()}
+                <span className="font-semibold text-gray-300">{t('adminSettings.offer.system.modulesLabel')}</span> {panelHersteller.split(',')[0].trim()}
               </p>
             )}
             {wechselrichterHersteller && (
               <p className="text-xs text-gray-400">
-                <span className="font-semibold text-gray-300">Wechselrichter:</span> {wechselrichterHersteller.split(',')[0].trim()}
+                <span className="font-semibold text-gray-300">{t('adminSettings.offer.system.inverterLabel')}</span> {wechselrichterHersteller.split(',')[0].trim()}
               </p>
             )}
           </div>
         )}
       </div>
 
-      {/* Zahlungsplan — dynamisch */}
+      {/* {t('adminSettings.offer.paymentPlan.label')} — dynamisch */}
       <div className="px-6 py-4 border-b border-white/5">
-        <p className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-3">Zahlungsplan</p>
+        <p className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-3">{t('adminSettings.offer.paymentPlan.label')}</p>
         <div className="space-y-2">
           {[
-            { label: 'Anzahlung (30 %)',        amount: rate1, when: 'Bei Auftragserteilung' },
-            { label: 'Montagerechnung (60 %)',   amount: rate2, when: 'Nach Montage' },
-            { label: 'Schlussrechnung (10 %)',   amount: rate3, when: 'Nach Abnahme' },
+            { label: t('adminSettings.offer.paymentPlan.downPayment'), amount: rate1, when: t('adminSettings.offer.paymentPlan.onOrder') },
+            { label: t('adminSettings.offer.paymentPlan.installationInvoice'), amount: rate2, when: t('adminSettings.offer.paymentPlan.afterInstallation') },
+            { label: t('adminSettings.offer.paymentPlan.finalInvoice'), amount: rate3, when: t('adminSettings.offer.paymentPlan.afterAcceptance') },
           ].map(({ label, amount, when }) => (
             <div key={label} className="flex items-center justify-between">
               <div>
@@ -206,7 +209,7 @@ export const OfferPreviewCard: React.FC<OfferPreviewProps> = ({
       {(iban || zahlungsziel) && (
         <div className="px-6 py-3 border-b border-white/5 bg-[#252525]">
           <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-gray-400">
-            {iban && <span><span className="font-semibold text-gray-300">IBAN:</span> {iban}</span>}
+            {iban && <span><span className="font-semibold text-gray-300">{t('adminSettings.offer.payment.ibanLabel')}</span> {iban}</span>}
             {zahlungsziel && <span><span className="font-semibold text-gray-300">Zahlungsziel:</span> {zahlungsziel} Tage</span>}
           </div>
         </div>
@@ -215,7 +218,7 @@ export const OfferPreviewCard: React.FC<OfferPreviewProps> = ({
       {/* AGB-Vorschau */}
       {termsText && (
         <div className="px-6 py-3 border-b border-white/5 bg-[#1E1E1E]">
-          <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1">Zahlungsbedingungen</p>
+          <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1">{t('adminSettings.offer.termsLabel')}</p>
           <p className="text-[10px] text-gray-600 leading-relaxed line-clamp-2 whitespace-pre-line">{termsText}</p>
         </div>
       )}
@@ -224,13 +227,13 @@ export const OfferPreviewCard: React.FC<OfferPreviewProps> = ({
       <div className="px-6 py-4 flex items-center justify-between gap-3">
         <div className="flex items-center gap-1.5 text-xs text-gray-500">
           <CheckCircle className="w-3.5 h-3.5 text-green-400 shrink-0" />
-          Unverbindliches Angebot · 30 Tage gültig
+          {t('adminSettings.offer.disclaimer')}
         </div>
         <button
           className="text-xs font-bold px-4 py-2 rounded-lg shrink-0 transition-opacity hover:opacity-90"
           style={{ backgroundColor: accentColor, color: primaryColor }}
         >
-          Angebot annehmen
+          {t('adminSettings.offer.ctaAccept')}
         </button>
       </div>
     </div>

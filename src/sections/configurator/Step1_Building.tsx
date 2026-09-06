@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Home, Building2, Building, Factory, HelpCircle, UserCheck, KeyRound, Calendar, MapPin } from 'lucide-react';
 import type { WizardData } from '../../pages/Configurator';
 
@@ -6,57 +7,77 @@ interface Props {
   updateData: (p: Partial<WizardData>) => void;
 }
 
-const buildingTypes = [
-  { id: 'efh', label: 'Einfamilienhaus', icon: Home, desc: 'Freistehendes Haus' },
-  { id: 'zfh', label: 'Zweifamilienhaus', icon: Home, desc: 'Zwei Wohneinheiten' },
-  { id: 'mfh', label: 'Mehrfamilienhaus', icon: Building2, desc: '3+ Wohneinheiten' },
-  { id: 'gewerbe', label: 'Firmengebäude', icon: Building, desc: 'Gewerbe & Industrie' },
-  { id: 'sonstiges', label: 'Sonstiges', icon: Factory, desc: 'Andere Gebäudeart' },
+const buildingTypeIcons = [
+  { id: 'efh', icon: Home },
+  { id: 'zfh', icon: Home },
+  { id: 'mfh', icon: Building2 },
+  { id: 'gewerbe', icon: Building },
+  { id: 'sonstiges', icon: Factory },
 ];
 
-const ownershipTypes = [
-  { id: 'eigentuemer', label: 'Eigentümer', icon: KeyRound, desc: 'Ich bin Eigentümer' },
-  { id: 'mieter', label: 'Mieter', icon: UserCheck, desc: 'Ich bin Mieter' },
+const ownershipTypeIcons = [
+  { id: 'eigentuemer', icon: KeyRound },
+  { id: 'mieter', icon: UserCheck },
 ];
 
-const constructionYearOptions = [
-  { id: 'after2010', label: 'Nach 2010', icon: Calendar, desc: 'Neubau oder energetisch saniert' },
-  { id: 'pre1980', label: 'Vor 1980', icon: Calendar, desc: 'Altbausanierung möglich (+ 2.000 €)' },
+const constructionYearIcons = [
+  { id: 'after2010', icon: Calendar },
+  { id: 'pre1980', icon: Calendar },
 ];
 
 export default function Step1_Building({ data, updateData }: Props) {
+  const { t } = useTranslation();
+
+  const buildingTypes = buildingTypeIcons.map((type, i) => ({
+    ...type,
+    label: t(`configurator.step1.buildingTypes.${i}.label`),
+    desc: t(`configurator.step1.buildingTypes.${i}.desc`),
+  }));
+
+  const ownershipTypes = ownershipTypeIcons.map((type, i) => ({
+    ...type,
+    label: t(`configurator.step1.ownershipTypes.${i}.label`),
+    desc: t(`configurator.step1.ownershipTypes.${i}.desc`),
+  }));
+
+  const constructionYearOptions = constructionYearIcons.map((opt, i) => ({
+    ...opt,
+    label: t(`configurator.step1.constructionYearOptions.${i}.label`),
+    desc: t(`configurator.step1.constructionYearOptions.${i}.desc`),
+  }));
+
   return (
     <div className="flex flex-col gap-8">
       {/* Heading */}
       <div>
-        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">Gebäude & Eigentum</h2>
-        <p className="text-gray-500 text-sm">Wählen Sie Ihren Gebäudetyp und Ihre Eigentumsform aus.</p>
+        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">{t('configurator.step1.title')}</h2>
+        <p className="text-gray-500 text-sm">{t('configurator.step1.subtitle')}</p>
       </div>
 
       {/* PLZ */}
       <div className="bg-white/60 backdrop-blur-sm rounded-2xl border border-gray-200 p-5">
         <label className="text-sm font-medium text-brand-secondary mb-3 flex items-center gap-2">
           <MapPin className="w-4 h-4 text-brand-primary" />
-          Ihr Standort
+          {t('configurator.step1.locationLabel')}
         </label>
         <div className="relative">
           <input
             type="text"
             value={data.zipCode}
             onChange={(e) => updateData({ zipCode: e.target.value.replace(/\D/g, '').slice(0, 5) })}
-            placeholder="z.B. 80331"
+            placeholder={t('configurator.step1.zipPlaceholder')}
             maxLength={5}
             className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary"
           />
         </div>
         <p className="text-xs text-gray-400 mt-2">
-          Für regionalisierte Sonneneinstrahlung und lokale Förderprogramme.
+          {t('configurator.step1.locationHint')}
         </p>
       </div>
 
       {/* Building Type */}
       <div>
-        <label className="text-sm font-medium text-brand-secondary mb-3 block">Gebäudetyp</label>
+        <label className="text-sm font-medium text-brand-secondary mb-3 block">{t('configurator.step1.buildingTypeLabel')}</label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {buildingTypes.map((type) => {
             const Icon = type.icon;
@@ -88,7 +109,7 @@ export default function Step1_Building({ data, updateData }: Props) {
 
       {/* Construction Year */}
       <div>
-        <label className="text-sm font-medium text-brand-secondary mb-3 block">Baujahr</label>
+        <label className="text-sm font-medium text-brand-secondary mb-3 block">{t('configurator.step1.constructionYearLabel')}</label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {constructionYearOptions.map((opt) => {
             const Icon = opt.icon;
@@ -120,7 +141,7 @@ export default function Step1_Building({ data, updateData }: Props) {
 
       {/* Ownership */}
       <div>
-        <label className="text-sm font-medium text-brand-secondary mb-3 block">Eigentumsform</label>
+        <label className="text-sm font-medium text-brand-secondary mb-3 block">{t('configurator.step1.ownershipLabel')}</label>
         <div className="grid grid-cols-2 gap-3">
           {ownershipTypes.map((type) => {
             const Icon = type.icon;
@@ -155,7 +176,7 @@ export default function Step1_Building({ data, updateData }: Props) {
         <div className="flex items-start gap-3 p-4 rounded-xl bg-brand-primary/10 border border-brand-primary/20">
           <HelpCircle className="w-5 h-5 text-brand-primary flex-shrink-0 mt-0.5" />
           <p className="text-sm text-brand-secondary">
-            Als Mieter empfehlen wir Ihnen, das Mieterstrommodell zu prüfen. Sprechen Sie mit Ihrem Vermieter über eine gemeinsame Solaranlage.
+            {t('configurator.step1.renterHint')}
           </p>
         </div>
       )}

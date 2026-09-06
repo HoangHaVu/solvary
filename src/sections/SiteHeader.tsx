@@ -1,8 +1,9 @@
 // PROJECT: Voltify | PURPOSE: Gemeinsamer Landing-/Marketing-Header (Scroll-Shrink-Kapsel) — genutzt von LandingPage und PricingPage
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Globe, Menu, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { LOGO_PATH } from "../lib/branding";
 
 export interface NavLink {
@@ -11,11 +12,14 @@ export interface NavLink {
   href: string;
 }
 
-const DEFAULT_LINKS: NavLink[] = [
-  { label: "Produkte", href: "/produkte" },
-  { label: "Was brauche ich?", href: "/check" },
-  { label: "Preise", href: "/preise" },
-];
+function useNavLinks(): NavLink[] {
+  const { t } = useTranslation();
+  return [
+    { label: t("nav.products"), href: "/produkte" },
+    { label: t("nav.solutionCheck"), href: "/check" },
+    { label: t("nav.pricing"), href: "/preise" },
+  ];
+}
 
 /** In-Page-Anker (`/#…`) als natives `<a>` (weiches CSS-Scrollen), echte Routen als SPA-`<Link>`. */
 function NavItem({
@@ -41,12 +45,63 @@ function NavItem({
   );
 }
 
-export default function SiteHeader({
-  navLinks = DEFAULT_LINKS,
-}: {
-  navLinks?: NavLink[];
-}) {
+function LanguageSwitcher({ className, "data-testid": testId }: { className?: string; "data-testid"?: string }) {
+  const { i18n, t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, []);
+
+  const setLang = (lng: string) => {
+    i18n.changeLanguage(lng);
+    setOpen(false);
+  };
+
+  return (
+    <div ref={ref} className={`relative ${className ?? ""}`} data-testid={testId}>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        aria-label={t("language.switch")}
+        className="flex items-center justify-center w-9 h-9 rounded-full hover:bg-black/5 transition-colors"
+      >
+        <Globe className="w-5 h-5 text-gray-600" />
+      </button>
+      {open && (
+        <div className="absolute right-0 top-full mt-2 w-32 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden py-1">
+          <button
+            onClick={() => setLang("de")}
+            className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 ${
+              i18n.language === "de" ? "font-semibold text-brand-secondary" : "text-gray-600"
+            }`}
+          >
+            {t("language.de")}
+          </button>
+          <button
+            onClick={() => setLang("en")}
+            className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 ${
+              i18n.language === "en" ? "font-semibold text-brand-secondary" : "text-gray-600"
+            }`}
+          >
+            {t("language.en")}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function SiteHeader() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const navLinks = useNavLinks();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -99,7 +154,7 @@ export default function SiteHeader({
           >
             {navLinks.map((l) => (
               <NavItem
-                key={l.label}
+                key={l.href}
                 link={l}
                 className="text-sm font-medium text-gray-600 hover:text-brand-secondary transition-colors"
               />
@@ -107,17 +162,23 @@ export default function SiteHeader({
           </nav>
 
           {/* Mobile Toggle */}
-          <button className="lg:hidden" onClick={() => setMobileOpen(true)}>
-            <Menu className="w-5 h-5 text-brand-secondary" />
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            <LanguageSwitcher />
+            <button onClick={() => setMobileOpen(true)}>
+              <Menu className="w-5 h-5 text-brand-secondary" />
+            </button>
+          </div>
 
-          {/* CTA */}
-          <button
-            onClick={() => navigate("/beta")}
-            className="hidden md:inline-flex items-center bg-brand-secondary text-white text-sm font-bold px-5 py-3.5 rounded-full hover:bg-brand-secondary-hover transition-all"
-          >
-            Kostenlos testen
-          </button>
+          {/* CTA + Language */}
+          <div className="hidden md:flex items-center gap-1">
+            <LanguageSwitcher data-testid="language-switcher-desktop" />
+            <button
+              onClick={() => navigate("/beta")}
+              className="inline-flex items-center bg-brand-secondary text-white text-sm font-bold px-5 py-3.5 rounded-full hover:bg-brand-secondary-hover transition-all"
+            >
+              {t("nav.cta")}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -132,7 +193,7 @@ export default function SiteHeader({
           <nav className="flex flex-col items-center gap-6 pt-8">
             {navLinks.map((l) => (
               <NavItem
-                key={l.label}
+                key={l.href}
                 link={l}
                 onClick={() => setMobileOpen(false)}
                 className="text-2xl font-medium text-brand-secondary"
@@ -145,7 +206,7 @@ export default function SiteHeader({
               }}
               className="mt-4 flex items-center bg-brand-primary text-brand-secondary text-sm font-bold px-6 py-3 rounded-full"
             >
-              Kostenlos testen
+              {t("nav.cta")}
             </button>
           </nav>
         </div>

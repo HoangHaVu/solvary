@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslation } from 'react-i18next';
 import { Zap, ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -17,6 +18,7 @@ function PL({ text }: { text: string }) {
 const logos = ['LOCO', 'logoipsum', 'LOGO IPSUM', 'logoipsum', 'Logoipsum', 'LOGO IPSUM', 'LogoIpsum', 'LOGOIPSUM', 'logoipsum', 'Logoipsum'];
 
 export default function PartnersGrid() {
+  const { t } = useTranslation();
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -41,17 +43,17 @@ export default function PartnersGrid() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Zap className="w-4 h-4 text-black" />
-              <span className="text-xs font-semibold uppercase tracking-widest text-black">Unsere Partner</span>
+              <span className="text-xs font-semibold uppercase tracking-widest text-black">{t('demoPage.partnersGrid.badge')}</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-medium text-black leading-tight tracking-tight max-w-[600px]">
-              Nahtlos vernetzt mit vertrauenswürdigen Branchenpartnern
+              {t('demoPage.partnersGrid.heading')}
             </h2>
           </div>
           <a
             href="#contact"
             className="inline-flex items-center gap-2 bg-brand-primary text-brand-secondary text-sm font-medium px-6 py-3.5 rounded-full hover:bg-brand-primary-hover transition-all duration-250 hover:scale-[1.02] group w-fit"
           >
-            Partner werden
+            {t('demoPage.partnersGrid.cta')}
             <span className="w-7 h-7 bg-brand-secondary rounded-full flex items-center justify-center group-hover:bg-brand-secondary-hover transition-colors group-hover:translate-x-1 transition-transform">
               <ArrowRight className="w-3.5 h-3.5 text-white" />
             </span>

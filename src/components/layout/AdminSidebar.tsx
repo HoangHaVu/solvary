@@ -26,346 +26,339 @@ import {
 import { useAuth } from "../../contexts/AuthContext";
 import type { UserRole } from "../../services/auth";
 import { LOGO_WHITE_PATH } from "../../lib/branding";
+import { useTranslation } from "react-i18next";
 
 interface NavItem {
   id: string;
-  label: string;
+  labelKey: string;
   icon: React.ElementType;
   path: string;
   tab?: string; // Tab-ID für /admin Seite
 }
 
-// ── Navigation pro Rolle ──────────────────────────────────────────────
+function getNavForRole(role: UserRole, t: (key: string) => string): NavItem[] {
+  const nav: Record<UserRole, NavItem[]> = {
+    owner: [
+      {
+        id: "dashboard",
+        labelKey: t("adminDashboard.sidebar.nav.dashboard"),
+        icon: LayoutDashboard,
+        path: "/admin",
+        tab: "dashboard",
+      },
+      {
+        id: "pipeline",
+        labelKey: t("adminDashboard.sidebar.nav.pipeline"),
+        icon: BarChart3,
+        path: "/admin",
+        tab: "pipeline",
+      },
+      {
+        id: "projects",
+        labelKey: t("adminDashboard.sidebar.nav.projects"),
+        icon: LayoutGrid,
+        path: "/admin",
+        tab: "projects",
+      },
+      {
+        id: "calendar",
+        labelKey: t("adminDashboard.sidebar.nav.calendar"),
+        icon: Calendar,
+        path: "/admin/calendar",
+      },
+      {
+        id: "completed",
+        labelKey: t("adminDashboard.sidebar.nav.completed"),
+        icon: FolderCheck,
+        path: "/admin/completed",
+      },
+      {
+        id: "discounts",
+        labelKey: t("adminDashboard.sidebar.nav.discounts"),
+        icon: Percent,
+        path: "/admin",
+        tab: "discounts",
+      },
+      {
+        id: "reports",
+        labelKey: t("adminDashboard.sidebar.nav.reports"),
+        icon: FileText,
+        path: "/admin",
+        tab: "reports",
+      },
+      {
+        id: "team",
+        labelKey: t("adminDashboard.sidebar.nav.team"),
+        icon: Users,
+        path: "/admin/team",
+      },
+    ],
+    super_employee: [
+      {
+        id: "dashboard",
+        labelKey: t("adminDashboard.sidebar.nav.dashboard"),
+        icon: LayoutDashboard,
+        path: "/admin",
+        tab: "dashboard",
+      },
+      {
+        id: "pipeline",
+        labelKey: t("adminDashboard.sidebar.nav.pipeline"),
+        icon: BarChart3,
+        path: "/admin",
+        tab: "pipeline",
+      },
+      {
+        id: "projects",
+        labelKey: t("adminDashboard.sidebar.nav.projects"),
+        icon: LayoutGrid,
+        path: "/admin",
+        tab: "projects",
+      },
+      {
+        id: "calendar",
+        labelKey: t("adminDashboard.sidebar.nav.calendar"),
+        icon: Calendar,
+        path: "/admin/calendar",
+      },
+    ],
+    vertrieb: [
+      {
+        id: "dashboard",
+        labelKey: t("adminDashboard.sidebar.nav.dashboard"),
+        icon: LayoutDashboard,
+        path: "/admin",
+        tab: "dashboard",
+      },
+      {
+        id: "pipeline",
+        labelKey: t("adminDashboard.sidebar.nav.pipeline"),
+        icon: BarChart3,
+        path: "/admin",
+        tab: "pipeline",
+      },
+      {
+        id: "projects",
+        labelKey: t("adminDashboard.sidebar.nav.projects"),
+        icon: LayoutGrid,
+        path: "/admin",
+        tab: "projects",
+      },
+      {
+        id: "calendar",
+        labelKey: t("adminDashboard.sidebar.nav.calendar"),
+        icon: Calendar,
+        path: "/admin/calendar",
+      },
+    ],
+    projektleiter: [
+      {
+        id: "dashboard",
+        labelKey: t("adminDashboard.sidebar.nav.dashboard"),
+        icon: LayoutDashboard,
+        path: "/admin",
+        tab: "dashboard",
+      },
+      {
+        id: "projects",
+        labelKey: t("adminDashboard.sidebar.nav.projects"),
+        icon: LayoutGrid,
+        path: "/admin",
+        tab: "projects",
+      },
+      {
+        id: "calendar",
+        labelKey: t("adminDashboard.sidebar.nav.calendar"),
+        icon: Calendar,
+        path: "/admin/calendar",
+      },
+    ],
+    monteur: [
+      {
+        id: "dashboard",
+        labelKey: t("adminDashboard.sidebar.nav.dashboard"),
+        icon: LayoutDashboard,
+        path: "/admin",
+        tab: "dashboard",
+      },
+      {
+        id: "projects",
+        labelKey: t("adminDashboard.sidebar.nav.projects"),
+        icon: LayoutGrid,
+        path: "/admin",
+        tab: "projects",
+      },
+      {
+        id: "calendar",
+        labelKey: t("adminDashboard.sidebar.nav.calendar"),
+        icon: Calendar,
+        path: "/admin/calendar",
+      },
+    ],
+    backoffice: [
+      {
+        id: "dashboard",
+        labelKey: t("adminDashboard.sidebar.nav.dashboard"),
+        icon: LayoutDashboard,
+        path: "/admin",
+        tab: "dashboard",
+      },
+      {
+        id: "pipeline",
+        labelKey: t("adminDashboard.sidebar.nav.pipeline"),
+        icon: BarChart3,
+        path: "/admin",
+        tab: "pipeline",
+      },
+      {
+        id: "projects",
+        labelKey: t("adminDashboard.sidebar.nav.projects"),
+        icon: LayoutGrid,
+        path: "/admin",
+        tab: "projects",
+      },
+      {
+        id: "calendar",
+        labelKey: t("adminDashboard.sidebar.nav.calendar"),
+        icon: Calendar,
+        path: "/admin/calendar",
+      },
+      {
+        id: "completed",
+        labelKey: t("adminDashboard.sidebar.nav.completed"),
+        icon: FolderCheck,
+        path: "/admin/completed",
+      },
+    ],
+    installer: [
+      {
+        id: "dashboard",
+        labelKey: t("adminDashboard.sidebar.nav.dashboard"),
+        icon: LayoutDashboard,
+        path: "/admin",
+        tab: "dashboard",
+      },
+      {
+        id: "pipeline",
+        labelKey: t("adminDashboard.sidebar.nav.pipeline"),
+        icon: BarChart3,
+        path: "/admin",
+        tab: "pipeline",
+      },
+      {
+        id: "projects",
+        labelKey: t("adminDashboard.sidebar.nav.projects"),
+        icon: LayoutGrid,
+        path: "/admin",
+        tab: "projects",
+      },
+      {
+        id: "calendar",
+        labelKey: t("adminDashboard.sidebar.nav.calendar"),
+        icon: Calendar,
+        path: "/admin/calendar",
+      },
+    ],
+    sales_agency: [
+      {
+        id: "dashboard",
+        labelKey: t("adminDashboard.sidebar.nav.dashboard"),
+        icon: LayoutDashboard,
+        path: "/admin",
+        tab: "dashboard",
+      },
+      {
+        id: "leads",
+        labelKey: t("adminDashboard.sidebar.nav.myLeads"),
+        icon: BarChart3,
+        path: "/admin",
+        tab: "leads",
+      },
+      {
+        id: "partners",
+        labelKey: t("adminDashboard.sidebar.nav.partners"),
+        icon: Handshake,
+        path: "/admin/partners",
+      },
+      {
+        id: "router",
+        labelKey: t("adminDashboard.sidebar.nav.leadRouter"),
+        icon: Route,
+        path: "/admin/router",
+      },
+      {
+        id: "commissions",
+        labelKey: t("adminDashboard.sidebar.nav.commissions"),
+        icon: Landmark,
+        path: "/admin/commissions",
+      },
+      {
+        id: "calendar",
+        labelKey: t("adminDashboard.sidebar.nav.calendar"),
+        icon: Calendar,
+        path: "/admin/agency-calendar",
+      },
+      {
+        id: "team",
+        labelKey: t("adminDashboard.sidebar.nav.team"),
+        icon: Users,
+        path: "/admin/agency-team",
+      },
+      {
+        id: "settings",
+        labelKey: t("adminDashboard.sidebar.nav.settings"),
+        icon: SlidersHorizontal,
+        path: "/admin/agency-settings",
+      },
+    ],
+    agency_agent: [
+      {
+        id: "dashboard",
+        labelKey: t("adminDashboard.sidebar.nav.dashboard"),
+        icon: LayoutDashboard,
+        path: "/admin",
+        tab: "dashboard",
+      },
+      {
+        id: "leads",
+        labelKey: t("adminDashboard.sidebar.nav.myLeads"),
+        icon: BarChart3,
+        path: "/admin",
+        tab: "leads",
+      },
+      {
+        id: "router",
+        labelKey: t("adminDashboard.sidebar.nav.leadRouter"),
+        icon: Route,
+        path: "/admin/router",
+      },
+      {
+        id: "calendar",
+        labelKey: t("adminDashboard.sidebar.nav.calendar"),
+        icon: Calendar,
+        path: "/admin/agency-calendar",
+      },
+    ],
+    customer: [],
+  };
 
-const OWNER_NAV: NavItem[] = [
-  {
-    id: "dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard,
-    path: "/admin",
-    tab: "dashboard",
-  },
-  {
-    id: "pipeline",
-    label: "Pipeline",
-    icon: BarChart3,
-    path: "/admin",
-    tab: "pipeline",
-  },
-  {
-    id: "projects",
-    label: "Projekte",
-    icon: LayoutGrid,
-    path: "/admin",
-    tab: "projects",
-  },
-  {
-    id: "calendar",
-    label: "Kalender",
-    icon: Calendar,
-    path: "/admin/calendar",
-  },
-  {
-    id: "completed",
-    label: "Abgeschlossen",
-    icon: FolderCheck,
-    path: "/admin/completed",
-  },
-  {
-    id: "discounts",
-    label: "Rabatte",
-    icon: Percent,
-    path: "/admin",
-    tab: "discounts",
-  },
-  {
-    id: "reports",
-    label: "Reports",
-    icon: FileText,
-    path: "/admin",
-    tab: "reports",
-  },
-  { id: "team", label: "Team", icon: Users, path: "/admin/team" },
-];
-
-const SUPER_EMPLOYEE_NAV: NavItem[] = [
-  {
-    id: "dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard,
-    path: "/admin",
-    tab: "dashboard",
-  },
-  {
-    id: "pipeline",
-    label: "Pipeline",
-    icon: BarChart3,
-    path: "/admin",
-    tab: "pipeline",
-  },
-  {
-    id: "projects",
-    label: "Projekte",
-    icon: LayoutGrid,
-    path: "/admin",
-    tab: "projects",
-  },
-  {
-    id: "calendar",
-    label: "Kalender",
-    icon: Calendar,
-    path: "/admin/calendar",
-  },
-];
-
-const VERTRIEB_NAV: NavItem[] = [
-  {
-    id: "dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard,
-    path: "/admin",
-    tab: "dashboard",
-  },
-  {
-    id: "pipeline",
-    label: "Pipeline",
-    icon: BarChart3,
-    path: "/admin",
-    tab: "pipeline",
-  },
-  {
-    id: "projects",
-    label: "Projekte",
-    icon: LayoutGrid,
-    path: "/admin",
-    tab: "projects",
-  },
-  {
-    id: "calendar",
-    label: "Kalender",
-    icon: Calendar,
-    path: "/admin/calendar",
-  },
-];
-
-const PROJEKTLEITER_NAV: NavItem[] = [
-  {
-    id: "dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard,
-    path: "/admin",
-    tab: "dashboard",
-  },
-  {
-    id: "projects",
-    label: "Projekte",
-    icon: LayoutGrid,
-    path: "/admin",
-    tab: "projects",
-  },
-  {
-    id: "calendar",
-    label: "Kalender",
-    icon: Calendar,
-    path: "/admin/calendar",
-  },
-];
-
-const MONTEUR_NAV: NavItem[] = [
-  {
-    id: "dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard,
-    path: "/admin",
-    tab: "dashboard",
-  },
-  {
-    id: "projects",
-    label: "Projekte",
-    icon: LayoutGrid,
-    path: "/admin",
-    tab: "projects",
-  },
-  {
-    id: "calendar",
-    label: "Kalender",
-    icon: Calendar,
-    path: "/admin/calendar",
-  },
-];
-
-const BACKOFFICE_NAV: NavItem[] = [
-  {
-    id: "dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard,
-    path: "/admin",
-    tab: "dashboard",
-  },
-  {
-    id: "pipeline",
-    label: "Pipeline",
-    icon: BarChart3,
-    path: "/admin",
-    tab: "pipeline",
-  },
-  {
-    id: "projects",
-    label: "Projekte",
-    icon: LayoutGrid,
-    path: "/admin",
-    tab: "projects",
-  },
-  {
-    id: "calendar",
-    label: "Kalender",
-    icon: Calendar,
-    path: "/admin/calendar",
-  },
-  {
-    id: "completed",
-    label: "Abgeschlossen",
-    icon: FolderCheck,
-    path: "/admin/completed",
-  },
-];
-
-const INSTALLER_NAV: NavItem[] = [
-  {
-    id: "dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard,
-    path: "/admin",
-    tab: "dashboard",
-  },
-  {
-    id: "pipeline",
-    label: "Pipeline",
-    icon: BarChart3,
-    path: "/admin",
-    tab: "pipeline",
-  },
-  {
-    id: "projects",
-    label: "Projekte",
-    icon: LayoutGrid,
-    path: "/admin",
-    tab: "projects",
-  },
-  {
-    id: "calendar",
-    label: "Kalender",
-    icon: Calendar,
-    path: "/admin/calendar",
-  },
-];
-
-const SALES_AGENCY_NAV: NavItem[] = [
-  {
-    id: "dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard,
-    path: "/admin",
-    tab: "dashboard",
-  },
-  {
-    id: "leads",
-    label: "Meine Leads",
-    icon: BarChart3,
-    path: "/admin",
-    tab: "leads",
-  },
-  {
-    id: "partners",
-    label: "Partner",
-    icon: Handshake,
-    path: "/admin/partners",
-  },
-  { id: "router", label: "Lead-Router", icon: Route, path: "/admin/router" },
-  {
-    id: "commissions",
-    label: "Provisionen",
-    icon: Landmark,
-    path: "/admin/commissions",
-  },
-  {
-    id: "calendar",
-    label: "Kalender",
-    icon: Calendar,
-    path: "/admin/agency-calendar",
-  },
-  { id: "team", label: "Team", icon: Users, path: "/admin/agency-team" },
-  {
-    id: "settings",
-    label: "Einstellungen",
-    icon: SlidersHorizontal,
-    path: "/admin/agency-settings",
-  },
-];
-
-const AGENCY_AGENT_NAV: NavItem[] = [
-  {
-    id: "dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard,
-    path: "/admin",
-    tab: "dashboard",
-  },
-  {
-    id: "leads",
-    label: "Meine Leads",
-    icon: BarChart3,
-    path: "/admin",
-    tab: "leads",
-  },
-  { id: "router", label: "Lead-Router", icon: Route, path: "/admin/router" },
-  {
-    id: "calendar",
-    label: "Kalender",
-    icon: Calendar,
-    path: "/admin/agency-calendar",
-  },
-];
-
-function getNavForRole(role: UserRole): NavItem[] {
-  switch (role) {
-    case "owner":
-      return OWNER_NAV;
-    case "super_employee":
-      return SUPER_EMPLOYEE_NAV;
-    case "vertrieb":
-      return VERTRIEB_NAV;
-    case "projektleiter":
-      return PROJEKTLEITER_NAV;
-    case "monteur":
-      return MONTEUR_NAV;
-    case "backoffice":
-      return BACKOFFICE_NAV;
-    case "installer":
-      return INSTALLER_NAV;
-    case "sales_agency":
-      return SALES_AGENCY_NAV;
-    case "agency_agent":
-      return AGENCY_AGENT_NAV;
-    case "customer":
-      return [];
-    default:
-      return INSTALLER_NAV;
-  }
+  return nav[role] ?? nav.installer;
 }
 
-const ROLE_LABELS: Record<UserRole, string> = {
-  owner: "Inhaber",
-  super_employee: "Super-Mitarbeiter",
-  vertrieb: "Vertrieb",
-  projektleiter: "Projektleiter",
-  monteur: "Monteur",
-  backoffice: "Backoffice",
-  installer: "Installateur",
-  customer: "Kunde",
-  sales_agency: "Agentur-Inhaber",
-  agency_agent: "Vertriebler",
-};
+function getRoleLabels(t: (key: string) => string): Record<UserRole, string> {
+  return {
+    owner: t("adminDashboard.sidebar.role.owner"),
+    super_employee: t("adminDashboard.sidebar.role.superEmployee"),
+    vertrieb: t("adminDashboard.sidebar.role.sales"),
+    projektleiter: t("adminDashboard.sidebar.role.projectManager"),
+    monteur: t("adminDashboard.sidebar.role.technician"),
+    backoffice: t("adminDashboard.sidebar.role.backoffice"),
+    installer: t("adminDashboard.sidebar.role.installer"),
+    customer: t("adminDashboard.sidebar.role.customer"),
+    sales_agency: t("adminDashboard.sidebar.role.agencyOwner"),
+    agency_agent: t("adminDashboard.sidebar.role.agencyAgent"),
+  };
+}
 
 // ── Component ─────────────────────────────────────────────────────────
 
@@ -375,10 +368,12 @@ interface AdminSidebarProps {
 }
 
 export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
+  const { t } = useTranslation();
   const { user, logout, isOwner } = useAuth();
   const location = useLocation();
   const [showHelp, setShowHelp] = useState(false);
-  const sidebarNav = user ? getNavForRole(user.role) : [];
+  const sidebarNav = user ? getNavForRole(user.role, t) : [];
+  const roleLabels = getRoleLabels(t);
   const isSettingsPage = location.pathname === "/admin/settings";
 
   return (
@@ -411,7 +406,7 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
                 }`}
               >
                 <Icon className="w-[18px] h-[18px]" />
-                {item.label}
+                {item.labelKey}
               </Link>
             );
           }
@@ -430,7 +425,7 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
               }`}
             >
               <Icon className="w-[18px] h-[18px]" />
-              {item.label}
+              {item.labelKey}
             </button>
           ) : (
             <Link
@@ -443,7 +438,7 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
               }`}
             >
               <Icon className="w-[18px] h-[18px]" />
-              {item.label}
+              {item.labelKey}
             </Link>
           );
         })}
@@ -461,7 +456,7 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
             }`}
           >
             <Settings className="w-[18px] h-[18px]" />
-            Settings
+            {t("adminDashboard.sidebar.nav.settings")}
           </Link>
         )}
         <button
@@ -469,7 +464,7 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
           className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-gray-500 hover:text-white hover:bg-white/5 transition-all"
         >
           <HelpCircle className="w-[18px] h-[18px]" />
-          Hilfe
+          {t("adminDashboard.sidebar.nav.help")}
         </button>
       </div>
 
@@ -484,7 +479,9 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-white">Hilfe & Support</h3>
+              <h3 className="text-lg font-bold text-white">
+                {t("adminDashboard.helpModal.title")}
+              </h3>
               <button
                 onClick={() => setShowHelp(false)}
                 className="text-gray-500 hover:text-white transition-colors"
@@ -493,7 +490,7 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
               </button>
             </div>
             <p className="text-sm text-gray-400 mb-5">
-              Bei Fragen oder Problemen erreichen Sie uns direkt:
+              {t("adminDashboard.helpModal.intro")}
             </p>
             <div className="space-y-3">
               <a
@@ -512,7 +509,7 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
               </a>
               <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 text-sm text-gray-400">
                 <MessageCircle className="w-4 h-4 text-brand-primary" />
-                <span>Mo–Fr 9–18 Uhr erreichbar</span>
+                <span>{t("adminDashboard.helpModal.hours")}</span>
               </div>
             </div>
           </div>
@@ -535,7 +532,7 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
               {user?.fullName || "Admin"}
             </p>
             <p className="text-xs text-gray-600">
-              {user ? ROLE_LABELS[user.role] : "User"}
+              {user ? roleLabels[user.role] : "User"}
             </p>
           </div>
           <button

@@ -5,6 +5,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
 import { PillButton } from "../components/ui/PillButton";
@@ -22,64 +23,25 @@ interface ProductItem {
   image: string;
 }
 
-const products: ProductItem[] = [
-  {
-    title: "Solar-Konfigurator",
-    desc: "Ihre Kunden konfigurieren ihre Anlage selbst — Dach, Verbrauch, Speicher, Förderungen. Sie erhalten den Lead mit allen Daten.",
-    features: [
-      "9-Schritt-Wizard",
-      "ROI-Berechnung",
-      "BAFA / KfW Förderungen",
-      "Lead-Erfassung",
-      "DSGVO-konform",
-    ],
-    link: "/konfigurator?demo=1",
-    linkLabel: "Jetzt live testen",
-    image: "/images/configurator-bg.jpg",
-  },
-  {
-    title: "Angebotskonfigurator",
-    desc: "Aus dem Lead wird das Angebot: Positionen frei definieren, Preise und Rabatte anpassen, Vorlagen nutzen — PDF und E-Mail mit einem Klick.",
-    features: [
-      "Positionen frei definieren",
-      "Rabatte & Preise",
-      "Vorlagen & Textbausteine",
-      "PDF & E-Mail-Versand",
-      "ROI-Impact-Panel",
-    ],
-    link: "/angebot-demo",
-    linkLabel: "Jetzt live testen",
-    image: "/images/about-image.jpg",
-  },
-  {
-    title: "CRM & Dashboard",
-    desc: "Alle Leads, Projekte und Termine an einem Ort. Kanban-Pipeline, Kalender und Team-Verwaltung — speziell für Solar-Betriebe.",
-    features: [
-      "Lead-Pipeline",
-      "Projekt-Tracking",
-      "Kalender & Termine",
-      "Team & Rollen",
-      "Notizen",
-    ],
-    link: "/login",
-    linkLabel: "Demo-Account testen",
-    image: "/images/dashboard-bg.jpg",
-  },
-  {
-    title: "Digitaler Auftritt",
-    desc: "Ihre eigene Webseite mit integriertem Konfigurator — unter Ihrer Domain, mit Ihrem Logo, Ihren Farben und Kontaktdaten.",
-    features: [
-      "Eigene Domain",
-      "Ihr Logo & Branding",
-      "Konfigurator-Einbindung",
-      "Lead-Weiterleitung",
-      "DSGVO-konform",
-    ],
-    link: "/demo",
-    linkLabel: "Demo-Webseite ansehen",
-    image: "/images/hero-island.jpg",
-  },
+const PRODUCT_META = [
+  { link: "/konfigurator?demo=1", image: "/images/configurator-bg.jpg" },
+  { link: "/angebot-demo", image: "/images/about-image.jpg" },
+  { link: "/login", image: "/images/dashboard-bg.jpg" },
+  { link: "/demo", image: "/images/hero-island.jpg" },
 ];
+
+function useProducts(): ProductItem[] {
+  const { t } = useTranslation();
+  return PRODUCT_META.map((meta, i) => ({
+    ...meta,
+    title: t(`sections.productsStack.products.${i}.title`),
+    desc: t(`sections.productsStack.products.${i}.desc`),
+    features: t(`sections.productsStack.products.${i}.features`, {
+      returnObjects: true,
+    }) as unknown as string[],
+    linkLabel: t(`sections.productsStack.products.${i}.linkLabel`),
+  }));
+}
 
 interface ProductCardProps {
   product: ProductItem;
@@ -176,6 +138,8 @@ export function ProductsStackSection({
   /** Auf der ProductsPage bringt die Seite ihren eigenen Kopf mit. */
   showHeader?: boolean;
 }) {
+  const { t } = useTranslation();
+  const products = useProducts();
   const listRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: listRef,
@@ -187,16 +151,14 @@ export function ProductsStackSection({
       <div className="max-w-[1280px] mx-auto px-6">
         {showHeader && (
           <div className="text-center mb-16">
-            <SectionTag>Unsere Produkte</SectionTag>
+            <SectionTag>{t('sections.productsStack.tag')}</SectionTag>
             <h2 className="text-4xl md:text-5xl font-semibold text-brand-secondary mt-4 tracking-tight">
-              Vom Lead bis zum
+              {t('sections.productsStack.heading1')}
               <br />
-              Angebot — in einem System
+              {t('sections.productsStack.heading2')}
             </h2>
             <p className="text-gray-500 text-base max-w-[600px] mx-auto mt-4 leading-relaxed">
-              Der Kunde konfiguriert auf Ihrer Webseite. Sie erhalten den Lead
-              und generieren mit einem Klick eine professionelle
-              PDF-Kalkulation.
+              {t('sections.productsStack.sub')}
             </p>
           </div>
         )}

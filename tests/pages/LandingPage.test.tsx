@@ -104,7 +104,7 @@ describe("LandingPage", () => {
     expect(
       screen.getByText(/Häufige Fragen, klar beantwortet/i),
     ).toBeInTheDocument();
-    expect(screen.getByText(/Was kostet Voltify\?/i)).toBeInTheDocument();
+    expect(screen.getByText(/Was kostet Solvary\?/i)).toBeInTheDocument();
   });
 
   it("navigiert zu /demo beim Klick auf Demo-Webseite ansehen", () => {

@@ -53,9 +53,9 @@ export default function Datenschutz() {
           </p>
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 font-medium text-brand-secondary mt-3">
             <p>Solvary</p>
-            <p>Van Anh Kasem</p>
-            <p className="mt-1">Auf dem Gleichen 18</p>
-            <p>65934 Frankfurt am Main</p>
+            <p>Hoang Ha Vu</p>
+            <p className="mt-1">Dotzheimer Straße 108</p>
+            <p>65197 Wiesbaden</p>
             <p className="mt-2 flex items-center gap-1.5">
               <Mail className="w-4 h-4 text-brand-secondary" />
               <a

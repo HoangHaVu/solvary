@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslation } from 'react-i18next';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,6 +16,7 @@ function Logo6() { return <svg viewBox="0 0 120 30" className="h-5 opacity-50"><
 const logos = [Logo1, Logo2, Logo3, Logo4, Logo5, Logo6];
 
 export default function Partners() {
+  const { t } = useTranslation();
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function Partners() {
     <section ref={sectionRef} className="py-16 bg-white">
       <div className="max-w-[1280px] mx-auto px-6 flex flex-col md:flex-row items-center gap-8 md:gap-16">
         <h4 className="partners-heading text-lg font-medium text-black whitespace-nowrap opacity-0">
-          Unterstützt von den weltweit<br />führenden Venture-Capital-Investoren
+          {t('demoPage.partners.heading')}
         </h4>
         <div className="flex items-center gap-8 md:gap-12 flex-wrap justify-center">
           {logos.map((Logo, i) => (

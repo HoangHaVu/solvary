@@ -3,6 +3,7 @@ import { LOGO_PATH } from "../lib/branding";
 // PROJECT: Voltify | PURPOSE: Geführter Lösungs-Check für Installateure (Schmerz → Modul → Demo + Call)
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   ArrowRight,
   ArrowLeft,
@@ -15,13 +16,13 @@ import {
 } from "lucide-react";
 import SEO from "../components/seo/SEO";
 import { supabase } from "../lib/supabase";
-import { BETA, BETA_COPY } from "../lib/betaConfig";
+import { BETA } from "../lib/betaConfig";
 import {
-  IDENTITY_QUESTION,
-  INSTALLER_QUESTIONS,
-  PRIORITY_QUESTION,
-  VOLUME_QUESTION,
-  evaluateCheck,
+  useIdentityQuestion,
+  useInstallerQuestions,
+  usePriorityQuestion,
+  useVolumeQuestion,
+  useEvaluateCheck,
   type CheckAnswers,
   type CheckQuestion,
   type CheckResult,
@@ -30,23 +31,11 @@ import {
 
 type Phase = "q" | "contact" | "result";
 
-// Baut den Fragen-Fluss abhängig von der Rolle (Beta: voller Pfad nur für Installateure).
-function buildQuestions(role?: CheckRole): CheckQuestion[] {
-  if (role === "installer") {
-    return [
-      IDENTITY_QUESTION,
-      ...INSTALLER_QUESTIONS,
-      PRIORITY_QUESTION,
-      VOLUME_QUESTION,
-    ];
-  }
-  return [IDENTITY_QUESTION];
-}
-
 const NAVY = COLORS.secondary;
 const ACCENT = COLORS.primary;
 
 export default function SolutionCheck() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>("q");
   const [qIndex, setQIndex] = useState(0);
@@ -57,7 +46,25 @@ export default function SolutionCheck() {
   const [submitError, setSubmitError] = useState("");
   const [result, setResult] = useState<CheckResult | null>(null);
 
-  const flow = buildQuestions(answers.role);
+  const identityQuestion = useIdentityQuestion();
+  const installerQuestions = useInstallerQuestions();
+  const priorityQuestion = usePriorityQuestion();
+  const volumeQuestion = useVolumeQuestion();
+  const evaluateCheck = useEvaluateCheck();
+
+  function buildFlow(role?: CheckRole): CheckQuestion[] {
+    if (role === "installer") {
+      return [
+        identityQuestion,
+        ...installerQuestions,
+        priorityQuestion,
+        volumeQuestion,
+      ];
+    }
+    return [identityQuestion];
+  }
+
+  const flow = buildFlow(answers.role);
   const q = flow[qIndex];
   const isInstaller = answers.role === "installer";
   const progress =
@@ -75,7 +82,7 @@ export default function SolutionCheck() {
       setPhase("contact");
       return;
     }
-    const nextFlow = buildQuestions(next.role);
+    const nextFlow = buildFlow(next.role);
     if (qIndex < nextFlow.length - 1) setQIndex(qIndex + 1);
     else setPhase("contact");
   }
@@ -84,7 +91,7 @@ export default function SolutionCheck() {
     if (phase === "result") return;
     if (phase === "contact") {
       setPhase("q");
-      setQIndex(Math.max(0, buildQuestions(answers.role).length - 1));
+      setQIndex(Math.max(0, buildFlow(answers.role).length - 1));
       return;
     }
     if (qIndex > 0) setQIndex(qIndex - 1);
@@ -93,7 +100,7 @@ export default function SolutionCheck() {
 
   async function submit() {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setSubmitError("Bitte gib eine gültige E-Mail-Adresse ein.");
+      setSubmitError(t("check.contact.emailError"));
       return;
     }
     setSubmitError("");
@@ -118,8 +125,8 @@ export default function SolutionCheck() {
   return (
     <>
       <SEO
-        title="Lösungs-Check für Solarteure"
-        description="In 60 Sekunden herausfinden, welcher Teil von Voltify deinem Solar-Geschäft am meisten bringt — inkl. passender Demo."
+        title={t("check.seo.title")}
+        description={t("check.seo.description")}
         canonical="/check"
         noindex
       />
@@ -134,7 +141,7 @@ export default function SolutionCheck() {
             to="/konfigurator?demo=1"
             className="text-sm text-gray-400 hover:text-brand-secondary transition-colors"
           >
-            Ich weiß schon was ich will → Demo
+            {t("check.headerDemoLink")}
           </Link>
         </header>
 
@@ -196,13 +203,14 @@ function QuestionView({
   onSkip?: () => void;
   onBack: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div>
       <button
         onClick={onBack}
         className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-brand-secondary mb-6 transition-colors"
       >
-        <ArrowLeft className="w-4 h-4" /> Zurück
+        <ArrowLeft className="w-4 h-4" /> {t("check.back")}
       </button>
       <h1
         className="text-2xl md:text-3xl font-bold mb-2"
@@ -247,7 +255,7 @@ function QuestionView({
           onClick={onSkip}
           className="mt-6 text-sm text-gray-400 hover:text-brand-secondary transition-colors"
         >
-          Überspringen
+          {t("check.skip")}
         </button>
       )}
     </div>
@@ -274,47 +282,46 @@ function ContactView({
   onSubmit: () => void;
   onBack: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="max-w-lg">
       <button
         onClick={onBack}
         className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-brand-secondary mb-6 transition-colors"
       >
-        <ArrowLeft className="w-4 h-4" /> Zurück
+        <ArrowLeft className="w-4 h-4" /> {t("check.back")}
       </button>
       <span className="inline-flex items-center gap-1.5 bg-brand-primary/10 text-[#B8780A] text-xs font-bold px-3 py-1 rounded-full mb-3">
-        <Sparkles className="w-3.5 h-3.5" /> Fast geschafft
+        <Sparkles className="w-3.5 h-3.5" /> {t("check.contact.badge")}
       </span>
       <h1
         className="text-2xl md:text-3xl font-bold mb-2"
         style={{ color: NAVY }}
       >
-        Wohin schicken wir deine Auswertung?
+        {t("check.contact.title")}
       </h1>
-      <p className="text-gray-500 mb-8">
-        Du siehst dein Ergebnis sofort — und bekommst es zusätzlich per E-Mail.
-      </p>
+      <p className="text-gray-500 mb-8">{t("check.contact.sub")}</p>
       <div className="flex flex-col gap-4">
         <div>
           <label className="text-sm font-medium text-gray-600 mb-1.5 block">
-            Dein Name (optional)
+            {t("check.contact.name")}
           </label>
           <input
             value={name}
             onChange={(e) => onName(e.target.value)}
-            placeholder="Max Mustermann"
+            placeholder={t("check.contact.placeholderName")}
             className="w-full bg-white border-2 border-gray-200 rounded-xl px-4 py-3 text-brand-secondary focus:outline-none focus:border-brand-primary/60"
           />
         </div>
         <div>
           <label className="text-sm font-medium text-gray-600 mb-1.5 block">
-            E-Mail-Adresse *
+            {t("check.contact.email")}
           </label>
           <input
             type="email"
             value={email}
             onChange={(e) => onEmail(e.target.value)}
-            placeholder="max@solar-betrieb.de"
+            placeholder={t("check.contact.placeholderEmail")}
             className="w-full bg-white border-2 border-gray-200 rounded-xl px-4 py-3 text-brand-secondary focus:outline-none focus:border-brand-primary/60"
           />
         </div>
@@ -328,12 +335,12 @@ function ContactView({
             <Loader2 className="w-5 h-5 animate-spin" />
           ) : (
             <>
-              Auswertung anzeigen <ArrowRight className="w-4 h-4" />
+              {t("check.contact.cta")} <ArrowRight className="w-4 h-4" />
             </>
           )}
         </button>
         <p className="text-xs text-gray-400 text-center">
-          Keine Werbung. Nur deine Auswertung + ein optionales Gesprächsangebot.
+          {t("check.contact.privacy")}
         </p>
       </div>
     </div>
@@ -350,6 +357,7 @@ function ResultView({
   name: string;
   isInstaller: boolean;
 }) {
+  const { t } = useTranslation();
   const greeting = name ? `${name}, ` : "";
 
   // Nicht-Installateur (Beta-Scope) → direktes Gesprächsangebot
@@ -363,12 +371,12 @@ function ResultView({
           className="text-2xl md:text-3xl font-bold mb-3"
           style={{ color: NAVY }}
         >
-          Danke{name ? `, ${name}` : ""}!
+          {t("check.result.nonInstaller.title", {
+            name: name ? `, ${name}` : "",
+          })}
         </h1>
         <p className="text-gray-500 mb-8">
-          Der geführte Check ist gerade auf Installateure zugeschnitten — aber
-          für Vertriebsagenturen haben wir eine eigene Lösung. Lass uns am
-          besten kurz direkt sprechen.
+          {t("check.result.nonInstaller.sub")}
         </p>
         <BookingCta />
       </div>
@@ -380,10 +388,10 @@ function ResultView({
     <div className="max-w-2xl mx-auto">
       <div className="text-center mb-8">
         <span className="inline-flex items-center gap-1.5 bg-brand-primary/10 text-[#B8780A] text-xs font-bold px-3 py-1 rounded-full mb-3">
-          <Sparkles className="w-3.5 h-3.5" /> Deine Auswertung
+          <Sparkles className="w-3.5 h-3.5" /> {t("check.result.badge")}
         </span>
         <h1 className="text-2xl md:text-3xl font-bold" style={{ color: NAVY }}>
-          {greeting}dein größter Hebel ist{" "}
+          {t("check.result.title", { greeting, hero: "" })}
           <span style={{ color: ACCENT }}>{hero.name}</span>
         </h1>
       </div>
@@ -394,7 +402,7 @@ function ResultView({
         {reasons.length > 0 && (
           <div className="flex flex-col gap-2 mb-5">
             <p className="text-xs uppercase tracking-widest text-gray-400 mb-1">
-              Warum genau das
+              {t("check.result.why")}
             </p>
             {reasons.map((r, i) => (
               <div key={i} className="flex items-start gap-2.5">
@@ -422,10 +430,9 @@ function ResultView({
         <div className="bg-gray-50 rounded-2xl p-5 mb-5">
           <p className="text-sm text-gray-600 mb-3">
             <span className="font-semibold" style={{ color: NAVY }}>
-              Das hängt zusammen:
+              {t("check.result.together")}
             </span>{" "}
-            Bei dir greift mehr als ein Baustein. Voltify ist eine Plattform —
-            du startest mit dem größten Hebel, der Rest wächst mit.
+            {t("check.result.togetherSub")}
           </p>
           <div className="flex flex-wrap gap-2">
             {alsoRelevant.map((m) => (
@@ -447,27 +454,27 @@ function ResultView({
 }
 
 function BookingCta() {
+  const { t } = useTranslation();
   return (
     <div className="bg-gradient-to-br from-brand-secondary to-brand-secondary-hover rounded-2xl p-6 text-center">
       <div className="grid grid-cols-3 gap-3 mb-5">
         <div>
           <p className="text-lg font-bold text-white">{BETA.freeMonths} Mo.</p>
-          <p className="text-[10px] text-white/50">Kostenlos</p>
+          <p className="text-[10px] text-white/50">{t("check.result.booking.free")}</p>
         </div>
         <div>
           <p className="text-lg font-bold text-brand-primary">
             -{BETA.discountPercent}%
           </p>
-          <p className="text-[10px] text-white/50">Dauerhaft</p>
+          <p className="text-[10px] text-white/50">{t("check.result.booking.permanent")}</p>
         </div>
         <div>
           <p className="text-lg font-bold text-white">{BETA.callMinutes} min</p>
-          <p className="text-[10px] text-white/50">Demo-Call</p>
+          <p className="text-[10px] text-white/50">{t("check.result.booking.demoCall")}</p>
         </div>
       </div>
       <p className="text-white/80 text-sm mb-4">
-        {BETA_COPY.spotsBadge} — lass uns deine Situation in einem kurzen Call
-        durchgehen.
+        {t("check.result.booking.sub", { spots: BETA.spotsLeft })}
       </p>
       <a
         href={BETA.calendlyUrl}
@@ -475,7 +482,7 @@ function BookingCta() {
         rel="noopener noreferrer"
         className="flex items-center justify-center gap-2 bg-brand-primary text-brand-secondary font-bold py-3.5 rounded-xl hover:bg-brand-primary-hover transition-colors"
       >
-        <Calendar className="w-4 h-4" /> Kostenlosen Demo-Call buchen
+        <Calendar className="w-4 h-4" /> {t("check.result.booking.cta")}
       </a>
     </div>
   );

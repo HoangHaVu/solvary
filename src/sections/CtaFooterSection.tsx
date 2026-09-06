@@ -2,20 +2,22 @@
 
 import { Link, useNavigate } from "react-router-dom";
 import { Zap } from "lucide-react";
-import { BETA, BETA_COPY } from "../lib/betaConfig";
+import { useTranslation } from "react-i18next";
+import { BETA } from "../lib/betaConfig";
 import { LOGO_PATH } from "../lib/branding";
 import { PillButton } from "../components/ui/PillButton";
 import { SectionTag } from "../components/ui/SectionTag";
 
-const productLinks = [
-  { label: "Produkte", href: "/produkte" },
-  { label: "Was brauche ich?", href: "/check" },
-  { label: "Preise", href: "/preise" },
-  { label: "FAQ", href: "/#faq" },
-];
-
 export default function CtaFooterSection() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const productLinks = [
+    { label: t("sections.ctaFooter.links.products"), href: "/produkte" },
+    { label: t("sections.ctaFooter.links.solutionCheck"), href: "/check" },
+    { label: t("sections.ctaFooter.links.pricing"), href: "/preise" },
+    { label: t("sections.ctaFooter.links.faq"), href: "/#faq" },
+  ];
 
   return (
     <section className="relative overflow-hidden bg-white">
@@ -42,26 +44,25 @@ export default function CtaFooterSection() {
                 />
               }
             >
-              {BETA_COPY.spotsBadge} — Dauerhafter Gründerrabatt
+              {t("sections.ctaFooter.tag", { spots: BETA.spotsLeft })}
             </SectionTag>
           </div>
           <h2 className="text-4xl md:text-5xl font-semibold text-brand-secondary tracking-tight mb-4 leading-[1.1]">
-            Bereit, dein Solar-Geschäft
+            {t("sections.ctaFooter.heading1")}
             <br />
-            zu{" "}
             <span className="underline decoration-brand-primary decoration-4 underline-offset-4">
-              skalieren
+              {t("sections.ctaFooter.heading2")}
             </span>
-            ?
           </h2>
           <p className="text-gray-600 text-base mb-8">
-            {BETA.freeMonths} Monate kostenlos testen. Keine Kreditkarte.
-            Persönlicher Demo-Call. Als Beta-Partner sicherst du dir dauerhaft{" "}
-            {BETA.discountPercent}% Rabatt auf jeden Tarif.
+            {t("sections.ctaFooter.sub", {
+              freeMonths: BETA.freeMonths,
+              discount: BETA.discountPercent,
+            })}
           </p>
           <div className="flex justify-center">
             <PillButton variant="primary" onClick={() => navigate("/beta")}>
-              Jetzt Beta-Partner werden
+              {t("sections.ctaFooter.cta")}
             </PillButton>
           </div>
         </div>
@@ -75,15 +76,14 @@ export default function CtaFooterSection() {
                 <img src={LOGO_PATH} alt="Solvary" className="h-8 w-auto" />
               </Link>
               <p className="text-sm text-gray-500 leading-relaxed max-w-[280px]">
-                All-in-One-Software für den Solo-Solarteur: Konfigurator auf
-                deiner Webseite, Leads, Angebote und Rechnungen an einem Ort.
+                {t("sections.ctaFooter.description")}
               </p>
             </div>
 
             {/* Produkt */}
             <div>
               <p className="text-xs font-semibold text-brand-secondary/40 uppercase tracking-wider mb-3">
-                Produkt
+                {t("sections.ctaFooter.productTitle")}
               </p>
               <div className="flex flex-col gap-2.5">
                 {productLinks.map((l) =>
@@ -111,32 +111,32 @@ export default function CtaFooterSection() {
             {/* Unternehmen */}
             <div>
               <p className="text-xs font-semibold text-brand-secondary/40 uppercase tracking-wider mb-3">
-                Unternehmen
+                {t("sections.ctaFooter.companyTitle")}
               </p>
               <div className="flex flex-col gap-2.5">
                 <Link
                   to="/preise"
                   className="text-sm text-gray-600 hover:text-brand-secondary transition-colors"
                 >
-                  Preise
+                  {t("sections.ctaFooter.links.pricing")}
                 </Link>
                 <Link
                   to="/beta"
                   className="text-sm text-gray-600 hover:text-brand-secondary transition-colors"
                 >
-                  Beta-Programm
+                  {t("sections.ctaFooter.links.beta")}
                 </Link>
                 <Link
                   to="/konfigurator?demo=1"
                   className="text-sm text-gray-600 hover:text-brand-secondary transition-colors"
                 >
-                  Live-Demo
+                  {t("sections.ctaFooter.links.liveDemo")}
                 </Link>
                 <Link
                   to="/login"
                   className="text-sm text-gray-600 hover:text-brand-secondary transition-colors"
                 >
-                  Anmelden
+                  {t("sections.ctaFooter.links.login")}
                 </Link>
               </div>
             </div>
@@ -144,26 +144,26 @@ export default function CtaFooterSection() {
             {/* Rechtliches */}
             <div>
               <p className="text-xs font-semibold text-brand-secondary/40 uppercase tracking-wider mb-3">
-                Rechtliches
+                {t("sections.ctaFooter.legalTitle")}
               </p>
               <div className="flex flex-col gap-2.5">
                 <Link
                   to="/datenschutz"
                   className="text-sm text-gray-600 hover:text-brand-secondary transition-colors"
                 >
-                  Datenschutz
+                  {t("sections.ctaFooter.links.privacy")}
                 </Link>
                 <Link
                   to="/agb"
                   className="text-sm text-gray-600 hover:text-brand-secondary transition-colors"
                 >
-                  AGB
+                  {t("sections.ctaFooter.links.terms")}
                 </Link>
                 <Link
                   to="/impressum"
                   className="text-sm text-gray-600 hover:text-brand-secondary transition-colors"
                 >
-                  Impressum
+                  {t("sections.ctaFooter.links.imprint")}
                 </Link>
               </div>
             </div>
@@ -172,7 +172,7 @@ export default function CtaFooterSection() {
           {/* Bottom */}
           <div className="border-t border-brand-secondary/10 mt-10 pt-6">
             <p className="text-xs text-gray-500">
-              &copy; 2026 Solvary · Designed by{" "}
+              {t("sections.ctaFooter.copyright")}{" "}
               <a
                 href="https://www.vu-studio.de/"
                 target="_blank"

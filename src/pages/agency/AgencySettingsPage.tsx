@@ -1,5 +1,6 @@
 // PROJECT: Voltify | PURPOSE: Einstellungen für Agentur-Inhaber
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Settings, Save, Loader2, CheckCircle2, Globe, Phone,
   MapPin, Building2, Euro, Percent, Bell, BellOff, Users, ChevronRight,
@@ -35,6 +36,7 @@ const sectionCls = 'bg-brand-secondary-hover rounded-2xl border border-white/5 o
 const sectionHeaderCls = 'px-6 py-4 border-b border-white/5 flex items-center gap-3';
 
 export default function AgencySettingsPage() {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState<AgencyProfile>(EMPTY);
@@ -124,8 +126,8 @@ export default function AgencySettingsPage() {
               <Settings className="w-4 h-4 text-brand-primary" />
             </div>
             <div>
-              <h1 className="text-base font-black text-white">Einstellungen</h1>
-              <p className="text-xs text-gray-500">Agentur-Konfiguration</p>
+              <h1 className="text-base font-black text-white">{t('agency.agencySettings.title')}</h1>
+              <p className="text-xs text-gray-500">{t('agency.agencySettings.subtitle')}</p>
             </div>
           </div>
           <button
@@ -138,7 +140,7 @@ export default function AgencySettingsPage() {
             {saving ? <Loader2 className="w-4 h-4 animate-spin" /> :
               saved  ? <CheckCircle2 className="w-4 h-4" />       :
                        <Save className="w-4 h-4" />}
-            {saving ? 'Wird gespeichert…' : saved ? 'Gespeichert!' : 'Speichern'}
+            {saving ? t('agency.common.saving') : saved ? t('agency.common.saved') : t('agency.common.save')}
           </button>
         </div>
 
@@ -155,54 +157,54 @@ export default function AgencySettingsPage() {
             <div className={sectionCls}>
               <div className={sectionHeaderCls}>
                 <Building2 className="w-4 h-4 text-brand-primary" />
-                <h2 className="text-sm font-bold text-white">Firmenprofil</h2>
+                <h2 className="text-sm font-bold text-white">{t('agency.agencySettings.companyProfile.title')}</h2>
               </div>
               <div className="px-6 py-5 space-y-4">
                 <div className="space-y-1.5">
-                  <label className={labelCls}>Agenturname</label>
+                  <label className={labelCls}>{t('agency.agencySettings.companyProfile.agencyName')}</label>
                   <input
                     type="text"
                     value={form.full_name}
                     onChange={e => set('full_name', e.target.value)}
-                    placeholder="Solar Vertrieb GmbH"
+                    placeholder={t('agency.agencySettings.companyProfile.agencyNamePlaceholder')}
                     className={inputCls}
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className={`${labelCls} flex items-center gap-1.5`}>
-                      <Phone className="w-3 h-3" />Telefon
+                      <Phone className="w-3 h-3" />{t('agency.agencySettings.companyProfile.phone')}
                     </label>
                     <input
                       type="tel"
                       value={form.phone}
                       onChange={e => set('phone', e.target.value)}
-                      placeholder="+49 89 123456"
+                      placeholder={t('agency.agencySettings.companyProfile.phonePlaceholder')}
                       className={inputCls}
                     />
                   </div>
                   <div className="space-y-1.5">
                     <label className={`${labelCls} flex items-center gap-1.5`}>
-                      <MapPin className="w-3 h-3" />PLZ / Ort
+                      <MapPin className="w-3 h-3" />{t('agency.agencySettings.companyProfile.zipCity')}
                     </label>
                     <input
                       type="text"
                       value={form.zip}
                       onChange={e => set('zip', e.target.value)}
-                      placeholder="80333 München"
+                      placeholder={t('agency.agencySettings.companyProfile.zipCityPlaceholder')}
                       className={inputCls}
                     />
                   </div>
                 </div>
                 <div className="space-y-1.5">
                   <label className={`${labelCls} flex items-center gap-1.5`}>
-                    <Globe className="w-3 h-3" />Webseite
+                    <Globe className="w-3 h-3" />{t('agency.agencySettings.companyProfile.website')}
                   </label>
                   <input
                     type="url"
                     value={form.agency_website}
                     onChange={e => set('agency_website', e.target.value)}
-                    placeholder="https://meine-agentur.de"
+                    placeholder={t('agency.agencySettings.companyProfile.websitePlaceholder')}
                     className={inputCls}
                   />
                 </div>
@@ -214,17 +216,17 @@ export default function AgencySettingsPage() {
               <div className={sectionHeaderCls}>
                 <Euro className="w-4 h-4 text-brand-primary" />
                 <div>
-                  <h2 className="text-sm font-bold text-white">Standard-Provision</h2>
-                  <p className="text-xs text-gray-500 mt-0.5">Vorausgefüllte Werte beim Anlegen neuer Partner</p>
+                  <h2 className="text-sm font-bold text-white">{t('agency.agencySettings.defaultCommission.title')}</h2>
+                  <p className="text-xs text-gray-500 mt-0.5">{t('agency.agencySettings.defaultCommission.description')}</p>
                 </div>
               </div>
               <div className="px-6 py-5 space-y-4">
                 <div className="space-y-2">
-                  <label className={labelCls}>Provisionsart</label>
+                  <label className={labelCls}>{t('agency.agencySettings.defaultCommission.type')}</label>
                   <div className="grid grid-cols-2 gap-2">
                     {([
-                      { value: 'fixed',      label: 'Festbetrag (€)',  icon: Euro },
-                      { value: 'percentage', label: 'Prozentsatz (%)', icon: Percent },
+                      { value: 'fixed',      label: t('agency.common.fixedAmount'),  icon: Euro },
+                      { value: 'percentage', label: t('agency.common.percentage'), icon: Percent },
                     ] as const).map(({ value, label, icon: Icon }) => (
                       <button
                         key={value}
@@ -244,7 +246,7 @@ export default function AgencySettingsPage() {
                 </div>
                 <div className="space-y-1.5">
                   <label className={labelCls}>
-                    Standardwert ({form.agency_default_commission_type === 'fixed' ? '€' : '%'})
+                    {t('agency.agencySettings.defaultCommission.defaultValue', { unit: form.agency_default_commission_type === 'fixed' ? '€' : '%' })}
                   </label>
                   <input
                     type="number"
@@ -255,7 +257,7 @@ export default function AgencySettingsPage() {
                     className={inputCls}
                   />
                   <p className="text-[11px] text-gray-600">
-                    Kann beim Erstellen jedes Partners individuell angepasst werden.
+                    {t('agency.agencySettings.defaultCommission.hint')}
                   </p>
                 </div>
               </div>
@@ -265,7 +267,7 @@ export default function AgencySettingsPage() {
             <div className={sectionCls}>
               <div className={sectionHeaderCls}>
                 <Bell className="w-4 h-4 text-brand-primary" />
-                <h2 className="text-sm font-bold text-white">Benachrichtigungen</h2>
+                <h2 className="text-sm font-bold text-white">{t('agency.agencySettings.notifications.title')}</h2>
               </div>
               <div className="px-6 py-5">
                 <button
@@ -279,9 +281,9 @@ export default function AgencySettingsPage() {
                       : <BellOff className="w-4 h-4 text-gray-500" />
                     }
                     <div className="text-left">
-                      <p className="text-sm font-semibold text-white">Partner-Antwort per E-Mail</p>
+                      <p className="text-sm font-semibold text-white">{t('agency.agencySettings.notifications.emailToggle')}</p>
                       <p className="text-xs text-gray-500 mt-0.5">
-                        E-Mail erhalten wenn ein Partner einen Lead annimmt oder ablehnt
+                        {t('agency.agencySettings.notifications.emailToggleDescription')}
                       </p>
                     </div>
                   </div>
@@ -309,8 +311,8 @@ export default function AgencySettingsPage() {
                   <Users className="w-4 h-4 text-purple-400" />
                 </div>
                 <div className="text-left">
-                  <p className="text-sm font-bold text-white">Team verwalten</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Vertriebler einladen und Zugänge verwalten</p>
+                  <p className="text-sm font-bold text-white">{t('agency.agencySettings.teamShortcut.title')}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{t('agency.agencySettings.teamShortcut.description')}</p>
                 </div>
               </div>
               <ChevronRight className="w-4 h-4 text-gray-600" />

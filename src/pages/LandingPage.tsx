@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cacheFunnelSourceFromUrl } from "../lib/funnelTracking";
@@ -17,73 +18,20 @@ import CtaFooterSection from "../sections/CtaFooterSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── DATA ─── */
-const journey = [
-  {
-    num: "01",
-    subtitle: "Kontakt",
-    title: "Du meldest dich",
-    description:
-      "Starte den 60-Sekunden-Lösungs-Check oder buche direkt einen Demo-Call. Kein Vertrag, keine Kreditkarte, keine Verpflichtung.",
-    details: [
-      "60-Sekunden-Check ohne Anmeldung",
-      "Oder 30-min-Demo-Call zum Wunschtermin",
-      "Antwort noch am selben Tag",
-    ],
-  },
-  {
-    num: "02",
-    subtitle: "Demo & Beratung",
-    title: "Wir schauen auf deinen Betrieb",
-    description:
-      "Gemeinsam gehen wir durch, wie du heute Angebote erstellst und wo Zeit verloren geht. Du siehst Voltify live an echten Zahlen.",
-    details: [
-      "Ist-Aufnahme deines Angebots-Prozesses",
-      "Live-Demo am echten Konfigurator",
-      "Ehrliche Einschätzung, ob Voltify passt",
-    ],
-  },
-  {
-    num: "03",
-    subtitle: "Auswahl",
-    title: "Du wählst deine Module",
-    description:
-      "Konfigurator, Angebots-PDFs, CRM-Pipeline, Montage-Planung, Rechnungen — du entscheidest, welche Bausteine du brauchst. Du zahlst nur, was du nutzt.",
-    details: [
-      "Module einzeln zuschaltbar",
-      "Dein Branding, deine Preise, deine AGB",
-      "Fester Preis ab 149 €/Monat",
-    ],
-  },
-  {
-    num: "04",
-    subtitle: "Integration",
-    title: "Wir bauen es in deine Webseite ein",
-    description:
-      "Der Konfigurator wird in deine bestehende Webseite eingebunden — als Button, Einbettung oder eigene Unterseite. Die Technik übernehmen wir komplett.",
-    details: [
-      "Egal ob WordPress, Wix, Jimdo oder Eigenbau",
-      "Deine Domain und dein Design bleiben",
-      "Kein technisches Know-how nötig",
-    ],
-  },
-  {
-    num: "05",
-    subtitle: "Live",
-    title: "Deine Besucher konfigurieren selbst",
-    description:
-      "Innerhalb weniger Tage bist du startklar. Ab jetzt füllen deine Website-Besucher den Konfigurator aus — der fertige Lead landet direkt in deinem Dashboard.",
-    details: [
-      "Startklar in wenigen Tagen",
-      "Leads kommen vollständig vorbereitet an",
-      "Support bleibt persönlich erreichbar",
-    ],
-  },
-];
+interface JourneyStep {
+  num: string;
+  subtitle: string;
+  title: string;
+  description: string;
+  details: string[];
+}
 
 export default function LandingPage() {
   const navigate = useNavigate();
   const [exitIntent, dismissExitIntent] = useExitIntent();
+  const { t } = useTranslation();
+
+  const journey = t("landing.process.steps", { returnObjects: true }) as JourneyStep[];
 
   // UTM-Params (sl_lead, utm_source, utm_campaign) sofort cachen —
   // damit sie beim späteren Klick auf "Live-Demo ansehen" → /konfigurator noch verfügbar sind.
@@ -135,28 +83,25 @@ export default function LandingPage() {
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
             <div className="max-w-[640px]">
               <h1 className="reveal text-5xl md:text-6xl lg:text-7xl font-semibold text-brand-secondary leading-[1.05] tracking-tight">
-                Solar-Angebote
+                {t("landing.hero.headline1")}
                 <br />
-                in 20 Minuten
+                {t("landing.hero.headline2")}
                 <br />
-                statt 2 Tagen.
+                {t("landing.hero.headline3")}
               </h1>
               <PillButton
                 variant="white"
                 onClick={() => navigate("/check")}
                 className="reveal mt-8"
               >
-                Welche Lösung passt zu mir?
+                {t("landing.hero.cta")}
               </PillButton>
               <p className="reveal text-xs text-gray-500 mt-4">
-                60-Sekunden-Check · Keine Anmeldung · Sofort-Auswertung +
-                passende Demo
+                {t("landing.hero.sub")}
               </p>
             </div>
             <p className="reveal text-gray-600 text-base max-w-[360px] leading-relaxed lg:pt-4">
-              Die All-in-One-Software für Solo-Solarteure: Deine Kunden
-              konfigurieren selbst, du klickst auf "Versenden". Professionelle
-              Angebots-PDFs mit ROI, Förderungen und Zahlungsplan — automatisch.
+              {t("landing.hero.description")}
             </p>
           </div>
         </div>
@@ -173,9 +118,9 @@ export default function LandingPage() {
 
       {/* ═══════════════ PROCESS ═══════════════ */}
       <MilestonesSection
-        tag="Und was jetzt?"
-        headingLine1="In wenigen Tagen"
-        headingLine2="auf deiner Webseite"
+        tag={t("landing.process.tag")}
+        headingLine1={t("landing.process.heading1")}
+        headingLine2={t("landing.process.heading2")}
         milestones={journey}
       />
 

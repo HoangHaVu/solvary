@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, User, Building2, CheckCircle, AlertCircle, ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { signUpCustomer, signUpInstaller } from '../services/auth';
 import { LOGO_PATH } from '../lib/branding';
 import { COLORS } from '../lib/theme';
@@ -10,6 +11,7 @@ type Role = 'customer' | 'installer';
 
 export default function Register() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [role, setRole] = useState<Role>('customer');
   const [firstName, setFirstName] = useState('');
@@ -33,15 +35,15 @@ export default function Register() {
 
     // Validation
     if (password !== confirmPassword) {
-      setError('Die Passwörter stimmen nicht überein.');
+      setError(t('register.errors.passwordMismatch'));
       return;
     }
     if (password.length < 6) {
-      setError('Das Passwort muss mindestens 6 Zeichen haben.');
+      setError(t('register.errors.passwordLength'));
       return;
     }
     if (!agreeTerms) {
-      setError('Bitte akzeptiere die AGB und Datenschutzerklärung.');
+      setError(t('register.errors.termsRequired'));
       return;
     }
 
@@ -56,7 +58,7 @@ export default function Register() {
       }
       setSuccess(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Registrierung fehlgeschlagen.');
+      setError(err instanceof Error ? err.message : t('register.errors.generic'));
     } finally {
       setIsLoading(false);
     }
@@ -64,34 +66,34 @@ export default function Register() {
 
   return (
     <>
-      <SEO title="Registrierung" description="Erstellen Sie Ihr Voltify-Konto — als Privatkunde oder Installateur." canonical="/register" noindex />
+      <SEO title={t('register.seo.title')} description={t('register.seo.description')} canonical="/register" noindex />
       <div className="min-h-screen flex">
       {/* LEFT - Register Form */}
       <div className="w-full lg:w-[45%] xl:w-[40%] flex flex-col justify-between p-8 md:p-12 lg:p-16 bg-white">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 mb-12">
-          <img src={LOGO_PATH} alt="Solvary" className="h-7 w-auto" />
+          <img src={LOGO_PATH} alt={t('register.logoAlt')} className="h-7 w-auto" />
         </Link>
 
         {/* Form */}
         <div className="flex-1 flex flex-col justify-center max-w-[420px] mx-auto w-full">
-          <h1 className="text-3xl md:text-4xl font-semibold text-brand-secondary mb-3">Create Account</h1>
-          <p className="text-gray-500 text-sm mb-8">Fill in your details to get started with Voltify.</p>
+          <h1 className="text-3xl md:text-4xl font-semibold text-brand-secondary mb-3">{t('register.title')}</h1>
+          <p className="text-gray-500 text-sm mb-8">{t('register.subtitle')}</p>
 
           {success ? (
             <div className="flex flex-col items-center gap-4 py-8 text-center">
               <CheckCircle className="w-14 h-14 text-green-500" />
-              <h2 className="text-xl font-bold text-brand-secondary">Konto erstellt!</h2>
+              <h2 className="text-xl font-bold text-brand-secondary">{t('register.success.title')}</h2>
               <p className="text-gray-500 text-sm">
                 {role === 'customer'
-                  ? 'Bitte bestätige deine E-Mail-Adresse. Danach kannst du dich anmelden.'
-                  : 'Wir melden uns innerhalb von 24 Stunden bei dir. Dein Konto wird nach Prüfung freigeschaltet.'}
+                  ? t('register.success.customerMessage')
+                  : t('register.success.installerMessage')}
               </p>
               <button
                 onClick={() => navigate('/login')}
                 className="mt-4 bg-brand-secondary text-white font-medium px-6 py-3 rounded-xl hover:bg-brand-secondary-hover transition-colors"
               >
-                Zum Login
+                {t('register.success.loginButton')}
               </button>
             </div>
           ) : (
@@ -105,7 +107,7 @@ export default function Register() {
 
               {/* Role Selection */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-medium text-gray-700">Ich bin...</label>
+                <label className="text-xs font-medium text-gray-700">{t('register.role.label')}</label>
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
@@ -117,7 +119,7 @@ export default function Register() {
                     }`}
                   >
                     <User className="w-4 h-4" />
-                    Privatkunde
+                    {t('register.role.customer')}
                   </button>
                   <button
                     type="button"
@@ -129,7 +131,7 @@ export default function Register() {
                     }`}
                   >
                     <Building2 className="w-4 h-4" />
-                    Fachbetrieb
+                    {t('register.role.installer')}
                   </button>
                 </div>
               </div>
@@ -138,7 +140,7 @@ export default function Register() {
               {role === 'customer' && (
                 <div className="grid grid-cols-2 gap-3">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-medium text-gray-700">Vorname</label>
+                    <label className="text-xs font-medium text-gray-700">{t('register.fields.firstName')}</label>
                     <input
                       type="text"
                       value={firstName}
@@ -149,7 +151,7 @@ export default function Register() {
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-medium text-gray-700">Nachname</label>
+                    <label className="text-xs font-medium text-gray-700">{t('register.fields.lastName')}</label>
                     <input
                       type="text"
                       value={lastName}
@@ -166,7 +168,7 @@ export default function Register() {
               {role === 'installer' && (
                 <>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-medium text-gray-700">Firmenname</label>
+                    <label className="text-xs font-medium text-gray-700">{t('register.fields.companyName')}</label>
                     <input
                       type="text"
                       value={companyName}
@@ -178,7 +180,7 @@ export default function Register() {
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-medium text-gray-700">PLZ</label>
+                      <label className="text-xs font-medium text-gray-700">{t('register.fields.zip')}</label>
                       <input
                         type="text"
                         value={zip}
@@ -189,7 +191,7 @@ export default function Register() {
                       />
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-medium text-gray-700">Telefon</label>
+                      <label className="text-xs font-medium text-gray-700">{t('register.fields.phone')}</label>
                       <input
                         type="tel"
                         value={phone}
@@ -204,7 +206,7 @@ export default function Register() {
 
               {/* Email */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-medium text-gray-700">Email</label>
+                <label className="text-xs font-medium text-gray-700">{t('register.fields.email')}</label>
                 <input
                   type="email"
                   value={email}
@@ -217,13 +219,13 @@ export default function Register() {
 
               {/* Password */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-medium text-gray-700">Password</label>
+                <label className="text-xs font-medium text-gray-700">{t('register.fields.password')}</label>
                 <div className="relative">
                   <input
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Mindestens 6 Zeichen"
+                    placeholder={t('register.placeholders.password')}
                     required
                     minLength={6}
                     className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
@@ -240,13 +242,13 @@ export default function Register() {
 
               {/* Confirm Password */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-medium text-gray-700">Confirm Password</label>
+                <label className="text-xs font-medium text-gray-700">{t('register.fields.confirmPassword')}</label>
                 <div className="relative">
                   <input
                     type={showConfirm ? 'text' : 'password'}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Confirm your password"
+                    placeholder={t('register.placeholders.confirmPassword')}
                     required
                     className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary transition-all"
                   />
@@ -269,10 +271,10 @@ export default function Register() {
                   className="w-4 h-4 mt-0.5 rounded border-gray-300 text-brand-secondary focus:ring-brand-secondary"
                 />
                 <span className="text-xs text-gray-500">
-                  Ich akzeptiere die{' '}
-                  <Link to="/agb" className="text-brand-secondary font-medium hover:underline">AGB</Link>
-                  {' '}und die{' '}
-                  <Link to="/datenschutz" className="text-brand-secondary font-medium hover:underline">Datenschutzerklärung</Link>
+                  {t('register.terms.prefix')}{' '}
+                  <Link to="/agb" className="text-brand-secondary font-medium hover:underline">{t('register.terms.agb')}</Link>
+                  {' '}{t('register.terms.middle')}{' '}
+                  <Link to="/datenschutz" className="text-brand-secondary font-medium hover:underline">{t('register.terms.privacy')}</Link>
                 </span>
               </label>
 
@@ -282,7 +284,7 @@ export default function Register() {
                 disabled={isLoading}
                 className="w-full bg-brand-secondary text-white font-medium py-3 rounded-xl hover:bg-brand-secondary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                {isLoading ? 'Konto wird erstellt…' : 'Create Account'}
+                {isLoading ? t('register.submit.loading') : t('register.submit.create')}
                 {!isLoading && <ArrowRight className="w-4 h-4" />}
               </button>
             </form>
@@ -291,7 +293,7 @@ export default function Register() {
 
         {/* Bottom */}
         <p className="text-center text-sm text-gray-500 mt-8">
-          Already Have An Account? <Link to="/login" className="text-brand-secondary font-medium hover:underline">Login Now.</Link>
+          {t('register.footer.alreadyHaveAccount')} <Link to="/login" className="text-brand-secondary font-medium hover:underline">{t('register.footer.login')}</Link>
         </p>
       </div>
 
@@ -304,38 +306,38 @@ export default function Register() {
         <div className="relative max-w-[540px] w-full">
           {/* Tagline */}
           <h2 className="text-3xl font-semibold text-white mb-2 leading-snug">
-            Start your solar journey<br />with confidence.
+            {t('register.hero.titleLine1')}<br />{t('register.hero.titleLine2')}
           </h2>
-          <p className="text-white/60 text-sm mb-8">Create an account to access all features and manage your solar projects.</p>
+          <p className="text-white/60 text-sm mb-8">{t('register.hero.subtitle')}</p>
 
           {/* Dashboard Mockup */}
           <div className="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/10 shadow-2xl">
             {/* Stats Row */}
             <div className="grid grid-cols-3 gap-3 mb-4">
               <div className="bg-white/10 rounded-xl p-3">
-                <p className="text-[10px] text-white/60 mb-1">ROI Potential</p>
+                <p className="text-[10px] text-white/60 mb-1">{t('register.dashboard.roiPotential')}</p>
                 <p className="text-lg font-bold text-white">24.5%</p>
-                <span className="text-[10px] text-brand-primary">+5% vs last year</span>
+                <span className="text-[10px] text-brand-primary">{t('register.dashboard.roiChange')}</span>
               </div>
               <div className="bg-white/10 rounded-xl p-3">
-                <p className="text-[10px] text-white/60 mb-1">Panel Efficiency</p>
+                <p className="text-[10px] text-white/60 mb-1">{t('register.dashboard.panelEfficiency')}</p>
                 <p className="text-lg font-bold text-white">21.8%</p>
-                <span className="text-[10px] text-brand-primary">Top tier</span>
+                <span className="text-[10px] text-brand-primary">{t('register.dashboard.panelTier')}</span>
               </div>
               <div className="bg-white/10 rounded-xl p-3">
-                <p className="text-[10px] text-white/60 mb-1">Payback Time</p>
+                <p className="text-[10px] text-white/60 mb-1">{t('register.dashboard.paybackTime')}</p>
                 <p className="text-lg font-bold text-white">7.2 yrs</p>
-                <span className="text-[10px] text-brand-primary">Above average</span>
+                <span className="text-[10px] text-brand-primary">{t('register.dashboard.paybackLabel')}</span>
               </div>
             </div>
 
             {/* Chart Area */}
             <div className="bg-white/10 rounded-xl p-4 mb-4">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs text-white font-medium">Savings Projection</span>
+                <span className="text-xs text-white font-medium">{t('register.dashboard.savingsProjection')}</span>
                 <div className="flex gap-1">
-                  <span className="text-[10px] text-white/40 px-2 py-0.5 rounded bg-white/10">Yearly</span>
-                  <span className="text-[10px] text-white/40 px-2 py-0.5">Monthly</span>
+                  <span className="text-[10px] text-white/40 px-2 py-0.5 rounded bg-white/10">{t('register.dashboard.yearly')}</span>
+                  <span className="text-[10px] text-white/40 px-2 py-0.5">{t('register.dashboard.monthly')}</span>
                 </div>
               </div>
               <svg viewBox="0 0 400 120" className="w-full h-24">
@@ -368,16 +370,16 @@ export default function Register() {
                   </div>
                 </div>
                 <div>
-                  <p className="text-xs text-white font-medium">Carbon Offset</p>
-                  <p className="text-[10px] text-white/50">Yearly target</p>
+                  <p className="text-xs text-white font-medium">{t('register.dashboard.carbonOffset')}</p>
+                  <p className="text-[10px] text-white/50">{t('register.dashboard.carbonTarget')}</p>
                 </div>
               </div>
               <div className="w-[140px] bg-white/10 rounded-xl p-3">
-                <p className="text-[10px] text-white/60 mb-1">Configurations</p>
+                <p className="text-[10px] text-white/60 mb-1">{t('register.dashboard.configurations')}</p>
                 <p className="text-2xl font-bold text-white">3</p>
                 <div className="flex gap-1 mt-1">
-                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-green-500/20 text-green-400">2 Saved</span>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400">1 Draft</span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-green-500/20 text-green-400">{t('register.dashboard.saved', { count: 2 })}</span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400">{t('register.dashboard.draft', { count: 1 })}</span>
                 </div>
               </div>
             </div>

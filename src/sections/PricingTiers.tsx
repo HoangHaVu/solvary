@@ -1,6 +1,7 @@
 // PROJECT: Voltify | PURPOSE: Wiederverwendbares 3-Karten-Grid für Tarife — helle Kacheln, dunkle „Beliebt"-Kachel, Full-Width-Button wie in der Navbar
 
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Check } from "lucide-react";
 import gsap from "gsap";
@@ -20,6 +21,7 @@ export default function PricingTiers({
   tiers,
   showBeta = true,
 }: PricingTiersProps) {
+  const { t } = useTranslation();
   const wrapRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
@@ -58,7 +60,7 @@ export default function PricingTiers({
           >
             {tier.popular && (
               <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-primary px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-secondary">
-                Beliebt
+                {t("sections.pricingTiers.popular")}
               </span>
             )}
 
@@ -95,7 +97,7 @@ export default function PricingTiers({
                 <span
                   className={`text-sm ${dark ? "text-white/50" : "text-gray-500"}`}
                 >
-                  / Monat
+                  {t("sections.pricingTiers.perMonth")}
                 </span>
               </div>
               {showBeta && (
@@ -103,10 +105,10 @@ export default function PricingTiers({
                   <span
                     className={`font-semibold ${dark ? "text-white" : "text-brand-secondary"}`}
                   >
-                    ≈ €{betaPrice(tier.price)} / Monat
+                    {t("sections.pricingTiers.betaPrice", { price: betaPrice(tier.price) })}
                   </span>{" "}
                   <span className={dark ? "text-white/40" : "text-gray-400"}>
-                    als Beta-Partner (−{BETA.discountPercent}%)
+                    {t("sections.pricingTiers.betaLabel", { discount: BETA.discountPercent })}
                   </span>
                 </p>
               )}

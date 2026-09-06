@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Menu, X, ArrowRight, ChevronDown } from 'lucide-react';
 import { LOGO_PATH } from '../../lib/branding';
 
-const navLinks = [
-  { label: 'Services', href: '#services' },
-  { label: 'Ueber uns', href: '#about' },
-  { label: 'Neuigkeiten', href: '#news' },
-  { label: 'Kontakt', href: '#contact' },
-];
-
 export default function Header() {
+  const { t } = useTranslation();
+  const navLinks = t('demoPage.header.navLinks', { returnObjects: true }) as { label: string; href: string }[];
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -41,7 +38,7 @@ export default function Header() {
         <div className="max-w-[1280px] mx-auto px-6 h-full flex items-center justify-between">
           {/* Logo */}
           <a href="#home" onClick={(e) => { e.preventDefault(); scrollTo('#home'); }} className="flex items-center gap-2">
-            <img src={LOGO_PATH} alt="Solvary" className="h-7 w-auto" />
+            <img src={LOGO_PATH} alt={t('demoPage.header.logoAlt')} className="h-7 w-auto" />
           </a>
 
           {/* Desktop Nav */}
@@ -67,7 +64,7 @@ export default function Header() {
               className={`hidden lg:flex items-center gap-2 text-sm font-medium transition-colors duration-300 hover:opacity-70 ${scrolled ? 'text-brand-secondary' : 'text-white'}`}
             >
               <ArrowLeft className="w-4 h-4" />
-              Demo verlassen
+              {t('demoPage.header.leaveDemo')}
             </Link>
             <button
               className={`lg:hidden transition-colors duration-300 ${scrolled ? 'text-brand-secondary' : 'text-white'}`}
@@ -80,7 +77,7 @@ export default function Header() {
               onClick={(e) => { e.preventDefault(); scrollTo('#explore'); }}
               className="hidden lg:flex items-center gap-2 bg-brand-primary text-brand-secondary text-sm font-medium px-5 py-2.5 rounded-full hover:bg-brand-primary-hover transition-all duration-250 hover:scale-[1.02] group"
             >
-              Jetzt entdecken
+              {t('demoPage.header.discoverNow')}
               <span className="w-7 h-7 bg-brand-secondary rounded-full flex items-center justify-center group-hover:bg-brand-secondary-hover transition-colors">
                 <ArrowRight className="w-3.5 h-3.5 text-white" />
               </span>

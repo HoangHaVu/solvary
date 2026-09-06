@@ -40,9 +40,9 @@ export default function Impressum() {
             </h2>
             <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 text-brand-secondary">
               <p className="font-bold text-lg">Solvary</p>
-              <p className="mb-2">Van Anh Kasem</p>
-              <p>Auf dem Gleichen 18</p>
-              <p>65934 Frankfurt am Main</p>
+              <p className="mb-2">Hoang Ha Vu</p>
+              <p>Dotzheimer Straße 108</p>
+              <p>65197 Wiesbaden</p>
               <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
                 <p className="flex items-center gap-2">
                   <Mail className="w-4 h-4 text-brand-secondary" />
@@ -63,9 +63,9 @@ export default function Impressum() {
               Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
             </h2>
             <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 text-brand-secondary">
-              <p className="font-medium">Van Anh Kasem</p>
-              <p>Auf dem Gleichen 18</p>
-              <p>65934 Frankfurt am Main</p>
+              <p className="font-medium">Hoang Ha Vu</p>
+              <p>Dotzheimer Straße 108</p>
+              <p>65197 Wiesbaden</p>
             </div>
           </section>
 

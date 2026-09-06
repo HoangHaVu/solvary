@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Plus } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTranslation } from "react-i18next";
 import { BETA } from "../lib/betaConfig";
 import { SectionTag } from "../components/ui/SectionTag";
 
@@ -14,43 +15,15 @@ interface FaqItem {
   a: string;
 }
 
-const faqs: FaqItem[] = [
-  {
-    q: "Was kostet Solvary?",
-    a: `149 €/Monat, keine Einrichtungsgebühr. Die ersten ${BETA.freeMonths} Monate sind kostenlos, und als Beta-Partner sicherst du dir dauerhaft ${BETA.discountPercent}% Gründerrabatt auf jeden Tarif.`,
-  },
-  {
-    q: "Muss ich meine Webseite wechseln?",
-    a: "Nein. Der Konfigurator wird in deine bestehende Webseite eingebunden — egal ob WordPress, Wix, Jimdo oder Eigenbau. Deine Domain und dein Design bleiben unverändert.",
-  },
-  {
-    q: "Wie lange dauert die Einrichtung?",
-    a: "In der Regel wenige Tage. Wir übernehmen die technische Einbindung komplett — du lieferst nur Logo, Farben und deine Preise.",
-  },
-  {
-    q: "Brauche ich technisches Know-how?",
-    a: "Nein. Solvary ist für Solo-Solarteure gebaut, nicht für IT-Abteilungen. Wenn du eine E-Mail schreiben kannst, kommst du auch mit Solvary klar.",
-  },
-  {
-    q: "Wem gehören meine Leads und Daten?",
-    a: "Dir. Alle Daten liegen DSGVO-konform auf EU-Servern, ein Export ist jederzeit möglich. Wir verkaufen oder teilen keine Lead-Daten.",
-  },
-  {
-    q: "Kann ich Solvary vorher testen?",
-    a: "Ja. Starte den 60-Sekunden-Lösungs-Check oder buche einen 30-min-Demo-Call. Du siehst die Software an echten Zahlen, bevor du dich entscheidest.",
-  },
-  {
-    q: "Gibt es eine Mindestlaufzeit?",
-    a: "Nein. Solvary ist monatlich kündbar — keine Mindestlaufzeit, keine versteckten Kosten.",
-  },
-  {
-    q: "Für wen ist Solvary gedacht?",
-    a: "Für 1–5-Mann-Solarbetriebe im DACH-Raum, die ohne großes CRM-Budget professionelle Angebote erstellen und über die eigene Webseite Leads gewinnen wollen.",
-  },
-];
-
 export default function FaqSection() {
+  const { t } = useTranslation();
   const sectionRef = useRef<HTMLElement>(null);
+
+  const faqs = t("sections.faq.items", {
+    returnObjects: true,
+    freeMonths: BETA.freeMonths,
+    discount: BETA.discountPercent,
+  }) as FaqItem[];
   const [open, setOpen] = useState<number | null>(0);
 
   useEffect(() => {
@@ -81,11 +54,11 @@ export default function FaqSection() {
       <div className="max-w-[1080px] mx-auto px-6">
         {/* Badge */}
         <div className="faq-reveal flex justify-center">
-          <SectionTag>FAQ</SectionTag>
+          <SectionTag>{t("sections.faq.tag")}</SectionTag>
         </div>
 
         <h2 className="faq-reveal mt-6 mb-14 text-center text-4xl md:text-5xl font-semibold text-brand-secondary tracking-tight">
-          Häufige Fragen, klar beantwortet
+          {t("sections.faq.heading")}
         </h2>
 
         {/* Zwei Spalten — jedes Item steuert seinen eigenen Zustand */}

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Battery, Clock } from 'lucide-react';
 import type { WizardData } from '../../pages/Configurator';
 
@@ -6,19 +7,23 @@ interface Props {
   updateData: (p: Partial<WizardData>) => void;
 }
 
-const storageOptions = [
-  { id: '5', kwh: 5, label: '5 kWh', price: '~4.500 €', desc: 'Für kleine Haushalte', hours: 'ca. 4-5 Std.' },
-  { id: '10', kwh: 10, label: '10 kWh', price: '~7.000 €', desc: 'Optimal für 3-4 Pers.', hours: 'ca. 8-10 Std.', recommended: true },
-  { id: '15', kwh: 15, label: '15 kWh', price: '~9.500 €', desc: 'Für große Haushalte', hours: 'ca. 12-15 Std.' },
-  { id: '20', kwh: 20, label: '20 kWh', price: '~12.000 €', desc: 'Maximale Unabhängigkeit', hours: 'ca. 16-20 Std.' },
+const storageSkeleton = [
+  { id: '5', kwh: 5, recommended: false },
+  { id: '10', kwh: 10, recommended: true },
+  { id: '15', kwh: 15, recommended: false },
+  { id: '20', kwh: 20, recommended: false },
 ];
 
 export default function Step4_Storage({ data, updateData }: Props) {
+  const { t } = useTranslation();
+  const storageText = t('configurator.step4.storageOptions', { returnObjects: true }) as Array<{ label: string; price: string; desc: string; hours: string }>;
+  const storageOptions = storageSkeleton.map((opt, i) => ({ ...opt, ...storageText[i] }));
+
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">Speicher wählen</h2>
-        <p className="text-gray-500 text-sm">Welche Speichergröße passt zu Ihrem Haushalt?</p>
+        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">{t('configurator.step4.title')}</h2>
+        <p className="text-gray-500 text-sm">{t('configurator.step4.subtitle')}</p>
       </div>
 
       {/* Storage Cards */}
@@ -37,7 +42,7 @@ export default function Step4_Storage({ data, updateData }: Props) {
             >
               {opt.recommended && (
                 <span className="absolute -top-2.5 left-4 bg-brand-primary text-brand-secondary text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                  Empfohlen
+                  {t('configurator.step4.recommended')}
                 </span>
               )}
               <div className="flex items-start justify-between mb-3">
@@ -50,7 +55,7 @@ export default function Step4_Storage({ data, updateData }: Props) {
               <p className="text-xs text-gray-500 mb-3">{opt.desc}</p>
               <div className="flex items-center gap-1.5 text-xs text-gray-400">
                 <Clock className="w-3.5 h-3.5" />
-                <span>Autarkie: {opt.hours}</span>
+                <span>{t('configurator.step4.autarkyLabel')} {opt.hours}</span>
               </div>
             </button>
           );
@@ -59,7 +64,7 @@ export default function Step4_Storage({ data, updateData }: Props) {
 
       {/* Battery Visualization */}
       <div className="bg-white/60 backdrop-blur-sm rounded-2xl border border-gray-200 p-6">
-        <label className="text-sm font-medium text-brand-secondary mb-3 block">Feinjustierung</label>
+        <label className="text-sm font-medium text-brand-secondary mb-3 block">{t('configurator.step4.fineTuningLabel')}</label>
         <input
           type="range"
           min={5}
@@ -71,7 +76,7 @@ export default function Step4_Storage({ data, updateData }: Props) {
         />
         <div className="flex justify-between text-xs text-gray-400 mt-2">
           <span>5 kWh</span>
-          <span className="font-medium text-brand-primary">{data.storageSize} kWh ausgewählt</span>
+          <span className="font-medium text-brand-primary">{t('configurator.step4.selected', { size: data.storageSize })}</span>
           <span>20 kWh</span>
         </div>
       </div>

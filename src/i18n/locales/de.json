@@ -1,0 +1,2945 @@
+{
+  "nav": {
+    "products": "Produkte",
+    "solutionCheck": "Was brauche ich?",
+    "pricing": "Preise",
+    "cta": "Kostenlos testen"
+  },
+  "language": {
+    "de": "Deutsch",
+    "en": "English",
+    "switch": "Sprache wechseln"
+  },
+  "landing": {
+    "hero": {
+      "headline1": "Solar-Angebote",
+      "headline2": "in 20 Minuten",
+      "headline3": "statt 2 Tagen.",
+      "cta": "Welche Lösung passt zu mir?",
+      "sub": "60-Sekunden-Check · Keine Anmeldung · Sofort-Auswertung + passende Demo",
+      "description": "Die All-in-One-Software für Solo-Solarteure: Deine Kunden konfigurieren selbst, du klickst auf \"Versenden\". Professionelle Angebots-PDFs mit ROI, Förderungen und Zahlungsplan — automatisch."
+    },
+    "process": {
+      "tag": "Und was jetzt?",
+      "heading1": "In wenigen Tagen",
+      "heading2": "auf deiner Webseite",
+      "steps": [
+        {
+          "subtitle": "Kontakt",
+          "title": "Du meldest dich",
+          "description": "Starte den 60-Sekunden-Lösungs-Check oder buche direkt einen Demo-Call. Kein Vertrag, keine Kreditkarte, keine Verpflichtung.",
+          "details": [
+            "60-Sekunden-Check ohne Anmeldung",
+            "Oder 30-min-Demo-Call zum Wunschtermin",
+            "Antwort noch am selben Tag"
+          ]
+        },
+        {
+          "subtitle": "Demo & Beratung",
+          "title": "Wir schauen auf deinen Betrieb",
+          "description": "Gemeinsam gehen wir durch, wie du heute Angebote erstellst und wo Zeit verloren geht. Du siehst Voltify live an echten Zahlen.",
+          "details": [
+            "Ist-Aufnahme deines Angebots-Prozesses",
+            "Live-Demo am echten Konfigurator",
+            "Ehrliche Einschätzung, ob Voltify passt"
+          ]
+        },
+        {
+          "subtitle": "Auswahl",
+          "title": "Du wählst deine Module",
+          "description": "Konfigurator, Angebots-PDFs, CRM-Pipeline, Montage-Planung, Rechnungen — du entscheidest, welche Bausteine du brauchst. Du zahlst nur, was du nutzt.",
+          "details": [
+            "Module einzeln zuschaltbar",
+            "Dein Branding, deine Preise, deine AGB",
+            "Fester Preis ab 149 €/Monat"
+          ]
+        },
+        {
+          "subtitle": "Integration",
+          "title": "Wir bauen es in deine Webseite ein",
+          "description": "Der Konfigurator wird in deine bestehende Webseite eingebunden — als Button, Einbettung oder eigene Unterseite. Die Technik übernehmen wir komplett.",
+          "details": [
+            "Egal ob WordPress, Wix, Jimdo oder Eigenbau",
+            "Deine Domain und dein Design bleiben",
+            "Kein technisches Know-how nötig"
+          ]
+        },
+        {
+          "subtitle": "Live",
+          "title": "Deine Besucher konfigurieren selbst",
+          "description": "Innerhalb weniger Tage bist du startklar. Ab jetzt füllen deine Website-Besucher den Konfigurator aus — der fertige Lead landet direkt in deinem Dashboard.",
+          "details": [
+            "Startklar in wenigen Tagen",
+            "Leads kommen vollständig vorbereitet an",
+            "Support bleibt persönlich erreichbar"
+          ]
+        }
+      ]
+    }
+  },
+  "sections": {
+    "features": {
+      "tag": "Funktionen",
+      "heading": "Alles, was Sie täglich brauchen",
+      "items": [
+        {
+          "title": "Angebots-PDFs",
+          "desc": "Professionelle Kalkulationen mit Ihrem Branding, Förderungen und Zahlungsplänen — per E-Mail versenden."
+        },
+        {
+          "title": "Umsatz-Reports",
+          "desc": "Verfolgen Sie Conversion-Rate, durchschnittlichen Deal-Wert und Team-Performance in Echtzeit."
+        },
+        {
+          "title": "DSGVO & Rechtssicherheit",
+          "desc": "AGB-Generator, Datenschutz-Seiten und sichere Datenverarbeitung — alles inklusive."
+        },
+        {
+          "title": "Montage-Planung",
+          "desc": "Termine direkt im Kalender planen, Monteure zuweisen und den Projektstatus aktualisieren."
+        },
+        {
+          "title": "Team-Kommunikation",
+          "desc": "Notizen zu Leads und Projekten hinterlegen — alle Infos zentral, nichts mehr in E-Mails verstreut."
+        },
+        {
+          "title": "Rechnungs-PDFs",
+          "desc": "Abschlags- und Schlussrechnungen mit automatischer Fälligkeitsberechnung und Zahlungsstatus."
+        }
+      ]
+    },
+    "stats": {
+      "tag": "Warum Solvary",
+      "heading": "Weniger Admin, mehr Abschlüsse",
+      "freeMonthsLabel": "Kostenlos testen",
+      "adminEffortLabel": "Weniger Admin-Aufwand",
+      "discountLabel": "Gründerrabatt für Beta-Partner",
+      "readyLabel": "Startklar nach Demo-Call",
+      "center": "Ein System für Leads, Angebote und Projekte"
+    },
+    "pricing": {
+      "tag": "Preise",
+      "heading": "Tarife, die mit deinem Betrieb wachsen",
+      "sub": "Alle Tarife inkl. Solar-Konfigurator, monatlich kündbar. Als Beta-Partner sicherst du dir dauerhaft {{discount}}% Rabatt auf jeden Tarif.",
+      "compareLink": "Vollständiger Tarifvergleich & Agentur-Preise"
+    },
+    "pricingTiers": {
+      "popular": "Beliebt",
+      "perMonth": "/ Monat",
+      "betaPrice": "≈ €{{price}} / Monat",
+      "betaLabel": "als Beta-Partner (−{{discount}}%)"
+    },
+    "faq": {
+      "tag": "FAQ",
+      "heading": "Häufige Fragen, klar beantwortet",
+      "items": [
+        {
+          "q": "Was kostet Solvary?",
+          "a": "149 €/Monat, keine Einrichtungsgebühr. Die ersten {{freeMonths}} Monate sind kostenlos, und als Beta-Partner sicherst du dir dauerhaft {{discount}}% Gründerrabatt auf jeden Tarif."
+        },
+        {
+          "q": "Muss ich meine Webseite wechseln?",
+          "a": "Nein. Der Konfigurator wird in deine bestehende Webseite eingebunden — egal ob WordPress, Wix, Jimdo oder Eigenbau. Deine Domain und dein Design bleiben unverändert."
+        },
+        {
+          "q": "Wie lange dauert die Einrichtung?",
+          "a": "In der Regel wenige Tage. Wir übernehmen die technische Einbindung komplett — du lieferst nur Logo, Farben und deine Preise."
+        },
+        {
+          "q": "Brauche ich technisches Know-how?",
+          "a": "Nein. Solvary ist für Solo-Solarteure gebaut, nicht für IT-Abteilungen. Wenn du eine E-Mail schreiben kannst, kommst du auch mit Solvary klar."
+        },
+        {
+          "q": "Wem gehören meine Leads und Daten?",
+          "a": "Dir. Alle Daten liegen DSGVO-konform auf EU-Servern, ein Export ist jederzeit möglich. Wir verkaufen oder teilen keine Lead-Daten."
+        },
+        {
+          "q": "Kann ich Solvary vorher testen?",
+          "a": "Ja. Starte den 60-Sekunden-Lösungs-Check oder buche einen 30-min-Demo-Call. Du siehst die Software an echten Zahlen, bevor du dich entscheidest."
+        },
+        {
+          "q": "Gibt es eine Mindestlaufzeit?",
+          "a": "Nein. Solvary ist monatlich kündbar — keine Mindestlaufzeit, keine versteckten Kosten."
+        },
+        {
+          "q": "Für wen ist Solvary gedacht?",
+          "a": "Für 1–5-Mann-Solarbetriebe im DACH-Raum, die ohne großes CRM-Budget professionelle Angebote erstellen und über die eigene Webseite Leads gewinnen wollen."
+        }
+      ]
+    },
+    "ctaFooter": {
+      "tag": "{{spots}} Plätze — Dauerhafter Gründerrabatt",
+      "heading1": "Bereit, dein Solar-Geschäft",
+      "heading2": "zu skalieren?",
+      "sub": "{{freeMonths}} Monate kostenlos testen. Keine Kreditkarte. Persönlicher Demo-Call. Als Beta-Partner sicherst du dir dauerhaft {{discount}}% Rabatt auf jeden Tarif.",
+      "cta": "Jetzt Beta-Partner werden",
+      "description": "All-in-One-Software für den Solo-Solarteur: Konfigurator auf deiner Webseite, Leads, Angebote und Rechnungen an einem Ort.",
+      "productTitle": "Produkt",
+      "companyTitle": "Unternehmen",
+      "legalTitle": "Rechtliches",
+      "links": {
+        "products": "Produkte",
+        "solutionCheck": "Was brauche ich?",
+        "pricing": "Preise",
+        "faq": "FAQ",
+        "beta": "Beta-Programm",
+        "liveDemo": "Live-Demo",
+        "login": "Anmelden",
+        "privacy": "Datenschutz",
+        "terms": "AGB",
+        "imprint": "Impressum"
+      },
+      "copyright": "© 2026 Solvary · Designed by"
+    },
+    "productsStack": {
+      "tag": "Unsere Produkte",
+      "heading1": "Vom Lead bis zum",
+      "heading2": "Angebot — in einem System",
+      "sub": "Der Kunde konfiguriert auf Ihrer Webseite. Sie erhalten den Lead und generieren mit einem Klick eine professionelle PDF-Kalkulation.",
+      "products": [
+        {
+          "title": "Solar-Konfigurator",
+          "desc": "Ihre Kunden konfigurieren ihre Anlage selbst — Dach, Verbrauch, Speicher, Förderungen. Sie erhalten den Lead mit allen Daten.",
+          "features": [
+            "9-Schritt-Wizard",
+            "ROI-Berechnung",
+            "BAFA / KfW Förderungen",
+            "Lead-Erfassung",
+            "DSGVO-konform"
+          ],
+          "linkLabel": "Jetzt live testen"
+        },
+        {
+          "title": "Angebotskonfigurator",
+          "desc": "Aus dem Lead wird das Angebot: Positionen frei definieren, Preise und Rabatte anpassen, Vorlagen nutzen — PDF und E-Mail mit einem Klick.",
+          "features": [
+            "Positionen frei definieren",
+            "Rabatte & Preise",
+            "Vorlagen & Textbausteine",
+            "PDF & E-Mail-Versand",
+            "ROI-Impact-Panel"
+          ],
+          "linkLabel": "Jetzt live testen"
+        },
+        {
+          "title": "CRM & Dashboard",
+          "desc": "Alle Leads, Projekte und Termine an einem Ort. Kanban-Pipeline, Kalender und Team-Verwaltung — speziell für Solar-Betriebe.",
+          "features": [
+            "Lead-Pipeline",
+            "Projekt-Tracking",
+            "Kalender & Termine",
+            "Team & Rollen",
+            "Notizen"
+          ],
+          "linkLabel": "Demo-Account testen"
+        },
+        {
+          "title": "Digitaler Auftritt",
+          "desc": "Ihre eigene Webseite mit integriertem Konfigurator — unter Ihrer Domain, mit Ihrem Logo, Ihren Farben und Kontaktdaten.",
+          "features": [
+            "Eigene Domain",
+            "Ihr Logo & Branding",
+            "Konfigurator-Einbindung",
+            "Lead-Weiterleitung",
+            "DSGVO-konform"
+          ],
+          "linkLabel": "Demo-Webseite ansehen"
+        }
+      ]
+    }
+  },
+  "pricingPage": {
+    "hero": {
+      "tag": "Preise",
+      "heading1": "Wähle den passenden Tarif",
+      "heading2": "für dein Team",
+      "sub": "Starte kostenlos, skaliere mit deinem Geschäft. Alle Tarife inkl. Solar-Konfigurator, monatlich kündbar. Als Beta-Partner sicherst du dir dauerhaft {{discount}}% Rabatt."
+    },
+    "comparison": {
+      "heading": "Funktions-Vergleich",
+      "feature": "Funktion",
+      "starter": "Starter",
+      "professional": "Professional",
+      "enterprise": "Enterprise",
+      "rows": [
+        {
+          "label": "Nutzer",
+          "starter": "1",
+          "pro": "5",
+          "enterprise": "Unbegrenzt"
+        },
+        {
+          "label": "Solar-Konfigurator",
+          "starter": "✓",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Lead-Management",
+          "starter": "✓",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Kalender & Termine",
+          "starter": "✓",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Pipeline-Ansicht",
+          "starter": "—",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Team-Verwaltung",
+          "starter": "—",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Angebots-PDF",
+          "starter": "—",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Rechnungs-PDF",
+          "starter": "—",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Erweiterte Reports",
+          "starter": "—",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Rabatt-System",
+          "starter": "—",
+          "pro": "✓",
+          "enterprise": "✓"
+        },
+        {
+          "label": "API & Webhooks",
+          "starter": "—",
+          "pro": "—",
+          "enterprise": "✓"
+        },
+        {
+          "label": "White-Label",
+          "starter": "—",
+          "pro": "—",
+          "enterprise": "✓"
+        },
+        {
+          "label": "Dedizierter Support",
+          "starter": "—",
+          "pro": "—",
+          "enterprise": "✓"
+        }
+      ]
+    },
+    "agency": {
+      "tag": "Für Vertriebsagenturen",
+      "heading": "Partner-Programm für Solar-Vertriebe",
+      "sub": "Verwalte Installateur-Partner, route Leads intelligent und skaliere dein Vertriebsnetzwerk."
+    }
+  },
+  "productsPage": {
+    "hero": {
+      "tag": "Produkte",
+      "heading1": "Ein System für Lead,",
+      "heading2": "Angebot und Projekt",
+      "sub": "Konfigurator auf deiner Webseite, CRM für deine Pipeline, Angebots- und Rechnungs-PDFs auf Knopfdruck — modular kombinierbar."
+    }
+  },
+  "pricingData": {
+    "saas": [
+      {
+        "name": "Starter",
+        "seat": "1 Nutzer",
+        "description": "Für Einzelunternehmer, die ihre ersten Leads digital verwalten.",
+        "features": [
+          "Solar-Konfigurator",
+          "Lead-Management (unbegrenzt)",
+          "Kalender & Terminplanung",
+          "Grundlegende Reports",
+          "Community-Support"
+        ],
+        "cta": "Kostenlos testen"
+      },
+      {
+        "name": "Professional",
+        "seat": "5 Nutzer",
+        "description": "Für wachsende Teams mit professionellen Prozessen und Teamarbeit.",
+        "features": [
+          "Alles aus Starter",
+          "Team-Verwaltung (5 Nutzer)",
+          "Angebots- & Rechnungs-PDFs",
+          "Pipeline-Ansicht & KPIs",
+          "E-Mail-Versand & Rabatt-Codes",
+          "Prioritäts-Support"
+        ],
+        "cta": "14 Tage kostenlos testen"
+      },
+      {
+        "name": "Enterprise",
+        "seat": "Unbegrenzte Nutzer",
+        "description": "Für etablierte Betriebe mit White-Labeling und komplexen Abläufen.",
+        "features": [
+          "Alles aus Professional",
+          "API & Webhooks",
+          "White-Label-Branding",
+          "Benutzerdefinierte Workflows",
+          "Dedizierter Account Manager",
+          "SLA-Garantie & Onboarding"
+        ],
+        "cta": "Enterprise-Anfrage"
+      }
+    ],
+    "agency": [
+      {
+        "name": "Start",
+        "seat": "5 Partner",
+        "description": "Für junge Vertriebsagenturen, die erste Installateur-Partner anbinden.",
+        "features": [
+          "Bis zu 5 Partner-Installateure",
+          "Manuelles Lead-Routing",
+          "Partner-Portal",
+          "Basis-Provisionen",
+          "E-Mail-Benachrichtigungen"
+        ],
+        "cta": "Kostenlos testen"
+      },
+      {
+        "name": "Pro",
+        "seat": "20 Partner",
+        "description": "Für wachsende Agenturen mit mehr Partnern und professionellem Routing.",
+        "features": [
+          "Bis zu 20 Partner-Installateure",
+          "PLZ-basierte Partner-Vorschläge",
+          "Erweiterte Provisionen & Stufen",
+          "Agentur-Dashboard & KPIs",
+          "White-Label Partner-Portal",
+          "Prioritäts-Support"
+        ],
+        "cta": "14 Tage kostenlos testen"
+      },
+      {
+        "name": "Scale",
+        "seat": "Unbegrenzte Partner",
+        "description": "Für etablierte Vertriebsagenturen, die Leads vollautomatisch skalieren.",
+        "features": [
+          "Unbegrenzte Partner-Installateure",
+          "Vollautomatisches PLZ-Routing",
+          "Round-Robin & Load-Balancing",
+          "API & Webhooks",
+          "Erweiterte Agentur-Analytics",
+          "Dedizierter Account Manager"
+        ],
+        "cta": "Scale-Anfrage"
+      }
+    ]
+  },
+  "betaPage": {
+    "seo": {
+      "title": "Beta-Programm",
+      "description": "Werde einer der ersten Voltify-Beta-Partner. Kostenloser Zugang, persönliches Onboarding."
+    },
+    "form": {
+      "successTitle": "Dankeschön für die Anfrage!",
+      "successText": "Wir werden uns in Kürze bei Ihnen telefonisch melden.",
+      "successCta": "Zurück zur Startseite",
+      "tag": "Beta-Programm — Nur {{spots}} Plätze",
+      "title": "Jetzt Beta-Partner werden",
+      "sub": "Hinterlasse deine Kontaktdaten — wir melden uns persönlich bei dir. Als Beta-Partner sicherst du dir die nächsten {{freeMonths}} Monate kostenlos und danach dauerhaft {{discount}}% Gründerrabatt.",
+      "company": "Firma *",
+      "name": "Name *",
+      "phone": "Handynummer",
+      "phoneHint": "— für Rückruf (empfohlen)",
+      "email": "E-Mail *",
+      "zip": "PLZ",
+      "message": "Kurze Nachricht",
+      "messageHint": "(optional)",
+      "errorFallback": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+      "placeholder": {
+        "company": "Mustermann GmbH",
+        "name": "Max Mustermann",
+        "phone": "+49 171 1234567",
+        "email": "max@firma.de",
+        "zip": "12345",
+        "message": "z.B. Wie viele Leads habt ihr pro Monat?"
+      },
+      "submit": "Anfragen",
+      "disclaimer": "Kein Abo · Keine Kreditkarte · Jederzeit kündbar",
+      "login": "Bereits registriert?",
+      "loginCta": "Jetzt anmelden."
+    },
+    "benefits": {
+      "tag": "Beta-Programm — Nur {{spots}} Plätze",
+      "title": "Werde einer der ersten {{spots}} Voltify-Partner",
+      "sub": "{{freeMonths}} Monate kostenlos testen. Danach {{discount}}% dauerhafter Rabatt. Kein Setup-Aufwand — nur ein Demo-Call mit uns.",
+      "items": [
+        {
+          "icon": "🎁",
+          "title": "3 Monate kostenlos",
+          "text": "Vollständiger Zugriff ohne Kreditkarte — null Risiko."
+        },
+        {
+          "icon": "💰",
+          "title": "-30% Gründerrabatt",
+          "text": "Dauerhaft auf jeden Tarif — auch nach der Beta-Phase."
+        },
+        {
+          "icon": "🚀",
+          "title": "Persönliches Demo",
+          "text": "30-Min Live-Demo. Wir zeigen dir die volle Power von Voltify."
+        },
+        {
+          "icon": "⭐",
+          "title": "Direkter Einfluss",
+          "text": "Dein Feedback formt das Produkt. Werde Case-Study."
+        }
+      ],
+      "stats": [
+        {
+          "value": "3 Mo.",
+          "label": "Kostenlos testen"
+        },
+        {
+          "value": "-30%",
+          "label": "Dauerhafter Rabatt"
+        },
+        {
+          "value": "30 min",
+          "label": "Demo-Call"
+        }
+      ]
+    },
+    "calendly": {
+      "title": "Demo-Call buchen",
+      "sub": "Wähle einen Termin für dein 30-Min Demo-Gespräch",
+      "close": "Schließen",
+      "footer1": "✓ Nach Terminbuchung: Bestätigung per Email mit Zoom-Link",
+      "footer2": "Die {{freeMonths}} Monate kostenlos starten sofort nach der Demo"
+    }
+  },
+  "check": {
+    "seo": {
+      "title": "Lösungs-Check für Solarteure",
+      "description": "In 60 Sekunden herausfinden, welcher Teil von Voltify deinem Solar-Geschäft am meisten bringt — inkl. passender Demo."
+    },
+    "headerDemoLink": "Ich weiß schon was ich will → Demo",
+    "back": "Zurück",
+    "skip": "Überspringen",
+    "contact": {
+      "badge": "Fast geschafft",
+      "title": "Wohin schicken wir deine Auswertung?",
+      "sub": "Du siehst dein Ergebnis sofort — und bekommst es zusätzlich per E-Mail.",
+      "name": "Dein Name (optional)",
+      "email": "E-Mail-Adresse *",
+      "placeholderName": "Max Mustermann",
+      "placeholderEmail": "max@solar-betrieb.de",
+      "emailError": "Bitte gib eine gültige E-Mail-Adresse ein.",
+      "cta": "Auswertung anzeigen",
+      "privacy": "Keine Werbung. Nur deine Auswertung + ein optionales Gesprächsangebot."
+    },
+    "result": {
+      "badge": "Deine Auswertung",
+      "title": "{{greeting}}dein größter Hebel ist {{hero}}",
+      "why": "Warum genau das",
+      "together": "Das hängt zusammen:",
+      "togetherSub": "Bei dir greift mehr als ein Baustein. Voltify ist eine Plattform — du startest mit dem größten Hebel, der Rest wächst mit.",
+      "nonInstaller": {
+        "title": "Danke{{name}}!",
+        "sub": "Der geführte Check ist gerade auf Installateure zugeschnitten — aber für Vertriebsagenturen haben wir eine eigene Lösung. Lass uns am besten kurz direkt sprechen."
+      },
+      "booking": {
+        "free": "Kostenlos",
+        "permanent": "Dauerhaft",
+        "demoCall": "Demo-Call",
+        "sub": "{{spots}} Plätze — lass uns deine Situation in einem kurzen Call durchgehen.",
+        "cta": "Kostenlosen Demo-Call buchen"
+      }
+    }
+  },
+  "solutionCheckData": {
+    "identity": {
+      "question": "Was beschreibt dich am besten?",
+      "subline": "Damit der Check zu deinem Geschäft passt.",
+      "options": [
+        {
+          "value": "installer",
+          "label": "Installateur / Solarteur — ich installiere selbst"
+        },
+        {
+          "value": "agency",
+          "label": "Vertriebsagentur — ich generiere Leads & gebe sie an Partner"
+        },
+        {
+          "value": "other",
+          "label": "Etwas anderes"
+        }
+      ]
+    },
+    "installer": [
+      {
+        "id": "leads",
+        "question": "Wie kommst du heute an neue Anfragen?",
+        "subline": "Dein wichtigster Wachstums-Hebel.",
+        "options": [
+          {
+            "value": "referral",
+            "label": "Vor allem über Empfehlungen / Mundpropaganda"
+          },
+          {
+            "value": "website",
+            "label": "Über meine eigene Website"
+          },
+          {
+            "value": "bought",
+            "label": "Ich kaufe Leads über Portale ein"
+          },
+          {
+            "value": "too-few",
+            "label": "Ehrlich gesagt: zu wenige oder unzuverlässig"
+          }
+        ]
+      },
+      {
+        "id": "offers",
+        "question": "Wie erstellst du heute deine Angebote?",
+        "options": [
+          {
+            "value": "manual",
+            "label": "Per Hand, Word oder Excel"
+          },
+          {
+            "value": "software",
+            "label": "Mit einer anderen Software"
+          },
+          {
+            "value": "supplier",
+            "label": "Mein Großhändler macht das für mich"
+          },
+          {
+            "value": "too-slow",
+            "label": "Dauert mir zu lang / sieht unprofessionell aus"
+          }
+        ]
+      },
+      {
+        "id": "manage",
+        "question": "Wo verwaltest du Anfragen & Kunden?",
+        "options": [
+          {
+            "value": "head",
+            "label": "Im Kopf, auf Zetteln oder in WhatsApp"
+          },
+          {
+            "value": "excel",
+            "label": "In einer Excel-Tabelle"
+          },
+          {
+            "value": "crm",
+            "label": "In einer richtigen CRM-Software"
+          },
+          {
+            "value": "lost",
+            "label": "Anfragen gehen verloren / Follow-ups vergesse ich"
+          }
+        ]
+      }
+    ],
+    "priority": {
+      "question": "Wenn du EIN Problem sofort lösen könntest — welches?",
+      "subline": "Das bestimmt, wo du den größten Hebel hast.",
+      "options": [
+        {
+          "value": "lead-funnel",
+          "label": "Mehr & bessere Anfragen bekommen"
+        },
+        {
+          "value": "offer",
+          "label": "Schneller & professioneller anbieten"
+        },
+        {
+          "value": "crm",
+          "label": "Den Überblick über meine Kunden behalten"
+        }
+      ]
+    },
+    "volume": {
+      "question": "Wie viele Angebote schreibst du ungefähr pro Monat?",
+      "subline": "Optional — hilft uns, deine Zeitersparnis konkret zu schätzen.",
+      "optional": true,
+      "options": [
+        {
+          "value": "0-5",
+          "label": "Bis zu 5"
+        },
+        {
+          "value": "6-15",
+          "label": "6 bis 15"
+        },
+        {
+          "value": "16-30",
+          "label": "16 bis 30"
+        },
+        {
+          "value": "30+",
+          "label": "Mehr als 30"
+        }
+      ]
+    },
+    "modules": {
+      "lead-funnel": {
+        "name": "Solar-Konfigurator (Lead-Funnel)",
+        "tagline": "Verwandelt Website-Besucher in qualifizierte Anfragen — mit Wirtschaftlichkeits-Analyse, die verkauft.",
+        "demoLabel": "Lead-Funnel live ausprobieren"
+      },
+      "offer": {
+        "name": "Angebots-Konfigurator",
+        "tagline": "Professionelle Angebote in Minuten statt Stunden — als PDF, direkt per E-Mail, mit deinem Branding.",
+        "demoLabel": "Angebots-Konfigurator ansehen"
+      },
+      "crm": {
+        "name": "Solar-CRM",
+        "tagline": "Jede Anfrage, jeder Kunde, jedes Follow-up an einem Ort — kein Lead geht mehr verloren.",
+        "demoLabel": "CRM-Demo ansehen"
+      }
+    },
+    "reasons": {
+      "leads": {
+        "too-few": "Du bekommst aktuell zu wenige verlässliche Anfragen.",
+        "referral": "Du hängst stark an Empfehlungen — planbares Wachstum fehlt."
+      },
+      "offers": {
+        "manual": "Deine Angebote entstehen per Hand — das kostet Zeit und wirkt weniger professionell.",
+        "too-slow": "Angebote zu schreiben dauert dir zu lang oder sieht nicht professionell genug aus."
+      },
+      "manage": {
+        "head": "Anfragen laufen über Zettel/WhatsApp — da geht leicht etwas verloren.",
+        "excel": "Du verwaltest Kunden in Excel — fehleranfällig und ohne Erinnerungen.",
+        "lost": "Anfragen gehen verloren und Follow-ups vergisst du — bares Geld, das liegen bleibt."
+      }
+    },
+    "volumeHours": {
+      "0-5": "ein paar Stunden im Monat",
+      "6-15": "ca. 3–5 Stunden pro Woche",
+      "16-30": "ca. 6–8 Stunden pro Woche",
+      "30+": "10+ Stunden pro Woche"
+    },
+    "timeSavedHint": "Bei deinem Volumen sparst du grob {{hours}} — Zeit, die du in Abschlüsse stecken kannst."
+  },
+  "demoBanner": {
+    "text": "Demo-Modus: Kein echter Versand, keine Verpflichtung — einfach ausprobieren.",
+    "cta": "Für mein Geschäft holen"
+  },
+  "demoPage": {
+    "seo": {
+      "title": "Solar-Konfigurator",
+      "description": "Berechnen Sie die Wirtschaftlichkeit Ihrer Photovoltaik-Anlage in wenigen Minuten. Inkl. Foerderungen, ROI-Analyse und persoenlichem Angebot."
+    },
+    "header": {
+      "navLinks": [
+        {
+          "label": "Services",
+          "href": "#services"
+        },
+        {
+          "label": "Ueber uns",
+          "href": "#about"
+        },
+        {
+          "label": "Neuigkeiten",
+          "href": "#news"
+        },
+        {
+          "label": "Kontakt",
+          "href": "#contact"
+        }
+      ],
+      "leaveDemo": "Demo verlassen",
+      "discoverNow": "Jetzt entdecken",
+      "logoAlt": "Solvary"
+    },
+    "hero": {
+      "headline": ["Solarenergie", "die die Welt", "voranbringt"],
+      "description": "Bei Solvary planen und installieren wir Solaranlagen, die Effizienz und langfristigen Wert maximieren. Schließen Sie sich der Energiewende an und übernehmen Sie die Kontrolle über Ihre Energie — heute und für die Zukunft.",
+      "reviewsCard": {
+        "discoverNow": "Jetzt entdecken",
+        "ratingsText": "100+ Bewertungen",
+        "rating": "4,96 von 5"
+      },
+      "marqueeWords": ["SOLAR", "GREEN", "ENERGY", "FUTURE", "CLEAN", "POWER"]
+    },
+    "partners": {
+      "heading": "Unterstützt von den weltweit führenden Venture-Capital-Investoren"
+    },
+    "excellentServices": {
+      "label": "Hervorragende Services",
+      "heading": "Innovationen in grüner Technologie und Umweltlösungen",
+      "cta": "Jetzt starten",
+      "services": [
+        {
+          "title": "Fünf Jahre Garantie",
+          "desc": "Profitieren Sie von höchster Sicherheit mit unserer umfassenden Fünf-Jahres-Garantie, die Leistung, Langlebigkeit und Systemzuverlässigkeit abdeckt – für langfristigen Schutz Ihrer Investition."
+        },
+        {
+          "title": "Ersatzteile & Wartung",
+          "desc": "Wir bieten kontinuierliche Wartung und hochwertige Ersatzteile, damit Ihre Energieanlage effizient, sicher und mit Spitzenleistung Jahr für Jahr arbeitet."
+        },
+        {
+          "title": "Nachhaltige Energie",
+          "desc": "Unsere Lösungen basieren auf sauberen, erneuerbaren Energietechnologien, die dabei helfen, den CO₂-Fußabdruck zu reduzieren und gleichzeitig langfristige Einsparungen sowie Energieunabhängigkeit zu bieten."
+        }
+      ]
+    },
+    "ourServices": {
+      "label": "Unsere Services",
+      "heading": "Maßgeschneiderte Solaranlagen, die zu Ihnen passen",
+      "sub": "Unser Team entwirft und installiert maßgeschneiderte Solaranlagen basierend auf Ihrem individuellen Energieverbrauch, Grundstückslayout und Budget – für maximale Effizienz, langfristige Einsparungen und Unabhängigkeit von Energieversorgern.",
+      "cards": [
+        {
+          "img": "/images/service-rooftop.jpg",
+          "title": "Solaranlage auf dem Dach",
+          "icon": "/icons/rooftop.svg"
+        },
+        {
+          "img": "/images/service-maintenance.jpg",
+          "title": "Wartung von Solaranlagen",
+          "icon": "/icons/maint.svg"
+        },
+        {
+          "img": "/images/service-offgrid.jpg",
+          "title": "Off-Grid-Solarinstallation",
+          "icon": "/icons/offgrid.svg"
+        }
+      ]
+    },
+    "usp": {
+      "number": "13",
+      "numberSub": "Wir haben Unternehmen bei der Einwerbung von über 15 Mio. $ Finanzierung unterstützt",
+      "imageAlt": "Installation von Solarpanelen",
+      "badgeText": "Über uns ★ Über uns ★ Über uns ★",
+      "heading": "Umfassende Solarlösungen",
+      "checklist": [
+        "Wechselrichter-Installation",
+        "Batteriespeicher-Lösungen",
+        "Solarfinanzierung",
+        "Bewährte Erfolgsbilanz",
+        "Kundenorientierter Ansatz",
+        "24/7 Telefon- & Chat-Support"
+      ],
+      "cta": "Über uns"
+    },
+    "furtherServices": {
+      "label": "Further Services",
+      "heading": "Ueber 10 Jahre Erfahrung in der Solarbranche",
+      "cards": [
+        {
+          "title": "Solar-Wartungsservices",
+          "desc": "Laufende Wartung fuer langfristige Effizienz, Sicherheit und Systemzuverlaessigkeit."
+        },
+        {
+          "title": "Windturbinen-Reparaturservices",
+          "desc": "Fachgerechte Diagnose und Reparaturen, damit Ihre Windenergieanlagen reibungslos laufen."
+        },
+        {
+          "title": "Dach-Solarinstallation",
+          "desc": "Massgeschneiderte Dach-Solarloesungen, die Ihre Einsparungen maximieren und den Energieertrag optimieren."
+        }
+      ]
+    },
+    "team": {
+      "infoHeading": "Unsere preisgekrönten Referenten & Mentoren",
+      "cta": "Alle Mitglieder anzeigen",
+      "members": [
+        {
+          "name": "James Carter",
+          "role": "Geschäftsführer",
+          "img": "/images/team-james.jpg"
+        },
+        {
+          "name": "Emily Johnson",
+          "role": "Technische Leiterin",
+          "img": "/images/team-emily.jpg"
+        },
+        {
+          "name": "Michael Brown",
+          "role": "Produktdirektor",
+          "img": "/images/team-michael.jpg"
+        },
+        {
+          "name": "Sarah Davis",
+          "role": "Marketingleiterin",
+          "img": "/images/team-sarah.jpg"
+        }
+      ]
+    },
+    "exploreSection": {
+      "badge": "Solar-Konfigurator",
+      "heading": "Dein Weg zur eigenen Solaranlage",
+      "sub": "Nutze unseren Solar-Checker, um herauszufinden, wie viel du mit einer Solaranlage sparen kannst. Innerhalb von 2 Minuten erhaeltst du eine erste Einschaetzung – ganz unverbindlich.",
+      "zipLabel": "Postleitzahl",
+      "zipPlaceholder": "z.B. 10115",
+      "cta": "Jetzt berechnen",
+      "privacyNote": "100% Datenschutz gem. DSGVO – Deine Daten sind bei uns sicher.",
+      "savingsBadge": {
+        "value": "Bis zu 80%",
+        "label": "Stromkosten sparen"
+      },
+      "imageAlt": "Haus mit Solaranlage"
+    },
+    "marquee": {
+      "row1": [
+        "Zukunft mit der Sonne",
+        "Kraft der Solar-Innovation",
+        "Erneuerbare Energie",
+        "Kraft der Solar-Innovation"
+      ],
+      "row2": [
+        "Erneuerbare Revolution",
+        "Saubere Energie",
+        "Solar-Lösungen",
+        "Sonnenenergie",
+        "Strahlende Zukunft"
+      ]
+    },
+    "about": {
+      "badge": "Ueber Uns",
+      "heading": "Intelligente Solarloesungen für eine nachhaltige Zukunft",
+      "sub": "Unser Ansatz geht weit ueber die Standard-Montage hinaus. Wir entwickeln Systeme, die nahtlos smartes Monitoring mit durchdachtem Design verbinden.",
+      "leftHeading": "Smarter Solar. Hellere Zukunft",
+      "leftBody": "Solvary ist ein Software-Unternehmen der neuen Generation, das sich darauf spezialisiert hat, intelligente Solarsysteme zu entwickeln, die Nachhaltigkeit mit smarten Technologien verbinden.",
+      "stats": [
+        {
+          "label": "Einsparungen",
+          "sub": "Einfach gemacht, echte Ergebnisse",
+          "value": "45%"
+        },
+        {
+          "label": "Smartes Monitoring",
+          "sub": "Einfach gemacht, echte Ergebnisse",
+          "value": "24/7"
+        }
+      ],
+      "cards": [
+        {
+          "title": "Unsere Mission",
+          "desc": "Saubere Energie fuer alle zugaenglich, erschwinglich und muhelos machen. Wir entwickeln Software, die Solar-Betriebe bei jedem Schritt unterstuetzt."
+        },
+        {
+          "title": "Unsere Vision",
+          "desc": "Eine Welt, die vollstaendig von intelligenten, erneuerbaren Energiesystemen angetrieben wird — durch digitale Tools, die den Weg dorthin ebnen."
+        },
+        {
+          "title": "Unsere Werte",
+          "desc": "Innovation, Nachhaltigkeit, Integritaet und Kundenorientierung. Wir setzen auf Partnerschaft und echte Ergebnisse fuer unsere Kunden."
+        }
+      ]
+    },
+    "partnersGrid": {
+      "badge": "Unsere Partner",
+      "heading": "Nahtlos vernetzt mit vertrauenswürdigen Branchenpartnern",
+      "cta": "Partner werden"
+    },
+    "news": {
+      "badge": "Blog",
+      "heading": "Aktuelles aus der Solar-Branche",
+      "sub": "Tipps, Trends und Insights rund um Solarenergie, Digitalisierung und nachhaltiges Geschaeftswachstum.",
+      "posts": [
+        {
+          "img": "/images/blog-1.jpg",
+          "author": "Solvary",
+          "readTime": "4 Min. Lesedauer",
+          "title": "Wie eine überzeugende Solar-Website mehr Leads generiert"
+        },
+        {
+          "img": "/images/blog-2.jpg",
+          "author": "Solvary",
+          "readTime": "3 Min. Lesedauer",
+          "title": "Solar-Website-Design-Trends, die Sie 2025 beobachten sollten"
+        },
+        {
+          "img": "/images/blog-3.jpg",
+          "author": "Solvary",
+          "readTime": "2 Min. Lesedauer",
+          "title": "Erstellen Sie eine beeindruckende Online-Präsenz für Solarlösungen"
+        }
+      ],
+      "readMore": "Mehr lesen",
+      "moreNews": "Weitere Neuigkeiten"
+    },
+    "faq": {
+      "badge": "Haben Sie Fragen?",
+      "heading": "Haben Sie Fragen? Hier einige Antworten für Sie",
+      "experienceBadge": {
+        "value": "10+",
+        "label": "Jahre Erfahrung und Expertise"
+      },
+      "imageAlt": "Solarmodule",
+      "items": [
+        {
+          "q": "Wie lange dauert eine Solarinstallation in der Regel?",
+          "a": "Die meisten privaten Solarinstallationen werden innerhalb von 1–3 Tagen abgeschlossen, je nach Systemgröße."
+        },
+        {
+          "q": "Funktionieren Solarmodule auch an bewölkten Tagen?",
+          "a": "Ja, Solarmodule erzeugen auch an bewölkten Tagen Strom, wenn auch mit verringerter Effizienz. Sie können diffuses Sonnenlicht einfangen und weiterhin Energie produzieren, auch wenn die Sonne nicht direkt scheint."
+        },
+        {
+          "q": "Welche Wartung benötigen Solarsysteme?",
+          "a": "Solarsysteme benötigen nur minimale Wartung. In der Regel genügt es, die Module 2–4 Mal pro Jahr zu reinigen und eine jährliche professionelle Inspektion durchführen zu lassen, um das System optimal betreiben zu können."
+        },
+        {
+          "q": "Was ist eine netzgekoppelte Solarlösung?",
+          "a": "Ein netzgekoppeltes Solarsystem ist mit dem Stromnetz verbunden und ermöglicht es Ihnen, bei Bedarf Strom zu beziehen und überschüssige Energie über Net-Metering-Programme zurück ins Netz zu verkaufen."
+        }
+      ]
+    },
+    "footer": {
+      "usefulLinks": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "Preise",
+          "href": "/preise"
+        },
+        {
+          "label": "Solar-Konfigurator",
+          "href": "/konfigurator"
+        },
+        {
+          "label": "Datenschutz",
+          "href": "/datenschutz"
+        },
+        {
+          "label": "Impressum",
+          "href": "/impressum"
+        },
+        {
+          "label": "AGB",
+          "href": "/agb"
+        }
+      ],
+      "phoneLabel": "Telefonnummer",
+      "emailLabel": "E-Mail",
+      "addressLabel": "Unsere Adresse",
+      "aboutTitle": "Über Solvary",
+      "aboutText": "Solvary ist die All-in-One Software für Solar-Installateure. Verwalte Leads, erstelle Angebote und Rechnungen, und skaliere dein Geschäft — alles an einem Ort.",
+      "linksTitle": "Links",
+      "contactTitle": "Kontakt",
+      "newsletterTitle": "Newsletter",
+      "newsletterSub": "Melde dich für unseren Newsletter an und erhalte die neuesten Updates.",
+      "emailPlaceholder": "Ihre E-Mail-Adresse",
+      "subscribe": "Anmelden",
+      "bottomLinks": [
+        {
+          "label": "Datenschutz",
+          "href": "/datenschutz"
+        },
+        {
+          "label": "AGB",
+          "href": "/agb"
+        },
+        {
+          "label": "Impressum",
+          "href": "/impressum"
+        }
+      ],
+      "copyright": "© 2026 Solvary. Alle Rechte vorbehalten."
+    }
+  },
+  "login": {
+    "seo": {
+      "title": "Login",
+      "description": "Melden Sie sich an, um Ihre Solar-Projekte zu verwalten."
+    },
+    "title": "Willkommen zurück",
+    "subtitle": "Melde dich mit deiner E-Mail und Passwort an.",
+    "form": {
+      "emailLabel": "E-Mail",
+      "passwordLabel": "Passwort",
+      "submit": "Anmelden",
+      "submitting": "Anmeldung...",
+      "errorFallback": "Anmeldung fehlgeschlagen"
+    },
+    "quickLogin": "Schnell-Login",
+    "mode": {
+      "installer": "Installateur",
+      "agency": "Agentur"
+    },
+    "testAccount": {
+      "installer": "Installateur",
+      "owner": "Inhaber",
+      "agencyOwner": "Agentur-Inhaber",
+      "salesperson": "Vertriebler"
+    },
+    "bottom": {
+      "text": "Sind Sie interessiert?",
+      "link": "Jetzt Beta Tester werden."
+    },
+    "hero": {
+      "titleLine1": "Effizientes Management für",
+      "titleLine2": "Ihre Solar-Installationen.",
+      "description": "Melden Sie sich an, um Ihr Dashboard und Projekte zu verwalten."
+    }
+  },
+  "register": {
+    "seo": {
+      "title": "Registrierung",
+      "description": "Erstellen Sie Ihr Voltify-Konto — als Privatkunde oder Installateur."
+    },
+    "logoAlt": "Solvary",
+    "title": "Konto erstellen",
+    "subtitle": "Gib deine Daten ein, um mit Voltify loszulegen.",
+    "success": {
+      "title": "Konto erstellt!",
+      "customerMessage": "Bitte bestätige deine E-Mail-Adresse. Danach kannst du dich anmelden.",
+      "installerMessage": "Wir melden uns innerhalb von 24 Stunden bei dir. Dein Konto wird nach Prüfung freigeschaltet.",
+      "loginButton": "Zum Login"
+    },
+    "errors": {
+      "passwordMismatch": "Die Passwörter stimmen nicht überein.",
+      "passwordLength": "Das Passwort muss mindestens 6 Zeichen haben.",
+      "termsRequired": "Bitte akzeptiere die AGB und Datenschutzerklärung.",
+      "generic": "Registrierung fehlgeschlagen."
+    },
+    "role": {
+      "label": "Ich bin...",
+      "customer": "Privatkunde",
+      "installer": "Fachbetrieb"
+    },
+    "fields": {
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "companyName": "Firmenname",
+      "zip": "PLZ",
+      "phone": "Telefon",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "confirmPassword": "Passwort bestätigen"
+    },
+    "placeholders": {
+      "password": "Mindestens 6 Zeichen",
+      "confirmPassword": "Passwort wiederholen"
+    },
+    "terms": {
+      "prefix": "Ich akzeptiere die",
+      "agb": "AGB",
+      "middle": "und die",
+      "privacy": "Datenschutzerklärung"
+    },
+    "submit": {
+      "loading": "Konto wird erstellt…",
+      "create": "Konto erstellen"
+    },
+    "footer": {
+      "alreadyHaveAccount": "Bereits registriert?",
+      "login": "Jetzt anmelden."
+    },
+    "hero": {
+      "titleLine1": "Starte deine Solar-Reise",
+      "titleLine2": "mit Zuversicht.",
+      "subtitle": "Erstelle ein Konto, um alle Funktionen zu nutzen und deine Solarprojekte zu verwalten."
+    },
+    "dashboard": {
+      "roiPotential": "ROI-Potenzial",
+      "roiChange": "+5% vs letztes Jahr",
+      "panelEfficiency": "Modul-Effizienz",
+      "panelTier": "Spitzenklasse",
+      "paybackTime": "Amortisationszeit",
+      "paybackLabel": "Überdurchschnittlich",
+      "savingsProjection": "Einsparungsprognose",
+      "yearly": "Jährlich",
+      "monthly": "Monatlich",
+      "carbonOffset": "CO₂-Offset",
+      "carbonTarget": "Jahresziel",
+      "configurations": "Konfigurationen",
+      "saved": "{{count}} Gespeichert",
+      "draft": "{{count}} Entwurf"
+    }
+  },
+  "offerDemo": {
+    "seo": {
+      "title": "Angebotskonfigurator — Live-Demo",
+      "description": "Teste den Voltify-Angebotskonfigurator: Positionen, Rabatte, Textbausteine, PDF und E-Mail — direkt im Browser, ohne Anmeldung."
+    },
+    "topCta": "Für mein Geschäft holen",
+    "teaser": {
+      "tag": "Angebotskonfigurator",
+      "badge": "Demo-Modus — so wird aus dem Lead ein fertiges Angebot",
+      "headline": "Aus dem Lead wird das Angebot — in Minuten",
+      "body": "Genau die Seite, mit der deine Mitarbeiter im Dashboard arbeiten: Positionen und Preise anpassen, Rabatte setzen, deine Textbausteine einfügen — fertig als PDF und E-Mail. Probier sie hier direkt aus.",
+      "disclaimer": "Beispiel-Lead — keine echten Daten, nichts wird gespeichert oder versendet."
+    },
+    "processSteps": [
+      "Lead-Daten",
+      "Positionen & Preise",
+      "Rabatt & Textbausteine",
+      "PDF & E-Mail"
+    ],
+    "featureChips": [
+      "Positionen frei definieren",
+      "Rabatte & Preise",
+      "Vorlagen & Textbausteine",
+      "PDF & E-Mail-Versand",
+      "ROI-Impact-Panel"
+    ],
+    "title": "Angebot erstellen",
+    "status": {
+      "draft": "Entwurf",
+      "sent": "Versendet",
+      "accepted": "Angenommen",
+      "rejected": "Abgelehnt"
+    },
+    "saveDraft": "Entwurf speichern",
+    "saved": "Gespeichert",
+    "sendOffer": "Angebot senden",
+    "positions": {
+      "title": "Angebotspositionen",
+      "add": "Position hinzufügen",
+      "empty": {
+        "title": "Noch keine Positionen",
+        "addFirst": "Erste Position hinzufügen"
+      }
+    },
+    "columns": {
+      "category": "Kategorie",
+      "quantity": "Menge",
+      "unit": "Einheit",
+      "unitPrice": "Einzelpreis",
+      "total": "Gesamt"
+    },
+    "item": {
+      "placeholder": "Beschreibung (z. B. Hersteller, Modell, Details)…",
+      "deleteTitle": "Position löschen"
+    },
+    "notes": {
+      "title": "Interne Notizen",
+      "placeholder": "Interne Hinweise zum Angebot..."
+    },
+    "templates": {
+      "title": "Angebotstexte & Textbausteine",
+      "subtitle": "Aus deinen Einstellungen — fließen live in das PDF und die E-Mail.",
+      "placeholdersTitle": "Verfügbare Platzhalter",
+      "placeholders": [
+        {
+          "token": "{{vorname}}",
+          "label": "Vorname"
+        },
+        {
+          "token": "{{nachname}}",
+          "label": "Nachname"
+        },
+        {
+          "token": "{{angebotsnummer}}",
+          "label": "Angebotsnr."
+        },
+        {
+          "token": "{{firmenname}}",
+          "label": "Firmenname"
+        },
+        {
+          "token": "{{datum}}",
+          "label": "Datum"
+        },
+        {
+          "token": "{{gueltig_bis}}",
+          "label": "Gültig bis"
+        },
+        {
+          "token": "{{zahlungsziel}}",
+          "label": "Zahlungsziel"
+        }
+      ],
+      "anschreibenLabel": "Anschreiben (Einleitung)",
+      "anschreibenHint": "Erscheint oben im PDF nach dem Header.",
+      "zahlungsbedingungenLabel": "Zahlungsbedingungen & Hinweise",
+      "folgekostenLabel": "Folgekosten-Hinweis im PDF anzeigen",
+      "schlusstextLabel": "Schlusstext",
+      "schlusstextHint": "Erscheint über der Unterschriftszeile.",
+      "emailTitle": "E-Mail-Vorlage",
+      "subjectLabel": "Betreff",
+      "messageLabel": "Nachricht"
+    },
+    "categories": {
+      "module": "Module",
+      "inverter": "Wechselrichter",
+      "storage": "Speicher",
+      "mounting": "Montage",
+      "electrical": "Elektroarbeiten",
+      "scaffolding": "Gerüst",
+      "travel": "Anfahrt",
+      "other": "Sonstiges"
+    },
+    "summary": {
+      "title": "Zusammenfassung",
+      "subtotal": "Zwischensumme",
+      "discount": "Rabatt",
+      "vat": "MwSt ({{vatRate}}%)",
+      "total": "Gesamtsumme",
+      "impactTitle": "Impact für den Kunden",
+      "offerNumberLabel": "Angebotsnr.: {{offerNumber}}",
+      "lastSaved": "Zuletzt gespeichert:"
+    },
+    "impact": {
+      "amortization": "Amortisation",
+      "years": "~{{years}} J.",
+      "savingsPerYear": "Ersparnis/Jahr",
+      "profit20": "Gewinn 20 J.",
+      "autarky": "Autarkie"
+    },
+    "discount": {
+      "codeTitle": "Rabatt-Code",
+      "codePlaceholder": "Code wählen...",
+      "apply": "Anwenden",
+      "manualTitle": "Manueller Rabatt",
+      "percentPlaceholder": "%",
+      "amountPlaceholder": "€",
+      "ok": "OK",
+      "remove": "Rabatt entfernen"
+    },
+    "pdf": {
+      "creating": "PDF wird erstellt…",
+      "download": "Angebot als PDF",
+      "fileName": "Angebot-{{offerNumber}}.pdf"
+    },
+    "cta": {
+      "title": "Das willst du für dein Geschäft?",
+      "sub": "Angebotskonfigurator, CRM und Konfigurator für deine Webseite — als Beta-Partner 30% günstiger.",
+      "button": "Jetzt Beta-Partner werden"
+    },
+    "send": {
+      "modalTitle": "Angebot versenden",
+      "successTitle": "Angebot erfolgreich versendet!",
+      "successDemo": "Demo — es wurde keine echte E-Mail an {{email}} gesendet.",
+      "body": "Das Angebot wird als PDF generiert und per E-Mail an den Kunden gesendet.",
+      "demoNote": "(In dieser Demo wird nichts wirklich verschickt.)",
+      "emailLabel": "E-Mail-Adresse",
+      "subjectLabel": "Betreff",
+      "messageLabel": "Nachricht",
+      "cancel": "Abbrechen",
+      "sending": "Wird gesendet…",
+      "submit": "Jetzt senden"
+    }
+  },
+  "configurator": {
+    "seo": {
+      "title": "Solar-Konfigurator",
+      "description": "Konfigurieren Sie Ihre Photovoltaik-Anlage in 9 Schritten. Inkl. ROI-Berechnung, Förderungen und persönlichem Angebot."
+    },
+    "demoBanner": "Demo-Modus — so konfigurieren deine Kunden ihre Solaranlage",
+    "submitError": "Übermittlung fehlgeschlagen.",
+    "sidebar": {
+      "title": "Konfigurator",
+      "progress": "Fortschritt",
+      "poweredBy": "Powered by Solvary"
+    },
+    "mobileStep": "Schritt {{current}} / {{total}}",
+    "nav": {
+      "back": "Zurück",
+      "next": "Weiter",
+      "requestOffer": "Individuelles Angebot anfordern",
+      "toAnalysis": "Zur Analyse"
+    },
+    "steps": [
+      {
+        "label": "Gebäude & Eigentum",
+        "icon": "🏠"
+      },
+      {
+        "label": "Dach konfigurieren",
+        "icon": "🏗️"
+      },
+      {
+        "label": "Stromverbrauch",
+        "icon": "⚡"
+      },
+      {
+        "label": "Ausstattung & Pläne",
+        "icon": "🔧"
+      },
+      {
+        "label": "Speicher wählen",
+        "icon": "🔋"
+      },
+      {
+        "label": "Förderungen",
+        "icon": "💰"
+      },
+      {
+        "label": "Wirtschaftlichkeit",
+        "icon": "📊"
+      },
+      {
+        "label": "Kontaktdaten",
+        "icon": "📝"
+      },
+      {
+        "label": "Fertig",
+        "icon": "✅"
+      }
+    ],
+    "emailGate": {
+      "emailError": "Bitte gib eine gültige E-Mail-Adresse ein.",
+      "tag": "Kostenloser Konfigurator",
+      "title": "Dein persönliches Solar-Angebot in 8 Schritten",
+      "subtitle": "Ergebnis: ROI-Analyse, Förderungen und ein druckfertiges Angebot — in unter 5 Minuten.",
+      "firstNameLabel": "Vorname",
+      "firstNamePlaceholder": "Max",
+      "emailLabel": "E-Mail-Adresse",
+      "emailPlaceholder": "max@beispiel.de",
+      "submit": "Konfigurator starten",
+      "privacyPrefix": "Keine Werbung · Nur dein Angebot ·",
+      "skip": "Ohne Angabe fortfahren"
+    },
+    "common": {
+      "optional": "optional"
+    },
+    "step1": {
+      "title": "Gebäude & Eigentum",
+      "subtitle": "Wählen Sie Ihren Gebäudetyp und Ihre Eigentumsform aus.",
+      "locationLabel": "Ihr Standort",
+      "zipPlaceholder": "z.B. 80331",
+      "locationHint": "Für regionalisierte Sonneneinstrahlung und lokale Förderprogramme.",
+      "buildingTypeLabel": "Gebäudetyp",
+      "buildingTypes": [
+        {
+          "label": "Einfamilienhaus",
+          "desc": "Freistehendes Haus"
+        },
+        {
+          "label": "Zweifamilienhaus",
+          "desc": "Zwei Wohneinheiten"
+        },
+        {
+          "label": "Mehrfamilienhaus",
+          "desc": "3+ Wohneinheiten"
+        },
+        {
+          "label": "Firmengebäude",
+          "desc": "Gewerbe & Industrie"
+        },
+        {
+          "label": "Sonstiges",
+          "desc": "Andere Gebäudeart"
+        }
+      ],
+      "constructionYearLabel": "Baujahr",
+      "constructionYearOptions": [
+        {
+          "label": "Nach 2010",
+          "desc": "Neubau oder energetisch saniert"
+        },
+        {
+          "label": "Vor 1980",
+          "desc": "Altbausanierung möglich (+ 2.000 €)"
+        }
+      ],
+      "ownershipLabel": "Eigentumsform",
+      "ownershipTypes": [
+        {
+          "label": "Eigentümer",
+          "desc": "Ich bin Eigentümer"
+        },
+        {
+          "label": "Mieter",
+          "desc": "Ich bin Mieter"
+        }
+      ],
+      "renterHint": "Als Mieter empfehlen wir Ihnen, das Mieterstrommodell zu prüfen. Sprechen Sie mit Ihrem Vermieter über eine gemeinsame Solaranlage."
+    },
+    "step2": {
+      "title": "Dach konfigurieren",
+      "subtitle": "Geben Sie die Eigenschaften Ihres Daches an.",
+      "roofTiltLabel": "Dachneigung",
+      "tiltFlat": "0° (Flach)",
+      "tiltOptimal": "30° (Optimal)",
+      "tiltSteep": "60° (Steil)",
+      "orientationLabel": "Dachausrichtung",
+      "orientations": [
+        {
+          "label": "Norden"
+        },
+        {
+          "label": "N-Ost"
+        },
+        {
+          "label": "Osten"
+        },
+        {
+          "label": "S-Ost"
+        },
+        {
+          "label": "Süden"
+        },
+        {
+          "label": "S-West"
+        },
+        {
+          "label": "Westen"
+        },
+        {
+          "label": "N-West"
+        }
+      ],
+      "southOptimal": "Süd = Optimal",
+      "roofAreaLabel": "Geschätzte Dachfläche",
+      "roofAreaPlaceholder": "z.B. 60",
+      "roofAreaHint": "Ungefähre nutzbare Fläche für Solarmodule. Bei Unsicherheit: Einfamilienhaus ≈ 40-60m².",
+      "shadingLabel": "Verschattung",
+      "shadingOptions": [
+        {
+          "label": "Keine Verschattung",
+          "desc": "Freie Sonneneinstrahlung"
+        },
+        {
+          "label": "Teilweise",
+          "desc": "Gelegentlich Schatten"
+        },
+        {
+          "label": "Stark",
+          "desc": "Häufig verschattet"
+        }
+      ]
+    },
+    "step3": {
+      "title": "Ihr Stromverbrauch",
+      "subtitle": "Wie viel Strom verbrauchen Sie aktuell im Jahr?",
+      "uploadTitle": "Stromrechnung hochladen",
+      "uploadHint": "PDF oder Bild (max. 10MB)",
+      "or": "oder",
+      "presetMethod": "Nach Haushaltsgröße",
+      "manualMethod": "Manuell eingeben",
+      "presets": [
+        {
+          "label": "1-2 Personen",
+          "desc": "~2.500 kWh/Jahr"
+        },
+        {
+          "label": "3-4 Personen",
+          "desc": "~4.000 kWh/Jahr"
+        },
+        {
+          "label": "5+ Personen",
+          "desc": "~6.000 kWh/Jahr"
+        }
+      ],
+      "consumptionLabel": "Jährlicher Stromverbrauch",
+      "consumptionPlaceholder": "z.B. 4000",
+      "consumptionMin": "1.000 kWh",
+      "consumptionMax": "15.000 kWh",
+      "electricityPriceLabel": "Aktueller Strompreis",
+      "electricityPricePlaceholder": "z.B. 0.32",
+      "electricityPriceHint": "Durchschnitt in Deutschland: ca. 0,32 €/kWh (inkl. Grundpreis umgerechnet).",
+      "infoBox": "Je höher Ihr Stromverbrauch, desto mehr Solarmodule lohnen sich. Ein typischer 4-Personen-Haushalt verbraucht etwa 4.000 kWh pro Jahr."
+    },
+    "step4": {
+      "title": "Speicher wählen",
+      "subtitle": "Welche Speichergröße passt zu Ihrem Haushalt?",
+      "storageOptions": [
+        {
+          "label": "5 kWh",
+          "price": "~4.500 €",
+          "desc": "Für kleine Haushalte",
+          "hours": "ca. 4-5 Std."
+        },
+        {
+          "label": "10 kWh",
+          "price": "~7.000 €",
+          "desc": "Optimal für 3-4 Pers.",
+          "hours": "ca. 8-10 Std."
+        },
+        {
+          "label": "15 kWh",
+          "price": "~9.500 €",
+          "desc": "Für große Haushalte",
+          "hours": "ca. 12-15 Std."
+        },
+        {
+          "label": "20 kWh",
+          "price": "~12.000 €",
+          "desc": "Maximale Unabhängigkeit",
+          "hours": "ca. 16-20 Std."
+        }
+      ],
+      "recommended": "Empfohlen",
+      "autarkyLabel": "Autarkie:",
+      "fineTuningLabel": "Feinjustierung",
+      "selected": "{{size}} kWh ausgewählt"
+    },
+    "step5": {
+      "title": "Ausstattung & Pläne",
+      "subtitle": "Planen Sie ein E-Auto oder eine Wärmepumpe — und ergänzen Sie Ihre Anlage mit praktischen Extras.",
+      "futureNeedsLabel": "Planen Sie Veränderungen?",
+      "futureNeeds": [
+        {
+          "label": "E-Auto",
+          "impact": "+ ca. 2.500 kWh/Jahr",
+          "desc": "Planen Sie den Kauf eines E-Autos? Wir berücksichtigen den höheren Stromverbrauch in der Berechnung."
+        },
+        {
+          "label": "Wärmepumpe",
+          "impact": "+ ca. 3.000 kWh/Jahr",
+          "desc": "Planen Sie den Einbau einer Wärmepumpe? Wir berücksichtigen den höheren Stromverbrauch in der Berechnung."
+        }
+      ],
+      "extraOptions": "Zusatzoptionen",
+      "hardwareOptions": [
+        {
+          "label": "E-Mobility Wallbox",
+          "price": "+ 1.200 €",
+          "desc": "Laden Sie Ihr E-Auto bequem mit Solarstrom zu Hause. Inkl. Installation."
+        },
+        {
+          "label": "Notstromfunktion",
+          "price": "+ 800 €",
+          "desc": "Bleiben Sie auch beim Stromausfall versorgt. Automatische Umschaltung."
+        }
+      ]
+    },
+    "step6": {
+      "title": "Fördermittel für Ihr Projekt",
+      "subtitleStart": "Wir haben",
+      "programs": "Förderprogramme",
+      "subtitleLocation": "für Ihren Standort",
+      "subtitleEnd": "ermittelt. Diese werden automatisch in Ihrer Wirtschaftlichkeitsberechnung berücksichtigt.",
+      "vatTitle": "0 % Mehrwertsteuer — Sofort wirksam",
+      "vatSavings": "Sparen Sie ~19 % auf den Kaufpreis Ihrer Anlage.",
+      "vatText": "Seit dem 01.01.2023 entfällt die Umsatzsteuer bundesweit auf PV-Anlagen und Speicher auf Wohngebäuden — automatisch in unserem Angebotspreis einkalkuliert.",
+      "regionalTitle": "Regionale Förderungen — {{state}}",
+      "subsidySum": "Direktzuschuss-Summe: bis zu {{amount}} €",
+      "nationalTitle": "Bundesweite Förderungen",
+      "nationalBadge": "National",
+      "regionalBadge": "Regional",
+      "included": "Im Ergebnis enthalten",
+      "separateProcess": "Separates Antragsverfahren",
+      "consumerTitle": "Unabhängige Informationen der Verbraucherzentrale",
+      "consumerText": "Die Verbraucherzentrale bietet einen umfassenden Ratgeber zur Planung einer Solaranlage — von der Dachbeschaffenheit über die Wahl des Installateurs bis hin zu Finanzierungstipps. Ideal für alle, die sich vor dem Kauf gründlich informieren möchten.",
+      "states": {
+        "0": "Sachsen / Thüringen",
+        "1": "Berlin / Brandenburg",
+        "2": "Hamburg / Schleswig-Holstein",
+        "3": "Niedersachsen / Hessen",
+        "4": "Nordrhein-Westfalen",
+        "5": "NRW / Rheinland-Pfalz",
+        "6": "Hessen / Rheinland-Pfalz",
+        "7": "Baden-Württemberg",
+        "8": "Bayern",
+        "9": "Bayern / Franken",
+        "default": "Deutschland"
+      }
+    },
+    "grants": {
+      "national": {
+        "mwst": {
+          "title": "0 % Mehrwertsteuer",
+          "description": "Seit dem 01.01.2023 entfällt die Umsatzsteuer auf Lieferung und Installation von PV-Anlagen und Batteriespeichern auf Wohngebäuden bundesweit.",
+          "highlight": "~19 % Sofortersparnis"
+        },
+        "eeg": {
+          "title": "EEG Einspeisevergütung",
+          "description": "Für eingespeisten Strom erhältst du 20 Jahre lang eine staatlich garantierte Vergütung von 8,2 ct/kWh (bis 10 kWp) bzw. 7,1 ct/kWh (bis 40 kWp).",
+          "highlight": "20 Jahre garantiert"
+        },
+        "kfw270": {
+          "title": "KfW 270 – Erneuerbare Energien",
+          "description": "Zinsgünstiger Kredit der KfW-Bank für Errichtung, Erweiterung und Erwerb von PV-Anlagen. Finanzierung bis 150 Mio. €, Laufzeit bis 30 Jahre.",
+          "highlight": "Kredit ab 5,21 % eff. p.a."
+        }
+      },
+      "regional": {
+        "sab": {
+          "title": "SAB Sachsen Solar",
+          "description": "Die Sächsische Aufbaubank (SAB) fördert Photovoltaikanlagen und Batteriespeicher mit zinsgünstigen Darlehen und Zuschüssen.",
+          "highlight": "Zuschuss bis 5.000 €"
+        },
+        "thuefonds": {
+          "title": "ThüringenFonds Solar",
+          "description": "Die Thüringer Aufbaubank (TAB) unterstützt Investitionen in erneuerbare Energien mit günstigen Darlehen.",
+          "highlight": "Darlehen ab 1,5 % p.a."
+        },
+        "bene": {
+          "title": "BENE Berlin SolarPLUS",
+          "description": "Das Berliner Programm für Nachhaltige Entwicklung fördert PV-Anlagen mit Speicher mit einem direkten Investitionszuschuss.",
+          "highlight": "Zuschuss bis 10.000 €"
+        },
+        "ilb": {
+          "title": "ILB Brandenburg Solar",
+          "description": "Die Investitionsbank des Landes Brandenburg bietet zinsgünstige Darlehen für Photovoltaik- und Speicheranlagen.",
+          "highlight": "Darlehen ab 2,0 % p.a."
+        },
+        "hamburgenergie": {
+          "title": "IFB Hamburg Solar",
+          "description": "Die Investitions- und Förderbank Hamburg unterstützt PV-Anlagen auf Wohn- und Gewerbegebäuden mit Investitionszuschüssen.",
+          "highlight": "Zuschuss bis 2.500 €"
+        },
+        "eksh": {
+          "title": "EKSH Schleswig-Holstein",
+          "description": "Die Gesellschaft für Energie und Klimaschutz SH fördert innovative Energieprojekte inkl. PV-Anlagen mit Zuschüssen.",
+          "highlight": "Zuschuss bis 3.000 €"
+        },
+        "nbank": {
+          "title": "NBank Energieeinsparung",
+          "description": "Die Investitions- und Förderbank Niedersachsen fördert Photovoltaikanlagen auf privaten Wohngebäuden mit zinsgünstigen Darlehen.",
+          "highlight": "Darlehen ab 1,8 % p.a."
+        },
+        "progress-nrw": {
+          "title": "progres.nrw Klimaschutztechnik",
+          "description": "Das NRW-Förderprogramm unterstützt Investitionen in klimaschützende Technologien inkl. PV-Anlagen und Batteriespeicher.",
+          "highlight": "Zuschuss bis 7.500 €"
+        },
+        "progress-nrw-5": {
+          "title": "progres.nrw Klimaschutztechnik",
+          "description": "Das NRW-Förderprogramm unterstützt Investitionen in klimaschützende Technologien inkl. PV-Anlagen und Batteriespeicher.",
+          "highlight": "Zuschuss bis 7.500 €"
+        },
+        "kef-rlp": {
+          "title": "KEF Rheinland-Pfalz",
+          "description": "Die Klimaschutz- und Energieagentur Rheinland-Pfalz fördert PV-Anlagen und Speicher mit Direktzuschüssen.",
+          "highlight": "Zuschuss bis 4.000 €"
+        },
+        "kef-rlp-6": {
+          "title": "KEF Rheinland-Pfalz",
+          "description": "Die Klimaschutz- und Energieagentur RLP fördert PV-Anlagen und Speicher mit Direktzuschüssen.",
+          "highlight": "Zuschuss bis 4.000 €"
+        },
+        "huk": {
+          "title": "Hessen-Umwelt-Kredit",
+          "description": "Die WIBank Hessen bietet über den Hessen-Umwelt-Kredit zinsgünstige Darlehen für PV-Anlagen auf Wohngebäuden.",
+          "highlight": "Darlehen ab 1,25 % p.a."
+        },
+        "lbank": {
+          "title": "L-Bank Energiesparen Plus",
+          "description": "Die Staatsbank für Baden-Württemberg fördert über \"Energiesparen Plus\" PV-Anlagen und Speicher mit attraktiven Darlehen.",
+          "highlight": "Darlehen ab 1,0 % p.a."
+        },
+        "bayernfonds": {
+          "title": "BayernFonds Solaroffensive",
+          "description": "Die LfA Förderbank Bayern unterstützt die Installation von PV-Anlagen und Speichern mit günstigen Krediten.",
+          "highlight": "Kredit ab 0,95 % p.a."
+        },
+        "bayernfonds-9": {
+          "title": "BayernFonds Solaroffensive",
+          "description": "Die LfA Förderbank Bayern unterstützt PV-Anlagen und Speicher mit günstigen Krediten für Privatpersonen.",
+          "highlight": "Kredit ab 0,95 % p.a."
+        }
+      }
+    },
+    "step7": {
+      "title": "Wirtschaftlichkeitsanalyse",
+      "subtitle": "Ihre persönliche Auswertung basierend auf den eingegebenen Daten.",
+      "batteryToggleTitle": "Wie ändert sich die Wirtschaftlichkeit ohne Speicher?",
+      "batteryToggleSubtitle": "Vergleichen Sie die Zahlen mit und ohne Batteriespeicher",
+      "compareInvestment": "Investition",
+      "compareAutarky": "Autarkie",
+      "compareAmortization": "Amortisation",
+      "yearsSuffix": "J.",
+      "profitLabel": "Gewinn nach 20 J.",
+      "realisticHint": "realistisch · inkl. Folgekosten",
+      "investmentLabel": "Investition",
+      "afterGrants": "nach Förderungen (statt {{original}} €)",
+      "savingsLabel": "Ersparnis/Jahr",
+      "savingsHint": "{{kwp}} kWp · {{yield}} kWh/Jahr Ertrag",
+      "followUpCostsLabel": "Folgekosten (20 J.)",
+      "maintenanceInverter": "Wartung + Wechselrichter",
+      "batterySuffix": " + Batterie",
+      "amortizationLabel": "Amortisation",
+      "years": "Jahre",
+      "amortizationRealisticHint": "Realistisch: nicht in 20 J. · Einfach: {{simple}} J.",
+      "amortizationSimpleHint": "Realistisch (inkl. Folgekosten) · Einfach: {{simple}} J.",
+      "amortizationSimpleHintShort": "Realistisch (inkl. Folgekosten)",
+      "autarkyLabel": "Autarkie",
+      "selfConsumptionShare": "Eigenverbrauchsanteil",
+      "optimizeTitle": "Diese Anlage lässt sich weiter optimieren",
+      "optimizeHintNoFuture": "Planen Sie ein E-Auto oder eine Wärmepumpe? Damit steigt Ihr Eigenverbrauch deutlich — die Amortisationszeit sinkt oft um 3–5 Jahre.",
+      "optimizeHintFuture": "Mit einer angepassten Anlagengröße oder Speicherkonfiguration lässt sich das Ergebnis oft deutlich verbessern.",
+      "optimizeInstaller": "Ein Installateur zeigt Ihnen die optimale Kombination für Ihre persönliche Situation.",
+      "subsidiesHeading": "Förderungen & Vergünstigungen — bereits eingerechnet",
+      "vatTitle": "0 % Mehrwertsteuer",
+      "vatDesc": "Preis bereits ohne MwSt. — spart ~19 % auf den Kaufpreis",
+      "eegTitle": "EEG Einspeisevergütung",
+      "eegDescWithFeedIn": "ca. {{amount}} €/Jahr · 8,2 ct/kWh · 20 Jahre garantiert",
+      "eegDescNoFeedIn": "8,2 ct/kWh · 20 Jahre garantiert",
+      "regionalSubsidyTitle": "Regionaler Zuschuss",
+      "regionalSubsidyDesc": "−{{amount}} € vom Kaufpreis abgezogen",
+      "regionalSubsidyEmptyTitle": "Regionale Förderung",
+      "regionalSubsidyEmptyDesc": "Prüfen Sie zusätzliche Zuschüsse im Förderungsschritt",
+      "chartTitle": "Amortisationsverlauf (20 Jahre)",
+      "chartBadge": "{{value}} € nach 20 Jahren (mit Folgekosten)",
+      "chartTooltip": "Jahr {{year}}: {{value}} €",
+      "year1": "Jahr 1",
+      "breakEvenNone": "Break-even nicht in 20 Jahren erreicht",
+      "breakEvenYear": "Break-even ca. Jahr {{year}}",
+      "year20": "Jahr 20",
+      "faqTitle": "Häufige Fragen vor dem Kauf",
+      "faqItems": [
+        {
+          "q": "Wie lange hält ein Wechselrichter?",
+          "a": "In der Regel 10–15 Jahre. Danach fällt ein Austausch an (ca. 1.500–3.000 €)."
+        },
+        {
+          "q": "Was kostet der Austausch der Batterie?",
+          "a": "Nach ca. 10.000 Ladezyklen (10–15 Jahre) sollte der Speicher erneuert werden (ca. 4.000–8.000 €)."
+        },
+        {
+          "q": "Wie oft muss die Anlage gewartet werden?",
+          "a": "Eine Inspektion alle 2–3 Jahre wird empfohlen (ca. 150–300 €)."
+        },
+        {
+          "q": "Sind die Amortisationszeiten realistisch?",
+          "a": "Diese Analyse berücksichtigt aktuelle Strompreise und EEG-Vergütung. Folgekosten verlängern die Amortisation typisch um 2–3 Jahre."
+        }
+      ],
+      "faqFooter": "Alle Antworten basieren auf dem Ratgeber der Verbraucherzentrale — unabhängig und neutral.",
+      "co2Title": "CO₂-Einsparung",
+      "co2Text": "Ihre Anlage spart jährlich ca. {{tons}} Tonnen CO₂ — das entspricht {{trees}} Bäumen!",
+      "requestOffer": "Individuelles Angebot anfordern",
+      "pdfFileNamePrefix": "Solvary-ROI-Analyse",
+      "zipFallback": "PLZ",
+      "pdfLoading": "PDF wird erstellt…",
+      "pdfDownload": "Analyse als PDF"
+    },
+    "step8": {
+      "title": "Kontaktdaten",
+      "subtitle": "Geben Sie Ihre Daten ein, damit wir Ihr persönliches Angebot erstellen können.",
+      "firstName": "Vorname",
+      "firstNamePlaceholder": "Max",
+      "lastName": "Nachname",
+      "lastNamePlaceholder": "Mustermann",
+      "email": "E-Mail-Adresse",
+      "emailPlaceholder": "max.mustermann@email.de",
+      "phone": "Telefonnummer",
+      "phonePlaceholder": "+49 170 1234567",
+      "city": "Ort",
+      "cityPlaceholder": "Berlin",
+      "company": "Firma",
+      "companyPlaceholder": "Muster GmbH",
+      "privacyPrefix": "Ich stimme der",
+      "privacyLink": "Datenschutzerklärung",
+      "privacySuffix": "zu und erlaube {{company}}, meine Daten zur Erstellung eines Angebots zu verwenden.",
+      "sending": "Wird gesendet…",
+      "submit": "Angebot anfordern",
+      "ssl": "Ihre Daten werden SSL-verschlüsselt übertragen."
+    },
+    "step9": {
+      "nextSteps": [
+        {
+          "title": "Prüfung der Daten",
+          "desc": "Die Konfiguration wird innerhalb von 24 Stunden analysiert.",
+          "time": "24h"
+        },
+        {
+          "title": "Persönliches Angebot",
+          "desc": "Ein maßgeschneidertes Angebot landet per E-Mail beim Kunden.",
+          "time": "48h"
+        },
+        {
+          "title": "Kostenlose Beratung",
+          "desc": "Bei Fragen folgt ein telefonischer Rückruf — unverbindlich.",
+          "time": "72h"
+        }
+      ],
+      "spotsBadge": "{{count}} Plätze — Permanent Gründerrabatt",
+      "demoTitle": "Stark, oder? Das war die Kundensicht.",
+      "demoSubtitleStart": "Genau so konfigurieren deine Kunden ihre Anlage — und du bekommst den Lead mit allen Daten frei Haus. Willst du das auf ",
+      "demoSubtitleYour": "deiner",
+      "demoSubtitleEnd": " Webseite?",
+      "free": "Kostenlos",
+      "permanent": "Dauerhaft",
+      "demoCall": "Demo-Call",
+      "betaCta": "Beta-Partner werden",
+      "demoNextStepsTitle": "Was danach automatisch für deinen Kunden passiert",
+      "replayDemo": "Demo nochmal durchklicken",
+      "thankYouTitle": "Vielen Dank!",
+      "thankYouSubtitle": "Ihre Anfrage wurde erfolgreich übermittelt. Wir erstellen jetzt Ihr individuelles Solarangebot.",
+      "nextStepsTitle": "Was passiert als Nächstes?",
+      "backHome": "Zurück zur Startseite"
+    }
+  },
+  "installerDashboard": {
+    "seo": {
+      "description": "Verwalte deine Solar-Projekte und Leads — ROI-Analysen, Dokumentenverwaltung und Live-Statusverfolgung."
+    },
+    "header": {
+      "overview": "Übersicht"
+    },
+    "sidebar": {
+      "overview": "Übersicht",
+      "analyst": "Analyst",
+      "performance": "Performance",
+      "report": "Berichte",
+      "system": "System",
+      "mySite": "Meine Webseite",
+      "help": "Hilfe",
+      "settings": "Einstellungen"
+    },
+    "role": {
+      "customer": "Kunde"
+    },
+    "statusLabels": {
+      "angebot": "Angebot",
+      "planung": "Planung",
+      "genehmigung": "Genehmigung",
+      "installation": "Installation",
+      "inbetrieb": "In Betrieb",
+      "neu": "Neu",
+      "kontaktiert": "Kontaktiert",
+      "abschluss": "Abschluss",
+      "gewonnen": "Gewonnen",
+      "verloren": "Verloren",
+      "abgeschlossen": "Abgeschlossen"
+    },
+    "emptyState": {
+      "title": "Noch keine Projekte vorhanden",
+      "description": "Starten Sie den Konfigurator, um Ihre erste Solaranlage zu konfigurieren.",
+      "cta": "Konfigurator starten"
+    },
+    "project": {
+      "title": "Projekt {{id}}"
+    },
+    "monitoring": {
+      "title": "Solar-Monitoring",
+      "projectSelect": "Projekt {{id}}",
+      "status": "Status",
+      "capacity": "Leistung",
+      "investment": "Investition",
+      "amortization": "Amortisation",
+      "savingsPerYear": "Ersparnisse/Jahr",
+      "autarky": "Autarkie",
+      "profit20Years": "Gewinn 20 Jahre",
+      "notes": "Notizen",
+      "noNotes": "Keine Notizen",
+      "active": "Aktiv"
+    },
+    "monthlyGeneration": {
+      "title": "Monatliche Erzeugung",
+      "estimated": "Geschätzte monatliche Erzeugung basierend auf lokalen Wetterbedingungen.",
+      "systemPerformance": "System-Leistung",
+      "annualSavings": "Jährliche Ersparnisse",
+      "amortization": "Amortisation",
+      "years": "Jahre",
+      "approx": "ca. {{value}} kWh/Jahr",
+      "months": {
+        "sept": "Sept.",
+        "oct": "Okt.",
+        "nov": "Nov.",
+        "dec": "Dez."
+      }
+    },
+    "energyChart": {
+      "title": "Energie-Übersicht",
+      "forecast": "Geschätzte jährliche Produktion basierend auf Systemgröße und Wetterdaten.",
+      "period": "Monatlich",
+      "approxYearly": "ca. {{value}} kWh/Jahr",
+      "legend": {
+        "produced": "Produziert",
+        "consumed": "Verbraucht"
+      },
+      "months": [
+        "Jan",
+        "Feb",
+        "Mär",
+        "Apr",
+        "Mai",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Okt",
+        "Nov",
+        "Dez"
+      ]
+    },
+    "documents": {
+      "title": "Dokumente",
+      "empty": {
+        "title": "Keine Dokumente vorhanden",
+        "description": "Dokumente wie Angebote und Verträge erscheinen hier."
+      }
+    },
+    "error": {
+      "loadData": "Fehler beim Laden der Daten"
+    },
+    "calendar": {
+      "monthNames": [
+        "Januar",
+        "Februar",
+        "März",
+        "April",
+        "Mai",
+        "Juni",
+        "Juli",
+        "August",
+        "September",
+        "Oktober",
+        "November",
+        "Dezember"
+      ],
+      "weekdayNames": [
+        "Sonntag",
+        "Montag",
+        "Dienstag",
+        "Mittwoch",
+        "Donnerstag",
+        "Freitag",
+        "Samstag"
+      ],
+      "types": {
+        "beratung": "Beratung",
+        "installation": "Installation",
+        "abnahme": "Abnahme",
+        "partnermeeting": "Partner-Meeting"
+      },
+      "durationMinutes": "{{minutes}} Min.",
+      "durationHours": "{{hours}} Std.",
+      "durationHoursMinutes": "{{hours}} Std. {{minutes}} Min.",
+      "today": "Heute",
+      "newAppointment": "Neuer Termin",
+      "legend": "Legende:",
+      "reschedule": "Verschieben",
+      "cancel": "Absagen",
+      "rescheduleTitle": "Neuer Termin-Zeitpunkt",
+      "date": "Datum *",
+      "from": "Von *",
+      "to": "Bis *",
+      "note": "Hinweis",
+      "notePlaceholder": "z.B. Kunde hat ursprünglichen Termin abgesagt",
+      "saving": "Wird gespeichert…",
+      "back": "Zurück",
+      "cancelConfirmTitle": "Termin wirklich absagen?",
+      "cancelConfirmText": "„{{title}}\" am {{date}} wird gelöscht und kann nicht wiederhergestellt werden.",
+      "cancelling": "Wird abgesagt…",
+      "confirmCancel": "Ja, Termin absagen",
+      "timeRange": "{{start}} – {{end}} Uhr",
+      "weekdayNamesShort": ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+    },
+    "messages": {
+      "unknown": "Unbekannt",
+      "error": {
+        "load": "Fehler beim Laden",
+        "send": "Fehler beim Senden"
+      },
+      "title": "Nachrichten",
+      "totalNotes_one": "{{count}} Notiz gesamt",
+      "totalNotes_other": "{{count}} Notizen gesamt",
+      "customerDetails": "Kundendetails",
+      "allNotes": "Alle Notizen",
+      "filterByLead": "Nach Lead filtern",
+      "searchPlaceholder": "Kunde suchen…",
+      "noLeadsFound": "Keine Leads gefunden",
+      "emptyTitleLead": "Keine Notizen für diesen Lead",
+      "emptyTitleAll": "Noch keine Notizen",
+      "emptySubtitleLead": "Schreibe die erste Notiz unten.",
+      "emptySubtitleAll": "Notizen erscheinen hier, sobald sie erstellt werden.",
+      "notePlaceholderLead": "Notiz zu {{name}}…",
+      "notePlaceholder": "Neue Notiz schreiben…",
+      "received": "Eingegangen: {{date}}",
+      "openLead": "Lead öffnen"
+    },
+    "completedOrders": {
+      "back": "Zurück",
+      "title": "Abgeschlossene Aufträge",
+      "subtitle_one": "{{count}} abgeschlossener Lead",
+      "subtitle_other": "{{count}} abgeschlossene Leads",
+      "searchPlaceholder": "Suchen...",
+      "emptyTitle": "Noch keine abgeschlossenen Aufträge.",
+      "emptyDescription": "Abgeschlossene Leads erscheinen hier, wenn sie als gewonnen oder verloren markiert werden.",
+      "columns": {
+        "customer": "Kunde",
+        "email": "E-Mail",
+        "status": "Status",
+        "zip": "PLZ",
+        "received": "Eingegangen",
+        "system": "Anlage",
+        "action": "Aktion"
+      },
+      "selectedCount": "{{count}} ausgewählt",
+      "bulk": {
+        "email": "E-Mail",
+        "tag": "Tag",
+        "assign": "Zuweisen"
+      }
+    }
+  },
+  "adminDashboard": {
+    "sidebar": {
+      "nav": {
+        "dashboard": "Dashboard",
+        "pipeline": "Pipeline",
+        "projects": "Projekte",
+        "calendar": "Kalender",
+        "completed": "Abgeschlossen",
+        "discounts": "Rabatte",
+        "reports": "Berichte",
+        "team": "Team",
+        "myLeads": "Meine Leads",
+        "partners": "Partner",
+        "leadRouter": "Lead-Router",
+        "commissions": "Provisionen",
+        "settings": "Einstellungen",
+        "help": "Hilfe"
+      },
+      "role": {
+        "owner": "Inhaber",
+        "superEmployee": "Super-Mitarbeiter",
+        "sales": "Vertrieb",
+        "projectManager": "Projektleiter",
+        "technician": "Monteur",
+        "backoffice": "Backoffice",
+        "installer": "Installateur",
+        "customer": "Kunde",
+        "agencyOwner": "Agentur-Inhaber",
+        "agencyAgent": "Vertriebler"
+      }
+    },
+    "helpModal": {
+      "title": "Hilfe & Support",
+      "intro": "Bei Fragen oder Problemen erreichen Sie uns direkt:",
+      "hours": "Mo–Fr 9–18 Uhr erreichbar"
+    },
+    "leadCard": {
+      "offerStatus": {
+        "created": "Angebot erstellt",
+        "sent": "Angebot versendet",
+        "viewed": "Angebot geöffnet",
+        "accepted": "Angenommen ✓",
+        "rejected": "Abgelehnt"
+      },
+      "score": {
+        "hot": "Heiß",
+        "warm": "Warm",
+        "cold": "Kalt"
+      },
+      "sla": {
+        "noResponseHours": "{{hours}}h ohne Reaktion",
+        "noResponseDays": "{{days}}T ohne Reaktion",
+        "overdue": "⚠ {{days}}T — SLA überfällig"
+      },
+      "appointment": "Termin: {{date}}",
+      "onSiteDone": "Vor-Ort erledigt",
+      "won": "Auftrag gewonnen",
+      "lost": "Kein Auftrag",
+      "date": {
+        "today": "Heute, {{time}}",
+        "yesterday": "Gestern",
+        "daysAgo": "Vor {{days}} Tagen"
+      }
+    },
+    "common": {
+      "source": {
+        "landingpage": "Landingpage",
+        "direct": "Direkt",
+        "referral": "Empfehlung",
+        "social": "Social Media",
+        "google": "Google",
+        "other": "Sonstiges"
+      },
+      "status": {
+        "new": "Neu",
+        "contacted": "Kontaktiert",
+        "onSite": "Vor Ort",
+        "offerSent": "Angebot",
+        "closing": "Abschluss",
+        "won": "Gewonnen",
+        "lost": "Verloren",
+        "planning": "Planung",
+        "installation": "Installation",
+        "completed": "Abgeschlossen"
+      }
+    },
+    "pipeline": {
+      "title": "Pipeline",
+      "activeLeads": "{{count}} aktive Leads",
+      "wonCount": "{{count}} gewonnen",
+      "lostCount": "{{count}} verloren",
+      "status": {
+        "new": "Neu",
+        "contacted": "Kontaktiert",
+        "onSite": "Vor Ort",
+        "offerSent": "Angebot",
+        "closing": "Abschluss"
+      },
+      "filter": {
+        "zip": "PLZ",
+        "zipPlaceholder": "z.B. 80331",
+        "minSize": "Mindestgröße",
+        "allSizes": "Alle Größen",
+        "fromKwp": "Ab {{value}} kWp",
+        "fromDate": "Ab Datum",
+        "source": "Quelle",
+        "allSources": "Alle Quellen",
+        "results": "{{count}} von {{total}}",
+        "reset": "Filter zurücksetzen"
+      },
+      "dropClosing": "Gewonnene Leads hierher ziehen",
+      "dropHere": "Leads hierher ziehen"
+    },
+    "projects": {
+      "title": "Projekte",
+      "subtitle": "{{active}} aktiv · {{done}} abgeschlossen",
+      "completedOrders": "Abgeschlossene Aufträge",
+      "active": "Aktiv",
+      "done": "Fertig",
+      "emptyTitle": "Noch keine Projekte vorhanden",
+      "emptySubtitle": "Gewonnene Leads erscheinen hier als Projekte.",
+      "noCompleted": "Noch keine abgeschlossenen Projekte",
+      "none": "Keine Projekte",
+      "status": {
+        "planning": "Planung",
+        "approval": "Genehmigung",
+        "installation": "Installation",
+        "completed": "In Betrieb"
+      },
+      "unknownCustomer": "Unbekannter Kunde",
+      "details": "Details →"
+    },
+    "offer": {
+      "status": {
+        "created": "Erstellt",
+        "sent": "Versendet",
+        "viewed": "Angesehen",
+        "accepted": "Angenommen",
+        "rejected": "Abgelehnt"
+      }
+    },
+    "dashboard": {
+      "stats": {
+        "totalLeads": "Gesamt-Leads",
+        "activeDeals": "Aktive Deals",
+        "wonCount": "{{count}} gewonnen",
+        "pipelineValue": "Pipeline-Wert",
+        "conversionShort": "{{value}}% Conversion",
+        "conversionRate": "Conversion-Rate",
+        "winLoss": "{{value}} Win/Loss"
+      },
+      "pipelineOverview": "Pipeline-Übersicht",
+      "newLead": "Neuer Lead",
+      "pipelineFlow": "Pipeline-Verlauf",
+      "stage": {
+        "newLeads": "Neue Leads"
+      },
+      "recentActivity": "Letzte Aktivitäten",
+      "recentDeals": "Letzte Deals",
+      "viewAll": "Alle anzeigen",
+      "table": {
+        "company": "Firma",
+        "contact": "Kontakt",
+        "value": "Wert",
+        "stage": "Phase",
+        "assigned": "Zugewiesen"
+      }
+    }
+  },
+  "offers": {
+    "status": {
+      "draft": "Entwurf",
+      "sent": "Versendet",
+      "accepted": "Angenommen",
+      "rejected": "Abgelehnt"
+    },
+    "unitPiece": "Stk",
+    "leadNotFound": "Lead nicht gefunden.",
+    "errorUpdatingLineItem": "Fehler beim Aktualisieren der Position:",
+    "errorWithMessage": "Fehler: {{message}}",
+    "confirmDeleteLineItem": "Position wirklich löschen?",
+    "activity": {
+      "offerDraftSaved": "Angebotsentwurf gespeichert (Summe: {{total}})",
+      "offerSent": "Angebot versendet an {{email}}",
+      "offerAccepted": "Angebot angenommen (Summe: {{total}})",
+      "offerRejected": "Angebot abgelehnt"
+    },
+    "email": {
+      "defaultSubject": "Ihr persönliches Solar-Angebot — {{companyName}}",
+      "defaultBody": "\n        <p>Guten Tag {{firstName}} {{lastName}},</p>\n        <p>vielen Dank für Ihr Interesse an einer Photovoltaikanlage. Anbei finden Sie Ihr persönliches Angebot.</p>\n        {{signatureBlock}}\n        <p>Bei Fragen stehen wir Ihnen gerne zur Verfügung.</p>\n        <p>Mit freundlichen Grüßen<br>{{companyName}}</p>\n      ",
+      "signatureButtonText": "Angebot digital unterschreiben",
+      "signatureHint": "Sie können das Angebot auch bequem digital unterzeichnen. Der obige Link bleibt 30 Tage gültig."
+    },
+    "pdfFilename": "Angebot-{{offerNumber}}.pdf",
+    "emailSendFailed": "E-Mail-Versand fehlgeschlagen",
+    "sendError": "Fehler beim Versand",
+    "confirmAccept": "Angebot als angenommen markieren? Der Lead wird auf „Gewonnen\" gesetzt.",
+    "confirmReject": "Angebot als abgelehnt markieren?",
+    "backToPipeline": "Zurück zur Pipeline",
+    "backToLead": "Zurück zum Lead",
+    "createOffer": "Angebot erstellen",
+    "saveDraft": "Entwurf speichern",
+    "sendOffer": "Angebot senden",
+    "accepted": "Angenommen",
+    "rejected": "Abgelehnt",
+    "lineItems": "Angebotspositionen",
+    "addLineItem": "Position hinzufügen",
+    "columnCategory": "Kategorie",
+    "columnQuantity": "Menge",
+    "columnUnit": "Einheit",
+    "columnUnitPrice": "Einzelpreis",
+    "columnTotal": "Gesamt",
+    "deleteLineItem": "Position löschen",
+    "descriptionPlaceholder": "Beschreibung (z. B. Hersteller, Modell, Details)…",
+    "noLineItems": "Noch keine Positionen",
+    "addFirstLineItem": "Erste Position hinzufügen",
+    "internalNotes": "Interne Notizen",
+    "internalNotesPlaceholder": "Interne Hinweise zum Angebot...",
+    "summary": "Zusammenfassung",
+    "subtotal": "Zwischensumme",
+    "discount": "Rabatt",
+    "vat": "MwSt ({{rate}}%)",
+    "total": "Gesamtsumme",
+    "customerImpact": "Impact für den Kunden",
+    "amortization": "Amortisation",
+    "amortizationValue": "~{{years}} J.",
+    "savingsPerYear": "Ersparnis/Jahr",
+    "profit20Years": "Gewinn 20 J.",
+    "autarky": "Autarkie",
+    "systemOutput": "Anlagenleistung",
+    "discountCode": "Rabatt-Code",
+    "selectCode": "Code wählen...",
+    "apply": "Anwenden",
+    "manualDiscount": "Manueller Rabatt",
+    "ok": "OK",
+    "removeDiscount": "Rabatt entfernen",
+    "pdfCreating": "PDF wird erstellt…",
+    "downloadPdf": "Angebot als PDF",
+    "offerNumber": "Angebotsnr.: {{number}}",
+    "lastSaved": "Zuletzt gespeichert: {{date}}",
+    "sentAt": "Versendet: {{date}}",
+    "sendModalTitle": "Angebot versenden",
+    "sendSuccessTitle": "Angebot erfolgreich versendet!",
+    "sendSuccessMessage": "E-Mail wurde an {{email}} gesendet.",
+    "sendModalDescription": "Das Angebot wird als PDF generiert und per E-Mail an den Kunden gesendet.",
+    "emailAddress": "E-Mail-Adresse",
+    "subject": "Betreff",
+    "subjectPlaceholder": "Ihr persönliches Solar-Angebot",
+    "message": "Nachricht",
+    "cancel": "Abbrechen",
+    "sending": "Wird gesendet…",
+    "sendNow": "Jetzt senden",
+    "invalidLink": "Ungültiger Link.",
+    "linkExpired": "Dieser Link ist ungültig oder abgelaufen.",
+    "defaultCompanyName": "Ihr Solar-Partner",
+    "saveError": "Fehler beim Speichern. Bitte versuchen Sie es erneut.",
+    "errorTitle": "Fehler",
+    "signedTitle": "Angebot unterzeichnet",
+    "signedMessage": "Vielen Dank, {{firstName}}! Ihr Angebot wurde erfolgreich unterzeichnet.",
+    "signedEmailHint": "Sie erhalten in Kürze eine Bestätigung per E-Mail.",
+    "signTitle": "Angebot unterzeichnen",
+    "investment": "Investition",
+    "amortizationShort": "Amortisation",
+    "yearsShort": "J.",
+    "legalNotice": "Mit Ihrer Unterschrift bestätigen Sie, dass Sie das Angebot gelesen und akzeptiert haben. Die Unterschrift ist rechtsverbindlich.",
+    "signatureHeading": "Digitale Unterschrift"
+  },
+  "leads": {
+    "status": {
+      "new": "Neu",
+      "contacted": "Kontaktiert",
+      "onSite": "Vor Ort",
+      "offer": "Angebot versendet",
+      "closing": "Abschluss",
+      "won": "Gewonnen",
+      "lost": "Verloren",
+      "planning": "Planung",
+      "installation": "Installation",
+      "completed": "Abgeschlossen"
+    },
+    "errors": {
+      "loadFailed": "Fehler beim Laden: {{error}}",
+      "deleteFailed": "Löschung fehlgeschlagen",
+      "exportFailed": "Export fehlgeschlagen",
+      "loadDraft": "Fehler beim Laden des Angebots-Entwurfs:"
+    },
+    "searchPlaceholder": "Leads suchen...",
+    "foundCount_one": "{{count}} Lead gefunden",
+    "foundCount_other": "{{count}} Leads gefunden",
+    "offerAction": {
+      "draft": "Entwurf vorhanden",
+      "sent": "Angebot versendet",
+      "accepted": "Angebot angenommen",
+      "rejected": "Angebot abgelehnt"
+    },
+    "invoiceLabels": [
+      "Rechnung 1/30%",
+      "Rechnung 2/60%",
+      "Schlussrechnung (10%)"
+    ],
+    "offer": "Angebot",
+    "total": "Gesamtsumme",
+    "editOffer": "Angebot bearbeiten",
+    "viewOffer": "Angebot ansehen",
+    "markViewed": "Als angesehen",
+    "accepted": "Angenommen",
+    "rejected": "Abgelehnt",
+    "invoices": "Abschlagsrechnungen",
+    "invoiceFileName": "Rechnung-{{number}}.pdf",
+    "pdfLoading": "PDF…",
+    "noOfferYet": "Noch kein Angebot erstellt",
+    "createOffer": "Angebot erstellen",
+    "notFound": "Lead nicht gefunden.",
+    "backToPipeline": "Zurück zur Pipeline",
+    "gdpr": {
+      "exportTitle": "Alle Daten dieses Leads als JSON exportieren (DSGVO Art. 20 — Datenübertragbarkeit)",
+      "exportButton": "Datenexport (Art. 20)",
+      "deleteTitle": "Alle personenbezogenen Daten dieses Leads löschen (DSGVO Art. 17)",
+      "deleteButton": "DSGVO-Löschung",
+      "deleteHeading": "DSGVO-Löschung",
+      "deleteIntro": "Alle personenbezogenen Daten von {{name}} werden unwiderruflich gelöscht:",
+      "deleteItem1": "Lead, Notizen, Termine, Angebote & Unterschriften",
+      "deleteItem2": "Funnel- & Webhook-Verlauf",
+      "deleteItem3": "Provisionen werden anonymisiert (Buchhaltung bleibt erhalten)"
+    },
+    "cancel": "Abbrechen",
+    "deletePermanently": "Endgültig löschen",
+    "leadNumber": "Lead #{{number}}",
+    "received": "Eingegangen",
+    "changeStatus": "Status ändern",
+    "section": {
+      "contact": "Kontaktdaten",
+      "roof": "Dachkonfiguration",
+      "energy": "Energiebedarf & Ausstattung",
+      "planning": "Planung & Finanzierung",
+      "system": "Anlagenkonfiguration",
+      "score": "Lead-Score",
+      "quickActions": "Schnellaktionen",
+      "siteVisit": "Vor-Ort-Termin",
+      "customerData": "Kundendaten",
+      "projectStatus": "Projektstatus"
+    },
+    "label": {
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "zip": "Postleitzahl",
+      "wish": "Wunsch",
+      "roofArea": "Dachfläche",
+      "orientation": "Ausrichtung",
+      "constructionYear": "Baujahr",
+      "consumption": "Jahresverbrauch",
+      "electricityPrice": "Strompreis",
+      "planningHorizon": "Planungshorizont",
+      "financing": "Finanzierung",
+      "systemSize": "Anlagengröße",
+      "investment": "Investition",
+      "savingsPerYear": "Ersparnis/Jahr",
+      "amortization": "Amortisation",
+      "autarky": "Autarkie",
+      "selfConsumption": "Eigenverbrauchsanteil",
+      "profit20Years": "Gewinn 20 J.",
+      "afterDeduction": "nach Investitionsabzug",
+      "name": "Name",
+      "yearlyYield": "Jährlicher Ertrag"
+    },
+    "zoomCallWanted": "Zoom-Beratungsgespräch gewünscht",
+    "feature": {
+      "battery": "Stromspeicher",
+      "eCar": "Elektroauto",
+      "heatPump": "Wärmepumpe"
+    },
+    "financing": {
+      "kfw": "KfW-Finanzierung gewünscht",
+      "cash": "Eigenkapital"
+    },
+    "years": "Jahre",
+    "realistic": "Realistisch: {{years}} J.",
+    "topFactors": "Top-Faktoren",
+    "sendEmail": "E-Mail senden",
+    "call": "Anrufen",
+    "siteVisit": {
+      "done": "Durchgeführt",
+      "planned": "Geplant: {{date}}",
+      "measuredRoofArea": "Gemessene Dachfläche: {{area}} m²",
+      "previousArea": "{{area}} m² vorher",
+      "roofAngle": "Dachneigung: {{angle}}°",
+      "shading": "⚠ Verschattung festgestellt"
+    },
+    "system": "System",
+    "horizon": {
+      "asap": "So bald wie möglich",
+      "months3": "In 3 Monaten",
+      "months12": "In 12 Monaten"
+    },
+    "orientation": {
+      "south": "Süd",
+      "eastWest": "Ost / West",
+      "north": "Nord"
+    },
+    "construction": {
+      "pre1980": "Vor 1980",
+      "1980-2000": "1980 – 2000",
+      "2000-2010": "2000 – 2010",
+      "after2010": "Nach 2010"
+    },
+    "projectStatus": {
+      "offerCreated": "Angebot erstellt",
+      "planning": "In Planung",
+      "approval": "Genehmigung läuft",
+      "installation": "In Installation",
+      "operational": "In Betrieb"
+    },
+    "noProjectYet": "Noch kein Projekt vorhanden.",
+    "backToProjects": "Zurück zu Projekten",
+    "pvSystem": "PV Anlage",
+    "offerAccepted": "Angebot angenommen",
+    "downloadOfferPdf": "Angebot als PDF",
+    "systemOperational": "Anlage in Betrieb",
+    "completePhase": "Phase abschließen",
+    "setStatusManually": "Status manuell setzen",
+    "completePhaseHint": "Oder nutze \"Phase abschließen\" oben für den nächsten Schritt.",
+    "customer": "Kunde",
+    "uploadDocuments": "Dokumente hochladen",
+    "documentHint": "Zählerfoto, Dachpläne, etc.",
+    "chooseFile": "Datei auswählen",
+    "internalNotes": "Interne Notizen",
+    "notesPlaceholder": "Notizen zur Dachbeschaffenheit, Kundenwünschen oder Besonderheiten...",
+    "saveNotes": "Notizen speichern",
+    "paymentStatus": "Zahlungsstatus",
+    "paymentPlan": {
+      "hint": "3-Raten-Zahlungsplan — als bezahlt markieren",
+      "labels": [
+        "Abschlags-Rechnung 1 — 30 % Anzahlung",
+        "Abschlags-Rechnung 2 — 60 % Montage",
+        "Schluss-Rechnung — 10 % Abnahme"
+      ],
+      "paidCount": "{{count}} / 3 Raten bezahlt",
+      "received": "{{amount}} € erhalten"
+    },
+    "generateInvoices": "Rechnungen generieren",
+    "invoiceVatHint": "3-Raten-Zahlungsplan · 0 % MwSt. gem. § 12 Abs. 3 UStG",
+    "pdf": "PDF"
+  },
+  "agency": {
+    "common": {
+      "errorPrefix": "Fehler: ",
+      "upgradeRequired": "Upgrade erforderlich",
+      "viewPlans": "Tarife ansehen",
+      "loading": "Laden...",
+      "save": "Speichern",
+      "add": "Hinzufügen",
+      "saving": "Wird gespeichert…",
+      "saved": "Gespeichert!",
+      "creating": "Wird erstellt…",
+      "cancel": "Abbrechen",
+      "unknown": "Unbekannt",
+      "unknownError": "Unbekannter Fehler",
+      "refresh": "Aktualisieren",
+      "resetFilter": "Filter zurücksetzen",
+      "fixedAmount": "Festbetrag (€)",
+      "percentage": "Prozentsatz (%)"
+    },
+    "partnersPage": {
+      "confirmDelete": "Partner wirklich löschen?",
+      "title": "Partner-Installateure",
+      "subtitle": "Verwalten Sie Ihre Installateur-Partner",
+      "addPartner": "Partner hinzufügen",
+      "limitReachedTitle": "Partner-Limit erreicht ({{active}}/{{limit}})",
+      "limitReachedDescription": "Du hast das Limit deines aktuellen Agency-Tarifs erreicht. Upgrade auf Pro oder Scale, um unbegrenzt Partner zu verwalten.",
+      "emptyTitle": "Noch keine Partner",
+      "emptySubtitle": "Fügen Sie Ihre ersten Installateur-Partner hinzu",
+      "zipLabel": "PLZ",
+      "commissionLabel": "Provision",
+      "portalLink": "Portal-Link",
+      "editPartner": "Partner bearbeiten",
+      "newPartner": "Neuer Partner",
+      "companyNamePlaceholder": "Firmenname *",
+      "contactNamePlaceholder": "Ansprechpartner",
+      "emailPlaceholder": "E-Mail *",
+      "phonePlaceholder": "Telefon",
+      "zipRegionsPlaceholder": "PLZ-Gebiete (z.B. 80, 81, 82)",
+      "commissionFixed": "Fester Betrag (€)",
+      "commissionPercentage": "Prozentual (%)",
+      "commissionValuePlaceholder": "Wert",
+      "kwhPricePlaceholder": "kWh-Preis (optional)",
+      "websitePlaceholder": "Webseite (z.B. https://muster-solar.de)",
+      "notesPlaceholder": "Notizen"
+    },
+    "agencyTeam": {
+      "loadError": "Fehler beim Laden",
+      "confirmRemove": "Vertriebler wirklich aus dem Team entfernen?",
+      "removeError": "Fehler beim Entfernen",
+      "invite": {
+        "emailExists": "Diese E-Mail ist bereits registriert.",
+        "createFailed": "Account konnte nicht erstellt werden. Bitte erneut versuchen.",
+        "assignmentFailed": "Account erstellt, aber Zuweisung fehlgeschlagen: ",
+        "title": "Vertriebler einladen",
+        "nameLabel": "Name *",
+        "namePlaceholder": "Max Mustermann",
+        "emailLabel": "E-Mail *",
+        "emailPlaceholder": "max@beispiel.de",
+        "roleHint": "Wird als <strong>Vertriebler</strong> angelegt — eingeschränkter Zugriff",
+        "inviteButton": "Einladen"
+      },
+      "title": "Mein Team",
+      "subtitle": "Vertriebler einladen & verwalten",
+      "inviteButton": "Vertriebler einladen",
+      "membersTitle": "Vertriebler",
+      "memberCount_one": "{{count}} Mitglied",
+      "memberCount_other": "{{count}} Mitglieder",
+      "emptyTitle": "Noch keine Vertriebler im Team.",
+      "emptySubtitle": "Lade deinen ersten Vertriebler ein.",
+      "salesRole": "Vertriebler",
+      "memberSince": "seit {{date}}",
+      "infoBox": {
+        "title": "Was können Vertriebler?",
+        "items": [
+          "Alle Leads der Agentur einsehen",
+          "Lead-Router nutzen (Leads zuweisen)",
+          "Eigenen Kalender verwalten",
+          "Kein Zugriff auf Partner, Provisionen oder Team"
+        ]
+      }
+    },
+    "commissionsPage": {
+      "invoiceNumberPrompt": "Rechnungsnummer:",
+      "confirmPaid": "Als bezahlt markieren?",
+      "title": "Provisionen",
+      "subtitle": "Übersicht über offene und bezahlte Provisionen",
+      "stats": {
+        "total": "Gesamt",
+        "pending": "Ausstehend",
+        "invoiced": "In Rechnung",
+        "paid": "Bezahlt"
+      },
+      "topOrdersTitle": "Meiste Aufträge",
+      "topPaidTitle": "Höchste bezahlte Provision",
+      "noPaidCommissions": "Noch keine bezahlten Provisionen",
+      "statusFilter": {
+        "all": "Alle",
+        "pending": "Ausstehend",
+        "invoiced": "In Rechnung",
+        "paid": "Bezahlt",
+        "cancelled": "Storniert"
+      },
+      "allPartners": "Alle Partner",
+      "allSalespeople": "Alle Vertriebler",
+      "entryCount": "{{count}} Einträge",
+      "empty": "Keine Provisionen gefunden",
+      "columns": {
+        "partner": "Partner",
+        "lead": "Lead",
+        "amount": "Betrag",
+        "invoiceNumber": "Rechnung-Nr.",
+        "status": "Status",
+        "date": "Datum",
+        "action": "Aktion"
+      },
+      "status": {
+        "pending": "Ausstehend",
+        "invoiced": "In Rechnung",
+        "paid": "Bezahlt",
+        "cancelled": "Storniert"
+      },
+      "actions": {
+        "invoice": "In Rechnung",
+        "paid": "Bezahlt"
+      }
+    },
+    "agencySettings": {
+      "title": "Einstellungen",
+      "subtitle": "Agentur-Konfiguration",
+      "companyProfile": {
+        "title": "Firmenprofil",
+        "agencyName": "Agenturname",
+        "agencyNamePlaceholder": "Solar Vertrieb GmbH",
+        "phone": "Telefon",
+        "phonePlaceholder": "+49 89 123456",
+        "zipCity": "PLZ / Ort",
+        "zipCityPlaceholder": "80333 München",
+        "website": "Webseite",
+        "websitePlaceholder": "https://meine-agentur.de"
+      },
+      "defaultCommission": {
+        "title": "Standard-Provision",
+        "description": "Vorausgefüllte Werte beim Anlegen neuer Partner",
+        "type": "Provisionsart",
+        "defaultValue": "Standardwert ({{unit}})",
+        "hint": "Kann beim Erstellen jedes Partners individuell angepasst werden."
+      },
+      "notifications": {
+        "title": "Benachrichtigungen",
+        "emailToggle": "Partner-Antwort per E-Mail",
+        "emailToggleDescription": "E-Mail erhalten wenn ein Partner einen Lead annimmt oder ablehnt"
+      },
+      "teamShortcut": {
+        "title": "Team verwalten",
+        "description": "Vertriebler einladen und Zugänge verwalten"
+      }
+    },
+    "partnerPortal": {
+      "invalidAccess": "Ungültiger Zugriff. Bitte überprüfen Sie Ihren Link.",
+      "loadError": "Fehler beim Laden der Daten.",
+      "accessDenied": "Zugriff verweigert",
+      "invalidLink": "Ungültiger Link",
+      "title": "Partner-Portal",
+      "commission": "Provision",
+      "newLeads": "Neue Leads ({{count}})",
+      "noNewLeads": "Keine neuen Leads",
+      "myLeads": "Meine Leads ({{count}})",
+      "noActiveLeads": "Keine aktiven Leads",
+      "orderPlaced": "Auftrag erteilt",
+      "converted": "Konvertiert",
+      "accept": "Annehmen",
+      "reject": "Ablehnen"
+    }
+  },
+  "adminSettings": {
+    "common": {
+      "yourCompanyName": "Ihr Firmenname",
+      "optional": "(optional)",
+      "saving": "Wird gespeichert…",
+      "saveSettings": "Einstellungen speichern",
+      "saved": "Gespeichert",
+      "saveError": "Fehler beim Speichern",
+      "copied": "Kopiert!",
+      "copy": "Kopieren",
+      "reset": "Zurücksetzen"
+    },
+    "settings": {
+      "title": "Einstellungen",
+      "subtitle": "CRM-Integration & Webhook"
+    },
+    "webhook": {
+      "title": "CRM-Webhook",
+      "prioBadge": "PRIO",
+      "description": "Jeder neue Lead wird automatisch als JSON-Payload an deine Webhook-URL gesendet — kompatibel mit Zapier, Make, HubSpot, Pipedrive und jedem eigenen System.",
+      "activeLabel": "Webhook aktiv",
+      "activeHint": "Leads werden automatisch weitergeleitet",
+      "urlLabel": "Webhook-URL",
+      "urlPlaceholder": "https://hooks.zapier.com/hooks/catch/...",
+      "secretLabel": "Webhook-Secret",
+      "secretPlaceholder": "Geheimer Schlüssel für HMAC-SHA256-Signatur",
+      "secretHint": "Falls gesetzt, signieren wir jeden Request mit X-Voltify-Signature: sha256=…",
+      "sending": "Wird gesendet…",
+      "sendTest": "Test-Webhook senden",
+      "testSuccess": "Test erfolgreich",
+      "testFailed": "Test fehlgeschlagen",
+      "payloadTitle": "Payload-Format (JSON)",
+      "integrationsTitle": "Integrationen",
+      "integrationsSubtitle": "Kompatible Systeme — Webhook-URL aus dem jeweiligen Tool einfügen",
+      "crmIntegrations": {
+        "zapier": {
+          "description": "Verbinde mit 5.000+ Apps — HubSpot, Pipedrive, Salesforce, Gmail u.v.m.",
+          "hint": "Webhook-URL aus dem Zapier-Trigger \"Webhooks by Zapier\" kopieren."
+        },
+        "hubspot": {
+          "description": "Lead direkt als Kontakt + Deal in HubSpot anlegen.",
+          "hint": "Nutze den HubSpot Workflow → Webhook-Schritt oder Zapier als Brücke."
+        },
+        "pipedrive": {
+          "description": "Lead als Person + Deal mit Score im Pipedrive anlegen.",
+          "hint": "Pipedrive → Automatisierungen → Webhook-Auslöser aktivieren."
+        },
+        "make": {
+          "description": "Flexibler als Zapier, günstiger für mehrere Leads/Monat.",
+          "hint": "Make-Szenario → Webhook-Modul → URL kopieren."
+        }
+      },
+      "retryTitle": "Retry-Logik:",
+      "retryDescription": "Bei einem fehlgeschlagenen Webhook-Aufruf wird der Request automatisch 3× wiederholt (nach 1 s, 2 s, 4 s Backoff). Alle Versuche werden im Webhook-Log protokolliert."
+    },
+    "invoice": {
+      "serviceDescription": "PV-Anlage {{kwp}} kWp inkl. Montage",
+      "flatRate": "Pauschal",
+      "recipientLabel": "Rechnungsempfänger",
+      "invoiceNumber": "Rechnungsnr.",
+      "date": "Datum",
+      "dueDate": "Fällig am",
+      "taxNumber": "St.-Nr.",
+      "serviceLabel": "Leistung",
+      "table": {
+        "position": "Pos.",
+        "description": "Beschreibung",
+        "amount": "Betrag"
+      },
+      "serviceNote": "Lieferung und Montage gem. Auftragsbestätigung",
+      "netAmount": "Nettobetrag",
+      "vatNote": "MwSt. 0 % (§ 12 Abs. 3 UStG — PV-Anlage)",
+      "total": "Gesamtbetrag",
+      "paymentNoteLabel": "Zahlungshinweis",
+      "paymentInstructionPrefix": "Bitte überweisen Sie den Betrag innerhalb von",
+      "paymentDays_one": "Tag",
+      "paymentDays_other": "Tagen",
+      "paymentInstructionSuffix": "auf folgendes Konto:",
+      "referenceLabel": "Verwendungszweck:",
+      "ceo": "GF",
+      "taxNumberShort": "St.-Nr."
+    },
+    "offer": {
+      "recipientLabel": "Angebot für",
+      "itemsLabel": "Angebotspositionen",
+      "items": {
+        "solarModules": "Solarmodule",
+        "inverter": "Wechselrichter",
+        "mounting": "Montage & Unterkonstruktion",
+        "electrical": "Elektroinstallation"
+      },
+      "itemDetails": {
+        "standard": "Standard",
+        "flatRate": "Pauschal",
+        "wiring": "AC/DC-Verkabelung"
+      },
+      "total": "Gesamtbetrag",
+      "systemLabel": "Ihre Photovoltaikanlage",
+      "system": {
+        "size": "Systemgröße",
+        "investment": "Investition",
+        "annualSavings": "Jahresersparnis",
+        "payback": "Amortisation",
+        "years": "Jahre",
+        "modulesLabel": "Module:",
+        "inverterLabel": "Wechselrichter:"
+      },
+      "paymentPlan": {
+        "label": "Zahlungsplan",
+        "downPayment": "Anzahlung (30 %)",
+        "installationInvoice": "Montagerechnung (60 %)",
+        "finalInvoice": "Schlussrechnung (10 %)",
+        "onOrder": "Bei Auftragserteilung",
+        "afterInstallation": "Nach Montage",
+        "afterAcceptance": "Nach Abnahme"
+      },
+      "payment": {
+        "ibanLabel": "IBAN:"
+      },
+      "termsLabel": "Zahlungsbedingungen",
+      "disclaimer": "Unverbindliches Angebot · 30 Tage gültig",
+      "ctaAccept": "Angebot annehmen"
+    },
+    "tabs": {
+      "abo": "Abo & Limits",
+      "profile": "Profil & Branding",
+      "calculation": "Kalkulation",
+      "legal": "Rechtliches",
+      "templates": "Vorlagen",
+      "previews": "Vorschauen",
+      "integration": "Integration"
+    },
+    "title": "Inhaber-Konfiguration",
+    "subtitle": "Branding, Kalkulationsparameter & Regionseinstellungen",
+    "subscription": {
+      "title": "Abo & Limits",
+      "active": "Aktiv",
+      "currentPackage": "Aktuelles Paket",
+      "planDetails": "{{price}} €/Monat · {{users}} Nutzer · unbegrenzte Leads",
+      "upgrade": "Upgrade",
+      "leadsThisMonth": "Leads diesen Monat",
+      "unlimited": "Unbegrenzt",
+      "leadsCreated": "{{count}} Leads erstellt",
+      "teamMembers": "Team-Mitglieder",
+      "seatsLeft": "Noch {{count}} Plätze frei",
+      "features": "Features",
+      "featureList": {
+        "configurator": "Konfigurator",
+        "leadPipeline": "Lead-Pipeline",
+        "projects": "Projekte",
+        "offerPdf": "Angebots-PDF",
+        "invoicePdf": "Rechnungs-PDF",
+        "messages": "Nachrichten",
+        "calendar": "Kalender",
+        "crmWebhook": "CRM-Webhook",
+        "leadScoring": "Lead-Scoring",
+        "customDomain": "Eigene Domain",
+        "apiAccess": "API-Zugriff",
+        "multiLocation": "Multi-Standort"
+      }
+    },
+    "profile": {
+      "publicProfile": "Öffentliches Profil",
+      "profileLink": "Dein Profil-Link",
+      "companyNamePublic": "Firmenname (öffentlich)",
+      "website": "Website",
+      "whiteLabelSlug": "White-Label Slug",
+      "whiteLabelBadge": "White-Label",
+      "slugHint": "Teile diesen Link mit deinen Kunden — der Konfigurator erscheint in deinem Branding.",
+      "bio": "Kurzbeschreibung",
+      "companyProfile": "Firmenprofil",
+      "companyLogo": "Firmen-Logo",
+      "uploadLogo": "Logo hochladen",
+      "companyName": "Firmenname",
+      "slogan": "Slogan",
+      "brandingColors": "Branding & Farben",
+      "primaryColor": "Primärfarbe",
+      "accentColor": "Akzentfarbe",
+      "offerCreatedBadge": "Angebot erstellt",
+      "colorPreview": "Vorschau der Farbkombination"
+    },
+    "calculation": {
+      "configuratorAssumptions": "Konfigurator-Annahmen (ROI)",
+      "configuratorAssumptionsDescription": "Diese Werte steuern die Wirtschaftlichkeits-Analyse, die dein Kunde im Konfigurator sieht. Lass ein Feld leer, um den Voltify-Standard zu nutzen. Tipp: Setze den Richtpreis nahe deiner realen Kalkulation, damit das spätere Angebot keine Überraschung wird.",
+      "guidelinePrice": "Richtpreis (€/kWp)",
+      "defaultPlaceholder": "Standard: {{value}}",
+      "electricityPriceDefault": "Strompreis-Default (€/kWh)",
+      "feedInTariff": "Einspeisevergütung (€/kWh)",
+      "maintenanceCosts": "Wartungskosten (€/Jahr)",
+      "offerConfig": "Angebots-Konfiguration",
+      "minPrice": "Mindestpreis (€)",
+      "defaultMargin": "Standard-Marge (%)",
+      "defaultIban": "Standard-IBAN",
+      "paymentTermDays": "Zahlungsziel (Tage)",
+      "panelManufacturer": "Panel-Hersteller",
+      "inverterManufacturer": "Wechselrichter-Hersteller",
+      "defaultOfferPrices": "Standard-Angebotspreise",
+      "modules": "Module (€/kWp)",
+      "inverter": "Wechselrichter (€/kWp)",
+      "storage": "Speicher (€/kWh)",
+      "mounting": "Montage (€ Pauschal)",
+      "electrical": "Elektro (€ Pauschal)",
+      "scaffolding": "Gerüst (€ Pauschal)",
+      "travel": "Anfahrt (€ Pauschal)",
+      "vatRate": "MwSt-Satz (%)",
+      "calculationParameters": "Kalkulations-Parameter",
+      "electricityPrice": "Strompreis (ct/kWh)",
+      "electricityPriceIncrease": "Strompreissteigerung (%/Jahr)",
+      "kfwInterestRate": "KfW-Zinssatz (%)",
+      "selfConsumptionRate": "Eigenverbrauchsquote (%)",
+      "co2Factor": "CO₂-Faktor (kg/kWh)",
+      "regionAvailability": "Region & Verfügbarkeit",
+      "servedZipAreas": "Bediente PLZ-Gebiete",
+      "zipHint": "Komma-getrennte Postleitzahlen oder Präfixe — leer = überregional",
+      "maxDistance": "Max. Entfernung (km)"
+    },
+    "legal": {
+      "legalRequirements": "Rechtliche Pflichtangaben",
+      "taxNumber": "Steuernummer / USt-IdNr.",
+      "invoiceNumberRange": "Rechnungsnummernkreis",
+      "street": "Straße & Hausnummer",
+      "zipCity": "PLZ & Ort",
+      "managingDirector": "Geschäftsführer"
+    },
+    "templates": {
+      "availablePlaceholders": "Verfügbare Platzhalter",
+      "placeholders": {
+        "firstName": "Vorname Kunde",
+        "lastName": "Nachname Kunde",
+        "offerNumber": "z. B. ANG-20260619-A1B2",
+        "companyName": "Dein Firmenname",
+        "date": "Heutiges Datum",
+        "validUntil": "Gültig bis (30 Tage)",
+        "paymentTerm": "Zahlungsziel in Tagen"
+      },
+      "offerTemplateTitle": "Angebotsvorlage — PDF-Texte",
+      "offerTemplateHint": "Diese Texte erscheinen im PDF. Platzhalter werden beim Rendern ersetzt.",
+      "salutation": "Anschreiben (Einleitung)",
+      "salutationHint": "Erscheint oben im PDF nach dem Header. Leer lassen = kein Anschreiben.",
+      "terms": "Zahlungsbedingungen & Hinweise",
+      "showFollowUpCosts": "Folgekosten-Hinweis im PDF anzeigen",
+      "closingText": "Schlusstext",
+      "closingTextHint": "Erscheint über der Unterschriftszeile. Leer lassen = kein Schlusstext.",
+      "emailTemplate": "E-Mail-Vorlage",
+      "emailTemplateHint": "Beim Öffnen des Sende-Dialogs automatisch vorausgefüllt.",
+      "subject": "Betreff",
+      "message": "Nachricht"
+    },
+    "previews": {
+      "offerPreview": "Angebots-Vorschau",
+      "offerPreviewHint": "Musterkunde · 9,5 kWp · inkl. deiner Vorlagen-Texte",
+      "invoicePreview": "Rechnungs-Vorschau",
+      "invoicePreviewHint": "Musterrechnung mit deinen Einstellungen — inkl. 0 % MwSt. nach § 12 Abs. 3 UStG."
+    }
+  }
+}

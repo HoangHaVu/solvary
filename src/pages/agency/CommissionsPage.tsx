@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Landmark, CheckCircle, FileText, Clock, Trophy, TrendingUp,
   Filter, ChevronDown, Euro, RotateCcw, Users,
@@ -9,16 +10,11 @@ import { fetchCommissions, markCommissionInvoiced, markCommissionPaid, type Comm
 import { fetchTeamMembers } from '../../services/data';
 import { resolveAgencyId } from '../../services/auth';
 
-const STATUS_MAP: Record<string, { label: string; color: string }> = {
-  pending:   { label: 'Ausstehend',   color: 'text-amber-400 bg-amber-500/10' },
-  invoiced:  { label: 'In Rechnung',  color: 'text-blue-400 bg-blue-500/10' },
-  paid:      { label: 'Bezahlt',      color: 'text-green-400 bg-green-500/10' },
-  cancelled: { label: 'Storniert',    color: 'text-gray-400 bg-gray-500/10' },
-};
-
-type StatusFilter = 'all' | 'pending' | 'invoiced' | 'paid' | 'cancelled';
+type StatusKey = 'pending' | 'invoiced' | 'paid' | 'cancelled';
+type StatusFilter = 'all' | StatusKey;
 
 export default function CommissionsPage() {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [commissions, setCommissions] = useState<Commission[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,6 +22,8 @@ export default function CommissionsPage() {
   const [partnerFilter, setPartnerFilter] = useState<string>('all');
   const [memberFilter, setMemberFilter] = useState<string>('all');
   const [teamMembers, setTeamMembers] = useState<{ id: string; full_name: string }[]>([]);
+
+  const statusOrder: StatusFilter[] = ['all', 'pending', 'invoiced', 'paid', 'cancelled'];
 
   useEffect(() => {
     if (!user) return;
@@ -55,23 +53,23 @@ export default function CommissionsPage() {
   }
 
   async function handleInvoice(commissionId: string) {
-    const num = prompt('Rechnungsnummer:');
+    const num = prompt(t('agency.commissionsPage.invoiceNumberPrompt'));
     if (num === null) return;
     try {
       await markCommissionInvoiced(commissionId, num || undefined);
       loadCommissions();
     } catch (e) {
-      alert('Fehler: ' + (e as Error).message);
+      alert(t('agency.common.errorPrefix') + (e as Error).message);
     }
   }
 
   async function handlePaid(commissionId: string) {
-    if (!confirm('Als bezahlt markieren?')) return;
+    if (!confirm(t('agency.commissionsPage.confirmPaid'))) return;
     try {
       await markCommissionPaid(commissionId);
       loadCommissions();
     } catch (e) {
-      alert('Fehler: ' + (e as Error).message);
+      alert(t('agency.common.errorPrefix') + (e as Error).message);
     }
   }
 
@@ -87,7 +85,7 @@ export default function CommissionsPage() {
   const partnerStats = useMemo(() => {
     const map = new Map<string, { name: string; count: number; totalAmount: number; paidAmount: number }>();
     for (const c of commissions) {
-      const name = c.partner?.company_name || 'Unbekannt';
+      const name = c.partner?.company_name || t('agency.common.unknown');
       const key = c.partner_id;
       const existing = map.get(key) ?? { name, count: 0, totalAmount: 0, paidAmount: 0 };
       map.set(key, {
@@ -98,7 +96,7 @@ export default function CommissionsPage() {
       });
     }
     return Array.from(map.values());
-  }, [commissions]);
+  }, [commissions, t]);
 
   const topByOrders = useMemo(() =>
     [...partnerStats].sort((a, b) => b.count - a.count).slice(0, 5),
@@ -131,6 +129,20 @@ export default function CommissionsPage() {
   const maxOrders  = topByOrders[0]?.count ?? 1;
   const maxPaid    = topByPaid[0]?.paidAmount ?? 1;
 
+  const statusColors: Record<StatusKey, string> = {
+    pending:   'text-amber-400 bg-amber-500/10',
+    invoiced:  'text-blue-400 bg-blue-500/10',
+    paid:      'text-green-400 bg-green-500/10',
+    cancelled: 'text-gray-400 bg-gray-500/10',
+  };
+
+  const statsConfig = [
+    { key: 'total',    icon: Euro,        color: 'text-white' },
+    { key: 'pending',  icon: Clock,       color: 'text-amber-400' },
+    { key: 'invoiced', icon: FileText,    color: 'text-blue-400' },
+    { key: 'paid',     icon: CheckCircle, color: 'text-green-400' },
+  ] as const;
+
   return (
     <div className="min-h-screen flex bg-[#0F0F0F] text-white">
       <AdminSidebar />
@@ -139,35 +151,30 @@ export default function CommissionsPage() {
         {/* ── Header ── */}
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h1 className="text-2xl font-semibold text-white">Provisionen</h1>
-            <p className="text-sm text-gray-500 mt-0.5">Übersicht über offene und bezahlte Provisionen</p>
+            <h1 className="text-2xl font-semibold text-white">{t('agency.commissionsPage.title')}</h1>
+            <p className="text-sm text-gray-500 mt-0.5">{t('agency.commissionsPage.subtitle')}</p>
           </div>
           <button
             onClick={loadCommissions}
             className="flex items-center gap-2 text-xs text-gray-500 hover:text-white border border-white/10 hover:border-white/20 px-3 py-2 rounded-lg transition-all"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            Aktualisieren
+            {t('agency.common.refresh')}
           </button>
         </div>
 
         {/* ── Stats ── */}
         <div className="grid grid-cols-4 gap-3 mb-6">
-          {[
-            { label: 'Gesamt',       value: stats.total,    color: 'text-white',       icon: Euro },
-            { label: 'Ausstehend',   value: stats.pending,  color: 'text-amber-400',   icon: Clock },
-            { label: 'In Rechnung',  value: stats.invoiced, color: 'text-blue-400',    icon: FileText },
-            { label: 'Bezahlt',      value: stats.paid,     color: 'text-green-400',   icon: CheckCircle },
-          ].map(s => {
+          {statsConfig.map(s => {
             const Icon = s.icon;
             return (
-              <div key={s.label} className="bg-brand-secondary-hover border border-white/5 rounded-xl p-4 flex items-center gap-3">
+              <div key={s.key} className="bg-brand-secondary-hover border border-white/5 rounded-xl p-4 flex items-center gap-3">
                 <div className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
                   <Icon className={`w-4 h-4 ${s.color}`} />
                 </div>
                 <div>
-                  <p className={`text-xl font-bold ${s.color}`}>{s.value.toLocaleString('de-DE')} €</p>
-                  <p className="text-[10px] text-gray-500 leading-tight">{s.label}</p>
+                  <p className={`text-xl font-bold ${s.color}`}>{stats[s.key].toLocaleString('de-DE')} €</p>
+                  <p className="text-[10px] text-gray-500 leading-tight">{t(`agency.commissionsPage.stats.${s.key}`)}</p>
                 </div>
               </div>
             );
@@ -181,7 +188,7 @@ export default function CommissionsPage() {
             <div className="bg-brand-secondary-hover border border-white/5 rounded-xl p-5">
               <div className="flex items-center gap-2 mb-4">
                 <Trophy className="w-4 h-4 text-brand-primary" />
-                <h2 className="text-sm font-semibold text-white">Meiste Aufträge</h2>
+                <h2 className="text-sm font-semibold text-white">{t('agency.commissionsPage.topOrdersTitle')}</h2>
               </div>
               <div className="space-y-3">
                 {topByOrders.map((p, i) => (
@@ -210,7 +217,7 @@ export default function CommissionsPage() {
             <div className="bg-brand-secondary-hover border border-white/5 rounded-xl p-5">
               <div className="flex items-center gap-2 mb-4">
                 <TrendingUp className="w-4 h-4 text-green-400" />
-                <h2 className="text-sm font-semibold text-white">Höchste bezahlte Provision</h2>
+                <h2 className="text-sm font-semibold text-white">{t('agency.commissionsPage.topPaidTitle')}</h2>
               </div>
               <div className="space-y-3">
                 {topByPaid.map((p, i) => (
@@ -235,7 +242,7 @@ export default function CommissionsPage() {
                   </div>
                 ))}
                 {topByPaid.every(p => p.paidAmount === 0) && (
-                  <p className="text-xs text-gray-600 text-center py-4">Noch keine bezahlten Provisionen</p>
+                  <p className="text-xs text-gray-600 text-center py-4">{t('agency.commissionsPage.noPaidCommissions')}</p>
                 )}
               </div>
             </div>
@@ -245,7 +252,7 @@ export default function CommissionsPage() {
         {/* ── Filter-Leiste ── */}
         <div className="flex items-center gap-3 mb-4 flex-wrap">
           <div className="flex items-center gap-1 bg-brand-secondary-hover border border-white/5 rounded-xl p-1">
-            {(['all', 'pending', 'invoiced', 'paid', 'cancelled'] as StatusFilter[]).map(f => (
+            {statusOrder.map(f => (
               <button
                 key={f}
                 onClick={() => setStatusFilter(f)}
@@ -255,7 +262,7 @@ export default function CommissionsPage() {
                     : 'text-gray-500 hover:text-white hover:bg-white/5'
                 }`}
               >
-                {{ all: 'Alle', pending: 'Ausstehend', invoiced: 'In Rechnung', paid: 'Bezahlt', cancelled: 'Storniert' }[f]}
+                {t(`agency.commissionsPage.statusFilter.${f}`)}
               </button>
             ))}
           </div>
@@ -267,7 +274,7 @@ export default function CommissionsPage() {
                 onChange={e => setPartnerFilter(e.target.value)}
                 className="appearance-none bg-brand-secondary-hover border border-white/5 text-sm text-gray-400 rounded-xl px-4 py-2 pr-8 focus:outline-none focus:border-white/20 hover:border-white/15 transition-colors cursor-pointer"
               >
-                <option value="all">Alle Partner</option>
+                <option value="all">{t('agency.commissionsPage.allPartners')}</option>
                 {uniquePartners.map(([id, name]) => (
                   <option key={id} value={id}>{name}</option>
                 ))}
@@ -284,7 +291,7 @@ export default function CommissionsPage() {
                 onChange={e => setMemberFilter(e.target.value)}
                 className="appearance-none bg-brand-secondary-hover border border-white/5 text-sm text-gray-400 rounded-xl px-4 py-2 pr-8 focus:outline-none focus:border-white/20 hover:border-white/15 transition-colors cursor-pointer"
               >
-                <option value="all">Alle Vertriebler</option>
+                <option value="all">{t('agency.commissionsPage.allSalespeople')}</option>
                 {teamMembers.map(m => (
                   <option key={m.id} value={m.id}>{m.full_name}</option>
                 ))}
@@ -299,38 +306,38 @@ export default function CommissionsPage() {
               className="text-[11px] text-gray-500 hover:text-white flex items-center gap-1 transition-colors"
             >
               <Filter className="w-3 h-3" />
-              Filter zurücksetzen
+              {t('agency.common.resetFilter')}
             </button>
           )}
 
-          <span className="ml-auto text-xs text-gray-600">{filtered.length} Einträge</span>
+          <span className="ml-auto text-xs text-gray-600">{t('agency.commissionsPage.entryCount', { count: filtered.length })}</span>
         </div>
 
         {/* ── Tabelle ── */}
         <div className="bg-brand-secondary-hover border border-white/5 rounded-xl overflow-hidden">
           {loading ? (
-            <div className="text-center py-12 text-gray-500 text-sm">Laden…</div>
+            <div className="text-center py-12 text-gray-500 text-sm">{t('agency.common.loading')}</div>
           ) : filtered.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 gap-3 text-gray-600">
               <Landmark className="w-8 h-8 opacity-20" />
-              <p className="text-sm">Keine Provisionen gefunden</p>
+              <p className="text-sm">{t('agency.commissionsPage.empty')}</p>
             </div>
           ) : (
             <table className="w-full">
               <thead>
                 <tr className="text-[10px] font-bold text-gray-500 uppercase tracking-wider border-b border-white/5">
-                  <th className="px-5 py-3 text-left">Partner</th>
-                  <th className="px-5 py-3 text-left">Lead</th>
-                  <th className="px-5 py-3 text-right">Betrag</th>
-                  <th className="px-5 py-3 text-left">Rechnung-Nr.</th>
-                  <th className="px-5 py-3 text-left">Status</th>
-                  <th className="px-5 py-3 text-right">Datum</th>
-                  <th className="px-5 py-3 text-right">Aktion</th>
+                  <th className="px-5 py-3 text-left">{t('agency.commissionsPage.columns.partner')}</th>
+                  <th className="px-5 py-3 text-left">{t('agency.commissionsPage.columns.lead')}</th>
+                  <th className="px-5 py-3 text-right">{t('agency.commissionsPage.columns.amount')}</th>
+                  <th className="px-5 py-3 text-left">{t('agency.commissionsPage.columns.invoiceNumber')}</th>
+                  <th className="px-5 py-3 text-left">{t('agency.commissionsPage.columns.status')}</th>
+                  <th className="px-5 py-3 text-right">{t('agency.commissionsPage.columns.date')}</th>
+                  <th className="px-5 py-3 text-right">{t('agency.commissionsPage.columns.action')}</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((c, i) => {
-                  const s = STATUS_MAP[c.status] || STATUS_MAP.cancelled;
+                  const s = statusColors[c.status as StatusKey] || statusColors.cancelled;
                   return (
                     <tr key={c.id} className={`border-b border-white/5 text-sm ${i % 2 !== 0 ? 'bg-white/[0.02]' : ''}`}>
                       <td className="px-5 py-3.5 font-medium text-white">{c.partner?.company_name || '—'}</td>
@@ -338,7 +345,9 @@ export default function CommissionsPage() {
                       <td className="px-5 py-3.5 text-right font-semibold text-white">{c.amount.toLocaleString('de-DE')} €</td>
                       <td className="px-5 py-3.5 text-gray-500 text-xs">{c.invoice_number || '—'}</td>
                       <td className="px-5 py-3.5">
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${s.color}`}>{s.label}</span>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${s}`}>
+                          {t(`agency.commissionsPage.status.${c.status as StatusKey}`)}
+                        </span>
                       </td>
                       <td className="px-5 py-3.5 text-right text-gray-600">
                         {new Date(c.created_at).toLocaleDateString('de-DE')}
@@ -350,7 +359,7 @@ export default function CommissionsPage() {
                             className="flex items-center gap-1 text-xs bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 px-3 py-1.5 rounded-lg transition-colors ml-auto"
                           >
                             <FileText className="w-3 h-3" />
-                            In Rechnung
+                            {t('agency.commissionsPage.actions.invoice')}
                           </button>
                         )}
                         {c.status === 'invoiced' && (
@@ -359,7 +368,7 @@ export default function CommissionsPage() {
                             className="flex items-center gap-1 text-xs bg-green-500/10 text-green-400 hover:bg-green-500/20 px-3 py-1.5 rounded-lg transition-colors ml-auto"
                           >
                             <CheckCircle className="w-3 h-3" />
-                            Bezahlt
+                            {t('agency.commissionsPage.actions.paid')}
                           </button>
                         )}
                         {c.status === 'paid' && (

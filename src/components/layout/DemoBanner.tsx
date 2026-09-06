@@ -4,6 +4,7 @@
 
 import { useNavigate } from 'react-router-dom';
 import { Eye } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { BETA_COPY } from '../../lib/betaConfig';
 import { PillButton } from '../ui/PillButton';
 
@@ -12,7 +13,8 @@ interface Props {
   label?: string;
 }
 
-export default function DemoBanner({ label = 'Demo-Modus — so erleben deine Kunden Solvary' }: Props) {
+export default function DemoBanner({ label }: Props) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   return (
@@ -21,11 +23,11 @@ export default function DemoBanner({ label = 'Demo-Modus — so erleben deine Ku
         <div className="flex items-center gap-2 min-w-0">
           <Eye className="w-4 h-4 text-brand-primary shrink-0" />
           <p className="text-xs md:text-sm font-medium truncate">
-            {label}
+            {label ?? t('demoBanner.text')}
           </p>
         </div>
         <PillButton variant="primary" onClick={() => navigate('/beta')}>
-          <span className="hidden sm:inline">Für mein Geschäft holen</span>
+          <span className="hidden sm:inline">{t('demoBanner.cta')}</span>
           <span className="sm:hidden">{BETA_COPY.freeTrial}</span>
         </PillButton>
       </div>

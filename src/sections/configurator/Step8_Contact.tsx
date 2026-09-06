@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Shield, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
 import type { WizardData } from '../../pages/Configurator';
 
@@ -11,6 +12,8 @@ interface Props {
 }
 
 export default function Step8_Contact({ data, updateData, onSubmit, isSubmitting, submitError, companyName = 'Solvary' }: Props) {
+  const { t } = useTranslation();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (data.firstName && data.lastName && data.email && data.privacyConsent && !isSubmitting) {
@@ -21,8 +24,8 @@ export default function Step8_Contact({ data, updateData, onSubmit, isSubmitting
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">Kontaktdaten</h2>
-        <p className="text-gray-500 text-sm">Geben Sie Ihre Daten ein, damit wir Ihr persönliches Angebot erstellen können.</p>
+        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">{t('configurator.step8.title')}</h2>
+        <p className="text-gray-500 text-sm">{t('configurator.step8.subtitle')}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -35,23 +38,23 @@ export default function Step8_Contact({ data, updateData, onSubmit, isSubmitting
         {/* Name Row */}
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium text-brand-secondary">Vorname</label>
+            <label className="text-xs font-medium text-brand-secondary">{t('configurator.step8.firstName')}</label>
             <input
               type="text"
               value={data.firstName}
               onChange={(e) => updateData({ firstName: e.target.value })}
-              placeholder="Max"
+              placeholder={t('configurator.step8.firstNamePlaceholder')}
               required
               className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary"
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium text-brand-secondary">Nachname</label>
+            <label className="text-xs font-medium text-brand-secondary">{t('configurator.step8.lastName')}</label>
             <input
               type="text"
               value={data.lastName}
               onChange={(e) => updateData({ lastName: e.target.value })}
-              placeholder="Mustermann"
+              placeholder={t('configurator.step8.lastNamePlaceholder')}
               required
               className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary"
             />
@@ -60,12 +63,12 @@ export default function Step8_Contact({ data, updateData, onSubmit, isSubmitting
 
         {/* Email */}
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-brand-secondary">E-Mail-Adresse</label>
+          <label className="text-xs font-medium text-brand-secondary">{t('configurator.step8.email')}</label>
           <input
             type="email"
             value={data.email}
             onChange={(e) => updateData({ email: e.target.value })}
-            placeholder="max.mustermann@email.de"
+            placeholder={t('configurator.step8.emailPlaceholder')}
             required
             className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary"
           />
@@ -73,36 +76,36 @@ export default function Step8_Contact({ data, updateData, onSubmit, isSubmitting
 
         {/* Phone */}
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-brand-secondary">Telefonnummer</label>
+          <label className="text-xs font-medium text-brand-secondary">{t('configurator.step8.phone')}</label>
           <input
             type="tel"
             value={data.phone}
             onChange={(e) => updateData({ phone: e.target.value })}
-            placeholder="+49 170 1234567"
+            placeholder={t('configurator.step8.phonePlaceholder')}
             className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary"
           />
         </div>
 
         {/* City */}
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-brand-secondary">Ort</label>
+          <label className="text-xs font-medium text-brand-secondary">{t('configurator.step8.city')}</label>
           <input
             type="text"
             value={data.city}
             onChange={(e) => updateData({ city: e.target.value })}
-            placeholder="Berlin"
+            placeholder={t('configurator.step8.cityPlaceholder')}
             className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary"
           />
         </div>
 
         {/* Company (optional) */}
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-brand-secondary">Firma <span className="text-gray-400">(optional)</span></label>
+          <label className="text-xs font-medium text-brand-secondary">{t('configurator.step8.company')} <span className="text-gray-400">({t('configurator.common.optional')})</span></label>
           <input
             type="text"
             value={data.company}
             onChange={(e) => updateData({ company: e.target.value })}
-            placeholder="Muster GmbH"
+            placeholder={t('configurator.step8.companyPlaceholder')}
             className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary"
           />
         </div>
@@ -117,7 +120,9 @@ export default function Step8_Contact({ data, updateData, onSubmit, isSubmitting
             className="w-4 h-4 mt-0.5 rounded border-gray-300 text-brand-secondary focus:ring-brand-secondary"
           />
           <span className="text-xs text-gray-500 leading-relaxed">
-            Ich stimme der <a href="#" className="text-brand-secondary font-medium hover:underline">Datenschutzerklärung</a> zu und erlaube {companyName}, meine Daten zur Erstellung eines Angebots zu verwenden.
+            {t('configurator.step8.privacyPrefix')}{' '}
+            <a href="#" className="text-brand-secondary font-medium hover:underline">{t('configurator.step8.privacyLink')}</a>{' '}
+            {t('configurator.step8.privacySuffix', { company: companyName })}
           </span>
         </label>
 
@@ -130,11 +135,11 @@ export default function Step8_Contact({ data, updateData, onSubmit, isSubmitting
           {isSubmitting ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin" />
-              Wird gesendet…
+              {t('configurator.step8.sending')}
             </>
           ) : (
             <>
-              Angebot anfordern
+              {t('configurator.step8.submit')}
               <ArrowRight className="w-4 h-4" />
             </>
           )}
@@ -143,7 +148,7 @@ export default function Step8_Contact({ data, updateData, onSubmit, isSubmitting
         {/* Trust Badge */}
         <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
           <Shield className="w-4 h-4" />
-          <span>Ihre Daten werden SSL-verschlüsselt übertragen.</span>
+          <span>{t('configurator.step8.ssl')}</span>
         </div>
       </form>
     </div>

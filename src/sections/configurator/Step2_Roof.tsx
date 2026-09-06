@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Sun, CloudSun, CloudRain } from 'lucide-react';
 import type { WizardData } from '../../pages/Configurator';
 
@@ -6,35 +7,40 @@ interface Props {
   updateData: (p: Partial<WizardData>) => void;
 }
 
-const orientations = [
-  { id: 'N', label: 'Norden', deg: 0 },
-  { id: 'NO', label: 'N-Ost', deg: 45 },
-  { id: 'O', label: 'Osten', deg: 90 },
-  { id: 'SO', label: 'S-Ost', deg: 135 },
-  { id: 'S', label: 'Süden', deg: 180 },
-  { id: 'SW', label: 'S-West', deg: 225 },
-  { id: 'W', label: 'Westen', deg: 270 },
-  { id: 'NW', label: 'N-West', deg: 315 },
-];
+const orientationIds = ['N', 'NO', 'O', 'SO', 'S', 'SW', 'W', 'NW'];
 
-const shadingOptions = [
-  { id: 'none', label: 'Keine Verschattung', icon: Sun, desc: 'Freie Sonneneinstrahlung' },
-  { id: 'partial', label: 'Teilweise', icon: CloudSun, desc: 'Gelegentlich Schatten' },
-  { id: 'strong', label: 'Stark', icon: CloudRain, desc: 'Häufig verschattet' },
+const shadingTypeIcons = [
+  { id: 'none', icon: Sun },
+  { id: 'partial', icon: CloudSun },
+  { id: 'strong', icon: CloudRain },
 ];
 
 export default function Step2_Roof({ data, updateData }: Props) {
+  const { t } = useTranslation();
+
+  const orientations = orientationIds.map((id, i) => ({
+    id,
+    label: t(`configurator.step2.orientations.${i}.label`),
+    deg: [0, 45, 90, 135, 180, 225, 270, 315][i],
+  }));
+
+  const shadingOptions = shadingTypeIcons.map((opt, i) => ({
+    ...opt,
+    label: t(`configurator.step2.shadingOptions.${i}.label`),
+    desc: t(`configurator.step2.shadingOptions.${i}.desc`),
+  }));
+
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">Dach konfigurieren</h2>
-        <p className="text-gray-500 text-sm">Geben Sie die Eigenschaften Ihres Daches an.</p>
+        <h2 className="text-2xl md:text-3xl font-semibold text-brand-secondary mb-2">{t('configurator.step2.title')}</h2>
+        <p className="text-gray-500 text-sm">{t('configurator.step2.subtitle')}</p>
       </div>
 
       {/* Roof Tilt */}
       <div className="bg-white/60 backdrop-blur-sm rounded-2xl border border-gray-200 p-6">
         <div className="flex items-center justify-between mb-4">
-          <label className="text-sm font-medium text-brand-secondary">Dachneigung</label>
+          <label className="text-sm font-medium text-brand-secondary">{t('configurator.step2.roofTiltLabel')}</label>
           <span className="text-2xl font-bold text-brand-secondary">{data.roofTilt}°</span>
         </div>
         <input
@@ -46,15 +52,15 @@ export default function Step2_Roof({ data, updateData }: Props) {
           className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer accent-brand-primary"
         />
         <div className="flex justify-between text-xs text-gray-400 mt-2">
-          <span>0° (Flach)</span>
-          <span>30° (Optimal)</span>
-          <span>60° (Steil)</span>
+          <span>{t('configurator.step2.tiltFlat')}</span>
+          <span>{t('configurator.step2.tiltOptimal')}</span>
+          <span>{t('configurator.step2.tiltSteep')}</span>
         </div>
       </div>
 
       {/* Orientation - Compass */}
       <div className="bg-white/60 backdrop-blur-sm rounded-2xl border border-gray-200 p-6">
-        <label className="text-sm font-medium text-brand-secondary mb-4 block">Dachausrichtung</label>
+        <label className="text-sm font-medium text-brand-secondary mb-4 block">{t('configurator.step2.orientationLabel')}</label>
         <div className="relative w-[240px] h-[240px] mx-auto">
           {/* Compass Circle */}
           <div className="absolute inset-0 rounded-full border-2 border-gray-200 bg-white/40" />
@@ -83,14 +89,14 @@ export default function Step2_Roof({ data, updateData }: Props) {
           })}
           {/* S Label inside */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-8">
-            <p className="text-[10px] text-gray-400">Süd = Optimal</p>
+            <p className="text-[10px] text-gray-400">{t('configurator.step2.southOptimal')}</p>
           </div>
         </div>
       </div>
 
       {/* Roof Area */}
       <div className="bg-white/60 backdrop-blur-sm rounded-2xl border border-gray-200 p-6">
-        <label className="text-sm font-medium text-brand-secondary mb-3 block">Geschätzte Dachfläche</label>
+        <label className="text-sm font-medium text-brand-secondary mb-3 block">{t('configurator.step2.roofAreaLabel')}</label>
         <div className="relative">
           <input
             type="number"
@@ -101,19 +107,19 @@ export default function Step2_Roof({ data, updateData }: Props) {
               if (val !== '' && Number(val) < 0) return;
               updateData({ roofArea: val });
             }}
-            placeholder="z.B. 60"
+            placeholder={t('configurator.step2.roofAreaPlaceholder')}
             className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-16 text-sm text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-1 focus:ring-brand-secondary"
           />
           <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-400">m²</span>
         </div>
         <p className="text-xs text-gray-400 mt-2">
-          Ungefähre nutzbare Fläche für Solarmodule. Bei Unsicherheit: Einfamilienhaus ≈ 40-60m².
+          {t('configurator.step2.roofAreaHint')}
         </p>
       </div>
 
       {/* Shading */}
       <div>
-        <label className="text-sm font-medium text-brand-secondary mb-3 block">Verschattung</label>
+        <label className="text-sm font-medium text-brand-secondary mb-3 block">{t('configurator.step2.shadingLabel')}</label>
         <div className="grid grid-cols-3 gap-3">
           {shadingOptions.map((opt) => {
             const Icon = opt.icon;

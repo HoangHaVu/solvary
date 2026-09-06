@@ -22,31 +22,10 @@ import {
 } from "lucide-react";
 import SEO from "../components/seo/SEO";
 import { useAuth } from "../contexts/AuthContext";
+import { useTranslation } from "react-i18next";
 import { LOGO_WHITE_PATH } from "../lib/branding";
 import { fetchCustomerProject, fetchCustomerDocuments } from "../services/data";
 import type { Project, DocumentItem } from "../services/data";
-
-const sidebarNav = [
-  { id: "overview", label: "Overview", icon: LayoutDashboard },
-  { id: "analyst", label: "Analyst", icon: TrendingUp },
-  { id: "performance", label: "Performance", icon: BarChart2 },
-  { id: "report", label: "Report", icon: FileText },
-  { id: "system", label: "System", icon: Cpu },
-  { id: "mysite", label: "My Site", icon: MapPin },
-];
-
-const bottomNav = [
-  { id: "help", label: "Help", icon: HelpCircle },
-  { id: "settings", label: "Settings", icon: Settings },
-];
-
-const statusLabels: Record<string, string> = {
-  angebot: "Angebot",
-  planung: "Planung",
-  genehmigung: "Genehmigung",
-  installation: "Installation",
-  inbetrieb: "In Betrieb",
-};
 
 const statusColors: Record<string, string> = {
   angebot: "text-yellow-400",
@@ -57,8 +36,59 @@ const statusColors: Record<string, string> = {
 };
 
 export default function Dashboard() {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
+
+  const sidebarNav = [
+    {
+      id: "overview",
+      label: t("installerDashboard.sidebar.overview"),
+      icon: LayoutDashboard,
+    },
+    {
+      id: "analyst",
+      label: t("installerDashboard.sidebar.analyst"),
+      icon: TrendingUp,
+    },
+    {
+      id: "performance",
+      label: t("installerDashboard.sidebar.performance"),
+      icon: BarChart2,
+    },
+    {
+      id: "report",
+      label: t("installerDashboard.sidebar.report"),
+      icon: FileText,
+    },
+    { id: "system", label: t("installerDashboard.sidebar.system"), icon: Cpu },
+    {
+      id: "mysite",
+      label: t("installerDashboard.sidebar.mySite"),
+      icon: MapPin,
+    },
+  ];
+
+  const bottomNav = [
+    {
+      id: "help",
+      label: t("installerDashboard.sidebar.help"),
+      icon: HelpCircle,
+    },
+    {
+      id: "settings",
+      label: t("installerDashboard.sidebar.settings"),
+      icon: Settings,
+    },
+  ];
+
+  const statusLabels: Record<string, string> = {
+    angebot: t("installerDashboard.statusLabels.angebot"),
+    planung: t("installerDashboard.statusLabels.planung"),
+    genehmigung: t("installerDashboard.statusLabels.genehmigung"),
+    installation: t("installerDashboard.statusLabels.installation"),
+    inbetrieb: t("installerDashboard.statusLabels.inbetrieb"),
+  };
   const [project, setProject] = useState<Project | null>(null);
   const [documents, setDocuments] = useState<DocumentItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -83,7 +113,7 @@ export default function Dashboard() {
       setError(
         err instanceof Error
           ? err.message
-          : "Daten konnten nicht geladen werden.",
+          : t("installerDashboard.error.loadData"),
       );
     } finally {
       setIsLoading(false);
@@ -97,7 +127,9 @@ export default function Dashboard() {
   const consumedPoints = [
     80, 110, 140, 100, 180, 260, 220, 180, 160, 200, 120, 100,
   ];
-  const months = ["Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec", "Jan"];
+  const months = t("installerDashboard.energyChart.months", {
+    returnObjects: true,
+  }) as string[];
 
   const Y_MAX = 350;
   const chartH = 340;
@@ -129,10 +161,30 @@ export default function Dashboard() {
   };
 
   const monthlyData = [
-    { month: "Sept", value: 280, icon: Sun, active: true },
-    { month: "Oct", value: 301, icon: Sun, active: false },
-    { month: "Nov", value: 189, icon: Cloud, active: false },
-    { month: "Dec", value: 243, icon: Cloud, active: false },
+    {
+      month: t("installerDashboard.monthlyGeneration.months.sept"),
+      value: 280,
+      icon: Sun,
+      active: true,
+    },
+    {
+      month: t("installerDashboard.monthlyGeneration.months.oct"),
+      value: 301,
+      icon: Sun,
+      active: false,
+    },
+    {
+      month: t("installerDashboard.monthlyGeneration.months.nov"),
+      value: 189,
+      icon: Cloud,
+      active: false,
+    },
+    {
+      month: t("installerDashboard.monthlyGeneration.months.dec"),
+      value: 243,
+      icon: Cloud,
+      active: false,
+    },
   ];
 
   if (isLoading) {
@@ -150,7 +202,7 @@ export default function Dashboard() {
     <>
       <SEO
         title="Dashboard"
-        description="Verwalten Sie Ihre Solar-Projekte und Dokumente."
+        description={t("installerDashboard.seo.description")}
         canonical="/dashboard"
         noindex
       />
@@ -224,7 +276,9 @@ export default function Dashboard() {
                   {user?.fullName || "User"}
                 </p>
                 <p className="text-xs text-gray-600">
-                  {user?.role === "customer" ? "Kunde" : user?.role}
+                  {user?.role === "customer"
+                    ? t("installerDashboard.role.customer")
+                    : user?.role}
                 </p>
               </div>
               <button
@@ -241,7 +295,9 @@ export default function Dashboard() {
         <main className="flex-1 p-6 overflow-y-auto">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
-            <h1 className="text-xl font-semibold text-white">Overview</h1>
+            <h1 className="text-xl font-semibold text-white">
+              {t("installerDashboard.header.overview")}
+            </h1>
             <button className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-gray-500 hover:text-white transition-colors">
               <Bell className="w-4 h-4" />
             </button>
@@ -261,18 +317,17 @@ export default function Dashboard() {
                 <Sun className="w-8 h-8 text-brand-primary" />
               </div>
               <h2 className="text-xl font-semibold text-white mb-2">
-                Noch kein Projekt vorhanden
+                {t("installerDashboard.emptyState.title")}
               </h2>
               <p className="text-sm text-gray-500 max-w-md mb-6">
-                Sie haben noch keine Solaranlage konfiguriert. Starten Sie den
-                Konfigurator, um Ihr persönliches Angebot zu erhalten.
+                {t("installerDashboard.emptyState.description")}
               </p>
               <Link
                 to="/konfigurator"
                 className="flex items-center gap-2 bg-brand-primary text-brand-secondary px-6 py-3 rounded-xl text-sm font-semibold hover:bg-brand-primary-hover transition-all"
               >
                 <Zap className="w-4 h-4" />
-                Zum Konfigurator
+                {t("installerDashboard.emptyState.cta")}
               </Link>
             </div>
           ) : (
@@ -285,7 +340,9 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-white">
-                      Projekt #{project.id.slice(0, 8)}
+                      {t("installerDashboard.project.title", {
+                        id: project.id.slice(0, 8),
+                      })}
                     </p>
                     <p className="text-xs text-gray-500">
                       {project.zip} · {project.kwp} kWp ·{" "}
@@ -306,10 +363,12 @@ export default function Dashboard() {
                 <div className="col-span-7 bg-brand-secondary-hover rounded-2xl p-5 border border-white/5">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-base font-semibold text-white">
-                      Solar Panel Monitoring
+                      {t("installerDashboard.monitoring.title")}
                     </h2>
                     <button className="flex items-center gap-1.5 text-xs text-gray-500 bg-white/5 px-3 py-1.5 rounded-lg">
-                      Projekt {project.id.slice(0, 6)}{" "}
+                      {t("installerDashboard.monitoring.projectSelect", {
+                        id: project.id.slice(0, 6),
+                      })}{" "}
                       <ChevronDown className="w-3 h-3" />
                     </button>
                   </div>
@@ -321,16 +380,17 @@ export default function Dashboard() {
                         <div className="flex items-center gap-2 mb-1">
                           <div className="w-2 h-2 rounded-full bg-green-400" />
                           <span className="text-[10px] text-gray-500">
-                            Status
+                            {t("installerDashboard.monitoring.status")}
                           </span>
                         </div>
                         <p className="text-lg font-bold text-white">
-                          {statusLabels[project.status] || "Aktiv"}
+                          {statusLabels[project.status] ||
+                            t("installerDashboard.monitoring.active")}
                         </p>
                       </div>
                       <div className="bg-[#252525] rounded-xl p-3">
                         <span className="text-[10px] text-gray-500">
-                          Kapazität
+                          {t("installerDashboard.monitoring.capacity")}
                         </span>
                         <p className="text-lg font-bold text-white">
                           {project.kwp || 0}{" "}
@@ -341,7 +401,7 @@ export default function Dashboard() {
                       </div>
                       <div className="bg-[#252525] rounded-xl p-3">
                         <span className="text-[10px] text-gray-500">
-                          Investition
+                          {t("installerDashboard.monitoring.investment")}
                         </span>
                         <p className="text-lg font-bold text-white">
                           {project.investment?.toLocaleString() || 0}{" "}
@@ -352,7 +412,7 @@ export default function Dashboard() {
                       </div>
                       <div className="bg-[#252525] rounded-xl p-3">
                         <span className="text-[10px] text-gray-500">
-                          Amortisation
+                          {t("installerDashboard.monitoring.amortization")}
                         </span>
                         <p className="text-lg font-bold text-white">
                           {project.amortization || 0}{" "}
@@ -363,7 +423,7 @@ export default function Dashboard() {
                       </div>
                       <div className="bg-[#252525] rounded-xl p-3">
                         <span className="text-[10px] text-gray-500">
-                          Ersparnis/Jahr
+                          {t("installerDashboard.monitoring.savingsPerYear")}
                         </span>
                         <p className="text-lg font-bold text-white">
                           {project.annual_savings?.toLocaleString() || 0}{" "}
@@ -374,7 +434,7 @@ export default function Dashboard() {
                       </div>
                       <div className="bg-[#252525] rounded-xl p-3">
                         <span className="text-[10px] text-gray-500">
-                          Autarkie
+                          {t("installerDashboard.monitoring.autarky")}
                         </span>
                         <p className="text-lg font-bold text-white">
                           {project.autarky || 0}{" "}
@@ -385,7 +445,7 @@ export default function Dashboard() {
                       </div>
                       <div className="bg-[#252525] rounded-xl p-3 col-span-1">
                         <span className="text-[10px] text-gray-500">
-                          Gewinn nach 20 Jahren
+                          {t("installerDashboard.monitoring.profit20Years")}
                         </span>
                         <p className="text-2xl font-bold text-brand-primary">
                           {project.profit_20_years?.toLocaleString() || 0}{" "}
@@ -396,10 +456,11 @@ export default function Dashboard() {
                       </div>
                       <div className="bg-[#252525] rounded-xl p-3 flex flex-col justify-center">
                         <span className="text-[10px] text-gray-500">
-                          Notizen
+                          {t("installerDashboard.monitoring.notes")}
                         </span>
                         <p className="text-xs text-gray-400 line-clamp-2">
-                          {project.notes || "Keine Notizen"}
+                          {project.notes ||
+                            t("installerDashboard.monitoring.noNotes")}
                         </p>
                       </div>
                     </div>
@@ -419,15 +480,17 @@ export default function Dashboard() {
                 <div className="col-span-5 bg-brand-secondary-hover rounded-2xl p-5 border border-white/5">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-base font-semibold text-white">
-                      Monatliche Erzeugung
+                      {t("installerDashboard.monthlyGeneration.title")}
                     </h2>
                     <span className="text-xs text-gray-500 flex items-center gap-1">
-                      <Zap className="w-3 h-3 text-brand-primary" /> ~
-                      {Math.round((project.kwp || 0) * 100)} kWh
+                      <Zap className="w-3 h-3 text-brand-primary" />{" "}
+                      {t("installerDashboard.monthlyGeneration.approx", {
+                        value: Math.round((project.kwp || 0) * 100),
+                      })}
                     </span>
                   </div>
                   <p className="text-[10px] text-gray-600 mb-4">
-                    Geschätzte Werte basierend auf Ihrer Konfiguration
+                    {t("installerDashboard.monthlyGeneration.estimated")}
                   </p>
 
                   {/* Month Cards */}
@@ -463,7 +526,9 @@ export default function Dashboard() {
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">
-                        Systemleistung
+                        {t(
+                          "installerDashboard.monthlyGeneration.systemPerformance",
+                        )}
                       </span>
                       <span className="text-xs text-white">
                         {project.kwp} kWp
@@ -471,7 +536,9 @@ export default function Dashboard() {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">
-                        Jährliche Ersparnis
+                        {t(
+                          "installerDashboard.monthlyGeneration.annualSavings",
+                        )}
                       </span>
                       <span className="text-xs text-white">
                         {project.annual_savings?.toLocaleString()} €
@@ -479,10 +546,11 @@ export default function Dashboard() {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">
-                        Amortisation
+                        {t("installerDashboard.monthlyGeneration.amortization")}
                       </span>
                       <span className="text-xs text-white font-semibold">
-                        {project.amortization} Jahre
+                        {project.amortization}{" "}
+                        {t("installerDashboard.monthlyGeneration.years")}
                       </span>
                     </div>
                   </div>
@@ -497,19 +565,22 @@ export default function Dashboard() {
                     <div>
                       <div className="flex items-center gap-2">
                         <h2 className="text-base font-semibold text-white">
-                          Energy Produced
+                          {t("installerDashboard.energyChart.title")}
                         </h2>
                         <span className="text-xs text-gray-500 flex items-center gap-1">
-                          <Zap className="w-3 h-3 text-brand-primary" /> ~
-                          {Math.round((project.kwp || 0) * 900)} kWh/Jahr
+                          <Zap className="w-3 h-3 text-brand-primary" />{" "}
+                          {t("installerDashboard.energyChart.approxYearly", {
+                            value: Math.round((project.kwp || 0) * 900),
+                          })}
                         </span>
                       </div>
                       <p className="text-[10px] text-gray-600 mt-0.5">
-                        Geschätzte Ertragsprognose
+                        {t("installerDashboard.energyChart.forecast")}
                       </p>
                     </div>
                     <button className="flex items-center gap-1 text-xs text-gray-500 bg-white/5 px-3 py-1.5 rounded-lg">
-                      Jährlich <ChevronDown className="w-3 h-3" />
+                      {t("installerDashboard.energyChart.period")}{" "}
+                      <ChevronDown className="w-3 h-3" />
                     </button>
                   </div>
 
@@ -631,13 +702,13 @@ export default function Dashboard() {
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-0.5 bg-brand-primary rounded-full" />
                       <span className="text-xs text-gray-500">
-                        Energy Produced
+                        {t("installerDashboard.energyChart.legend.produced")}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-0.5 bg-blue-500 rounded-full" />
                       <span className="text-xs text-gray-500">
-                        Energy Consumption
+                        {t("installerDashboard.energyChart.legend.consumed")}
                       </span>
                     </div>
                   </div>
@@ -646,17 +717,17 @@ export default function Dashboard() {
                 {/* Documents */}
                 <div className="col-span-5 bg-brand-secondary-hover rounded-2xl p-5 border border-white/5">
                   <h2 className="text-base font-semibold text-white mb-4">
-                    Dokumente
+                    {t("installerDashboard.documents.title")}
                   </h2>
 
                   {documents.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-8 text-center">
                       <FileText className="w-8 h-8 text-gray-600 mb-2" />
                       <p className="text-sm text-gray-500">
-                        Noch keine Dokumente vorhanden
+                        {t("installerDashboard.documents.empty.title")}
                       </p>
                       <p className="text-xs text-gray-600 mt-1">
-                        Dokumente werden hier angezeigt, sobald verfügbar
+                        {t("installerDashboard.documents.empty.description")}
                       </p>
                     </div>
                   ) : (

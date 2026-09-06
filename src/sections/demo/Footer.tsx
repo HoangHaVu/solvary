@@ -1,18 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Zap, Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Dribbble, ArrowRight } from 'lucide-react';
 import { LOGO_WHITE_PATH } from '../../lib/branding';
 
-const usefulLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Preise', href: '/preise' },
-  { label: 'Solar-Konfigurator', href: '/konfigurator' },
-  { label: 'Datenschutz', href: '/datenschutz' },
-  { label: 'Impressum', href: '/impressum' },
-  { label: 'AGB', href: '/agb' },
-];
-
 export default function Footer() {
+  const { t } = useTranslation();
+  const usefulLinks = t('demoPage.footer.usefulLinks', { returnObjects: true }) as { label: string; href: string }[];
+  const bottomLinks = t('demoPage.footer.bottomLinks', { returnObjects: true }) as { label: string; href: string }[];
   const [email, setEmail] = useState('');
 
   return (
@@ -32,7 +27,7 @@ export default function Footer() {
                 <Phone className="w-5 h-5 text-brand-secondary" />
               </div>
               <div>
-                <div className="text-xs text-gray-400 mb-0.5">Telefonnummer</div>
+                <div className="text-xs text-gray-400 mb-0.5">{t('demoPage.footer.phoneLabel')}</div>
                 <div className="text-sm text-white">+123-456-7890</div>
               </div>
             </div>
@@ -41,7 +36,7 @@ export default function Footer() {
                 <Mail className="w-5 h-5 text-brand-secondary" />
               </div>
               <div>
-                <div className="text-xs text-gray-400 mb-0.5">E-Mail</div>
+                <div className="text-xs text-gray-400 mb-0.5">{t('demoPage.footer.emailLabel')}</div>
                 <div className="text-sm text-white">info@solvary.de</div>
               </div>
             </div>
@@ -50,7 +45,7 @@ export default function Footer() {
                 <MapPin className="w-5 h-5 text-brand-secondary" />
               </div>
               <div>
-                <div className="text-xs text-gray-400 mb-0.5">Unsere Adresse</div>
+                <div className="text-xs text-gray-400 mb-0.5">{t('demoPage.footer.addressLabel')}</div>
                 <div className="text-sm text-white">East Street, USA 550</div>
               </div>
             </div>
@@ -61,15 +56,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* About */}
           <div>
-            <h4 className="text-base font-medium text-white mb-4">Über Solvary</h4>
+            <h4 className="text-base font-medium text-white mb-4">{t('demoPage.footer.aboutTitle')}</h4>
             <p className="text-sm text-gray-400 leading-relaxed">
-              Solvary ist die All-in-One Software für Solar-Installateure. Verwalte Leads, erstelle Angebote und Rechnungen, und skaliere dein Geschäft — alles an einem Ort.
+              {t('demoPage.footer.aboutText')}
             </p>
           </div>
 
           {/* Useful Links */}
           <div>
-            <h4 className="text-base font-medium text-white mb-4">Links</h4>
+            <h4 className="text-base font-medium text-white mb-4">{t('demoPage.footer.linksTitle')}</h4>
             <div className="flex flex-col gap-3">
               {usefulLinks.map((link) => (
                 <Link
@@ -85,7 +80,7 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-base font-medium text-white mb-4">Kontakt</h4>
+            <h4 className="text-base font-medium text-white mb-4">{t('demoPage.footer.contactTitle')}</h4>
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-brand-primary flex-shrink-0" />
@@ -100,20 +95,20 @@ export default function Footer() {
 
           {/* Newsletter */}
           <div>
-            <h4 className="text-base font-medium text-white mb-4">Newsletter</h4>
+            <h4 className="text-base font-medium text-white mb-4">{t('demoPage.footer.newsletterTitle')}</h4>
             <p className="text-sm text-gray-400 mb-4">
-              Melde dich für unseren Newsletter an und erhalte die neuesten Updates.
+              {t('demoPage.footer.newsletterSub')}
             </p>
             <div className="flex">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Ihre E-Mail-Adresse"
+                placeholder={t('demoPage.footer.emailPlaceholder')}
                 className="flex-1 bg-transparent border border-gray-700 rounded-l-full px-4 py-2.5 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-brand-primary"
               />
               <button className="bg-brand-primary text-brand-secondary text-sm font-medium px-5 py-2.5 rounded-r-full hover:bg-brand-primary-hover transition-colors flex items-center gap-1">
-                Anmelden
+                {t('demoPage.footer.subscribe')}
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -123,13 +118,19 @@ export default function Footer() {
         {/* Bottom Row */}
         <div className="border-t border-gray-800 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-6">
-            <Link to="/datenschutz" className="text-xs text-gray-500 hover:text-white transition-colors">Datenschutz</Link>
-            <Link to="/agb" className="text-xs text-gray-500 hover:text-white transition-colors">AGB</Link>
-            <Link to="/impressum" className="text-xs text-gray-500 hover:text-white transition-colors">Impressum</Link>
+            {bottomLinks.map((link) => (
+              <Link
+                key={link.label}
+                to={link.href}
+                className="text-xs text-gray-500 hover:text-white transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
 
           <p className="text-xs text-gray-500">
-            © 2026 Solvary. Alle Rechte vorbehalten.
+            {t('demoPage.footer.copyright')}
           </p>
 
           <div className="flex items-center gap-4">

@@ -1,11 +1,26 @@
 import { COLORS } from '../../lib/theme';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Search, Phone } from 'lucide-react';
 import { useLeads } from '../../hooks/useLeads';
 import { getScoreResult } from '../../utils/leadScore';
 
 export default function RealLeadsTable() {
+  const { t, i18n } = useTranslation();
   const { leads, isLoading, error } = useLeads();
+
+  const STATUS_LABELS: Record<string, string> = {
+    neu: t('leads.status.new'),
+    kontaktiert: t('leads.status.contacted'),
+    vorort: t('leads.status.onSite'),
+    angebot: t('leads.status.offer'),
+    abschluss: t('leads.status.closing'),
+    gewonnen: t('leads.status.won'),
+    verloren: t('leads.status.lost'),
+    planung: t('leads.status.planning'),
+    installation: t('leads.status.installation'),
+    abgeschlossen: t('leads.status.completed'),
+  };
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredLeads = leads.filter((l) =>
@@ -25,7 +40,7 @@ export default function RealLeadsTable() {
   if (error) {
     return (
       <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-xl text-sm">
-        Fehler beim Laden: {error}
+        {t('leads.errors.loadFailed', { error })}
       </div>
     );
   }
@@ -36,7 +51,7 @@ export default function RealLeadsTable() {
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
         <input
           type="text"
-          placeholder="Leads suchen..."
+          placeholder={t('leads.searchPlaceholder')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full bg-brand-secondary-hover border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-brand-primary/50"
@@ -44,7 +59,7 @@ export default function RealLeadsTable() {
       </div>
 
       <p className="text-sm text-gray-400">
-        {filteredLeads.length} {filteredLeads.length === 1 ? 'Lead' : 'Leads'} gefunden
+        {t('leads.foundCount', { count: filteredLeads.length })}
       </p>
 
       <div className="space-y-2">
@@ -89,7 +104,7 @@ export default function RealLeadsTable() {
                     lead.status === 'verloren' ? 'bg-red-500/10 text-red-400' :
                     'bg-gray-500/10 text-gray-400'
                   }`}>
-                    {lead.status}
+                    {STATUS_LABELS[lead.status] ?? lead.status}
                   </span>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 import { COLORS } from '../lib/theme';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import {
   ArrowLeft, Sun, Mail, Phone, MapPin, Zap, Euro, Calendar,
@@ -26,23 +27,6 @@ import type { Lead, Project } from '../services/data';
 
 const TIER_ICON = { heiss: Flame, warm: Zap, kalt: Snowflake };
 
-const OFFER_CONFIG: Record<Lead['offer_status'], { label: string; icon: React.ElementType; color: string; bg: string; border: string }> = {
-  created:  { label: 'Noch nicht versendet', icon: FileText,     color: 'text-gray-400',  bg: 'bg-[#252525]', border: 'border-white/5' },
-  sent:     { label: 'Angebot versendet',    icon: Send,         color: 'text-blue-400',  bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
-  viewed:   { label: 'Angebot angesehen',    icon: Eye,          color: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20' },
-  accepted: { label: 'Angebot angenommen ✓', icon: CheckCircle,  color: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20' },
-  rejected: { label: 'Angebot abgelehnt',    icon: XCircle,      color: 'text-red-400',   bg: 'bg-red-500/10', border: 'border-red-500/20' },
-};
-
-const STATUS_OPTIONS: { value: Lead['status']; label: string }[] = [
-  { value: 'neu', label: 'Neu' },
-  { value: 'kontaktiert', label: 'Kontaktiert' },
-  { value: 'angebot', label: 'Angebot versendet' },
-  { value: 'abschluss', label: 'Abschluss' },
-  { value: 'gewonnen', label: 'Gewonnen' },
-  { value: 'verloren', label: 'Verloren' },
-];
-
 const STATUS_COLOR: Record<Lead['status'], string> = {
   neu: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
   kontaktiert: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
@@ -54,25 +38,6 @@ const STATUS_COLOR: Record<Lead['status'], string> = {
   planung: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
   installation: 'bg-green-500/10 text-green-400 border-green-500/20',
   abgeschlossen: 'bg-gray-500/10 text-gray-400 border-gray-500/20',
-};
-
-const HORIZON_LABEL: Record<string, string> = {
-  sofort: 'So bald wie möglich',
-  '3monate': 'In 3 Monaten',
-  '12monate': 'In 12 Monaten',
-};
-
-const ORIENTATION_LABEL: Record<string, string> = {
-  sued: 'Süd',
-  ostwest: 'Ost / West',
-  nord: 'Nord',
-};
-
-const CONSTRUCTION_LABEL: Record<string, string> = {
-  pre1980: 'Vor 1980',
-  '1980-2000': '1980 – 2000',
-  '2000-2010': '2000 – 2010',
-  after2010: 'Nach 2010',
 };
 
 interface InfoRowProps {
@@ -112,7 +77,7 @@ function StatCard({ label, value, sub, icon, accent }: StatCardProps) {
 // ─── Default company settings for PDF ───
 const DEFAULT_COMPANY: CompanySettings = {
   firmenname: 'Voltify Solar',
-  slogan: 'Ihre Solaranlage — einfach konfiguriert.',
+  slogan: 'Your solar system — simply configured.',
   logoDataUrl: '',
   primaryColor: COLORS.secondary,
   accentColor: COLORS.primary,
@@ -153,13 +118,14 @@ function OfferActionSection({
   onStatusChange: (status: Lead['offer_status']) => Promise<void>;
 }) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const company = loadCompanySettings();
 
   const statusLabel: Record<OfferDraft['status'], string> = {
-    draft: 'Entwurf vorhanden',
-    sent: 'Angebot versendet',
-    accepted: 'Angebot angenommen',
-    rejected: 'Angebot abgelehnt',
+    draft: t('leads.offerAction.draft'),
+    sent: t('leads.offerAction.sent'),
+    accepted: t('leads.offerAction.accepted'),
+    rejected: t('leads.offerAction.rejected'),
   };
 
   const statusColor: Record<OfferDraft['status'], string> = {
@@ -169,9 +135,11 @@ function OfferActionSection({
     rejected: 'bg-red-500/10 text-red-400 border-red-500/20',
   };
 
+  const invoiceLabels = t('leads.invoiceLabels', { returnObjects: true }) as [string, string, string];
+
   return (
     <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
-      <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Angebot</h2>
+      <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">{t('leads.offer')}</h2>
 
       {loadingDraft ? (
         <div className="flex items-center justify-center py-8">
@@ -185,7 +153,7 @@ function OfferActionSection({
           </div>
 
           <div className="flex items-baseline gap-2">
-            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Gesamtsumme</span>
+            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{t('leads.total')}</span>
             <span className="text-2xl font-black text-brand-primary">{draft.total.toLocaleString('de-DE')} €</span>
           </div>
 
@@ -195,7 +163,7 @@ function OfferActionSection({
               className="flex items-center gap-2 bg-brand-primary hover:bg-brand-primary-hover text-brand-secondary font-bold text-sm px-5 py-2.5 rounded-xl transition-colors shadow-sm"
             >
               <FilePlus className="w-4 h-4" />
-              {draft.status === 'draft' ? 'Angebot bearbeiten' : 'Angebot ansehen'}
+              {draft.status === 'draft' ? t('leads.editOffer') : t('leads.viewOffer')}
             </button>
 
             {draft.status === 'sent' && (
@@ -205,21 +173,21 @@ function OfferActionSection({
                   className="flex items-center gap-2 border border-purple-500/20 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 font-bold text-sm px-4 py-2.5 rounded-xl transition-colors"
                 >
                   <Eye className="w-4 h-4" />
-                  Als angesehen
+                  {t('leads.markViewed')}
                 </button>
                 <button
                   onClick={() => onStatusChange('accepted')}
                   className="flex items-center gap-2 border border-green-500/20 bg-green-500/10 hover:bg-green-500/20 text-green-400 font-bold text-sm px-4 py-2.5 rounded-xl transition-colors"
                 >
                   <CheckCircle className="w-4 h-4" />
-                  Angenommen
+                  {t('leads.accepted')}
                 </button>
                 <button
                   onClick={() => onStatusChange('rejected')}
                   className="flex items-center gap-2 border border-red-500/20 bg-red-500/10 hover:bg-red-500/20 text-red-400 font-bold text-sm px-4 py-2.5 rounded-xl transition-colors"
                 >
                   <XCircle className="w-4 h-4" />
-                  Abgelehnt
+                  {t('leads.rejected')}
                 </button>
               </>
             )}
@@ -229,7 +197,7 @@ function OfferActionSection({
             <div className="pt-4 border-t border-white/5 space-y-3">
               <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1.5">
                 <Receipt className="w-3.5 h-3.5" />
-                Abschlagsrechnungen
+                {t('leads.invoices')}
               </p>
               <div className="flex flex-wrap gap-2">
                 {([1, 2, 3] as const).map((type) => {
@@ -239,15 +207,15 @@ function OfferActionSection({
                     <PDFDownloadLink
                       key={type}
                       document={<InvoicePdfDocument lead={lead} company={company} invoiceNumber={invNum} type={type} />}
-                      fileName={`Rechnung-${invNum}.pdf`}
+                      fileName={t('leads.invoiceFileName', { number: invNum })}
                       className="flex items-center gap-1.5 bg-[#252525] border border-white/10 text-white font-bold text-xs px-3 py-2 rounded-lg hover:bg-[#333] transition-colors cursor-pointer"
                     >
                       {({ loading }) => (
                         <>
                           <Receipt className="w-3.5 h-3.5" />
-                          {loading ? 'PDF…' : (
+                          {loading ? t('leads.pdfLoading') : (
                             <>
-                              {type === 3 ? 'Schlussrechnung (10%)' : `Rechnung ${type}/${type === 1 ? '30' : '60'}%`}
+                              {invoiceLabels[type - 1]}
                               {isPaid && <span className="ml-1 text-[9px] text-green-400">✓</span>}
                             </>
                           )}
@@ -263,13 +231,13 @@ function OfferActionSection({
       ) : (
         <div className="text-center py-6">
           <FileText className="w-10 h-10 text-gray-600 mx-auto mb-3" />
-          <p className="text-gray-400 text-sm mb-4">Noch kein Angebot erstellt</p>
+          <p className="text-gray-400 text-sm mb-4">{t('leads.noOfferYet')}</p>
           <button
             onClick={() => navigate(`/lead/${lead.id}/offer`)}
             className="flex items-center justify-center gap-2 w-full bg-brand-primary hover:bg-brand-primary-hover text-brand-secondary font-bold text-sm px-5 py-3 rounded-xl transition-colors shadow-sm"
           >
             <FilePlus className="w-4 h-4" />
-            Angebot erstellen
+            {t('leads.createOffer')}
           </button>
         </div>
       )}
@@ -280,6 +248,7 @@ function OfferActionSection({
 export default function LeadDetailsPage() {
   const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const { lead, isLoading, changeStatus, changeOfferStatus } = useInstallerLead(id);
 
@@ -291,6 +260,34 @@ export default function LeadDetailsPage() {
   const [exporting, setExporting] = useState(false);
   const [exportError, setExportError] = useState('');
 
+  const STATUS_OPTIONS: { value: Lead['status']; label: string }[] = [
+    { value: 'neu', label: t('leads.status.new') },
+    { value: 'kontaktiert', label: t('leads.status.contacted') },
+    { value: 'angebot', label: t('leads.status.offer') },
+    { value: 'abschluss', label: t('leads.status.closing') },
+    { value: 'gewonnen', label: t('leads.status.won') },
+    { value: 'verloren', label: t('leads.status.lost') },
+  ];
+
+  const HORIZON_LABEL: Record<string, string> = {
+    sofort: t('leads.horizon.asap'),
+    '3monate': t('leads.horizon.months3'),
+    '12monate': t('leads.horizon.months12'),
+  };
+
+  const ORIENTATION_LABEL: Record<string, string> = {
+    sued: t('leads.orientation.south'),
+    ostwest: t('leads.orientation.eastWest'),
+    nord: t('leads.orientation.north'),
+  };
+
+  const CONSTRUCTION_LABEL: Record<string, string> = {
+    pre1980: t('leads.construction.pre1980'),
+    '1980-2000': t('leads.construction.1980-2000'),
+    '2000-2010': t('leads.construction.2000-2010'),
+    after2010: t('leads.construction.after2010'),
+  };
+
   async function handleErase() {
     if (!lead) return;
     setErasing(true);
@@ -299,7 +296,7 @@ export default function LeadDetailsPage() {
       await eraseLead(lead.id);
       navigate('/admin');
     } catch (e) {
-      setEraseError(e instanceof Error ? e.message : 'Löschung fehlgeschlagen');
+      setEraseError(e instanceof Error ? e.message : t('leads.errors.deleteFailed'));
       setErasing(false);
     }
   }
@@ -322,7 +319,7 @@ export default function LeadDetailsPage() {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch (e) {
-      setExportError(e instanceof Error ? e.message : 'Export fehlgeschlagen');
+      setExportError(e instanceof Error ? e.message : t('leads.errors.exportFailed'));
     } finally {
       setExporting(false);
     }
@@ -336,7 +333,7 @@ export default function LeadDetailsPage() {
     setLoadingDraft(true);
     getOfferDraftForLead(id)
       .then(setDraft)
-      .catch((e) => console.error('Fehler beim Laden des Angebots-Entwurfs:', e))
+      .catch((e) => console.error(t('leads.errors.loadDraft'), e))
       .finally(() => setLoadingDraft(false));
   }, [id]);
 
@@ -381,7 +378,7 @@ export default function LeadDetailsPage() {
   }) : null;
 
   const formatDate = (iso: string) =>
-    new Date(iso).toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
+    new Date(iso).toLocaleDateString(i18n.language === 'de' ? 'de-DE' : 'en-US', { day: '2-digit', month: 'long', year: 'numeric' });
 
   const leadAsProject = lead ? ({
     id: lead.id,
@@ -416,7 +413,7 @@ export default function LeadDetailsPage() {
 
           {!isLoading && !lead && (
             <div className="bg-brand-secondary-hover rounded-xl border border-white/5 p-12 text-center text-gray-500">
-              <p className="font-semibold">Lead nicht gefunden.</p>
+              <p className="font-semibold">{t('leads.notFound')}</p>
             </div>
           )}
 
@@ -428,7 +425,7 @@ export default function LeadDetailsPage() {
                   className="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-white transition-colors group"
                 >
                   <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-                  Zurück zur Pipeline
+                  {t('leads.backToPipeline')}
                 </button>
                 <div className="flex items-center gap-4">
                   {exportError && <span className="text-xs font-semibold text-red-400">{exportError}</span>}
@@ -436,16 +433,16 @@ export default function LeadDetailsPage() {
                     onClick={handleExport}
                     disabled={exporting}
                     className="flex items-center gap-1.5 text-xs font-bold text-gray-600 hover:text-brand-primary transition-colors disabled:opacity-50"
-                    title="Alle Daten dieses Leads als JSON exportieren (DSGVO Art. 20 — Datenübertragbarkeit)"
+                    title={t('leads.gdpr.exportTitle')}
                   >
-                    {exporting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />} Datenexport (Art. 20)
+                    {exporting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />} {t('leads.gdpr.exportButton')}
                   </button>
                   <button
                     onClick={() => setShowErase(true)}
                     className="flex items-center gap-1.5 text-xs font-bold text-gray-600 hover:text-red-400 transition-colors"
-                    title="Alle personenbezogenen Daten dieses Leads löschen (DSGVO Art. 17)"
+                    title={t('leads.gdpr.deleteTitle')}
                   >
-                    <Trash2 className="w-3.5 h-3.5" /> DSGVO-Löschung
+                    <Trash2 className="w-3.5 h-3.5" /> {t('leads.gdpr.deleteButton')}
                   </button>
                 </div>
               </div>
@@ -457,16 +454,15 @@ export default function LeadDetailsPage() {
                       <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center">
                         <ShieldAlert className="w-5 h-5 text-red-400" />
                       </div>
-                      <h3 className="text-lg font-black text-white">DSGVO-Löschung</h3>
+                      <h3 className="text-lg font-black text-white">{t('leads.gdpr.deleteHeading')}</h3>
                     </div>
                     <p className="text-sm text-gray-400 mb-3">
-                      Alle personenbezogenen Daten von <span className="font-bold text-white">{lead.first_name} {lead.last_name}</span> werden
-                      <span className="font-bold text-red-400"> unwiderruflich</span> gelöscht:
+                      {t('leads.gdpr.deleteIntro', { name: `${lead.first_name} ${lead.last_name}` })}
                     </p>
                     <ul className="text-xs text-gray-500 space-y-1 mb-4 list-disc list-inside">
-                      <li>Lead, Notizen, Termine, Angebote &amp; Unterschriften</li>
-                      <li>Funnel- &amp; Webhook-Verlauf</li>
-                      <li>Provisionen werden anonymisiert (Buchhaltung bleibt erhalten)</li>
+                      <li>{t('leads.gdpr.deleteItem1')}</li>
+                      <li>{t('leads.gdpr.deleteItem2')}</li>
+                      <li>{t('leads.gdpr.deleteItem3')}</li>
                     </ul>
                     {eraseError && <p className="text-xs text-red-400 mb-3">{eraseError}</p>}
                     <div className="flex gap-3">
@@ -474,13 +470,13 @@ export default function LeadDetailsPage() {
                         onClick={() => setShowErase(false)} disabled={erasing}
                         className="flex-1 py-2.5 rounded-xl border border-white/10 text-sm font-bold text-gray-300 hover:bg-white/5 transition-colors disabled:opacity-50"
                       >
-                        Abbrechen
+                        {t('leads.cancel')}
                       </button>
                       <button
                         onClick={handleErase} disabled={erasing}
                         className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-red-500 text-white text-sm font-bold hover:bg-red-600 transition-colors disabled:opacity-50"
                       >
-                        {erasing ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Trash2 className="w-4 h-4" /> Endgültig löschen</>}
+                        {erasing ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Trash2 className="w-4 h-4" /> {t('leads.deletePermanently')}</>}
                       </button>
                     </div>
                   </div>
@@ -506,12 +502,12 @@ export default function LeadDetailsPage() {
                     {lead.first_name} {lead.last_name}
                   </h1>
                   <p className="text-xs text-gray-500 mt-1 font-bold uppercase tracking-widest">
-                    Lead #{lead.id.slice(0, 8).toUpperCase()} · Eingegangen {formatDate(lead.created_at)}
+                    {t('leads.leadNumber', { number: lead.id.slice(0, 8).toUpperCase() })} · {t('leads.received')} {formatDate(lead.created_at)}
                   </p>
                 </div>
 
                 <div className="relative shrink-0">
-                  <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">Status ändern</label>
+                  <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1.5">{t('leads.changeStatus')}</label>
                   <div className="relative">
                     <select
                       value={lead.status}
@@ -532,32 +528,32 @@ export default function LeadDetailsPage() {
                 <div className="lg:col-span-5 flex flex-col gap-6">
                   {/* Kontakt */}
                   <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
-                    <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Kontaktdaten</h2>
+                    <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">{t('leads.section.contact')}</h2>
                     <div className="space-y-3">
                       <InfoRow
                         icon={<Mail className="w-4 h-4 text-gray-400" />}
-                        label="E-Mail"
+                        label={t('leads.label.email')}
                         value={<a href={`mailto:${lead.email}`} className="hover:text-brand-primary transition-colors">{lead.email}</a>}
                       />
                       {lead.phone && (
                         <InfoRow
                           icon={<Phone className="w-4 h-4 text-gray-400" />}
-                          label="Telefon"
+                          label={t('leads.label.phone')}
                           value={<a href={`tel:${lead.phone}`} className="hover:text-brand-primary transition-colors">{lead.phone}</a>}
                         />
                       )}
                       {lead.zip && (
                         <InfoRow
                           icon={<MapPin className="w-4 h-4 text-gray-400" />}
-                          label="Postleitzahl"
+                          label={t('leads.label.zip')}
                           value={lead.zip}
                         />
                       )}
                       {lead.wants_zoom_call && (
                         <InfoRow
                           icon={<Video className="w-4 h-4 text-blue-400" />}
-                          label="Wunsch"
-                          value="Zoom-Beratungsgespräch gewünscht"
+                          label={t('leads.label.wish')}
+                          value={t('leads.zoomCallWanted')}
                           accent="bg-blue-500/10"
                         />
                       )}
@@ -566,12 +562,12 @@ export default function LeadDetailsPage() {
 
                   {/* Dachkonfiguration */}
                   <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
-                    <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Dachkonfiguration</h2>
+                    <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">{t('leads.section.roof')}</h2>
                     <div className="space-y-3">
                       {lead.roof_area != null && (
                         <InfoRow
                           icon={<Home className="w-4 h-4 text-indigo-400" />}
-                          label="Dachfläche"
+                          label={t('leads.label.roofArea')}
                           value={`${lead.roof_area} m²`}
                           accent="bg-indigo-500/10"
                         />
@@ -579,7 +575,7 @@ export default function LeadDetailsPage() {
                       {lead.roof_orientation && (
                         <InfoRow
                           icon={<Compass className="w-4 h-4 text-amber-400" />}
-                          label="Ausrichtung"
+                          label={t('leads.label.orientation')}
                           value={ORIENTATION_LABEL[lead.roof_orientation] ?? lead.roof_orientation}
                           accent="bg-amber-500/10"
                         />
@@ -587,7 +583,7 @@ export default function LeadDetailsPage() {
                       {lead.construction_year && (
                         <InfoRow
                           icon={<Calendar className="w-4 h-4 text-gray-400" />}
-                          label="Baujahr"
+                          label={t('leads.label.constructionYear')}
                           value={CONSTRUCTION_LABEL[lead.construction_year] ?? lead.construction_year}
                         />
                       )}
@@ -596,12 +592,12 @@ export default function LeadDetailsPage() {
 
                   {/* Energiebedarf */}
                   <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
-                    <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Energiebedarf & Ausstattung</h2>
+                    <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">{t('leads.section.energy')}</h2>
                     <div className="space-y-3">
                       {lead.consumption != null && (
                         <InfoRow
                           icon={<Zap className="w-4 h-4 text-yellow-400" />}
-                          label="Jahresverbrauch"
+                          label={t('leads.label.consumption')}
                           value={`${lead.consumption.toLocaleString('de-DE')} kWh/Jahr`}
                           accent="bg-yellow-500/10"
                         />
@@ -609,22 +605,22 @@ export default function LeadDetailsPage() {
                       {lead.electricity_price != null && (
                         <InfoRow
                           icon={<Euro className="w-4 h-4 text-gray-400" />}
-                          label="Strompreis"
+                          label={t('leads.label.electricityPrice')}
                           value={`${(lead.electricity_price * 100).toFixed(0)} Ct/kWh`}
                         />
                       )}
                       <div className="flex gap-2 flex-wrap pt-1">
                         <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full ${lead.has_battery ? 'bg-green-500/10 text-green-400' : 'bg-[#252525] text-gray-600 line-through'}`}>
                           <BatteryCharging className="w-3.5 h-3.5" />
-                          Stromspeicher
+                          {t('leads.feature.battery')}
                         </span>
                         <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full ${lead.has_e_car ? 'bg-blue-500/10 text-blue-400' : 'bg-[#252525] text-gray-600 line-through'}`}>
                           <Car className="w-3.5 h-3.5" />
-                          Elektroauto
+                          {t('leads.feature.eCar')}
                         </span>
                         <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full ${lead.has_heat_pump ? 'bg-orange-500/10 text-orange-400' : 'bg-[#252525] text-gray-600 line-through'}`}>
                           <Thermometer className="w-3.5 h-3.5" />
-                          Wärmepumpe
+                          {t('leads.feature.heatPump')}
                         </span>
                       </div>
                     </div>
@@ -632,20 +628,20 @@ export default function LeadDetailsPage() {
 
                   {/* Planung & Finanzierung */}
                   <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
-                    <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Planung & Finanzierung</h2>
+                    <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">{t('leads.section.planning')}</h2>
                     <div className="space-y-3">
                       {lead.planning_horizon && (
                         <InfoRow
                           icon={<Clock className="w-4 h-4 text-amber-400" />}
-                          label="Planungshorizont"
+                          label={t('leads.label.planningHorizon')}
                           value={HORIZON_LABEL[lead.planning_horizon]}
                           accent="bg-amber-500/10"
                         />
                       )}
                       <InfoRow
                         icon={<CreditCard className={`w-4 h-4 ${lead.needs_financing ? 'text-blue-400' : 'text-gray-400'}`} />}
-                        label="Finanzierung"
-                        value={lead.needs_financing ? 'KfW-Finanzierung gewünscht' : 'Eigenkapital'}
+                        label={t('leads.label.financing')}
+                        value={lead.needs_financing ? t('leads.financing.kfw') : t('leads.financing.cash')}
                         accent={lead.needs_financing ? 'bg-blue-500/10' : 'bg-[#252525]'}
                       />
                     </div>
@@ -656,23 +652,23 @@ export default function LeadDetailsPage() {
                 <div className="lg:col-span-7 flex flex-col gap-6">
                   {/* Anlagenkennzahlen */}
                   <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
-                    <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Anlagenkonfiguration</h2>
+                    <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">{t('leads.section.system')}</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                      <StatCard label="Anlagengröße" value={lead.kwp != null ? `${lead.kwp} kWp` : '—'} icon={<Zap className="w-3.5 h-3.5" />} accent="text-yellow-400" />
-                      <StatCard label="Investition" value={lead.investment != null ? `${lead.investment.toLocaleString('de-DE')} €` : '—'} icon={<Euro className="w-3.5 h-3.5" />} accent="text-gray-400" />
-                      <StatCard label="Ersparnis/Jahr" value={lead.annual_savings != null ? `${lead.annual_savings.toLocaleString('de-DE')} €` : '—'} icon={<TrendingUp className="w-3.5 h-3.5" />} accent="text-green-400" />
+                      <StatCard label={t('leads.label.systemSize')} value={lead.kwp != null ? `${lead.kwp} kWp` : '—'} icon={<Zap className="w-3.5 h-3.5" />} accent="text-yellow-400" />
+                      <StatCard label={t('leads.label.investment')} value={lead.investment != null ? `${lead.investment.toLocaleString('de-DE')} €` : '—'} icon={<Euro className="w-3.5 h-3.5" />} accent="text-gray-400" />
+                      <StatCard label={t('leads.label.savingsPerYear')} value={lead.annual_savings != null ? `${lead.annual_savings.toLocaleString('de-DE')} €` : '—'} icon={<TrendingUp className="w-3.5 h-3.5" />} accent="text-green-400" />
                       <div className="relative">
-                        <StatCard label="Amortisation" value={lead.amortization != null ? `${lead.amortization} Jahre` : '—'} icon={<Calendar className="w-3.5 h-3.5" />} accent="text-indigo-400" />
+                        <StatCard label={t('leads.label.amortization')} value={lead.amortization != null ? `${lead.amortization} ${t('leads.years')}` : '—'} icon={<Calendar className="w-3.5 h-3.5" />} accent="text-indigo-400" />
                         {realisticCalc && realisticCalc.amortizationRealistic > (lead.amortization || 0) && (
                           <div className="absolute -bottom-1 left-0 right-0 text-center">
                             <span className="text-[10px] text-amber-400 font-medium bg-amber-500/10 px-1.5 py-0.5 rounded-full">
-                              Realistisch: {realisticCalc.amortizationRealistic} J.
+                              {t('leads.realistic', { years: realisticCalc.amortizationRealistic })}
                             </span>
                           </div>
                         )}
                       </div>
-                      <StatCard label="Autarkie" value={lead.autarky != null ? `${lead.autarky} %` : '—'} sub="Eigenverbrauchsanteil" icon={<BatteryCharging className="w-3.5 h-3.5" />} accent="text-teal-400" />
-                      <StatCard label="Gewinn 20 J." value={lead.profit_20_years != null ? `${lead.profit_20_years.toLocaleString('de-DE')} €` : '—'} sub="nach Investitionsabzug" icon={<BarChart2 className="w-3.5 h-3.5" />} accent="text-emerald-400" />
+                      <StatCard label={t('leads.label.autarky')} value={lead.autarky != null ? `${lead.autarky} %` : '—'} sub={t('leads.label.selfConsumption')} icon={<BatteryCharging className="w-3.5 h-3.5" />} accent="text-teal-400" />
+                      <StatCard label={t('leads.label.profit20Years')} value={lead.profit_20_years != null ? `${lead.profit_20_years.toLocaleString('de-DE')} €` : '—'} sub={t('leads.label.afterDeduction')} icon={<BarChart2 className="w-3.5 h-3.5" />} accent="text-emerald-400" />
                     </div>
                   </section>
 
@@ -691,7 +687,7 @@ export default function LeadDetailsPage() {
                   {/* Lead-Score */}
                   {scoreResult && (
                     <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
-                      <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Lead-Score</h2>
+                      <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">{t('leads.section.score')}</h2>
                       <div className="flex items-center gap-4">
                         <div className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center ${scoreResult.bgColor} border`}>
                           {TierIcon && <TierIcon className={`w-6 h-6 mb-0.5 ${scoreResult.color}`} />}
@@ -700,7 +696,7 @@ export default function LeadDetailsPage() {
                         <div className="flex-1 min-w-0">
                           <p className={`text-base font-black ${scoreResult.color}`}>{scoreResult.label}</p>
                           <p className="text-xs text-gray-500 mt-0.5">
-                            Top-Faktoren: {detailedScore?.factors.slice(0, 3).map(f => f.label).join(', ')}
+                            {t('leads.topFactors')}: {detailedScore?.factors.slice(0, 3).map(f => f.label).join(', ')}
                           </p>
                           {/* Score-Faktoren Detail */}
                           <div className="mt-3 space-y-1.5">
@@ -740,22 +736,22 @@ export default function LeadDetailsPage() {
 
                   {/* Schnellaktionen */}
                   <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
-                    <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Schnellaktionen</h2>
+                    <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">{t('leads.section.quickActions')}</h2>
                     <div className="flex flex-wrap gap-3">
                       <a href={`mailto:${lead.email}`} className="flex items-center gap-2 bg-brand-primary text-brand-secondary font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-brand-primary-hover transition-colors shadow-sm">
                         <Mail className="w-4 h-4" />
-                        E-Mail senden
+                        {t('leads.sendEmail')}
                       </a>
                       {lead.phone && (
                         <a href={`tel:${lead.phone}`} className="flex items-center gap-2 border border-white/10 text-white font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-white/5 transition-colors">
                           <Phone className="w-4 h-4" />
-                          Anrufen
+                          {t('leads.call')}
                         </a>
                       )}
                       {lead.wants_zoom_call && (
                         <span className="flex items-center gap-2 border border-blue-500/20 bg-blue-500/10 text-blue-400 font-bold text-sm px-5 py-2.5 rounded-xl">
                           <Video className="w-4 h-4" />
-                          Zoom-Call gewünscht
+                          {t('leads.zoomCallWanted')}
                         </span>
                       )}
                     </div>
@@ -765,12 +761,12 @@ export default function LeadDetailsPage() {
                   {(lead.site_visit_date || lead.site_visit_done || lead.roof_area_measured) && (
                     <section className="bg-brand-secondary-hover rounded-xl border border-white/5 p-6">
                       <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest">Vor-Ort-Termin</h2>
+                        <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest">{t('leads.section.siteVisit')}</h2>
                         {lead.site_visit_done ? (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-500/10 text-green-400">Durchgeführt</span>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-500/10 text-green-400">{t('leads.siteVisit.done')}</span>
                         ) : lead.site_visit_date ? (
                           <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400">
-                            Geplant: {new Date(lead.site_visit_date).toLocaleDateString('de-DE')}
+                            {t('leads.siteVisit.planned', { date: new Date(lead.site_visit_date).toLocaleDateString('de-DE') })}
                           </span>
                         ) : null}
                       </div>
@@ -782,19 +778,19 @@ export default function LeadDetailsPage() {
                           <div className="flex flex-wrap gap-3 pt-2 border-t border-white/5">
                             {lead.roof_area_measured && (
                               <span className="text-xs text-gray-400">
-                                Gemessene Dachfläche: <strong className="text-white">{lead.roof_area_measured} m²</strong>
+                                {t('leads.siteVisit.measuredRoofArea', { area: lead.roof_area_measured })}
                                 {lead.roof_area && lead.roof_area !== lead.roof_area_measured && (
-                                  <span className="text-gray-600 line-through ml-1">({lead.roof_area} m² vorher)</span>
+                                  <span className="text-gray-600 line-through ml-1">({t('leads.siteVisit.previousArea', { area: lead.roof_area })})</span>
                                 )}
                               </span>
                             )}
                             {lead.roof_angle != null && (
                               <span className="text-xs text-gray-400">
-                                Dachneigung: <strong className="text-white">{lead.roof_angle}°</strong>
+                                {t('leads.siteVisit.roofAngle', { angle: lead.roof_angle })}
                               </span>
                             )}
                             {lead.shading_issues && (
-                              <span className="text-xs text-amber-400">⚠ Verschattung festgestellt</span>
+                              <span className="text-xs text-amber-400">{t('leads.siteVisit.shading')}</span>
                             )}
                           </div>
                         )}
@@ -823,7 +819,7 @@ export default function LeadDetailsPage() {
                   />
 
                   {/* Aktivitäts-Log */}
-                  <ActivityLog lead={lead} userName={user?.fullName || 'System'} />
+                  <ActivityLog lead={lead} userName={user?.fullName || t('leads.system')} />
                 </div>
               </div>
             </>

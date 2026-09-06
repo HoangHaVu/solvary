@@ -1,29 +1,21 @@
 // PROJECT: Voltify | PURPOSE: Oeffentliche Preisseite — helles Landing-Styling, SaaS- + Agentur-Tarife, gemeinsame FAQ/CTA/Footer
 
 import { Check, Rocket } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { BETA } from "../lib/betaConfig";
-import { saasTiers, agencyTiers } from "../lib/pricingData";
+import { useSaasTiers, useAgencyTiers } from "../lib/pricingData";
 import { SectionTag } from "../components/ui/SectionTag";
 import SiteHeader from "../sections/SiteHeader";
 import PricingTiers from "../sections/PricingTiers";
 import FaqSection from "../sections/FaqSection";
 import CtaFooterSection from "../sections/CtaFooterSection";
 
-const COMPARISON_ROWS = [
-  { label: "Nutzer", starter: "1", pro: "5", enterprise: "Unbegrenzt" },
-  { label: "Solar-Konfigurator", starter: "✓", pro: "✓", enterprise: "✓" },
-  { label: "Lead-Management", starter: "✓", pro: "✓", enterprise: "✓" },
-  { label: "Kalender & Termine", starter: "✓", pro: "✓", enterprise: "✓" },
-  { label: "Pipeline-Ansicht", starter: "—", pro: "✓", enterprise: "✓" },
-  { label: "Team-Verwaltung", starter: "—", pro: "✓", enterprise: "✓" },
-  { label: "Angebots-PDF", starter: "—", pro: "✓", enterprise: "✓" },
-  { label: "Rechnungs-PDF", starter: "—", pro: "✓", enterprise: "✓" },
-  { label: "Erweiterte Reports", starter: "—", pro: "✓", enterprise: "✓" },
-  { label: "Rabatt-System", starter: "—", pro: "✓", enterprise: "✓" },
-  { label: "API & Webhooks", starter: "—", pro: "—", enterprise: "✓" },
-  { label: "White-Label", starter: "—", pro: "—", enterprise: "✓" },
-  { label: "Dedizierter Support", starter: "—", pro: "—", enterprise: "✓" },
-];
+interface ComparisonRow {
+  label: string;
+  starter: string;
+  pro: string;
+  enterprise: string;
+}
 
 function Cell({ value, accent = false }: { value: string; accent?: boolean }) {
   if (value === "✓") {
@@ -48,6 +40,13 @@ function Cell({ value, accent = false }: { value: string; accent?: boolean }) {
 }
 
 export default function PricingPage() {
+  const { t } = useTranslation();
+  const saasTiers = useSaasTiers();
+  const agencyTiers = useAgencyTiers();
+  const comparisonRows = t("pricingPage.comparison.rows", {
+    returnObjects: true,
+  }) as ComparisonRow[];
+
   return (
     <div className="min-h-screen bg-white text-brand-secondary">
       <SiteHeader />
@@ -56,17 +55,15 @@ export default function PricingPage() {
       <section className="px-6 pt-36 pb-14 text-center md:pt-44">
         <div className="mx-auto max-w-2xl">
           <div className="flex justify-center">
-            <SectionTag>Preise</SectionTag>
+            <SectionTag>{t("pricingPage.hero.tag")}</SectionTag>
           </div>
           <h1 className="mt-6 text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">
-            Wähle den passenden Tarif
+            {t("pricingPage.hero.heading1")}
             <br />
-            für dein Team
+            {t("pricingPage.hero.heading2")}
           </h1>
           <p className="mx-auto mt-4 max-w-lg text-base text-gray-500">
-            Starte kostenlos, skaliere mit deinem Geschäft. Alle Tarife inkl.
-            Solar-Konfigurator, monatlich kündbar. Als Beta-Partner sicherst du
-            dir dauerhaft {BETA.discountPercent}% Rabatt.
+            {t("pricingPage.hero.sub", { discount: BETA.discountPercent })}
           </p>
         </div>
       </section>
@@ -82,20 +79,24 @@ export default function PricingPage() {
       <section className="border-t border-gray-100 px-6 py-20">
         <div className="mx-auto max-w-[900px]">
           <h2 className="mb-10 text-center text-2xl md:text-3xl font-semibold tracking-tight">
-            Funktions-Vergleich
+            {t("pricingPage.comparison.heading")}
           </h2>
 
           <div className="overflow-hidden rounded-2xl border border-gray-100">
             <div className="grid grid-cols-4 gap-4 border-b border-gray-100 bg-brand-bg-alt px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-500">
-              <span>Funktion</span>
-              <span className="text-center">Starter</span>
-              <span className="text-center text-brand-secondary">
-                Professional
+              <span>{t("pricingPage.comparison.feature")}</span>
+              <span className="text-center">
+                {t("pricingPage.comparison.starter")}
               </span>
-              <span className="text-center">Enterprise</span>
+              <span className="text-center text-brand-secondary">
+                {t("pricingPage.comparison.professional")}
+              </span>
+              <span className="text-center">
+                {t("pricingPage.comparison.enterprise")}
+              </span>
             </div>
 
-            {COMPARISON_ROWS.map((row, i) => (
+            {comparisonRows.map((row, i) => (
               <div
                 key={row.label}
                 className={`grid grid-cols-4 gap-4 px-6 py-3 text-sm ${
@@ -122,15 +123,14 @@ export default function PricingPage() {
               <SectionTag
                 icon={<Rocket className="h-3.5 w-3.5 text-brand-primary" />}
               >
-                Für Vertriebsagenturen
+                {t("pricingPage.agency.tag")}
               </SectionTag>
             </div>
             <h2 className="mt-6 text-3xl md:text-4xl font-semibold tracking-tight">
-              Partner-Programm für Solar-Vertriebe
+              {t("pricingPage.agency.heading")}
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-base text-gray-500">
-              Verwalte Installateur-Partner, route Leads intelligent und
-              skaliere dein Vertriebsnetzwerk.
+              {t("pricingPage.agency.sub")}
             </p>
           </div>
 

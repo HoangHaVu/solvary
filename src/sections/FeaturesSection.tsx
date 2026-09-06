@@ -10,53 +10,26 @@ import {
   Briefcase,
   type LucideIcon,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SectionTag } from "../components/ui/SectionTag";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface Feature {
-  icon: LucideIcon;
+interface FeatureItem {
   title: string;
   desc: string;
 }
 
-const features: Feature[] = [
-  {
-    icon: FileText,
-    title: "Angebots-PDFs",
-    desc: "Professionelle Kalkulationen mit Ihrem Branding, Förderungen und Zahlungsplänen — per E-Mail versenden.",
-  },
-  {
-    icon: BarChart3,
-    title: "Umsatz-Reports",
-    desc: "Verfolgen Sie Conversion-Rate, durchschnittlichen Deal-Wert und Team-Performance in Echtzeit.",
-  },
-  {
-    icon: Shield,
-    title: "DSGVO & Rechtssicherheit",
-    desc: "AGB-Generator, Datenschutz-Seiten und sichere Datenverarbeitung — alles inklusive.",
-  },
-  {
-    icon: Calendar,
-    title: "Montage-Planung",
-    desc: "Termine direkt im Kalender planen, Monteure zuweisen und den Projektstatus aktualisieren.",
-  },
-  {
-    icon: MessageSquare,
-    title: "Team-Kommunikation",
-    desc: "Notizen zu Leads und Projekten hinterlegen — alle Infos zentral, nichts mehr in E-Mails verstreut.",
-  },
-  {
-    icon: Briefcase,
-    title: "Rechnungs-PDFs",
-    desc: "Abschlags- und Schlussrechnungen mit automatischer Fälligkeitsberechnung und Zahlungsstatus.",
-  },
-];
+const icons: LucideIcon[] = [FileText, BarChart3, Shield, Calendar, MessageSquare, Briefcase];
 
 export default function FeaturesSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const { t } = useTranslation();
+
+  const items = t("sections.features.items", { returnObjects: true }) as FeatureItem[];
+  const features = items.map((item, i) => ({ ...item, icon: icons[i] }));
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -86,10 +59,10 @@ export default function FeaturesSection() {
       <div className="max-w-[1280px] mx-auto px-6">
         <div className="text-center mb-16">
           <div className="feature-reveal flex justify-center">
-            <SectionTag>Funktionen</SectionTag>
+            <SectionTag>{t("sections.features.tag")}</SectionTag>
           </div>
           <h2 className="feature-reveal text-4xl md:text-5xl font-semibold text-brand-secondary mt-4 tracking-tight">
-            Alles, was Sie täglich brauchen
+            {t("sections.features.heading")}
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -1,9 +1,11 @@
 import { COLORS } from '../../lib/theme';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Shield, ArrowRight, Lock } from 'lucide-react';
 
 export default function ExploreSection() {
+  const { t } = useTranslation();
   const [zipCode, setZipCode] = useState('');
   const navigate = useNavigate();
 
@@ -23,27 +25,26 @@ export default function ExploreSection() {
             {/* Badge */}
             <div className="flex items-center gap-2 mb-4">
               <Shield className="w-4 h-4 text-black" />
-              <span className="text-xs font-semibold uppercase tracking-widest text-black">Solar-Konfigurator</span>
+              <span className="text-xs font-semibold uppercase tracking-widest text-black">{t('demoPage.exploreSection.badge')}</span>
             </div>
 
             <h2 className="text-4xl md:text-5xl font-medium text-black leading-tight tracking-tight mb-4">
-              Dein Weg zur eigenen Solaranlage
+              {t('demoPage.exploreSection.heading')}
             </h2>
 
             <p className="text-gray-600 text-base leading-relaxed mb-8">
-              Nutze unseren Solar-Checker, um herauszufinden, wie viel du mit einer Solaranlage sparen kannst.
-              Innerhalb von 2 Minuten erhaeltst du eine erste Einschaetzung – ganz unverbindlich.
+              {t('demoPage.exploreSection.sub')}
             </p>
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <label className="text-sm font-medium text-brand-secondary">Postleitzahl</label>
+              <label className="text-sm font-medium text-brand-secondary">{t('demoPage.exploreSection.zipLabel')}</label>
               <div className="flex flex-col sm:flex-row gap-3">
                 <input
                   type="text"
                   value={zipCode}
                   onChange={(e) => setZipCode(e.target.value)}
-                  placeholder="z.B. 10115"
+                  placeholder={t('demoPage.exploreSection.zipPlaceholder')}
                   maxLength={5}
                   className="flex-1 border border-gray-200 rounded-xl px-5 py-4 text-lg text-brand-secondary placeholder:text-gray-400 focus:outline-none focus:border-brand-secondary focus:ring-2 focus:ring-brand-secondary/10 transition-all"
                 />
@@ -51,7 +52,7 @@ export default function ExploreSection() {
                   type="submit"
                   className="flex items-center justify-center gap-2 bg-brand-primary text-brand-secondary text-sm font-medium px-5 py-4 sm:py-2.5 rounded-full hover:bg-brand-primary-hover transition-all hover:scale-[1.02] whitespace-nowrap group"
                 >
-                  Jetzt berechnen
+                  {t('demoPage.exploreSection.cta')}
                   <span className="w-7 h-7 bg-brand-secondary rounded-full flex items-center justify-center group-hover:bg-brand-secondary-hover transition-colors">
                     <ArrowRight className="w-3.5 h-3.5 text-white" />
                   </span>
@@ -61,7 +62,7 @@ export default function ExploreSection() {
               {/* Privacy note */}
               <div className="flex items-center gap-2 text-xs text-gray-400 mt-1">
                 <Lock className="w-3.5 h-3.5" />
-                <span>100% Datenschutz gem. DSGVO – Deine Daten sind bei uns sicher.</span>
+                <span>{t('demoPage.exploreSection.privacyNote')}</span>
               </div>
             </form>
           </div>
@@ -71,7 +72,7 @@ export default function ExploreSection() {
             <div className="rounded-2xl overflow-hidden">
               <img
                 src="/images/configurator-bg.jpg"
-                alt="Haus mit Solaranlage"
+                alt={t('demoPage.exploreSection.imageAlt')}
                 className="w-full aspect-[4/3] object-cover"
               />
             </div>
@@ -84,8 +85,8 @@ export default function ExploreSection() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-brand-secondary">Bis zu 80%</p>
-                  <p className="text-xs text-gray-500">Stromkosten sparen</p>
+                  <p className="text-sm font-bold text-brand-secondary">{t('demoPage.exploreSection.savingsBadge.value')}</p>
+                  <p className="text-xs text-gray-500">{t('demoPage.exploreSection.savingsBadge.label')}</p>
                 </div>
               </div>
             </div>

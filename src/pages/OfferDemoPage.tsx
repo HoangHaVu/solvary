@@ -5,6 +5,7 @@
 
 import { useMemo, useReducer, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import {
   ArrowRight,
@@ -110,13 +111,6 @@ const CATEGORY_ICONS: Record<OfferLineItem["category"], React.ElementType> = {
   scaffolding: Wrench,
   travel: Car,
   other: Package,
-};
-
-const STATUS_LABELS: Record<OfferDraft["status"], string> = {
-  draft: "Entwurf",
-  sent: "Versendet",
-  accepted: "Angenommen",
-  rejected: "Abgelehnt",
 };
 
 const STATUS_COLORS: Record<OfferDraft["status"], string> = {
@@ -285,55 +279,43 @@ function reducer(state: DemoState, action: DemoAction): DemoState {
 
 // ─── Teaser-Kopf ──────────────────────────────────────────────────────
 
-const PROCESS_STEPS = [
-  { icon: ClipboardList, label: "Lead-Daten" },
-  { icon: Package, label: "Positionen & Preise" },
-  { icon: Coins, label: "Rabatt & Textbausteine" },
-  { icon: Mail, label: "PDF & E-Mail" },
-];
-
-const FEATURE_CHIPS = [
-  "Positionen frei definieren",
-  "Rabatte & Preise",
-  "Vorlagen & Textbausteine",
-  "PDF & E-Mail-Versand",
-  "ROI-Impact-Panel",
-];
+const PROCESS_STEP_ICONS = [ClipboardList, Package, Coins, Mail];
 
 function DemoTeaser() {
+  const { t } = useTranslation();
+  const processSteps = t('offerDemo.processSteps', { returnObjects: true }) as string[];
+  const featureChips = t('offerDemo.featureChips', { returnObjects: true }) as string[];
   return (
     <div className="border-b border-gray-100 bg-white">
       <div className="max-w-[1200px] mx-auto px-6 py-10">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          <SectionTag>Angebotskonfigurator</SectionTag>
+          <SectionTag>{t('offerDemo.teaser.tag')}</SectionTag>
           <span className="inline-flex items-center gap-1.5 text-xs md:text-sm font-medium text-gray-500">
             <Eye className="h-3.5 w-3.5 shrink-0" />
-            Demo-Modus — so wird aus dem Lead ein fertiges Angebot
+            {t('offerDemo.teaser.badge')}
           </span>
         </div>
         <h1 className="mt-4 text-3xl md:text-4xl font-bold text-brand-secondary tracking-tight">
-          Aus dem Lead wird das Angebot — in Minuten
+          {t('offerDemo.teaser.headline')}
         </h1>
         <p className="mt-3 max-w-2xl text-sm md:text-base text-gray-500 leading-relaxed">
-          Genau die Seite, mit der deine Mitarbeiter im Dashboard arbeiten:
-          Positionen und Preise anpassen, Rabatte setzen, deine Textbausteine
-          einfügen — fertig als PDF und E-Mail. Probier sie hier direkt aus.
+          {t('offerDemo.teaser.body')}
         </p>
 
         {/* Prozessleiste */}
         <div className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-3">
-          {PROCESS_STEPS.map((step, i) => (
-            <div key={step.label} className="flex items-center gap-2">
+          {PROCESS_STEP_ICONS.map((StepIcon, i) => (
+            <div key={processSteps[i]} className="flex items-center gap-2">
               <div className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1.5">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-primary text-[10px] font-black text-brand-secondary">
                   {i + 1}
                 </span>
-                <step.icon className="h-3.5 w-3.5 text-brand-secondary" />
+                <StepIcon className="h-3.5 w-3.5 text-brand-secondary" />
                 <span className="text-xs font-bold text-gray-700">
-                  {step.label}
+                  {processSteps[i]}
                 </span>
               </div>
-              {i < PROCESS_STEPS.length - 1 && (
+              {i < PROCESS_STEP_ICONS.length - 1 && (
                 <ArrowRight className="h-4 w-4 text-gray-300" />
               )}
             </div>
@@ -342,7 +324,7 @@ function DemoTeaser() {
 
         {/* Feature-Chips */}
         <div className="mt-5 flex flex-wrap gap-2">
-          {FEATURE_CHIPS.map((chip) => (
+          {featureChips.map((chip) => (
             <span
               key={chip}
               className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-[11px] font-medium text-gray-600"
@@ -354,8 +336,7 @@ function DemoTeaser() {
 
         <p className="mt-5 flex items-center gap-2 text-[11px] text-gray-400">
           <Eye className="h-3.5 w-3.5" />
-          Beispiel-Lead — keine echten Daten, nichts wird gespeichert oder
-          versendet.
+          {t('offerDemo.teaser.disclaimer')}
         </p>
       </div>
     </div>
@@ -366,6 +347,7 @@ function DemoTeaser() {
 
 export default function OfferDemoPage() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const [state, dispatch] = useReducer(reducer, undefined, initState);
   const offerNumber = useMemo(() => generateOfferNumber(DEMO_LEAD), []);
 
@@ -533,8 +515,8 @@ export default function OfferDemoPage() {
   return (
     <div className="min-h-screen bg-brand-bg-alt text-brand-secondary">
       <SEO
-        title="Angebotskonfigurator — Live-Demo"
-        description="Teste den Voltify-Angebotskonfigurator: Positionen, Rabatte, Textbausteine, PDF und E-Mail — direkt im Browser, ohne Anmeldung."
+        title={t('offerDemo.seo.title')}
+        description={t('offerDemo.seo.description')}
         canonical="/angebot-demo"
         og={{ type: "website" }}
       />
@@ -546,7 +528,7 @@ export default function OfferDemoPage() {
             <img src={LOGO_PATH} alt="Solvary" className="h-8 w-auto" />
           </Link>
           <PillButton variant="primary" onClick={() => navigate("/beta")}>
-            Für mein Geschäft holen
+            {t('offerDemo.topCta')}
           </PillButton>
         </div>
       </header>
@@ -559,12 +541,12 @@ export default function OfferDemoPage() {
           <div>
             <div className="flex items-center gap-3">
               <h2 className="text-2xl md:text-3xl font-bold text-brand-secondary">
-                Angebot erstellen
+                {t('offerDemo.title')}
               </h2>
               <span
                 className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border ${STATUS_COLORS[state.status]}`}
               >
-                {STATUS_LABELS[state.status]}
+                {t(`offerDemo.status.${state.status}`)}
               </span>
             </div>
             <p className="text-sm text-gray-500 mt-1">
@@ -583,7 +565,7 @@ export default function OfferDemoPage() {
               ) : (
                 <Save className="w-4 h-4" />
               )}
-              {savedFlash ? "Gespeichert" : "Entwurf speichern"}
+              {savedFlash ? t('offerDemo.saved') : t('offerDemo.saveDraft')}
             </button>
             {state.status === "draft" && (
               <button
@@ -591,7 +573,7 @@ export default function OfferDemoPage() {
                 className="flex items-center gap-2 bg-brand-secondary hover:bg-brand-secondary-hover text-white font-bold text-sm px-4 py-2.5 rounded-xl transition-colors"
               >
                 <Send className="w-4 h-4" />
-                Angebot senden
+                {t('offerDemo.sendOffer')}
               </button>
             )}
           </div>
@@ -603,14 +585,14 @@ export default function OfferDemoPage() {
             <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
               <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
                 <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest">
-                  Angebotspositionen
+                  {t('offerDemo.positions.title')}
                 </h3>
                 <button
                   onClick={() => dispatch({ type: "ADD_ITEM" })}
                   className="flex items-center gap-1.5 text-xs font-bold text-brand-secondary hover:opacity-60 transition-opacity"
                 >
                   <Plus className="w-3.5 h-3.5" />
-                  Position hinzufügen
+                  {t('offerDemo.positions.add')}
                 </button>
               </div>
 
@@ -623,11 +605,11 @@ export default function OfferDemoPage() {
                 }}
               >
                 <div className="pl-3 py-3" />
-                <div className="px-3 py-3">Kategorie</div>
-                <div className="px-3 py-3 text-right">Menge</div>
-                <div className="px-3 py-3">Einheit</div>
-                <div className="px-3 py-3 text-right">Einzelpreis</div>
-                <div className="px-3 py-3 text-right">Gesamt</div>
+                <div className="px-3 py-3">{t('offerDemo.columns.category')}</div>
+                <div className="px-3 py-3 text-right">{t('offerDemo.columns.quantity')}</div>
+                <div className="px-3 py-3">{t('offerDemo.columns.unit')}</div>
+                <div className="px-3 py-3 text-right">{t('offerDemo.columns.unitPrice')}</div>
+                <div className="px-3 py-3 text-right">{t('offerDemo.columns.total')}</div>
                 <div className="pr-3 py-3" />
               </div>
 
@@ -684,9 +666,9 @@ export default function OfferDemoPage() {
                             className={`w-full text-xs px-2 py-1.5 ${INPUT}`}
                           >
                             {Object.entries(CATEGORY_LABELS).map(
-                              ([key, label]) => (
+                              ([key]) => (
                                 <option key={key} value={key}>
-                                  {label}
+                                  {t(`offerDemo.categories.${key}`)}
                                 </option>
                               ),
                             )}
@@ -751,7 +733,7 @@ export default function OfferDemoPage() {
                             dispatch({ type: "DELETE_ITEM", id: item.id })
                           }
                           className="p-1.5 rounded-lg hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors"
-                          title="Position löschen"
+                          title={t('offerDemo.item.deleteTitle')}
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -773,7 +755,7 @@ export default function OfferDemoPage() {
                             value: e.target.value,
                           })
                         }
-                        placeholder="Beschreibung (z. B. Hersteller, Modell, Details)…"
+                        placeholder={t('offerDemo.item.placeholder')}
                         className="w-full bg-gray-50 border border-gray-200 text-gray-600 text-xs rounded-lg px-3 py-2 outline-none focus:border-gray-400 placeholder:text-gray-400"
                       />
                     </div>
@@ -784,12 +766,12 @@ export default function OfferDemoPage() {
               {state.lineItems.length === 0 && (
                 <div className="text-center py-12 text-gray-400">
                   <Package className="w-10 h-10 mx-auto mb-3 opacity-40" />
-                  <p className="text-sm">Noch keine Positionen</p>
+                  <p className="text-sm">{t('offerDemo.positions.empty.title')}</p>
                   <button
                     onClick={() => dispatch({ type: "ADD_ITEM" })}
                     className="mt-3 text-xs font-bold text-brand-secondary hover:opacity-60 transition-opacity"
                   >
-                    Erste Position hinzufügen
+                    {t('offerDemo.positions.empty.addFirst')}
                   </button>
                 </div>
               )}
@@ -798,7 +780,7 @@ export default function OfferDemoPage() {
             {/* Notizen */}
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
               <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-3">
-                Interne Notizen
+                {t('offerDemo.notes.title')}
               </h3>
               <textarea
                 value={state.notes}
@@ -807,7 +789,7 @@ export default function OfferDemoPage() {
                 }
                 rows={3}
                 className={`w-full text-sm px-4 py-3 resize-none ${INPUT}`}
-                placeholder="Interne Hinweise zum Angebot..."
+                placeholder={t('offerDemo.notes.placeholder')}
               />
             </div>
 
@@ -821,11 +803,10 @@ export default function OfferDemoPage() {
                   <FileText className="w-4 h-4 text-brand-secondary" />
                   <div>
                     <h3 className="text-sm font-bold text-brand-secondary">
-                      Angebotstexte & Textbausteine
+                      {t('offerDemo.templates.title')}
                     </h3>
                     <p className="text-[11px] text-gray-500 mt-0.5">
-                      Aus deinen Einstellungen — fließen live in das PDF und die
-                      E-Mail.
+                      {t('offerDemo.templates.subtitle')}
                     </p>
                   </div>
                 </div>
@@ -839,29 +820,19 @@ export default function OfferDemoPage() {
                   {/* Platzhalter */}
                   <div>
                     <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">
-                      Verfügbare Platzhalter
+                      {t('offerDemo.templates.placeholdersTitle')}
                     </p>
                     <div className="flex flex-wrap gap-1.5">
-                      {(
-                        [
-                          ["{{vorname}}", "Vorname"],
-                          ["{{nachname}}", "Nachname"],
-                          ["{{angebotsnummer}}", "Angebotsnr."],
-                          ["{{firmenname}}", "Firmenname"],
-                          ["{{datum}}", "Datum"],
-                          ["{{gueltig_bis}}", "Gültig bis"],
-                          ["{{zahlungsziel}}", "Zahlungsziel"],
-                        ] as [string, string][]
-                      ).map(([ph, desc]) => (
+                      {(t('offerDemo.templates.placeholders', { returnObjects: true }) as { token: string; label: string }[]).map(({ token, label }) => (
                         <div
-                          key={ph}
+                          key={token}
                           className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-lg px-2 py-1"
                         >
                           <code className="text-[10px] text-brand-secondary font-mono">
-                            {ph}
+                            {token}
                           </code>
                           <span className="text-[10px] text-gray-400">
-                            {desc}
+                            {label}
                           </span>
                         </div>
                       ))}
@@ -869,8 +840,8 @@ export default function OfferDemoPage() {
                   </div>
 
                   <TemplateField
-                    label="Anschreiben (Einleitung)"
-                    hint="Erscheint oben im PDF nach dem Header."
+                    label={t('offerDemo.templates.anschreibenLabel')}
+                    hint={t('offerDemo.templates.anschreibenHint')}
                     value={state.textTemplate.anschreiben}
                     onChange={(v) =>
                       dispatch({
@@ -882,7 +853,7 @@ export default function OfferDemoPage() {
                     rows={4}
                   />
                   <TemplateField
-                    label="Zahlungsbedingungen & Hinweise"
+                    label={t('offerDemo.templates.zahlungsbedingungenLabel')}
                     value={state.textTemplate.zahlungsbedingungen}
                     onChange={(v) =>
                       dispatch({
@@ -907,7 +878,7 @@ export default function OfferDemoPage() {
                         }
                         className="w-4 h-4 rounded border-gray-300 accent-brand-secondary"
                       />
-                      Folgekosten-Hinweis im PDF anzeigen
+                      {t('offerDemo.templates.folgekostenLabel')}
                     </label>
                     {state.textTemplate.showFolgekosten && (
                       <textarea
@@ -925,8 +896,8 @@ export default function OfferDemoPage() {
                     )}
                   </div>
                   <TemplateField
-                    label="Schlusstext"
-                    hint="Erscheint über der Unterschriftszeile."
+                    label={t('offerDemo.templates.schlusstextLabel')}
+                    hint={t('offerDemo.templates.schlusstextHint')}
                     value={state.textTemplate.schlusstext}
                     onChange={(v) =>
                       dispatch({
@@ -942,12 +913,12 @@ export default function OfferDemoPage() {
                     <div className="flex items-center gap-3">
                       <Mail className="w-4 h-4 text-brand-secondary" />
                       <h4 className="text-sm font-semibold text-brand-secondary">
-                        E-Mail-Vorlage
+                        {t('offerDemo.templates.emailTitle')}
                       </h4>
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-xs font-medium text-gray-600">
-                        Betreff
+                        {t('offerDemo.templates.subjectLabel')}
                       </label>
                       <input
                         type="text"
@@ -964,7 +935,7 @@ export default function OfferDemoPage() {
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-xs font-medium text-gray-600">
-                        Nachricht
+                        {t('offerDemo.templates.messageLabel')}
                       </label>
                       <textarea
                         value={state.emailTemplate.nachricht}
@@ -989,12 +960,12 @@ export default function OfferDemoPage() {
           <div className="lg:col-span-1">
             <div className="sticky top-16 bg-white rounded-2xl border border-gray-200 p-5 space-y-5">
               <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest">
-                Zusammenfassung
+                {t('offerDemo.summary.title')}
               </h3>
 
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Zwischensumme</span>
+                  <span className="text-gray-500">{t('offerDemo.summary.subtotal')}</span>
                   <span className="font-bold text-brand-secondary">
                     {formatCurrency(calculated.subtotal)}
                   </span>
@@ -1002,7 +973,7 @@ export default function OfferDemoPage() {
                 {hasDiscount && (
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">
-                      Rabatt
+                      {t('offerDemo.summary.discount')}
                       {state.discountPercentage
                         ? ` (${state.discountPercentage}%)`
                         : ""}
@@ -1014,14 +985,14 @@ export default function OfferDemoPage() {
                   </div>
                 )}
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">MwSt ({vatRate}%)</span>
+                  <span className="text-gray-500">{t('offerDemo.summary.vat', { vatRate })}</span>
                   <span className="font-bold text-brand-secondary">
                     {formatCurrency(calculated.vat)}
                   </span>
                 </div>
                 <div className="pt-3 border-t border-gray-100 flex justify-between items-center">
                   <span className="text-base font-bold text-brand-secondary">
-                    Gesamtsumme
+                    {t('offerDemo.summary.total')}
                   </span>
                   <span className="text-2xl font-black text-brand-secondary">
                     {formatCurrency(calculated.total)}
@@ -1032,24 +1003,24 @@ export default function OfferDemoPage() {
               {roiImpact && (
                 <div className="pt-4 border-t border-gray-100 space-y-3">
                   <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">
-                    Impact für den Kunden
+                    {t('offerDemo.summary.impactTitle')}
                   </p>
                   <div className="grid grid-cols-2 gap-2">
                     <div
                       className={`rounded-lg px-3 py-2.5 border ${roiImpact.amortization < 10 ? "bg-green-50 border-green-200" : roiImpact.amortization < 15 ? "bg-amber-50 border-amber-200" : "bg-red-50 border-red-200"}`}
                     >
                       <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-500 mb-0.5">
-                        Amortisation
+                        {t('offerDemo.impact.amortization')}
                       </p>
                       <p
                         className={`text-base font-black ${roiImpact.amortization < 10 ? "text-green-600" : roiImpact.amortization < 15 ? "text-amber-600" : "text-red-600"}`}
                       >
-                        ~{roiImpact.amortization} J.
+                        {t('offerDemo.impact.years', { years: roiImpact.amortization })}
                       </p>
                     </div>
                     <div className="rounded-lg px-3 py-2.5 bg-gray-50 border border-gray-200">
                       <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-500 mb-0.5">
-                        Ersparnis/Jahr
+                        {t('offerDemo.impact.savingsPerYear')}
                       </p>
                       <p className="text-base font-black text-green-600">
                         {formatCurrency(roiImpact.annualSavings)}
@@ -1059,7 +1030,7 @@ export default function OfferDemoPage() {
                       className={`rounded-lg px-3 py-2.5 border ${roiImpact.profit20 >= 0 ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"}`}
                     >
                       <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-500 mb-0.5">
-                        Gewinn 20 J.
+                        {t('offerDemo.impact.profit20')}
                       </p>
                       <p
                         className={`text-base font-black ${roiImpact.profit20 >= 0 ? "text-green-600" : "text-red-600"}`}
@@ -1070,7 +1041,7 @@ export default function OfferDemoPage() {
                     </div>
                     <div className="rounded-lg px-3 py-2.5 bg-gray-50 border border-gray-200">
                       <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-500 mb-0.5">
-                        Autarkie
+                        {t('offerDemo.impact.autarky')}
                       </p>
                       <p className="text-base font-black text-blue-600">
                         {roiImpact.autarky}%
@@ -1085,7 +1056,7 @@ export default function OfferDemoPage() {
                 <div className="space-y-2 pt-3 border-t border-gray-100">
                   <label className="flex items-center gap-2 text-xs font-bold text-gray-500 uppercase tracking-widest">
                     <Tag className="w-3.5 h-3.5" />
-                    Rabatt-Code
+                    {t('offerDemo.discount.codeTitle')}
                   </label>
                   <div className="flex gap-2">
                     <select
@@ -1093,7 +1064,7 @@ export default function OfferDemoPage() {
                       onChange={(e) => setSelectedCodeId(e.target.value)}
                       className={`flex-1 text-xs px-3 py-2 ${INPUT}`}
                     >
-                      <option value="">Code wählen...</option>
+                      <option value="">{t('offerDemo.discount.codePlaceholder')}</option>
                       {DEMO_DISCOUNT_CODES.map((code) => (
                         <option key={code.id} value={code.id}>
                           {code.code} ({code.percentage}%)
@@ -1105,7 +1076,7 @@ export default function OfferDemoPage() {
                       disabled={!selectedCodeId}
                       className="bg-brand-primary hover:bg-brand-primary-hover disabled:opacity-40 text-brand-secondary font-bold text-xs px-3 py-2 rounded-lg transition-colors"
                     >
-                      Anwenden
+                      {t('offerDemo.discount.apply')}
                     </button>
                   </div>
                 </div>
@@ -1116,7 +1087,7 @@ export default function OfferDemoPage() {
                 <div className="space-y-2 pt-3 border-t border-gray-100">
                   <label className="flex items-center gap-2 text-xs font-bold text-gray-500 uppercase tracking-widest">
                     <Percent className="w-3.5 h-3.5" />
-                    Manueller Rabatt
+                    {t('offerDemo.discount.manualTitle')}
                   </label>
                   <div className="flex gap-2">
                     <input
@@ -1126,7 +1097,7 @@ export default function OfferDemoPage() {
                         setManualDiscountPct(e.target.value);
                         if (e.target.value) setManualDiscountAmount("");
                       }}
-                      placeholder="%"
+                      placeholder={t('offerDemo.discount.percentPlaceholder')}
                       className={`w-20 text-xs px-3 py-2 ${INPUT}`}
                     />
                     <input
@@ -1136,7 +1107,7 @@ export default function OfferDemoPage() {
                         setManualDiscountAmount(e.target.value);
                         if (e.target.value) setManualDiscountPct("");
                       }}
-                      placeholder="€"
+                      placeholder={t('offerDemo.discount.amountPlaceholder')}
                       className={`flex-1 text-xs px-3 py-2 ${INPUT}`}
                     />
                     <button
@@ -1144,7 +1115,7 @@ export default function OfferDemoPage() {
                       disabled={!manualDiscountPct && !manualDiscountAmount}
                       className="bg-white border border-gray-200 hover:bg-gray-50 disabled:opacity-40 text-brand-secondary font-bold text-xs px-3 py-2 rounded-lg transition-colors"
                     >
-                      OK
+                      {t('offerDemo.discount.ok')}
                     </button>
                   </div>
                   {hasDiscount && (
@@ -1152,7 +1123,7 @@ export default function OfferDemoPage() {
                       onClick={removeDiscount}
                       className="text-xs text-red-500 hover:text-red-600 transition-colors"
                     >
-                      Rabatt entfernen
+                      {t('offerDemo.discount.remove')}
                     </button>
                   )}
                 </div>
@@ -1170,7 +1141,7 @@ export default function OfferDemoPage() {
                       textTemplate={state.textTemplate}
                     />
                   }
-                  fileName={`Angebot-${offerNumber}.pdf`}
+                  fileName={t('offerDemo.pdf.fileName', { offerNumber })}
                   className="flex items-center justify-center gap-2 w-full bg-white border border-gray-200 hover:bg-gray-50 text-brand-secondary font-bold text-sm px-4 py-2.5 rounded-xl transition-colors cursor-pointer"
                 >
                   {({ loading: pdfLoading }) => (
@@ -1180,7 +1151,7 @@ export default function OfferDemoPage() {
                       ) : (
                         <FileText className="w-4 h-4" />
                       )}
-                      {pdfLoading ? "PDF wird erstellt…" : "Angebot als PDF"}
+                      {pdfLoading ? t('offerDemo.pdf.creating') : t('offerDemo.pdf.download')}
                     </>
                   )}
                 </PDFDownloadLink>
@@ -1191,16 +1162,16 @@ export default function OfferDemoPage() {
                     className="flex items-center justify-center gap-2 w-full bg-brand-secondary hover:bg-brand-secondary-hover text-white font-bold text-sm px-4 py-2.5 rounded-xl transition-colors"
                   >
                     <Send className="w-4 h-4" />
-                    Angebot senden
+                    {t('offerDemo.sendOffer')}
                   </button>
                 )}
               </div>
 
               <div className="text-[10px] text-gray-400 space-y-1">
-                <p>Angebotsnr.: {offerNumber}</p>
+                <p>{t('offerDemo.summary.offerNumberLabel', { offerNumber })}</p>
                 <p>
-                  Zuletzt gespeichert:{" "}
-                  {new Date().toLocaleDateString("de-DE", {
+                  {t('offerDemo.summary.lastSaved')}{" "}
+                  {new Date().toLocaleDateString(i18n.language === "en" ? "en-GB" : "de-DE", {
                     day: "2-digit",
                     month: "short",
                     year: "numeric",
@@ -1214,15 +1185,14 @@ export default function OfferDemoPage() {
         {/* Abschluss-CTA */}
         <div className="mt-12 rounded-2xl border border-gray-200 bg-white p-8 text-center">
           <h3 className="text-xl font-bold text-brand-secondary">
-            Das willst du für dein Geschäft?
+            {t('offerDemo.cta.title')}
           </h3>
           <p className="mt-2 text-sm text-gray-500">
-            Angebotskonfigurator, CRM und Konfigurator für deine Webseite — als
-            Beta-Partner 30% günstiger.
+            {t('offerDemo.cta.sub')}
           </p>
           <div className="mt-5 flex justify-center">
             <PillButton variant="primary" onClick={() => navigate("/beta")}>
-              Jetzt Beta-Partner werden
+              {t('offerDemo.cta.button')}
             </PillButton>
           </div>
         </div>
@@ -1237,7 +1207,7 @@ export default function OfferDemoPage() {
                 <Send className="w-4 h-4 text-blue-600" />
               </div>
               <h3 className="text-base font-bold text-brand-secondary">
-                Angebot versenden
+                {t('offerDemo.send.modalTitle')}
               </h3>
             </div>
 
@@ -1246,26 +1216,25 @@ export default function OfferDemoPage() {
                 <CheckCircle className="w-5 h-5 shrink-0" />
                 <div>
                   <p className="font-bold text-sm">
-                    Angebot erfolgreich versendet!
+                    {t('offerDemo.send.successTitle')}
                   </p>
                   <p className="text-xs text-green-600/80">
-                    Demo — es wurde keine echte E-Mail an {sendEmail} gesendet.
+                    {t('offerDemo.send.successDemo', { email: sendEmail })}
                   </p>
                 </div>
               </div>
             ) : (
               <>
                 <p className="text-sm text-gray-500 mb-4">
-                  Das Angebot wird als PDF generiert und per E-Mail an den
-                  Kunden gesendet.
+                  {t('offerDemo.send.body')}
                   <span className="text-gray-400">
                     {" "}
-                    (In dieser Demo wird nichts wirklich verschickt.)
+                    {t('offerDemo.send.demoNote')}
                   </span>
                 </p>
 
                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">
-                  E-Mail-Adresse
+                  {t('offerDemo.send.emailLabel')}
                 </label>
                 <input
                   type="email"
@@ -1275,7 +1244,7 @@ export default function OfferDemoPage() {
                 />
 
                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">
-                  Betreff
+                  {t('offerDemo.send.subjectLabel')}
                 </label>
                 <input
                   type="text"
@@ -1285,7 +1254,7 @@ export default function OfferDemoPage() {
                 />
 
                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5">
-                  Nachricht
+                  {t('offerDemo.send.messageLabel')}
                 </label>
                 <textarea
                   value={sendMessage}
@@ -1299,7 +1268,7 @@ export default function OfferDemoPage() {
                     onClick={() => setShowSendModal(false)}
                     className="flex-1 border border-gray-200 text-gray-600 font-bold text-sm px-4 py-2.5 rounded-xl hover:bg-gray-50 transition-colors"
                   >
-                    Abbrechen
+                    {t('offerDemo.send.cancel')}
                   </button>
                   <button
                     onClick={handleSimulatedSend}
@@ -1311,7 +1280,7 @@ export default function OfferDemoPage() {
                     ) : (
                       <Send className="w-4 h-4" />
                     )}
-                    {sending ? "Wird gesendet…" : "Jetzt senden"}
+                    {sending ? t('offerDemo.send.sending') : t('offerDemo.send.submit')}
                   </button>
                 </div>
               </>

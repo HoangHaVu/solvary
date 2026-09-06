@@ -1,32 +1,14 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslation } from 'react-i18next';
 import { User, MessageCircle, ArrowRight, Zap } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const posts = [
-  {
-    img: '/images/blog-1.jpg',
-    author: 'Solvary',
-    readTime: '4 Min. Lesedauer',
-    title: 'Wie eine überzeugende Solar-Website mehr Leads generiert',
-  },
-  {
-    img: '/images/blog-2.jpg',
-    author: 'Solvary',
-    readTime: '3 Min. Lesedauer',
-    title: 'Solar-Website-Design-Trends, die Sie 2025 beobachten sollten',
-  },
-  {
-    img: '/images/blog-3.jpg',
-    author: 'Solvary',
-    readTime: '2 Min. Lesedauer',
-    title: 'Erstellen Sie eine beeindruckende Online-Präsenz für Solarlösungen',
-  },
-];
-
 export default function News() {
+  const { t } = useTranslation();
+  const posts = t('demoPage.news.posts', { returnObjects: true }) as { img: string; author: string; readTime: string; title: string }[];
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -50,13 +32,13 @@ export default function News() {
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Zap className="w-4 h-4 text-black" />
-            <span className="text-xs font-semibold uppercase tracking-widest text-black">Blog</span>
+            <span className="text-xs font-semibold uppercase tracking-widest text-black">{t('demoPage.news.badge')}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-medium text-black leading-tight tracking-tight mb-4">
-            Aktuelles aus der Solar-Branche
+            {t('demoPage.news.heading')}
           </h2>
           <p className="text-gray-500 text-base max-w-[560px] mx-auto leading-relaxed">
-            Tipps, Trends und Insights rund um Solarenergie, Digitalisierung und nachhaltiges Geschaeftswachstum.
+            {t('demoPage.news.sub')}
           </p>
         </div>
 
@@ -93,7 +75,7 @@ export default function News() {
                 {post.title}
               </h3>
               <span className="inline-flex items-center gap-2 text-sm text-black font-medium group-hover:gap-3 transition-all">
-                Mehr lesen <ArrowRight className="w-4 h-4" />
+                {t('demoPage.news.readMore')} <ArrowRight className="w-4 h-4" />
               </span>
             </article>
           ))}
@@ -105,7 +87,7 @@ export default function News() {
             href="#news"
             className="news-btn inline-flex items-center gap-2 bg-brand-primary text-brand-secondary text-sm font-medium px-6 py-3.5 rounded-full hover:bg-brand-primary-hover transition-all duration-250 hover:scale-[1.02] group opacity-0"
           >
-            Weitere Neuigkeiten
+            {t('demoPage.news.moreNews')}
             <span className="w-7 h-7 bg-brand-secondary rounded-full flex items-center justify-center group-hover:bg-brand-secondary-hover transition-colors group-hover:translate-x-1 transition-transform">
               <ArrowRight className="w-3.5 h-3.5 text-white" />
             </span>

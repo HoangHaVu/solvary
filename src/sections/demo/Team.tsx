@@ -1,18 +1,14 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslation } from 'react-i18next';
 import { User, ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const members = [
-  { name: 'James Carter', role: 'Geschäftsführer', img: '/images/team-james.jpg' },
-  { name: 'Emily Johnson', role: 'Technische Leiterin', img: '/images/team-emily.jpg' },
-  { name: 'Michael Brown', role: 'Produktdirektor', img: '/images/team-michael.jpg' },
-  { name: 'Sarah Davis', role: 'Marketingleiterin', img: '/images/team-sarah.jpg' },
-];
-
 export default function Team() {
+  const { t } = useTranslation();
+  const members = t('demoPage.team.members', { returnObjects: true }) as { name: string; role: string; img: string }[];
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -40,14 +36,14 @@ export default function Team() {
                 <User className="w-5 h-5 text-brand-secondary" />
               </div>
               <h3 className="text-2xl font-medium text-white leading-tight mb-2">
-                Unsere preisgekrönten<br />Referenten & Mentoren
+                {t('demoPage.team.infoHeading')}
               </h3>
             </div>
             <a
               href="#team"
               className="inline-flex items-center gap-2 bg-brand-secondary text-white text-sm font-medium px-5 py-3 rounded-full hover:bg-brand-secondary-hover transition-all mt-6 w-fit group"
             >
-              Alle Mitglieder anzeigen
+              {t('demoPage.team.cta')}
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>

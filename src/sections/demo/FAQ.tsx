@@ -1,30 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslation } from 'react-i18next';
 import { Plus, Minus, Zap } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const faqs = [
-  {
-    q: 'Wie lange dauert eine Solarinstallation in der Regel?',
-    a: 'Die meisten privaten Solarinstallationen werden innerhalb von 1–3 Tagen abgeschlossen, je nach Systemgröße.',
-  },
-  {
-    q: 'Funktionieren Solarmodule auch an bewölkten Tagen?',
-    a: 'Ja, Solarmodule erzeugen auch an bewölkten Tagen Strom, wenn auch mit verringerter Effizienz. Sie können diffuses Sonnenlicht einfangen und weiterhin Energie produzieren, auch wenn die Sonne nicht direkt scheint.',
-  },
-  {
-    q: 'Welche Wartung benötigen Solarsysteme?',
-    a: 'Solarsysteme benötigen nur minimale Wartung. In der Regel genügt es, die Module 2–4 Mal pro Jahr zu reinigen und eine jährliche professionelle Inspektion durchführen zu lassen, um das System optimal betreiben zu können.',
-  },
-  {
-    q: 'Was ist eine netzgekoppelte Solarlösung?',
-    a: 'Ein netzgekoppeltes Solarsystem ist mit dem Stromnetz verbunden und ermöglicht es Ihnen, bei Bedarf Strom zu beziehen und überschüssige Energie über Net-Metering-Programme zurück ins Netz zu verkaufen.',
-  },
-];
-
 export default function FAQ() {
+  const { t } = useTranslation();
+  const faqs = t('demoPage.faq.items', { returnObjects: true }) as { q: string; a: string }[];
   const sectionRef = useRef<HTMLElement>(null);
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
@@ -51,14 +35,14 @@ export default function FAQ() {
             <div className="faq-img rounded-2xl overflow-hidden opacity-0">
               <img
                 src="/images/faq-image.jpg"
-                alt="Solarmodule"
+                alt={t('demoPage.faq.imageAlt')}
                 className="w-full aspect-[4/5] object-cover"
               />
             </div>
             {/* Experience Badge */}
             <div className="absolute bottom-6 right-6 bg-white/90 backdrop-blur-sm rounded-xl px-5 py-4 shadow-lg">
-              <div className="text-3xl font-semibold text-black">10+</div>
-              <div className="text-xs text-black/80">Jahre Erfahrung<br />und Expertise</div>
+              <div className="text-3xl font-semibold text-black">{t('demoPage.faq.experienceBadge.value')}</div>
+              <div className="text-xs text-black/80">{t('demoPage.faq.experienceBadge.label')}</div>
             </div>
           </div>
 
@@ -66,10 +50,10 @@ export default function FAQ() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Zap className="w-4 h-4 text-black" />
-              <span className="text-xs font-semibold uppercase tracking-widest text-black">Haben Sie Fragen?</span>
+              <span className="text-xs font-semibold uppercase tracking-widest text-black">{t('demoPage.faq.badge')}</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-medium text-black leading-tight tracking-tight mb-8">
-              Haben Sie Fragen? Hier einige Antworten für Sie
+              {t('demoPage.faq.heading')}
             </h2>
 
             <div className="flex flex-col">
