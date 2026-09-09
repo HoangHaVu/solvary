@@ -193,7 +193,7 @@ Deno.serve(async (req) => {
       method: 'POST',
       headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from:    'Solvary Partner <noreply@vu-studio.de>',
+        from:    'Solvary Partner <noreply@solvary.de>',
         to:      partner_email,
         subject: `Neuer Lead: ${lead_name || 'Solaranfrage'}${lead_zip ? ' · PLZ ' + lead_zip : ''}`,
         html,

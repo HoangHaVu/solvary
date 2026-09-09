@@ -117,6 +117,24 @@ export default function SolutionCheck() {
         email,
       })
       .then(() => {});
+    // fire-and-forget Auswertungs-Mail an den Lead
+    if (res) {
+      void supabase.functions
+        .invoke("send-check-result", {
+          body: {
+            to: email,
+            name: name || undefined,
+            hero: { name: res.hero.name, tagline: res.hero.tagline },
+            reasons: res.reasons,
+            alsoRelevant: res.alsoRelevant.map((m) => ({
+              name: m.name,
+              tagline: m.tagline,
+            })),
+            timeSavedHint: res.timeSavedHint,
+          },
+        })
+        .catch(() => {});
+    }
     setResult(res);
     setPhase("result");
     setSubmitting(false);
@@ -460,17 +478,23 @@ function BookingCta() {
       <div className="grid grid-cols-3 gap-3 mb-5">
         <div>
           <p className="text-lg font-bold text-white">{BETA.freeMonths} Mo.</p>
-          <p className="text-[10px] text-white/50">{t("check.result.booking.free")}</p>
+          <p className="text-[10px] text-white/50">
+            {t("check.result.booking.free")}
+          </p>
         </div>
         <div>
           <p className="text-lg font-bold text-brand-primary">
             -{BETA.discountPercent}%
           </p>
-          <p className="text-[10px] text-white/50">{t("check.result.booking.permanent")}</p>
+          <p className="text-[10px] text-white/50">
+            {t("check.result.booking.permanent")}
+          </p>
         </div>
         <div>
           <p className="text-lg font-bold text-white">{BETA.callMinutes} min</p>
-          <p className="text-[10px] text-white/50">{t("check.result.booking.demoCall")}</p>
+          <p className="text-[10px] text-white/50">
+            {t("check.result.booking.demoCall")}
+          </p>
         </div>
       </div>
       <p className="text-white/80 text-sm mb-4">

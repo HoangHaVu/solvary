@@ -95,7 +95,7 @@ import { getOfferDraftForLead, type OfferDraft } from "../services/offers";
 
 // ─── PDF Helpers ───
 const DEFAULT_COMPANY: CompanySettings = {
-  firmenname: "Voltify Solar",
+  firmenname: "Solvary",
   slogan: "Ihre Solaranlage — einfach konfiguriert.",
   logoDataUrl: "",
   primaryColor: COLORS.secondary,
@@ -157,7 +157,7 @@ interface OwnerSettings {
 }
 
 const DEFAULT_SETTINGS: OwnerSettings = {
-  firmenname: "Voltify Solar",
+  firmenname: "Solvary",
   slogan: "Ihre Solaranlage — einfach konfiguriert.",
   logoDataUrl: "",
   primaryColor: COLORS.secondary,

@@ -76,7 +76,7 @@ function StatCard({ label, value, sub, icon, accent }: StatCardProps) {
 
 // ─── Default company settings for PDF ───
 const DEFAULT_COMPANY: CompanySettings = {
-  firmenname: 'Voltify Solar',
+  firmenname: 'Solvary',
   slogan: 'Your solar system — simply configured.',
   logoDataUrl: '',
   primaryColor: COLORS.secondary,

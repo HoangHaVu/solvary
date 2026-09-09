@@ -53,7 +53,7 @@ Deno.serve(async (req) => {
     );
   }
 
-  const from = `Solvary <noreply@vu-studio.de>`;
+  const from = `Solvary <noreply@solvary.de>`;
   const dateStr = new Date(signedAt).toLocaleDateString('de-DE', {
     day: '2-digit',
     month: 'long',

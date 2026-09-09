@@ -12,7 +12,7 @@ export const BETA = {
   /** Dauer des Demo-Calls in Minuten */
   callMinutes: 30,
   /** Calendly-Buchungslink für den Demo-Call */
-  calendlyUrl: 'https://calendly.com/contact-vu-studio/30min',
+  calendlyUrl: "https://calendly.com/hoangha-vu-studio/30min",
 } as const;
 
 /** Vorformatierte Strings für die häufigsten Copy-Bausteine */

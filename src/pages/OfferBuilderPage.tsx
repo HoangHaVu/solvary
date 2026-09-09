@@ -65,7 +65,7 @@ import { supabase } from "../lib/supabase";
 
 // ─── Default company settings for PDF ───
 const DEFAULT_COMPANY: CompanySettings = {
-  firmenname: "Voltify Solar",
+  firmenname: "Solvary",
   slogan: "Ihre Solaranlage — einfach konfiguriert.",
   logoDataUrl: "",
   primaryColor: COLORS.secondary,

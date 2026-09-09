@@ -160,7 +160,7 @@ async function notifyAgency(
     method: 'POST',
     headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      from:    'Solvary <noreply@vu-studio.de>',
+      from:    'Solvary <noreply@solvary.de>',
       to:      profile.email,
       subject: `${partner.company_name} hat Lead ${leadName} ${action === 'accepted' ? 'angenommen ✅' : 'abgelehnt ❌'}`,
       html,

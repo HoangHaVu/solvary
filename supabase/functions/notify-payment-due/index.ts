@@ -57,7 +57,7 @@ Deno.serve(async (req) => {
       method: 'POST',
       headers: { Authorization: `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: 'Solvary <noreply@vu-studio.de>',
+        from: 'Solvary <noreply@solvary.de>',
         to: customerEmail,
         subject: `Zahlungserinnerung — ${nextUnpaid.label}`,
         html: `

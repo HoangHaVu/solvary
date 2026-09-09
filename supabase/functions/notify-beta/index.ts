@@ -7,7 +7,7 @@ const CORS = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const ADMIN_EMAIL = 'contact@vu-studio.de'; // verified domain
+const ADMIN_EMAIL = 'kontakt@solvary.de'; // verified domain
 
 interface BetaRequest {
   company_name: string;
@@ -78,7 +78,7 @@ Deno.serve(async (req) => {
   `;
 
   // Versuche mit eigener Domain, fallback auf Resend-Standard
-  let fromAddress = 'Solvary Beta <noreply@vu-studio.de>';
+  let fromAddress = 'Solvary Beta <noreply@solvary.de>';
   let res = await sendEmail(resendKey, fromAddress, ADMIN_EMAIL, data, html);
 
   if (!res.ok && (res.status === 403 || res.status === 422)) {

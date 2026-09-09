@@ -1,12 +1,17 @@
 import {
-  Document, Page, View, Text, StyleSheet, Image,
-} from '@react-pdf/renderer';
-import type { Lead } from '../../services/data';
-import type { OfferDraft, OfferTextTemplate } from '../../services/offers';
-import { COLORS } from '../../lib/theme';
+  Document,
+  Page,
+  View,
+  Text,
+  StyleSheet,
+  Image,
+} from "@react-pdf/renderer";
+import type { Lead } from "../../services/data";
+import type { OfferDraft, OfferTextTemplate } from "../../services/offers";
+import { COLORS } from "../../lib/theme";
 
 function interpolate(template: string, vars: Record<string, string>): string {
-  return template.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] ?? '');
+  return template.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] ?? "");
 }
 
 // ── Types ──
@@ -39,121 +44,343 @@ interface Props {
 
 // ── Base colors (neutral) ──
 const BASE = {
-  green: '#16A34A',
-  amber200: '#FDE68A',
-  amber700: '#B45309',
-  slate50: '#F8FAFC',
-  slate100: '#F1F5F9',
-  slate200: '#E2E8F0',
-  slate400: '#94A3B8',
-  slate500: '#64748B',
-  slate600: '#475569',
-  slate700: '#334155',
-  white: '#FFFFFF',
+  green: "#16A34A",
+  amber200: "#FDE68A",
+  amber700: "#B45309",
+  slate50: "#F8FAFC",
+  slate100: "#F1F5F9",
+  slate200: "#E2E8F0",
+  slate400: "#94A3B8",
+  slate500: "#64748B",
+  slate600: "#475569",
+  slate700: "#334155",
+  white: "#FFFFFF",
 };
 
 // ── Dynamic Styles Factory ──
 function getStyles(primary: string, accent: string) {
   return StyleSheet.create({
-    page: { fontFamily: 'Helvetica', fontSize: 9, color: BASE.slate700, padding: 32 },
+    page: {
+      fontFamily: "Helvetica",
+      fontSize: 9,
+      color: BASE.slate700,
+      padding: 32,
+    },
 
-    header: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 24 },
+    header: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: 24,
+    },
     headerLeft: { flex: 1 },
-    headerRight: { alignItems: 'flex-end' },
-    companyName: { fontSize: 18, fontFamily: 'Helvetica-Bold', color: primary },
+    headerRight: { alignItems: "flex-end" },
+    companyName: { fontSize: 18, fontFamily: "Helvetica-Bold", color: primary },
     companySlogan: { fontSize: 8, color: BASE.slate400, marginTop: 2 },
-    companyDetails: { fontSize: 8, color: BASE.slate500, marginTop: 4, lineHeight: 1.4 },
-    offerMeta: { fontSize: 8, color: BASE.slate500, textAlign: 'right', lineHeight: 1.5 },
-    offerNumber: { fontSize: 12, fontFamily: 'Helvetica-Bold', color: primary },
+    companyDetails: {
+      fontSize: 8,
+      color: BASE.slate500,
+      marginTop: 4,
+      lineHeight: 1.4,
+    },
+    offerMeta: {
+      fontSize: 8,
+      color: BASE.slate500,
+      textAlign: "right",
+      lineHeight: 1.5,
+    },
+    offerNumber: { fontSize: 12, fontFamily: "Helvetica-Bold", color: primary },
 
     accentBar: { height: 3, backgroundColor: accent, marginBottom: 20 },
 
     section: { marginBottom: 16 },
-    sectionTitle: { fontSize: 10, fontFamily: 'Helvetica-Bold', color: accent, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 6 },
+    sectionTitle: {
+      fontSize: 10,
+      fontFamily: "Helvetica-Bold",
+      color: accent,
+      textTransform: "uppercase",
+      letterSpacing: 1,
+      marginBottom: 6,
+    },
 
-    row: { flexDirection: 'row', gap: 16 },
+    row: { flexDirection: "row", gap: 16 },
     col: { flex: 1 },
 
-    box: { backgroundColor: BASE.slate50, borderRadius: 4, border: `1 solid ${BASE.slate200}`, padding: 10 },
-    boxLabel: { fontSize: 7, color: BASE.slate400, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 3 },
-    boxValue: { fontSize: 9, fontFamily: 'Helvetica-Bold', color: primary },
+    box: {
+      backgroundColor: BASE.slate50,
+      borderRadius: 4,
+      border: `1 solid ${BASE.slate200}`,
+      padding: 10,
+    },
+    boxLabel: {
+      fontSize: 7,
+      color: BASE.slate400,
+      textTransform: "uppercase",
+      letterSpacing: 0.5,
+      marginBottom: 3,
+    },
+    boxValue: { fontSize: 9, fontFamily: "Helvetica-Bold", color: primary },
     boxValueSmall: { fontSize: 8, color: BASE.slate500, marginTop: 1 },
 
     table: { marginTop: 4 },
-    tableHeader: { flexDirection: 'row', backgroundColor: primary, padding: '6 10', borderRadius: '4 4 0 0' },
-    tableHeaderCell: { fontSize: 8, fontFamily: 'Helvetica-Bold', color: BASE.white, flex: 1 },
-    tableHeaderCellRight: { fontSize: 8, fontFamily: 'Helvetica-Bold', color: BASE.white, textAlign: 'right', width: 80 },
-    tableRow: { flexDirection: 'row', padding: '6 10', borderBottom: `1 solid ${BASE.slate200}` },
-    tableRowAlt: { flexDirection: 'row', padding: '6 10', borderBottom: `1 solid ${BASE.slate200}`, backgroundColor: BASE.slate50 },
-    tableCell: { fontSize: 8, color: BASE.slate700, flex: 1 },
-    tableCellRight: { fontSize: 8, color: BASE.slate700, textAlign: 'right', width: 80, fontFamily: 'Helvetica-Bold' },
-    tableCellNote: { fontSize: 7, color: BASE.slate400, flex: 1, marginTop: 1 },
+    tableHeader: {
+      flexDirection: "row",
+      backgroundColor: primary,
+      padding: "6 10",
+      borderRadius: "4 4 0 0",
+    },
+    tableHeaderCell: {
+      fontSize: 8,
+      fontFamily: "Helvetica-Bold",
+      color: BASE.white,
+      flex: 1,
+    },
+    tableHeaderCellRight: {
+      fontSize: 8,
+      fontFamily: "Helvetica-Bold",
+      color: BASE.white,
+      textAlign: "right",
+      width: 80,
+    },
+    tableRow: {
+      flexDirection: "row",
+      padding: "8 10",
+      borderBottom: `1 solid ${BASE.slate200}`,
+    },
+    tableRowAlt: {
+      flexDirection: "row",
+      padding: "8 10",
+      borderBottom: `1 solid ${BASE.slate200}`,
+      backgroundColor: BASE.slate50,
+    },
+    tableCell: { fontSize: 8, lineHeight: 1.4, color: BASE.slate700, flex: 1 },
+    tableCellRight: {
+      fontSize: 8,
+      color: BASE.slate700,
+      textAlign: "right",
+      width: 80,
+      fontFamily: "Helvetica-Bold",
+    },
+    tableCellNote: {
+      fontSize: 7,
+      lineHeight: 1.4,
+      color: BASE.slate400,
+      flex: 1,
+      marginTop: 10,
+    },
 
-    totalRow: { flexDirection: 'row', justifyContent: 'flex-end', padding: '8 10', backgroundColor: BASE.slate50, borderRadius: '0 0 4 4', marginTop: -1 },
-    totalLabel: { fontSize: 9, fontFamily: 'Helvetica-Bold', color: primary },
-    totalValue: { fontSize: 11, fontFamily: 'Helvetica-Bold', color: accent, marginLeft: 12 },
+    totalRow: {
+      flexDirection: "row",
+      justifyContent: "flex-end",
+      padding: "8 10",
+      backgroundColor: BASE.slate50,
+      borderRadius: "0 0 4 4",
+      marginTop: -1,
+    },
+    totalLabel: { fontSize: 9, fontFamily: "Helvetica-Bold", color: primary },
+    totalValue: {
+      fontSize: 11,
+      fontFamily: "Helvetica-Bold",
+      color: accent,
+      marginLeft: 12,
+    },
 
-    metricGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 8 },
-    metricBox: { width: '23%', backgroundColor: BASE.slate50, border: `1 solid ${BASE.slate200}`, borderRadius: 4, padding: 8 },
-    metricLabel: { fontSize: 7, color: BASE.slate400, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 3 },
-    metricValue: { fontSize: 11, fontFamily: 'Helvetica-Bold', color: primary },
+    metricGrid: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: 8,
+      marginTop: 8,
+    },
+    metricBox: {
+      width: "23%",
+      backgroundColor: BASE.slate50,
+      border: `1 solid ${BASE.slate200}`,
+      borderRadius: 4,
+      padding: 8,
+    },
+    metricLabel: {
+      fontSize: 7,
+      color: BASE.slate400,
+      textTransform: "uppercase",
+      letterSpacing: 0.5,
+      marginBottom: 3,
+    },
+    metricValue: { fontSize: 11, fontFamily: "Helvetica-Bold", color: primary },
 
-    terms: { marginTop: 8, padding: 10, backgroundColor: BASE.slate50, borderRadius: 4 },
-    termsTitle: { fontSize: 8, fontFamily: 'Helvetica-Bold', color: primary, marginBottom: 4 },
+    terms: {
+      marginTop: 8,
+      padding: 10,
+      backgroundColor: BASE.slate50,
+      borderRadius: 4,
+    },
+    termsTitle: {
+      fontSize: 8,
+      fontFamily: "Helvetica-Bold",
+      color: primary,
+      marginBottom: 4,
+    },
     termsText: { fontSize: 7, color: BASE.slate500, lineHeight: 1.5 },
 
-    footer: { position: 'absolute', bottom: 24, left: 32, right: 32, borderTop: `1 solid ${BASE.slate200}`, paddingTop: 8 },
-    footerRow: { flexDirection: 'row', justifyContent: 'space-between' },
+    footer: {
+      position: "absolute",
+      bottom: 24,
+      left: 32,
+      right: 32,
+      borderTop: `1 solid ${BASE.slate200}`,
+      paddingTop: 8,
+    },
+    footerRow: { flexDirection: "row", justifyContent: "space-between" },
     footerText: { fontSize: 7, color: BASE.slate400 },
 
-    signatureRow: { flexDirection: 'row', gap: 24, marginTop: 20 },
+    signatureRow: { flexDirection: "row", gap: 24, marginTop: 20 },
     signatureBox: { flex: 1 },
-    signatureLine: { borderBottom: `1 solid ${BASE.slate200}`, paddingBottom: 24, marginBottom: 4 },
+    signatureLine: {
+      borderBottom: `1 solid ${BASE.slate200}`,
+      paddingBottom: 24,
+      marginBottom: 4,
+    },
     signatureLabel: { fontSize: 8, color: BASE.slate500 },
-    signatureImage: { width: 120, height: 40, objectFit: 'contain', marginBottom: 4 },
+    signatureImage: {
+      width: 120,
+      height: 40,
+      objectFit: "contain",
+      marginBottom: 4,
+    },
 
-    lifecycleBox: { marginTop: 16, padding: 12, backgroundColor: '#FEF3C7', borderRadius: 6, border: `1 solid ${BASE.amber200}` },
-    lifecycleTitle: { fontSize: 9, fontWeight: 'bold', color: BASE.amber700, marginBottom: 6 },
+    lifecycleBox: {
+      marginTop: 16,
+      padding: 12,
+      backgroundColor: "#FEF3C7",
+      borderRadius: 6,
+      border: `1 solid ${BASE.amber200}`,
+    },
+    lifecycleTitle: {
+      fontSize: 9,
+      fontWeight: "bold",
+      color: BASE.amber700,
+      marginBottom: 6,
+    },
     lifecycleText: { fontSize: 7.5, color: BASE.slate600, lineHeight: 1.4 },
 
     // Variant comparison table styles
     variantPage: { padding: 32, paddingTop: 28 },
-    variantTitle: { fontSize: 16, fontWeight: 'black', color: BASE.slate700, marginBottom: 4 },
+    variantTitle: {
+      fontSize: 16,
+      fontWeight: "black",
+      color: BASE.slate700,
+      marginBottom: 4,
+    },
     variantSubtitle: { fontSize: 8, color: BASE.slate500, marginBottom: 20 },
-    variantTable: { width: '100%', border: `1 solid ${BASE.slate200}`, borderRadius: 6, overflow: 'hidden' },
-    variantHeaderRow: { flexDirection: 'row', backgroundColor: BASE.slate100, borderBottom: `1 solid ${BASE.slate200}` },
-    variantHeaderCell: { flex: 1, padding: 8, fontSize: 8, fontWeight: 'bold', color: BASE.slate700, textAlign: 'center' as const },
-    variantHeaderCellFirst: { width: 120, padding: 8, fontSize: 8, fontWeight: 'bold', color: BASE.slate500, borderRight: `1 solid ${BASE.slate200}` },
-    variantRow: { flexDirection: 'row', borderBottom: `1 solid ${BASE.slate100}` },
-    variantRowLast: { flexDirection: 'row' },
-    variantCellFirst: { width: 120, padding: 8, fontSize: 8, color: BASE.slate500, borderRight: `1 solid ${BASE.slate200}`, backgroundColor: BASE.slate50 },
-    variantCell: { flex: 1, padding: 8, fontSize: 8, color: BASE.slate700, textAlign: 'center' as const },
-    variantCellRecommended: { flex: 1, padding: 8, fontSize: 8, color: BASE.slate700, textAlign: 'center' as const, backgroundColor: '#FEF3C7' },
-    variantRecommendedBadge: { fontSize: 7, color: BASE.amber700, fontWeight: 'bold', marginTop: 2 },
+    variantTable: {
+      width: "100%",
+      border: `1 solid ${BASE.slate200}`,
+      borderRadius: 6,
+      overflow: "hidden",
+    },
+    variantHeaderRow: {
+      flexDirection: "row",
+      backgroundColor: BASE.slate100,
+      borderBottom: `1 solid ${BASE.slate200}`,
+    },
+    variantHeaderCell: {
+      flex: 1,
+      padding: 8,
+      fontSize: 8,
+      fontWeight: "bold",
+      color: BASE.slate700,
+      textAlign: "center" as const,
+    },
+    variantHeaderCellFirst: {
+      width: 120,
+      padding: 8,
+      fontSize: 8,
+      fontWeight: "bold",
+      color: BASE.slate500,
+      borderRight: `1 solid ${BASE.slate200}`,
+    },
+    variantRow: {
+      flexDirection: "row",
+      borderBottom: `1 solid ${BASE.slate100}`,
+    },
+    variantRowLast: { flexDirection: "row" },
+    variantCellFirst: {
+      width: 120,
+      padding: 8,
+      fontSize: 8,
+      color: BASE.slate500,
+      borderRight: `1 solid ${BASE.slate200}`,
+      backgroundColor: BASE.slate50,
+    },
+    variantCell: {
+      flex: 1,
+      padding: 8,
+      fontSize: 8,
+      color: BASE.slate700,
+      textAlign: "center" as const,
+    },
+    variantCellRecommended: {
+      flex: 1,
+      padding: 8,
+      fontSize: 8,
+      color: BASE.slate700,
+      textAlign: "center" as const,
+      backgroundColor: "#FEF3C7",
+    },
+    variantRecommendedBadge: {
+      fontSize: 7,
+      color: BASE.amber700,
+      fontWeight: "bold",
+      marginTop: 2,
+    },
   });
 }
 
 // ── Helpers ──
 function fmtEUR(n: number | null | undefined): string {
-  if (n == null) return '—';
-  return n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+  if (n == null) return "—";
+  return (
+    n.toLocaleString("de-DE", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }) + " €"
+  );
 }
 
-function fmtNum(n: number | null | undefined, suffix = ''): string {
-  if (n == null) return '—';
-  return n.toLocaleString('de-DE') + suffix;
+function fmtNum(n: number | null | undefined, suffix = ""): string {
+  if (n == null) return "—";
+  return n.toLocaleString("de-DE") + suffix;
 }
 
 // ── Document ──
-export default function OfferPdfDocument({ lead, company, offerNumber: offerNumberProp, signaturePng, planningPng, offerDraft, textTemplate }: Props) {
-  const today = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
-  const validUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
+export default function OfferPdfDocument({
+  lead,
+  company,
+  offerNumber: offerNumberProp,
+  signaturePng,
+  planningPng,
+  offerDraft,
+  textTemplate,
+}: Props) {
+  const today = new Date().toLocaleDateString("de-DE", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+  const validUntil = new Date(
+    Date.now() + 30 * 24 * 60 * 60 * 1000,
+  ).toLocaleDateString("de-DE", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
 
   const primary = company.primaryColor || COLORS.secondary;
   const accent = company.accentColor || COLORS.primary;
   const s = getStyles(primary, accent);
 
-  const offerNumber = offerNumberProp ?? offerDraft?.offer_number ?? `ANG-${lead.id.slice(0, 8).toUpperCase()}`;
+  const offerNumber =
+    offerNumberProp ??
+    offerDraft?.offer_number ??
+    `ANG-${lead.id.slice(0, 8).toUpperCase()}`;
 
   const tplVars: Record<string, string> = {
     vorname: lead.first_name,
@@ -162,48 +389,81 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
     firmenname: company.firmenname,
     datum: today,
     gueltig_bis: validUntil,
-    zahlungsziel: company.zahlungsziel || '14',
+    zahlungsziel: company.zahlungsziel || "14",
   };
 
-  const anschreibenText  = textTemplate?.anschreiben       ? interpolate(textTemplate.anschreiben, tplVars)       : '';
-  const termsText        = textTemplate?.zahlungsbedingungen ? interpolate(textTemplate.zahlungsbedingungen, tplVars) : `Zahlungsziel: ${company.zahlungsziel || '14'} Tage nach Rechnungsstellung ohne Abzug.\nDie Liefer- und Leistungsfrist beginnt mit Zahlungseingang der Anzahlung.\nDieses Angebot ist unverbindlich und freibleibend.`;
-  const folgekostenText  = textTemplate?.folgekostenHinweis  ? interpolate(textTemplate.folgekostenHinweis, tplVars)  : 'Diese Analyse rechnet ehrlich — die meisten Anbieter verschweigen Folgekosten.\n\n• Wechselrichter-Austausch nach ca. 12 Jahren: ~2.000 €\n• Jährliche Wartung & Inspektion: ~200 €/Jahr';
-  const schlusstextText  = textTemplate?.schlusstext          ? interpolate(textTemplate.schlusstext, tplVars)          : '';
-  const showFolgekosten  = textTemplate?.showFolgekosten ?? true;
+  const anschreibenText = textTemplate?.anschreiben
+    ? interpolate(textTemplate.anschreiben, tplVars)
+    : "";
+  const termsText = textTemplate?.zahlungsbedingungen
+    ? interpolate(textTemplate.zahlungsbedingungen, tplVars)
+    : `Zahlungsziel: ${company.zahlungsziel || "14"} Tage nach Rechnungsstellung ohne Abzug.\nDie Liefer- und Leistungsfrist beginnt mit Zahlungseingang der Anzahlung.\nDieses Angebot ist unverbindlich und freibleibend.`;
+  const folgekostenText = textTemplate?.folgekostenHinweis
+    ? interpolate(textTemplate.folgekostenHinweis, tplVars)
+    : "Diese Analyse rechnet ehrlich — die meisten Anbieter verschweigen Folgekosten.\n\n• Wechselrichter-Austausch nach ca. 12 Jahren: ~2.000 €\n• Jährliche Wartung & Inspektion: ~200 €/Jahr";
+  const schlusstextText = textTemplate?.schlusstext
+    ? interpolate(textTemplate.schlusstext, tplVars)
+    : "";
+  const showFolgekosten = textTemplate?.showFolgekosten ?? true;
 
   // Preis-Berechnung: entweder aus OfferDraft oder Fallback auf Lead-Daten
   const hasDraft = offerDraft != null;
-  const bruttoPrice = hasDraft ? (offerDraft.subtotal ?? 0) : (lead.investment ?? 0);
-  const discountPct = hasDraft ? (offerDraft.discount_percentage ?? 0) : (lead.discount_percentage ?? 0);
-  const discountAmount = hasDraft ? (offerDraft.discount_amount ?? 0) : (discountPct > 0 ? Math.round(bruttoPrice * (discountPct / 100)) : 0);
-  const netPrice = hasDraft ? (offerDraft.total ?? bruttoPrice - discountAmount) : (lead.final_price ?? (bruttoPrice - discountAmount));
+  const bruttoPrice = hasDraft
+    ? (offerDraft.subtotal ?? 0)
+    : (lead.investment ?? 0);
+  const discountPct = hasDraft
+    ? (offerDraft.discount_percentage ?? 0)
+    : (lead.discount_percentage ?? 0);
+  const discountAmount = hasDraft
+    ? (offerDraft.discount_amount ?? 0)
+    : discountPct > 0
+      ? Math.round(bruttoPrice * (discountPct / 100))
+      : 0;
+  const netPrice = hasDraft
+    ? (offerDraft.total ?? bruttoPrice - discountAmount)
+    : (lead.final_price ?? bruttoPrice - discountAmount);
   const mwst = hasDraft ? (offerDraft.vat_amount ?? 0) : 0;
   const bruttoTotal = netPrice + mwst;
 
   // ROI: Jahresersparnis bleibt aus Lead (kWp-basiert), Amortisation + Profit vom echten Angebots-Total
   const actualInvestment = hasDraft ? netPrice : (lead.investment ?? netPrice);
   const annualSavings = lead.annual_savings ?? null;
-  const roiAmortization = annualSavings && annualSavings > 0
-    ? Math.round(actualInvestment / annualSavings * 10) / 10
-    : (lead.amortization ?? null);
-  const roiProfit20 = annualSavings != null
-    ? Math.round(annualSavings * 20 - actualInvestment)
-    : (lead.profit_20_years ?? null);
-  const showRoi = annualSavings != null || roiAmortization != null || lead.autarky != null;
+  const roiAmortization =
+    annualSavings && annualSavings > 0
+      ? Math.round((actualInvestment / annualSavings) * 10) / 10
+      : (lead.amortization ?? null);
+  const roiProfit20 =
+    annualSavings != null
+      ? Math.round(annualSavings * 20 - actualInvestment)
+      : (lead.profit_20_years ?? null);
+  const showRoi =
+    annualSavings != null || roiAmortization != null || lead.autarky != null;
 
   return (
-    <Document title={`Angebot ${offerNumber} — ${company.firmenname}`} author={company.firmenname}>
+    <Document
+      title={`Angebot ${offerNumber} — ${company.firmenname}`}
+      author={company.firmenname}
+    >
       <Page size="A4" style={s.page}>
-
         {/* Header */}
         <View style={s.header}>
-          <View style={[s.headerLeft, { flexDirection: 'row', alignItems: 'center', gap: 12 }]}>
+          <View
+            style={[
+              s.headerLeft,
+              { flexDirection: "row", alignItems: "center", gap: 12 },
+            ]}
+          >
             {company.logoDataUrl ? (
-              <Image src={company.logoDataUrl} style={{ width: 48, height: 48, borderRadius: 6 }} />
+              <Image
+                src={company.logoDataUrl}
+                style={{ width: 48, height: 48, borderRadius: 6 }}
+              />
             ) : null}
             <View>
               <Text style={s.companyName}>{company.firmenname}</Text>
-              {company.slogan && <Text style={s.companySlogan}>{company.slogan}</Text>}
+              {company.slogan && (
+                <Text style={s.companySlogan}>{company.slogan}</Text>
+              )}
               <Text style={s.companyDetails}>
                 {company.adresse && `${company.adresse}\n`}
                 {company.ort && `${company.ort}\n`}
@@ -215,8 +475,10 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
           <View style={s.headerRight}>
             <Text style={s.offerNumber}>{offerNumber}</Text>
             <Text style={s.offerMeta}>
-              Datum: {today}{'\n'}
-              Gültig bis: {validUntil}{'\n'}
+              Datum: {today}
+              {"\n"}
+              Gültig bis: {validUntil}
+              {"\n"}
               Kunde: {lead.first_name} {lead.last_name}
             </Text>
           </View>
@@ -226,7 +488,9 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
         {/* Anschreiben */}
         {anschreibenText ? (
           <View style={{ ...s.terms, marginBottom: 16 }}>
-            <Text style={{ ...s.termsText, fontSize: 8.5, lineHeight: 1.6 }}>{anschreibenText}</Text>
+            <Text style={{ ...s.termsText, fontSize: 8.5, lineHeight: 1.6 }}>
+              {anschreibenText}
+            </Text>
           </View>
         ) : null}
 
@@ -236,10 +500,16 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
             <View style={s.col}>
               <Text style={s.sectionTitle}>Kundendaten</Text>
               <View style={s.box}>
-                <Text style={s.boxValue}>{lead.first_name} {lead.last_name}</Text>
+                <Text style={s.boxValue}>
+                  {lead.first_name} {lead.last_name}
+                </Text>
                 {lead.zip && <Text style={s.boxValueSmall}>{lead.zip}</Text>}
-                {lead.email && <Text style={s.boxValueSmall}>{lead.email}</Text>}
-                {lead.phone && <Text style={s.boxValueSmall}>{lead.phone}</Text>}
+                {lead.email && (
+                  <Text style={s.boxValueSmall}>{lead.email}</Text>
+                )}
+                {lead.phone && (
+                  <Text style={s.boxValueSmall}>{lead.phone}</Text>
+                )}
               </View>
             </View>
             <View style={s.col}>
@@ -247,13 +517,19 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
               <View style={s.box}>
                 <Text style={s.boxValue}>Photovoltaikanlage</Text>
                 {lead.kwp != null && (
-                  <Text style={s.boxValueSmall}>Anlagenleistung: {lead.kwp} kWp</Text>
+                  <Text style={s.boxValueSmall}>
+                    Anlagenleistung: {lead.kwp} kWp
+                  </Text>
                 )}
                 {lead.roof_area != null && (
-                  <Text style={s.boxValueSmall}>Dachfläche: {lead.roof_area} m²</Text>
+                  <Text style={s.boxValueSmall}>
+                    Dachfläche: {lead.roof_area} m²
+                  </Text>
                 )}
                 {lead.roof_orientation && (
-                  <Text style={s.boxValueSmall}>Ausrichtung: {lead.roof_orientation}</Text>
+                  <Text style={s.boxValueSmall}>
+                    Ausrichtung: {lead.roof_orientation}
+                  </Text>
                 )}
               </View>
             </View>
@@ -262,24 +538,34 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
 
         {/* Configuration / Offer Items Table */}
         <View style={s.section}>
-          <Text style={s.sectionTitle}>{hasDraft ? 'Angebotspositionen' : 'Anlagenkonfiguration'}</Text>
+          <Text style={s.sectionTitle}>
+            {hasDraft ? "Angebotspositionen" : "Anlagenkonfiguration"}
+          </Text>
           <View style={s.table}>
             <View style={s.tableHeader}>
               <Text style={s.tableHeaderCell}>Position</Text>
               <Text style={s.tableHeaderCellRight}>Preis</Text>
             </View>
 
-            {hasDraft && offerDraft.line_items && offerDraft.line_items.length > 0 ? (
+            {hasDraft &&
+            offerDraft.line_items &&
+            offerDraft.line_items.length > 0 ? (
               <>
                 {offerDraft.line_items.map((item, index) => (
-                  <View key={item.id} style={index % 2 === 0 ? s.tableRow : s.tableRowAlt}>
+                  <View
+                    key={item.id}
+                    style={index % 2 === 0 ? s.tableRow : s.tableRowAlt}
+                  >
                     <View style={{ flex: 1 }}>
                       <Text style={s.tableCell}>{item.description}</Text>
                       <Text style={s.tableCellNote}>
-                        {item.quantity} {item.unit} · {fmtEUR(item.unit_price)} / {item.unit}
+                        {item.quantity} {item.unit} · {fmtEUR(item.unit_price)}{" "}
+                        / {item.unit}
                       </Text>
                     </View>
-                    <Text style={s.tableCellRight}>{fmtEUR(item.total_price)}</Text>
+                    <Text style={s.tableCellRight}>
+                      {fmtEUR(item.total_price)}
+                    </Text>
                   </View>
                 ))}
               </>
@@ -290,10 +576,16 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
                   <View style={{ flex: 1 }}>
                     <Text style={s.tableCell}>Photovoltaikanlage</Text>
                     <Text style={s.tableCellNote}>
-                      {lead.kwp ? `${lead.kwp} kWp` : 'Leistung auf Anfrage'}
-                      {lead.roof_area ? ` · ${lead.roof_area} m² Dachfläche` : ''}
-                      {company.panelHersteller ? ` · Module: ${company.panelHersteller.split(',')[0].trim()}` : ''}
-                      {company.wechselrichterHersteller ? ` · Wechselrichter: ${company.wechselrichterHersteller.split(',')[0].trim()}` : ''}
+                      {lead.kwp ? `${lead.kwp} kWp` : "Leistung auf Anfrage"}
+                      {lead.roof_area
+                        ? ` · ${lead.roof_area} m² Dachfläche`
+                        : ""}
+                      {company.panelHersteller
+                        ? ` · Module: ${company.panelHersteller.split(",")[0].trim()}`
+                        : ""}
+                      {company.wechselrichterHersteller
+                        ? ` · Wechselrichter: ${company.wechselrichterHersteller.split(",")[0].trim()}`
+                        : ""}
                     </Text>
                   </View>
                   <Text style={s.tableCellRight}>{fmtEUR(bruttoPrice)}</Text>
@@ -304,7 +596,9 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
                   <View style={s.tableRowAlt}>
                     <View style={{ flex: 1 }}>
                       <Text style={s.tableCell}>Batteriespeicher</Text>
-                      <Text style={s.tableCellNote}>Inkl. Energiemanagement-System</Text>
+                      <Text style={s.tableCellNote}>
+                        Inkl. Energiemanagement-System
+                      </Text>
                     </View>
                     <Text style={s.tableCellRight}>im Preis enthalten</Text>
                   </View>
@@ -326,7 +620,9 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
                   <View style={s.tableRowAlt}>
                     <View style={{ flex: 1 }}>
                       <Text style={s.tableCell}>Wärmepumpen-Integration</Text>
-                      <Text style={s.tableCellNote}>PV-Überschusssteuerung</Text>
+                      <Text style={s.tableCellNote}>
+                        PV-Überschusssteuerung
+                      </Text>
                     </View>
                     <Text style={s.tableCellRight}>im Preis enthalten</Text>
                   </View>
@@ -338,12 +634,21 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
             {discountAmount > 0 && (
               <View style={s.tableRow}>
                 <View style={{ flex: 1 }}>
-                  <Text style={[s.tableCell, { color: BASE.green }]}>Rabatt ({discountPct}%)</Text>
-                  {(hasDraft ? offerDraft.discount_code : lead.discount_code) && (
-                    <Text style={s.tableCellNote}>Code: {hasDraft ? offerDraft.discount_code : lead.discount_code}</Text>
+                  <Text style={[s.tableCell, { color: BASE.green }]}>
+                    Rabatt ({discountPct}%)
+                  </Text>
+                  {(hasDraft
+                    ? offerDraft.discount_code
+                    : lead.discount_code) && (
+                    <Text style={s.tableCellNote}>
+                      Code:{" "}
+                      {hasDraft ? offerDraft.discount_code : lead.discount_code}
+                    </Text>
                   )}
                 </View>
-                <Text style={[s.tableCellRight, { color: BASE.green }]}>− {fmtEUR(discountAmount)}</Text>
+                <Text style={[s.tableCellRight, { color: BASE.green }]}>
+                  − {fmtEUR(discountAmount)}
+                </Text>
               </View>
             )}
 
@@ -353,12 +658,24 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
               <Text style={s.totalValue}>{fmtEUR(netPrice)}</Text>
             </View>
             <View style={s.totalRow}>
-              <Text style={s.totalLabel}>MwSt. ({hasDraft ? offerDraft.vat_rate : 0}% — § 12 Abs. 3 UStG, PV-Anlage)</Text>
+              <Text style={s.totalLabel}>
+                MwSt. ({hasDraft ? offerDraft.vat_rate : 0}% — § 12 Abs. 3 UStG,
+                PV-Anlage)
+              </Text>
               <Text style={s.totalValue}>{fmtEUR(mwst)}</Text>
             </View>
-            <View style={[s.totalRow, { backgroundColor: primary, borderRadius: 4, marginTop: 4 }]}>
-              <Text style={[s.totalLabel, { color: BASE.white }]}>Gesamtbetrag brutto</Text>
-              <Text style={[s.totalValue, { color: accent }]}>{fmtEUR(bruttoTotal)}</Text>
+            <View
+              style={[
+                s.totalRow,
+                { backgroundColor: primary, borderRadius: 4, marginTop: 4 },
+              ]}
+            >
+              <Text style={[s.totalLabel, { color: BASE.white }]}>
+                Gesamtbetrag brutto
+              </Text>
+              <Text style={[s.totalValue, { color: accent }]}>
+                {fmtEUR(bruttoTotal)}
+              </Text>
             </View>
           </View>
         </View>
@@ -407,15 +724,19 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
         {/* Folgekosten-Hinweis */}
         {showFolgekosten && folgekostenText ? (
           <View style={s.lifecycleBox}>
-            <Text style={s.lifecycleTitle}>Hinweis zu Folgekosten & Transparenz</Text>
+            <Text style={s.lifecycleTitle}>
+              Hinweis zu Folgekosten & Transparenz
+            </Text>
             <Text style={s.lifecycleText}>{folgekostenText}</Text>
           </View>
         ) : null}
 
         {/* Schlusstext */}
         {schlusstextText ? (
-          <View style={{ marginTop: 12, padding: '8 0' }}>
-            <Text style={{ ...s.termsText, fontSize: 8.5, lineHeight: 1.6 }}>{schlusstextText}</Text>
+          <View style={{ marginTop: 12, padding: "8 0" }}>
+            <Text style={{ ...s.termsText, fontSize: 8.5, lineHeight: 1.6 }}>
+              {schlusstextText}
+            </Text>
           </View>
         ) : null}
 
@@ -432,7 +753,7 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
               <View style={s.signatureLine} />
             )}
             <Text style={s.signatureLabel}>
-              {signaturePng ? 'Digital unterschrieben' : 'Unterschrift Kunde'}
+              {signaturePng ? "Digital unterschrieben" : "Unterschrift Kunde"}
             </Text>
           </View>
         </View>
@@ -440,7 +761,9 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
         {/* Footer */}
         <View style={s.footer}>
           <View style={s.footerRow}>
-            <Text style={s.footerText}>{company.firmenname} · {company.adresse} · {company.ort}</Text>
+            <Text style={s.footerText}>
+              {company.firmenname} · {company.adresse} · {company.ort}
+            </Text>
             <Text style={s.footerText}>Seite 1 von 1 · {today}</Text>
           </View>
         </View>
@@ -450,7 +773,10 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
       {lead.offer_variants && lead.offer_variants.length > 1 && (
         <Page size="A4" style={s.variantPage}>
           <Text style={s.variantTitle}>Angebots-Varianten im Vergleich</Text>
-          <Text style={s.variantSubtitle}>Wählen Sie die für Sie passende Konfiguration. Alle Varianten basieren auf Ihren Angaben.</Text>
+          <Text style={s.variantSubtitle}>
+            Wählen Sie die für Sie passende Konfiguration. Alle Varianten
+            basieren auf Ihren Angaben.
+          </Text>
 
           <View style={s.variantTable}>
             {/* Header */}
@@ -461,46 +787,78 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
               {lead.offer_variants.map((v) => (
                 <View key={v.variant_key} style={s.variantHeaderCell}>
                   <Text>{v.label}</Text>
-                  {v.is_recommended && <Text style={s.variantRecommendedBadge}>★ Empfohlen</Text>}
+                  {v.is_recommended && (
+                    <Text style={s.variantRecommendedBadge}>★ Empfohlen</Text>
+                  )}
                 </View>
               ))}
             </View>
 
             {/* Speicher */}
             <View style={s.variantRow}>
-              <View style={s.variantCellFirst}><Text>Speicher</Text></View>
+              <View style={s.variantCellFirst}>
+                <Text>Speicher</Text>
+              </View>
               {lead.offer_variants.map((v) => (
-                <View key={v.variant_key} style={v.is_recommended ? s.variantCellRecommended : s.variantCell}>
-                  <Text>{v.storage_kwh > 0 ? `${v.storage_kwh} kWh` : 'Keiner'}</Text>
+                <View
+                  key={v.variant_key}
+                  style={
+                    v.is_recommended ? s.variantCellRecommended : s.variantCell
+                  }
+                >
+                  <Text>
+                    {v.storage_kwh > 0 ? `${v.storage_kwh} kWh` : "Keiner"}
+                  </Text>
                 </View>
               ))}
             </View>
 
             {/* Wallbox */}
             <View style={s.variantRow}>
-              <View style={s.variantCellFirst}><Text>Wallbox</Text></View>
+              <View style={s.variantCellFirst}>
+                <Text>Wallbox</Text>
+              </View>
               {lead.offer_variants.map((v) => (
-                <View key={v.variant_key} style={v.is_recommended ? s.variantCellRecommended : s.variantCell}>
-                  <Text>{v.has_wallbox ? '✓ Inklusive' : '—'}</Text>
+                <View
+                  key={v.variant_key}
+                  style={
+                    v.is_recommended ? s.variantCellRecommended : s.variantCell
+                  }
+                >
+                  <Text>{v.has_wallbox ? "✓ Inklusive" : "—"}</Text>
                 </View>
               ))}
             </View>
 
             {/* kWp */}
             <View style={s.variantRow}>
-              <View style={s.variantCellFirst}><Text>Anlagengröße</Text></View>
+              <View style={s.variantCellFirst}>
+                <Text>Anlagengröße</Text>
+              </View>
               {lead.offer_variants.map((v) => (
-                <View key={v.variant_key} style={v.is_recommended ? s.variantCellRecommended : s.variantCell}>
-                  <Text>{v.kwp != null ? `${v.kwp} kWp` : '—'}</Text>
+                <View
+                  key={v.variant_key}
+                  style={
+                    v.is_recommended ? s.variantCellRecommended : s.variantCell
+                  }
+                >
+                  <Text>{v.kwp != null ? `${v.kwp} kWp` : "—"}</Text>
                 </View>
               ))}
             </View>
 
             {/* Investition */}
             <View style={s.variantRow}>
-              <View style={s.variantCellFirst}><Text>Investition</Text></View>
+              <View style={s.variantCellFirst}>
+                <Text>Investition</Text>
+              </View>
               {lead.offer_variants.map((v) => (
-                <View key={v.variant_key} style={v.is_recommended ? s.variantCellRecommended : s.variantCell}>
+                <View
+                  key={v.variant_key}
+                  style={
+                    v.is_recommended ? s.variantCellRecommended : s.variantCell
+                  }
+                >
                   <Text>{fmtEUR(v.investment)}</Text>
                 </View>
               ))}
@@ -508,9 +866,16 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
 
             {/* Ersparnis/Jahr */}
             <View style={s.variantRow}>
-              <View style={s.variantCellFirst}><Text>Ersparnis / Jahr</Text></View>
+              <View style={s.variantCellFirst}>
+                <Text>Ersparnis / Jahr</Text>
+              </View>
               {lead.offer_variants.map((v) => (
-                <View key={v.variant_key} style={v.is_recommended ? s.variantCellRecommended : s.variantCell}>
+                <View
+                  key={v.variant_key}
+                  style={
+                    v.is_recommended ? s.variantCellRecommended : s.variantCell
+                  }
+                >
                   <Text>{fmtEUR(v.annual_savings)}</Text>
                 </View>
               ))}
@@ -518,46 +883,93 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
 
             {/* Amortisation */}
             <View style={s.variantRow}>
-              <View style={s.variantCellFirst}><Text>Amortisation</Text></View>
+              <View style={s.variantCellFirst}>
+                <Text>Amortisation</Text>
+              </View>
               {lead.offer_variants.map((v) => (
-                <View key={v.variant_key} style={v.is_recommended ? s.variantCellRecommended : s.variantCell}>
-                  <Text>{v.amortization != null ? `${v.amortization} Jahre` : '—'}</Text>
+                <View
+                  key={v.variant_key}
+                  style={
+                    v.is_recommended ? s.variantCellRecommended : s.variantCell
+                  }
+                >
+                  <Text>
+                    {v.amortization != null ? `${v.amortization} Jahre` : "—"}
+                  </Text>
                 </View>
               ))}
             </View>
 
             {/* Autarkie */}
             <View style={s.variantRow}>
-              <View style={s.variantCellFirst}><Text>Autarkie</Text></View>
+              <View style={s.variantCellFirst}>
+                <Text>Autarkie</Text>
+              </View>
               {lead.offer_variants.map((v) => (
-                <View key={v.variant_key} style={v.is_recommended ? s.variantCellRecommended : s.variantCell}>
-                  <Text>{v.autarky != null ? `${v.autarky} %` : '—'}</Text>
+                <View
+                  key={v.variant_key}
+                  style={
+                    v.is_recommended ? s.variantCellRecommended : s.variantCell
+                  }
+                >
+                  <Text>{v.autarky != null ? `${v.autarky} %` : "—"}</Text>
                 </View>
               ))}
             </View>
 
             {/* Gewinn 20 J. */}
             <View style={s.variantRowLast}>
-              <View style={s.variantCellFirst}><Text>Gewinn 20 Jahre</Text></View>
+              <View style={s.variantCellFirst}>
+                <Text>Gewinn 20 Jahre</Text>
+              </View>
               {lead.offer_variants.map((v) => (
-                <View key={v.variant_key} style={v.is_recommended ? s.variantCellRecommended : s.variantCell}>
-                  <Text style={{ fontWeight: 'bold' }}>{fmtEUR(v.profit_20_years)}</Text>
+                <View
+                  key={v.variant_key}
+                  style={
+                    v.is_recommended ? s.variantCellRecommended : s.variantCell
+                  }
+                >
+                  <Text style={{ fontWeight: "bold" }}>
+                    {fmtEUR(v.profit_20_years)}
+                  </Text>
                 </View>
               ))}
             </View>
           </View>
 
           {/* Hinweis */}
-          <View style={{ marginTop: 16, padding: 10, backgroundColor: BASE.slate50, borderRadius: 6 }}>
-            <Text style={{ fontSize: 7.5, color: BASE.slate500, lineHeight: 1.4 }}>
-              Die Empfehlung basiert auf einer Wirtschaftlichkeitsanalyse unter Berücksichtigung Ihres aktuellen Stromverbrauchs, der Dachfläche und der regionalen Sonneneinstrahlung. Die "Optimal"-Variante bietet in der Regel das beste Preis-Leistungs-Verhältnis.
+          <View
+            style={{
+              marginTop: 16,
+              padding: 10,
+              backgroundColor: BASE.slate50,
+              borderRadius: 6,
+            }}
+          >
+            <Text
+              style={{ fontSize: 7.5, color: BASE.slate500, lineHeight: 1.4 }}
+            >
+              Die Empfehlung basiert auf einer Wirtschaftlichkeitsanalyse unter
+              Berücksichtigung Ihres aktuellen Stromverbrauchs, der Dachfläche
+              und der regionalen Sonneneinstrahlung. Die "Optimal"-Variante
+              bietet in der Regel das beste Preis-Leistungs-Verhältnis.
             </Text>
           </View>
 
           {/* Footer */}
-          <View style={{ ...s.footer, position: 'absolute', bottom: 24, left: 32, right: 32 }}>
+          <View
+            style={{
+              ...s.footer,
+              position: "absolute",
+              bottom: 24,
+              left: 32,
+              right: 32,
+            }}
+          >
             <View style={s.footerRow}>
-              <Text style={s.footerText}>{company.firmenname} · {company.adresse} · {company.ort}</Text>
+              <Text style={s.footerText}>
+                {company.firmenname} · {company.adresse} · {company.ort}
+              </Text>
               <Text style={s.footerText}>Seite 2 von 2 · {today}</Text>
             </View>
           </View>
@@ -572,40 +984,55 @@ export default function OfferPdfDocument({ lead, company, offerNumber: offerNumb
               <Text style={s.companySlogan}>{company.slogan}</Text>
             </View>
             <View style={s.headerRight}>
-              <Text style={[s.offerMeta, { fontFamily: 'Helvetica-Bold' }]}>Solar-Planung</Text>
-              <Text style={s.offerMeta}>{lead.first_name} {lead.last_name}</Text>
+              <Text style={[s.offerMeta, { fontFamily: "Helvetica-Bold" }]}>
+                Solar-Planung
+              </Text>
+              <Text style={s.offerMeta}>
+                {lead.first_name} {lead.last_name}
+              </Text>
               {lead.zip && <Text style={s.offerMeta}>PLZ {lead.zip}</Text>}
             </View>
           </View>
           <View style={s.accentBar} />
 
-          <Text style={{ fontSize: 13, fontFamily: 'Helvetica-Bold', color: COLORS.secondary, marginBottom: 6 }}>
+          <Text
+            style={{
+              fontSize: 13,
+              fontFamily: "Helvetica-Bold",
+              color: COLORS.secondary,
+              marginBottom: 6,
+            }}
+          >
             Visualisierung Ihrer Solaranlage
           </Text>
           <Text style={{ fontSize: 8, color: BASE.slate400, marginBottom: 14 }}>
-            Die folgende Darstellung zeigt eine Übersicht der geplanten Modulanordnung auf Ihrem Dach.
-            Die genaue Positionierung erfolgt durch Ihren Installateur vor Ort.
+            Die folgende Darstellung zeigt eine Übersicht der geplanten
+            Modulanordnung auf Ihrem Dach. Die genaue Positionierung erfolgt
+            durch Ihren Installateur vor Ort.
           </Text>
 
           <Image
             src={planningPng}
-            style={{ width: '100%', borderRadius: 6, marginBottom: 10 }}
+            style={{ width: "100%", borderRadius: 6, marginBottom: 10 }}
           />
 
           {lead.module_layout && (
-            <View style={{ flexDirection: 'row', gap: 16, marginTop: 4 }}>
+            <View style={{ flexDirection: "row", gap: 16, marginTop: 4 }}>
               <Text style={{ fontSize: 8, color: BASE.slate500 }}>
                 Adresse: {lead.module_layout.address}
               </Text>
               <Text style={{ fontSize: 8, color: BASE.slate500 }}>
-                {lead.module_layout.moduleCount} Module · {lead.module_layout.kwp} kWp
+                {lead.module_layout.moduleCount} Module ·{" "}
+                {lead.module_layout.kwp} kWp
               </Text>
             </View>
           )}
 
           <View style={s.footer}>
             <View style={s.footerRow}>
-              <Text style={s.footerText}>{company.firmenname} · {company.adresse} · {company.ort}</Text>
+              <Text style={s.footerText}>
+                {company.firmenname} · {company.adresse} · {company.ort}
+              </Text>
               <Text style={s.footerText}>{today}</Text>
             </View>
           </View>

@@ -51,7 +51,7 @@ Deno.serve(async (req) => {
   // Resend API call
   const from = from_email
     ? `${from_name || 'Solvary'} <${from_email}>`
-    : `${from_name || 'Solvary'} <noreply@vu-studio.de>`;
+    : `${from_name || 'Solvary'} <noreply@solvary.de>`;
 
   try {
     const res = await fetch('https://api.resend.com/emails', {

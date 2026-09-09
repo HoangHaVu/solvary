@@ -81,7 +81,7 @@ interface OwnerSettings {
 }
 
 const DEFAULT_SETTINGS: OwnerSettings = {
-  firmenname: "Voltify Solar",
+  firmenname: "Solvary",
   slogan: "Ihre Solaranlage — einfach konfiguriert.",
   logoDataUrl: "",
   primaryColor: COLORS.secondary,
@@ -133,9 +133,10 @@ export default function AdminSettings() {
     }
     return { ...DEFAULT_SETTINGS };
   });
-  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "success">(
-    "idle",
-  );
+  const [saveStatus, setSaveStatus] = useState<
+    "idle" | "saving" | "success" | "error"
+  >("idle");
+  const [saveError, setSaveError] = useState("");
   const [linkCopied, setLinkCopied] = useState(false);
   const [profileCompanyName, setProfileCompanyName] = useState("");
   const [profileWebsite, setProfileWebsite] = useState("");
@@ -181,7 +182,7 @@ export default function AdminSettings() {
         "company_name, website, bio, offer_text_template, email_template, installer_slug, calc_assumptions, company_settings",
       )
       .eq("id", user.id)
-      .single()
+      .maybeSingle()
       .then(({ data }) => {
         if (!data) return;
         setProfileCompanyName(data.company_name ?? "");
@@ -263,39 +264,48 @@ export default function AdminSettings() {
 
   async function saveSettings() {
     setSaveStatus("saving");
+    setSaveError("");
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-    if (user) {
-      await supabase
-        .from("profiles")
-        .update({
-          company_name: profileCompanyName || null,
-          website: profileWebsite || null,
-          bio: profileBio || null,
-          installer_slug:
-            installerSlug
-              .trim()
-              .toLowerCase()
-              .replace(/[^a-z0-9-]/g, "-") || null,
-          offer_text_template: offerTextTemplate,
-          email_template: emailTemplate,
-          calc_assumptions:
-            Object.keys(calcAssumptions).length > 0 ? calcAssumptions : null,
-          company_settings: settings, // WL2: Source of Truth in DB (localStorage = Cache)
-          branding: {
-            firmenname: settings.firmenname,
-            slogan: settings.slogan,
-            logoDataUrl: settings.logoDataUrl,
-            primaryColor: settings.primaryColor,
-            accentColor: settings.accentColor,
-            poweredByVoltify: true,
-          },
-        })
-        .eq("id", user.id);
+    try {
+      if (user) {
+        const { error } = await supabase
+          .from("profiles")
+          .update({
+            company_name: profileCompanyName || null,
+            website: profileWebsite || null,
+            bio: profileBio || null,
+            installer_slug:
+              installerSlug
+                .trim()
+                .toLowerCase()
+                .replace(/[^a-z0-9-]/g, "-") || null,
+            offer_text_template: offerTextTemplate,
+            email_template: emailTemplate,
+            calc_assumptions:
+              Object.keys(calcAssumptions).length > 0 ? calcAssumptions : null,
+            company_settings: settings, // WL2: Source of Truth in DB (localStorage = Cache)
+            branding: {
+              firmenname: settings.firmenname,
+              slogan: settings.slogan,
+              logoDataUrl: settings.logoDataUrl,
+              primaryColor: settings.primaryColor,
+              accentColor: settings.accentColor,
+              poweredByVoltify: true,
+            },
+          })
+          .eq("id", user.id);
+        if (error) throw new Error(error.message);
+      }
+      setSlugSaved(true);
+      setTimeout(() => setSlugSaved(false), 2500);
+      setSaveStatus("success");
+      setTimeout(() => setSaveStatus("idle"), 2500);
+    } catch (err) {
+      setSaveError(
+        err instanceof Error ? err.message : "Speichern fehlgeschlagen.",
+      );
+      setSaveStatus("error");
     }
-    setSlugSaved(true);
-    setTimeout(() => setSlugSaved(false), 2500);
-    setSaveStatus("success");
-    setTimeout(() => setSaveStatus("idle"), 2500);
   }
 
   // ── Mock-Daten für DIN A4 PDF-Vorschau ──
@@ -1950,6 +1960,11 @@ export default function AdminSettings() {
                 <span className="flex items-center gap-2 text-green-400 font-semibold text-sm">
                   <CheckCircle className="w-5 h-5" />
                   {t("adminSettings.common.saved")}
+                </span>
+              )}
+              {saveStatus === "error" && (
+                <span className="text-red-400 font-semibold text-sm">
+                  Fehler beim Speichern: {saveError}
                 </span>
               )}
             </div>

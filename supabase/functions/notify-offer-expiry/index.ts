@@ -52,7 +52,7 @@ Deno.serve(async (req) => {
       method: 'POST',
       headers: { Authorization: `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: 'Solvary <noreply@vu-studio.de>',
+        from: 'Solvary <noreply@solvary.de>',
         to: installerEmail,
         subject: `⚠️ Angebot läuft in ${daysLeft} Tag${daysLeft === 1 ? '' : 'en'} ab`,
         html: `
