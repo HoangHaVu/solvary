@@ -88,27 +88,39 @@ export default function PricingTiers({
 
             {/* Preis */}
             <div className="mt-5">
-              <div className="flex items-baseline gap-1">
-                <span
+              {tier.price === null ? (
+                <div
                   className={`text-4xl font-bold ${dark ? "text-white" : "text-brand-secondary"}`}
                 >
-                  €{tier.price}
-                </span>
-                <span
-                  className={`text-sm ${dark ? "text-white/50" : "text-gray-500"}`}
-                >
-                  {t("sections.pricingTiers.perMonth")}
-                </span>
-              </div>
-              {showBeta && (
+                  {t("sections.pricingTiers.onRequest")}
+                </div>
+              ) : (
+                <div className="flex items-baseline gap-1">
+                  <span
+                    className={`text-4xl font-bold ${dark ? "text-white" : "text-brand-secondary"}`}
+                  >
+                    €{tier.price}
+                  </span>
+                  <span
+                    className={`text-sm ${dark ? "text-white/50" : "text-gray-500"}`}
+                  >
+                    {t("sections.pricingTiers.perMonth")}
+                  </span>
+                </div>
+              )}
+              {showBeta && tier.price !== null && (
                 <p className="mt-1.5 text-sm">
                   <span
                     className={`font-semibold ${dark ? "text-white" : "text-brand-secondary"}`}
                   >
-                    {t("sections.pricingTiers.betaPrice", { price: betaPrice(tier.price) })}
+                    {t("sections.pricingTiers.betaPrice", {
+                      price: betaPrice(tier.price),
+                    })}
                   </span>{" "}
                   <span className={dark ? "text-white/40" : "text-gray-400"}>
-                    {t("sections.pricingTiers.betaLabel", { discount: BETA.discountPercent })}
+                    {t("sections.pricingTiers.betaLabel", {
+                      discount: BETA.discountPercent,
+                    })}
                   </span>
                 </p>
               )}

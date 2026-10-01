@@ -127,7 +127,8 @@
       "popular": "Popular",
       "perMonth": "/ month",
       "betaPrice": "≈ €{{price}} / month",
-      "betaLabel": "as beta partner (−{{discount}}%)"
+      "betaLabel": "as beta partner (−{{discount}}%)",
+      "onRequest": "Custom pricing"
     },
     "faq": {
       "tag": "FAQ",

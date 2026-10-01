@@ -6,7 +6,8 @@ import { BETA } from "./betaConfig";
 
 export interface PricingTier {
   name: string;
-  price: number;
+  /** null = kein fester Preis, Anzeige als "Auf Anfrage" */
+  price: number | null;
   /** "1 Nutzer" bzw. "5 Partner" */
   seat: string;
   description: string;
@@ -26,31 +27,37 @@ export function useSaasTiers(): PricingTier[] {
   return [
     {
       name: t("pricingData.saas.0.name"),
-      price: 179,
+      price: 99,
       seat: t("pricingData.saas.0.seat"),
       description: t("pricingData.saas.0.description"),
       icon: Zap,
-      features: t("pricingData.saas.0.features", { returnObjects: true }) as string[],
+      features: t("pricingData.saas.0.features", {
+        returnObjects: true,
+      }) as string[],
       cta: t("pricingData.saas.0.cta"),
       popular: false,
     },
     {
       name: t("pricingData.saas.1.name"),
-      price: 379,
+      price: 229,
       seat: t("pricingData.saas.1.seat"),
       description: t("pricingData.saas.1.description"),
       icon: Crown,
-      features: t("pricingData.saas.1.features", { returnObjects: true }) as string[],
+      features: t("pricingData.saas.1.features", {
+        returnObjects: true,
+      }) as string[],
       cta: t("pricingData.saas.1.cta"),
       popular: true,
     },
     {
       name: t("pricingData.saas.2.name"),
-      price: 799,
+      price: null,
       seat: t("pricingData.saas.2.seat"),
       description: t("pricingData.saas.2.description"),
       icon: Building2,
-      features: t("pricingData.saas.2.features", { returnObjects: true }) as string[],
+      features: t("pricingData.saas.2.features", {
+        returnObjects: true,
+      }) as string[],
       cta: t("pricingData.saas.2.cta"),
       popular: false,
     },
@@ -62,31 +69,37 @@ export function useAgencyTiers(): PricingTier[] {
   return [
     {
       name: t("pricingData.agency.0.name"),
-      price: 199,
+      price: 129,
       seat: t("pricingData.agency.0.seat"),
       description: t("pricingData.agency.0.description"),
       icon: Zap,
-      features: t("pricingData.agency.0.features", { returnObjects: true }) as string[],
+      features: t("pricingData.agency.0.features", {
+        returnObjects: true,
+      }) as string[],
       cta: t("pricingData.agency.0.cta"),
       popular: false,
     },
     {
       name: t("pricingData.agency.1.name"),
-      price: 399,
+      price: 259,
       seat: t("pricingData.agency.1.seat"),
       description: t("pricingData.agency.1.description"),
       icon: Crown,
-      features: t("pricingData.agency.1.features", { returnObjects: true }) as string[],
+      features: t("pricingData.agency.1.features", {
+        returnObjects: true,
+      }) as string[],
       cta: t("pricingData.agency.1.cta"),
       popular: true,
     },
     {
       name: t("pricingData.agency.2.name"),
-      price: 699,
+      price: null,
       seat: t("pricingData.agency.2.seat"),
       description: t("pricingData.agency.2.description"),
       icon: Network,
-      features: t("pricingData.agency.2.features", { returnObjects: true }) as string[],
+      features: t("pricingData.agency.2.features", {
+        returnObjects: true,
+      }) as string[],
       cta: t("pricingData.agency.2.cta"),
       popular: false,
     },
