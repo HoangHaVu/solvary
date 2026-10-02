@@ -12,9 +12,13 @@
   },
   "landing": {
     "hero": {
-      "headline1": "Solar quotes",
-      "headline2": "in 20 minutes",
-      "headline3": "instead of 2 days.",
+      "headline1": "Ready-made solar leads",
+      "headline2": "straight from your website",
+      "headline3": "— quote included.",
+      "statLeftValue": "60 sec",
+      "statLeftLabel": "to a finished quote",
+      "statRightValue": "100%",
+      "statRightLabel": "pre-qualified leads",
       "cta": "Which solution fits me?",
       "sub": "60-second check · No signup · Instant evaluation + matching demo",
       "description": "The all-in-one software for solo solar installers: Your customers configure themselves, you click \"Send\". Professional quote PDFs with ROI, subsidies and payment schedule — automatically."

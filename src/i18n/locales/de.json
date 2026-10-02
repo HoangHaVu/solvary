@@ -12,9 +12,13 @@
   },
   "landing": {
     "hero": {
-      "headline1": "Solar-Angebote",
-      "headline2": "in 20 Minuten",
-      "headline3": "statt 2 Tagen.",
+      "headline1": "Fertige Solar-Anfragen",
+      "headline2": "direkt von deiner Website",
+      "headline3": "– inklusive Angebot.",
+      "statLeftValue": "60 Sek.",
+      "statLeftLabel": "bis zum fertigen Angebot",
+      "statRightValue": "100 %",
+      "statRightLabel": "vorqualifizierte Anfragen",
       "cta": "Welche Lösung passt zu mir?",
       "sub": "60-Sekunden-Check · Keine Anmeldung · Sofort-Auswertung + passende Demo",
       "description": "Die All-in-One-Software für Solo-Solarteure: Deine Kunden konfigurieren selbst, du klickst auf \"Versenden\". Professionelle Angebots-PDFs mit ROI, Förderungen und Zahlungsplan — automatisch."

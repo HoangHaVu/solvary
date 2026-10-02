@@ -31,7 +31,9 @@ export default function LandingPage() {
   const [exitIntent, dismissExitIntent] = useExitIntent();
   const { t } = useTranslation();
 
-  const journey = t("landing.process.steps", { returnObjects: true }) as JourneyStep[];
+  const journey = t("landing.process.steps", {
+    returnObjects: true,
+  }) as JourneyStep[];
 
   // UTM-Params (sl_lead, utm_source, utm_campaign) sofort cachen —
   // damit sie beim späteren Klick auf "Live-Demo ansehen" → /konfigurator noch verfügbar sind.
@@ -81,13 +83,15 @@ export default function LandingPage() {
         <div className="relative z-10 max-w-[1280px] mx-auto px-6 min-h-[100dvh] flex flex-col pt-36 pb-12">
           {/* Headline links + Beschreibung rechts */}
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
-            <div className="max-w-[640px]">
-              <h1 className="reveal text-5xl md:text-6xl lg:text-7xl font-semibold text-brand-secondary leading-[1.05] tracking-tight">
-                {t("landing.hero.headline1")}
-                <br />
-                {t("landing.hero.headline2")}
-                <br />
-                {t("landing.hero.headline3")}
+            <div className="max-w-[760px]">
+              {/* Fließtext statt fester Umbrüche; Teil 2+3 grau wie in der Vorlage */}
+              <h1 className="reveal text-4xl md:text-5xl lg:text-6xl font-semibold text-brand-secondary leading-[1.1] tracking-tight">
+                <span className="md:whitespace-nowrap">
+                  {t("landing.hero.headline1")}
+                </span>{" "}
+                <span className="text-gray-400">
+                  {t("landing.hero.headline2")} {t("landing.hero.headline3")}
+                </span>
               </h1>
               <PillButton
                 variant="white"
@@ -103,6 +107,28 @@ export default function LandingPage() {
             <p className="reveal text-gray-600 text-base max-w-[360px] leading-relaxed lg:pt-4">
               {t("landing.hero.description")}
             </p>
+          </div>
+
+          {/* Kennzahlen-Kacheln unten links + rechts */}
+          <div className="mt-auto mb-[80px] pt-16 flex items-end justify-between gap-8">
+            <div className="reveal max-w-[200px]">
+              <div className="text-4xl md:text-5xl font-semibold text-brand-secondary tracking-tight">
+                {t("landing.hero.statLeftValue")}
+              </div>
+              <div className="h-px bg-gray-300 my-3" />
+              <p className="text-sm text-gray-600 leading-snug">
+                {t("landing.hero.statLeftLabel")}
+              </p>
+            </div>
+            <div className="reveal max-w-[200px] text-right">
+              <div className="text-4xl md:text-5xl font-semibold text-brand-secondary tracking-tight">
+                {t("landing.hero.statRightValue")}
+              </div>
+              <div className="h-px bg-gray-300 my-3" />
+              <p className="text-sm text-gray-600 leading-snug">
+                {t("landing.hero.statRightLabel")}
+              </p>
+            </div>
           </div>
         </div>
       </section>
